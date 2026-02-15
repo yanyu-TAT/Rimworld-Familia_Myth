@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<!-- Grant Pharna ritual single outcome: done -->
+	<RitualOutcome_GrantPharna.outcomeChances.0.label>Done</RitualOutcome_GrantPharna.outcomeChances.0.label>
+
+	<!-- Ascend Pharna ritual outcome: great failure (5%) -->
+	<RitualOutcome_AscendPharna.outcomeChances.0.label>Terrible ascension ritual</RitualOutcome_AscendPharna.outcomeChances.0.label>
+	<!-- Ascend Pharna ritual outcome: failure (10%) -->
+	<RitualOutcome_AscendPharna.outcomeChances.1.label>Failed ascension ritual</RitualOutcome_AscendPharna.outcomeChances.1.label>
+	<!-- Ascend Pharna ritual outcome: normal (30%) -->
+	<RitualOutcome_AscendPharna.outcomeChances.2.label>Unremarkable ascension ritual</RitualOutcome_AscendPharna.outcomeChances.2.label>
+	<!-- Ascend Pharna ritual outcome: success (45%) -->
+	<RitualOutcome_AscendPharna.outcomeChances.3.label>Successful ascension ritual</RitualOutcome_AscendPharna.outcomeChances.3.label>
+	<!-- Ascend Pharna ritual outcome: great success (10%) -->
+	<RitualOutcome_AscendPharna.outcomeChances.4.label>Remarkable ascension ritual</RitualOutcome_AscendPharna.outcomeChances.4.label>
+
+</LanguageData>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<!-- Ability name: Strength -->
+	<FamiliaMyth.Strength>Strength</FamiliaMyth.Strength>
+	<!-- Ability name: Endurance -->
+	<FamiliaMyth.Endurance>Endurance</FamiliaMyth.Endurance>
+	<!-- Ability name: Dexterity -->
+	<FamiliaMyth.Dexterity>Dexterity</FamiliaMyth.Dexterity>
+	<!-- Ability name: Agility -->
+	<FamiliaMyth.Agility>Agility</FamiliaMyth.Agility>
+	<!-- Ability name: Magic -->
+	<FamiliaMyth.Mana>Magic</FamiliaMyth.Mana>
+	<!-- Ability name: Will -->
+	<FamiliaMyth.Will>Will</FamiliaMyth.Will>
+
+	<!-- Pharna display name in stat panel, e.g. "Pharna(Lv.3 AgilityF399): +0.12" -->
+	<FamiliaMyth.Pharna>Pharna</FamiliaMyth.Pharna>
+
+	<!-- Letter description after Grant Pharna ritual completes. {god}=god name, {pawn}=pawn name -->
+	<FamiliaMyth.GrantPharnaRitualDone>{god} has bestowed Pharna upon {pawn}. {pawn} is now a member of {god}'s Familia.</FamiliaMyth.GrantPharnaRitualDone>
+
+	<!-- Refusal: colonist already has Pharna, cannot grant again -->
+	<FamiliaMyth.AlreadyHavePharnaRefusion>Already has Pharna</FamiliaMyth.AlreadyHavePharnaRefusion>
+	<!-- Refusal: colonist has no Pharna, cannot ascend -->
+	<FamiliaMyth.HaveNoPharnaRefusion>Does not have Pharna</FamiliaMyth.HaveNoPharnaRefusion>
+	<!-- Refusal: colonist does not meet ascend requirements (ability>=D and enough exploits) -->
+	<FamiliaMyth.NotMeetAscendRequirementRefusion>Insufficient exploits or basic ability too low</FamiliaMyth.NotMeetAscendRequirementRefusion>
+
+	<!-- 经验值 -->
+	<FamiliaMyth.Experience>Experience</FamiliaMyth.Experience>
+	<!-- 伟业值 -->
+	<FamiliaMyth.Exploits>Exploits</FamiliaMyth.Exploits>
+</LanguageData>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<!-- 能力名称：力量 -->
+	<FamiliaMyth.Strength>力量</FamiliaMyth.Strength>
+	<!-- 能力名称：耐久 -->
+	<FamiliaMyth.Endurance>耐久</FamiliaMyth.Endurance>
+	<!-- 能力名称：灵巧 -->
+	<FamiliaMyth.Dexterity>灵巧</FamiliaMyth.Dexterity>
+	<!-- 能力名称：敏捷 -->
+	<FamiliaMyth.Agility>敏捷</FamiliaMyth.Agility>
+	<!-- 能力名称：魔力 -->
+	<FamiliaMyth.Mana>魔力</FamiliaMyth.Mana>
+	<!-- 能力名称：意志 -->
+	<FamiliaMyth.Will>意志</FamiliaMyth.Will>
+
+	<!-- 属性面板中恩惠的显示名称，如"恩惠(Lv.3 敏捷F399): +0.12" -->
+	<FamiliaMyth.Pharna>神之恩惠</FamiliaMyth.Pharna>
+
+	<!-- 赋予恩惠仪式完成后的信件描述文本 -->
+	<FamiliaMyth.GrantPharnaRitualDone>{god} 向 {pawn} 降下了神之恩惠。现在 {pawn} 是 {god} 眷族的一员了。</FamiliaMyth.GrantPharnaRitualDone>
+
+	<!-- 拒绝理由：该殖民者已拥有恩惠，无法再次赋予 -->
+	<FamiliaMyth.AlreadyHavePharnaRefusion>已有恩惠</FamiliaMyth.AlreadyHavePharnaRefusion>
+	<!-- 拒绝理由：该殖民者没有恩惠，无法升华 -->
+	<FamiliaMyth.HaveNoPharnaRefusion>没有恩惠</FamiliaMyth.HaveNoPharnaRefusion>
+	<!-- 拒绝理由：该殖民者未满足升华条件（能力≥D且伟业值足够） -->
+	<FamiliaMyth.NotMeetAscendRequirementRefusion>没有足够的伟业值或基础能力值不足</FamiliaMyth.NotMeetAscendRequirementRefusion>
+	
+	<!-- 经验值 -->
+	<FamiliaMyth.Experience>经验值</FamiliaMyth.Experience>
+	<!-- 伟业值 -->
+	<FamiliaMyth.Exploits>伟业值</FamiliaMyth.Exploits>
+
+</LanguageData>

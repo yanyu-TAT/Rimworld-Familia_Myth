@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<!-- 赋予恩惠仪式中"受恩者"角色的显示名称 -->
+	<RitualBehavior_GrantPharna.roles.0.label>眷族候选者</RitualBehavior_GrantPharna.roles.0.label>
+
+	<!-- 升华恩惠仪式中"受恩者"角色的显示名称 -->
+	<RitualBehavior_AscendPharna.roles.0.label>待升华的眷族成员</RitualBehavior_AscendPharna.roles.0.label>
+
+</LanguageData>

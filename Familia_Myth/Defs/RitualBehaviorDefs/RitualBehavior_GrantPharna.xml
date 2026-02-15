@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<RitualBehaviorDef MayRequire="Ludeon.RimWorld.Ideology">
+		<defName>RitualBehavior_GrantPharna</defName>
+		<workerClass>RimWorld.RitualBehaviorWorker</workerClass>
+		<roles>
+			<li Class="FamiliaMyth.Ritual.RitualRoleColonist_NoPharna">
+				<id>recipient</id>
+				<label>FamiliaMyth.RitualGrantPharnaRecipientLabel</label>
+				<required>true</required>
+				<maxCount>1</maxCount>
+				<allowOtherIdeos>true</allowOtherIdeos>
+			</li>
+		</roles>
+		<stages>
+			<li>
+				<defaultDuty>Spectate</defaultDuty>
+				<endTriggers>
+					<li Class="RimWorld.StageEndTrigger_DurationPercentage">
+						<percentage>1</percentage>
+					</li>
+				</endTriggers>
+			</li>
+		</stages>
+		<durationTicks>600~800</durationTicks>
+	</RitualBehaviorDef>
+</Defs>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE ModMetaData>
+<ModMetaData>
+    <name>Familia Myth</name>
+    <author>yanyu</author>
+    <description>参考了大量《在地下城期待邂逅是否搞错了什么》中的设定的模组。</description>
+    <packageId>yanyu.familiamyth</packageId>
+    <modVersion>0.0.1</modVersion>
+
+    <supportedVersions>
+        <li>1.6</li>
+    </supportedVersions>
+
+    <modDependencies>
+        <li>
+            <displayName>HugsLib</displayName>
+            <packageId>unlimitedhugs.hugslib</packageId>
+            <steamWorkshopUrl>steam://url/CommunityFilePage/818773962</steamWorkshopUrl>
+        </li>
+        <li>
+            <displayName>Harmony</displayName>
+            <packageId>brrainz.harmony</packageId>
+            <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+        </li>
+    </modDependencies>
+
+    <loadAfter>
+        <li>brrainz.harmony</li>
+        <li>unlimitedhugs.hugslib</li>
+        <li>Ludeon.RimWorld</li>
+        <li>Ludeon.RimWorld.Royalty</li>
+        <li>Ludeon.RimWorld.Ideology</li>
+        <li>Ludeon.RimWorld.Biotech</li>
+    </loadAfter>
+</ModMetaData>

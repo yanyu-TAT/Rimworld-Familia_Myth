@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<!-- Pharna hediff display name -->
+	<Hediff_Pharna.label>Pharna</Hediff_Pharna.label>
+	<!-- Pharna hediff detailed description -->
+	<Hediff_Pharna.description>The Pharna bestowed by the Archotech is empowering this person.</Hediff_Pharna.description>
+
+</LanguageData>

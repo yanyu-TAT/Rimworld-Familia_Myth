@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<RitualOutcomeEffectDef MayRequire="Ludeon.RimWorld.Ideology">
+		<defName>RitualOutcome_GrantPharna</defName>
+		<workerClass>FamiliaMyth.Ritual.RitualOutcomeEffectWorker_GrantPharna</workerClass>
+		<allowAttachableOutcome>false</allowAttachableOutcome>
+		<comps />
+		<outcomeChances>
+			<li>
+				<label>FamiliaMyth.GrantPharnaRitualOutcomeDone</label>
+				<chance>1</chance>
+				<positivityIndex>0</positivityIndex>
+			</li>
+		</outcomeChances>
+	</RitualOutcomeEffectDef>
+</Defs>

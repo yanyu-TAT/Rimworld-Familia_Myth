@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<RitualPatternDef MayRequire="Ludeon.RimWorld.Ideology">
+		<defName>RitualPattern_AscendPharna</defName>
+		<ritualBehavior>RitualBehavior_AscendPharna</ritualBehavior>
+		<ritualOutcomeEffect>RitualOutcome_AscendPharna</ritualOutcomeEffect>
+		<canStartAnytime>true</canStartAnytime>
+		<alwaysStartAnytime>true</alwaysStartAnytime>
+		<ritualTargetFilter>AltarOrRitualSpot</ritualTargetFilter>
+		<ritualObligationTargetFilter>RitualSpotOrAltar</ritualObligationTargetFilter>
+	</RitualPatternDef>
+</Defs>

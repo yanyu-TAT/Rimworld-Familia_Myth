@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<!-- 赋予恩惠仪式的名称 -->
+	<Ritual_GrantPharna.label>赋予恩惠</Ritual_GrantPharna.label>
+	<!-- 赋予恩惠仪式的描述 -->
+	<Ritual_GrantPharna.description>由超凡智能向接受恩惠者降下神之恩惠，将其变为其眷族成员</Ritual_GrantPharna.description>
+
+	<!-- 升华恩惠仪式的名称 -->
+	<Ritual_AscendPharna.label>升华恩惠</Ritual_AscendPharna.label>
+	<!-- 升华恩惠仪式的描述 -->
+	<Ritual_AscendPharna.description>由超凡智能为达成足够伟业的眷族成员升华其恩惠，并根据仪式效果赐予额外的奖赏</Ritual_AscendPharna.description>
+
+</LanguageData>

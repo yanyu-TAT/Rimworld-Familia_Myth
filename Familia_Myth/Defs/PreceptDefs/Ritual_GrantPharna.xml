@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<PreceptDef MayRequire="Ludeon.RimWorld.Ideology">
+		<defName>Ritual_GrantPharna</defName>
+		<label>FamiliaMyth.GrantPharnaRitualLabel</label>
+		<description>FamiliaMyth.GrantPharnaRitualDescription</description>
+		<preceptClass>RimWorld.Precept_Ritual</preceptClass>
+		<ritualPatternBase>RitualPattern_GrantPharna</ritualPatternBase>
+		<issue>Ritual</issue>
+		<impact>Low</impact>
+		<selectionWeight>0</selectionWeight>
+		<canGenerateAsSpecialPrecept>false</canGenerateAsSpecialPrecept>
+		<enabledForNPCFactions>false</enabledForNPCFactions>
+		<allowDuplicates>false</allowDuplicates>
+		<canRemoveInUI>false</canRemoveInUI>
+		<visible>true</visible>
+		<countsTowardsPreceptLimit>false</countsTowardsPreceptLimit>
+		<isNonIdeoRitual>true</isNonIdeoRitual>
+	</PreceptDef>
+</Defs>

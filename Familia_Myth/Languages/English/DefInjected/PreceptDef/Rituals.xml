@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<!-- Grant Pharna ritual name -->
+	<Ritual_GrantPharna.label>Grant Pharna</Ritual_GrantPharna.label>
+	<!-- Grant Pharna ritual description -->
+	<Ritual_GrantPharna.description>The Archotech bestows Pharna upon the recipient, making them a member of the Familia.</Ritual_GrantPharna.description>
+
+	<!-- Ascend Pharna ritual name -->
+	<Ritual_AscendPharna.label>Ascend Pharna</Ritual_AscendPharna.label>
+	<!-- Ascend Pharna ritual description -->
+	<Ritual_AscendPharna.description>The Archotech ascends the Pharna of those who have achieved sufficient exploits, granting additional rewards based on the ritual's outcome.</Ritual_AscendPharna.description>
+
+</LanguageData>

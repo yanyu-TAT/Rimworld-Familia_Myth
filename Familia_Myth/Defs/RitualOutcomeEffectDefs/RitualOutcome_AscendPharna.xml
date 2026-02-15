@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<RitualOutcomeEffectDef MayRequire="Ludeon.RimWorld.Ideology">
+		<defName>RitualOutcome_AscendPharna</defName>
+		<workerClass>FamiliaMyth.Ritual.RitualOutcomeEffectWorker_AscendPharna</workerClass>
+		<allowAttachableOutcome>false</allowAttachableOutcome>
+		<comps />
+		<outcomeChances>
+			<li>
+				<label>FamiliaMyth.AscendPharnaRitualOutcomeGreatFailure</label>
+				<chance>0.05</chance>
+				<positivityIndex>-2</positivityIndex>
+			</li>
+			<li>
+				<label>FamiliaMyth.AscendPharnaRitualOutcomeFailure</label>
+				<chance>0.1</chance>
+				<positivityIndex>-1</positivityIndex>
+			</li>
+			<li>
+				<label>FamiliaMyth.AscendPharnaRitualOutcomeNormal</label>
+				<chance>0.3</chance>
+				<positivityIndex>0</positivityIndex>
+			</li>
+			<li>
+				<label>FamiliaMyth.AscendPharnaRitualOutcomeSuccess</label>
+				<chance>0.45</chance>
+				<positivityIndex>1</positivityIndex>
+			</li>
+			<li>
+				<label>FamiliaMyth.AscendPharnaRitualOutcomeGreatSuccess</label>
+				<chance>0.1</chance>
+				<positivityIndex>2</positivityIndex>
+			</li>
+		</outcomeChances>
+	</RitualOutcomeEffectDef>
+</Defs>

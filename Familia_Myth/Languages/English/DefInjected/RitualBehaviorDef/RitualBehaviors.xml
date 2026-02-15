@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<!-- Grant Pharna ritual "recipient" role display name -->
+	<RitualBehavior_GrantPharna.roles.0.label>Familia candidate</RitualBehavior_GrantPharna.roles.0.label>
+
+	<!-- Ascend Pharna ritual "recipient" role display name -->
+	<RitualBehavior_AscendPharna.roles.0.label>Familia member to ascend</RitualBehavior_AscendPharna.roles.0.label>
+
+</LanguageData>

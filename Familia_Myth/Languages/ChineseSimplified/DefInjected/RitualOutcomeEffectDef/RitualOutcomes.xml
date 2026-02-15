@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<!-- 赋予恩惠仪式唯一结果：完成 -->
+	<RitualOutcome_GrantPharna.outcomeChances.0.label>完成</RitualOutcome_GrantPharna.outcomeChances.0.label>
+
+	<!-- 升华恩惠仪式结果：大失败 (5%) -->
+	<RitualOutcome_AscendPharna.outcomeChances.0.label>非常失败的升华仪式</RitualOutcome_AscendPharna.outcomeChances.0.label>
+	<!-- 升华恩惠仪式结果：失败 (10%) -->
+	<RitualOutcome_AscendPharna.outcomeChances.1.label>失败的升华仪式</RitualOutcome_AscendPharna.outcomeChances.1.label>
+	<!-- 升华恩惠仪式结果：普通 (30%) -->
+	<RitualOutcome_AscendPharna.outcomeChances.2.label>普通的升华仪式</RitualOutcome_AscendPharna.outcomeChances.2.label>
+	<!-- 升华恩惠仪式结果：成功 (45%) -->
+	<RitualOutcome_AscendPharna.outcomeChances.3.label>成功的升华仪式</RitualOutcome_AscendPharna.outcomeChances.3.label>
+	<!-- 升华恩惠仪式结果：大成功 (10%) -->
+	<RitualOutcome_AscendPharna.outcomeChances.4.label>大成功的升华仪式</RitualOutcome_AscendPharna.outcomeChances.4.label>
+
+</LanguageData>
