@@ -1,4 +1,5 @@
 using FamiliaMyth.Core;
+using FamiliaMyth.Pharna;
 using RimWorld;
 using Verse;
 
@@ -25,7 +26,7 @@ namespace FamiliaMyth.Ritual
             base.ApplyExtraOutcome(totalPresence, jobRitual, outcome, out extraOutcomeDesc, ref letterLookTargets);
 
             Pawn pawn = jobRitual.PawnWithRole("recipient");
-            if (pawn == null || pawn.health == null || pawn.health.hediffSet == null)
+            if (pawn == null || pawn.health == null)
             {
                 extraOutcomeDesc = string.Empty;
                 Log.Error("[FamiliaMyth] Invalid recipent role for ritual grant pharna");
@@ -33,7 +34,7 @@ namespace FamiliaMyth.Ritual
             }
 
             //检查是否已有恩惠
-            if (pawn.health.hediffSet.GetFirstHediffOfDef(PharnaDef) != null)
+            if (Hediff_Pharna.GetPharna(pawn) != null)
             {
                 extraOutcomeDesc = string.Empty;
                 Log.Warning("[FamiliaMyth] The recipent have been already granted pharna");
@@ -43,7 +44,7 @@ namespace FamiliaMyth.Ritual
             //赋予恩惠
             pawn.health.AddHediff(PharnaDef);
 
-            extraOutcomeDesc += "\n" + TranslateHelper.Translate("FamiliaMyth.GrantPharnaRitualDone", ("pawn", pawn.Name), ("god", GodName));
+            extraOutcomeDesc += TranslateHelper.Translate("FamiliaMyth.GrantPharnaRitualDone", ("pawn", pawn.Name), ("god", GodName));
             letterLookTargets = new LookTargets(pawn);
         }
     }

@@ -9,9 +9,6 @@ namespace FamiliaMyth.Ritual
         public RitualOutcomeEffectWorker_AscendPharna() { compDatas = new List<RitualOutcomeComp_Data>(); }
         public RitualOutcomeEffectWorker_AscendPharna(RitualOutcomeEffectDef def) : base(def) { compDatas = new List<RitualOutcomeComp_Data>(); }
 
-        private static HediffDef cachedPharnaDef;
-        private static HediffDef PharnaDef => cachedPharnaDef ??= DefDatabase<HediffDef>.GetNamed("Hediff_Pharna");
-
         // 无质量组件，按定义的chance权重随机选择结果
         public override RitualOutcomePossibility GetOutcome(float quality, LordJob_Ritual ritual)
         {
@@ -25,18 +22,13 @@ namespace FamiliaMyth.Ritual
             base.ApplyExtraOutcome(totalPresence, jobRitual, outcome, out extraOutcomeDesc, ref letterLookTargets);
 
             Pawn pawn = jobRitual.PawnWithRole("recipient");
-            if (pawn == null || pawn.health == null || pawn.health.hediffSet == null)
-            {
-                extraOutcomeDesc = string.Empty;
-                Log.Error("[FamiliaMyth] Invalid recipent role for ritual grant pharna");
-                return;
-            }
+            Hediff_Pharna pharna = Hediff_Pharna.GetPharna(pawn);
 
             //检查是否已有恩惠
-            if (pawn.health.hediffSet.GetFirstHediffOfDef(PharnaDef) is not Hediff_Pharna pharna)
+            if (pharna == null)
             {
                 extraOutcomeDesc = string.Empty;
-                Log.Warning("[FamiliaMyth] The recipent haven't been already granted pharna");
+                Log.Warning("[FamiliaMyth] The recipent haven't been granted pharna yet");
                 return;
             }
 

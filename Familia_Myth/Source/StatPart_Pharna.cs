@@ -1,4 +1,4 @@
-﻿using FamiliaMyth.Core;
+using FamiliaMyth.Core;
 using RimWorld;
 using Verse;
 
@@ -14,6 +14,7 @@ namespace FamiliaMyth.Pharna
         public PharnaStatusType statusType;
         public StatPartMode mode;
         public float a;
+        public bool displayAsPercent = true;
 
         private static HediffDef cachedPharnaDef;
         private static HediffDef PharnaDef => cachedPharnaDef ??= DefDatabase<HediffDef>.GetNamed("Hediff_Pharna");
@@ -72,11 +73,20 @@ namespace FamiliaMyth.Pharna
             switch (mode)
             {
                 case StatPartMode.Offset:
-                    s += (a * fullStatus).ToString(); break;
+                    s += displayAsPercent
+                        ? (a * fullStatus).ToStringPercent()
+                        : (a * fullStatus).ToString("G3");
+                    break;
                 case StatPartMode.Factor:
-                    s += (1 + a * fullStatus).ToStringPercent(); break;
+                    s += displayAsPercent
+                        ? (1 + a * fullStatus).ToStringPercent()
+                        : (1 + a * fullStatus).ToString("G3");
+                    break;
                 case StatPartMode.ExpDecay:
-                    s += ((float)Math.Pow(a, fullStatus)).ToStringPercent(); break;
+                    s += displayAsPercent
+                        ? ((float)Math.Pow(a, fullStatus)).ToStringPercent()
+                        : ((float)Math.Pow(a, fullStatus)).ToString("G3");
+                    break;
             }
 
             return s;

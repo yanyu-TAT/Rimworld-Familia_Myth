@@ -1,3 +1,4 @@
+using RimWorld;
 using System.Text;
 using Verse;
 
@@ -165,11 +166,29 @@ namespace FamiliaMyth.Pharna
             ChangeLevel(1);
         }
 
+        public bool GainStatus(PharnaStatusType type, float amount)
+        {
+            if (amount <= 0f) return false;
+            float capped = Math.Min(amount, maxStatus - GetCurrentStatus(type));
+            switch(type)
+            {
+                case PharnaStatusType.Strength: strength += capped; break;
+                case PharnaStatusType.Endurance: endurance += capped; break;
+                case PharnaStatusType.Dexterity: dexterity += capped; break;
+                case PharnaStatusType.Agility: agility += capped; break;
+                case PharnaStatusType.Mana: mana += capped; break;
+                case PharnaStatusType.Will: will += capped; break;
+                default: return false;
+            }
+            experience += capped;
+            return true;
+        }
+
         public static string GetRank(float value)
         {
-            int t = (int)value;
+            int t = ((int)value) / 100;
             t = t >= 12 ? 11 : t;
-            return ranks[t/100];
+            return ranks[t];
         }
 
         public override void ExposeData()
@@ -194,5 +213,23 @@ namespace FamiliaMyth.Pharna
             Scribe_Values.Look(ref experience, "experience", 0f);
             Scribe_Values.Look(ref exploits, "exploits", 0f);
         }
+
+        private static HediffDef cachedPharnaDef;
+        private static HediffDef PharnaDef => cachedPharnaDef ??= DefDatabase<HediffDef>.GetNamed("Hediff_Pharna");
+
+        public static Hediff_Pharna GetPharna(Pawn pawn)
+        {
+            if (pawn == null || pawn.health == null || pawn.health.hediffSet == null) return null;
+
+            if (pawn.health.hediffSet.GetFirstHediffOfDef(PharnaDef) is Hediff_Pharna pharna)
+                return pharna;
+
+            return null;
+        }
+    }
+
+    public static class PharnaGrowthHelper
+    {
+
     }
 }

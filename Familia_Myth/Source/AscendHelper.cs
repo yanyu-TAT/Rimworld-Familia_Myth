@@ -25,7 +25,7 @@ namespace FamiliaMyth.Pharna
         void Apply(Pawn pawn, Hediff_Pharna pharna);
     }
 
-    public class AscendHelper
+    public static class AscendHelper
     {
         public static List<IAscendReward> rewards = new();
 

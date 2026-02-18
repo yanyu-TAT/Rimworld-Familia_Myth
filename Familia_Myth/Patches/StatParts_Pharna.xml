@@ -290,6 +290,7 @@
                 <statusType>Dexterity</statusType>
                 <mode>Offset</mode>
                 <a>0.00030</a>
+                <displayAsPercent>false</displayAsPercent>
             </li>
         </value>
     </Operation>
@@ -443,6 +444,7 @@
                 <statusType>Agility</statusType>
                 <mode>Offset</mode>
                 <a>0.00100</a>
+                <displayAsPercent>false</displayAsPercent>
             </li>
         </value>
     </Operation>
