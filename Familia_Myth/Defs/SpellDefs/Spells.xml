@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+    <!-- ==================== 诺亚治愈 (Noah Heal) ===================== -->
+    <FamiliaMyth.Abilities.SpellDef>
+        <defName>Spell_NoahHeal</defName>
+        <label>诺亚治愈</label>
+        <description>包扎所有伤口在一段时间内加速愈合</description>
+
+        <!-- 魔法实现类 -->
+        <spellClass>FamiliaMyth.Abilities.Spell_NoahHeal</spellClass>
+
+        <!-- 稀有度 -->
+        <rarity>Rare</rarity>
+
+        <!-- 魔法类型：治疗魔法 -->
+        <spellType>Heal</spellType>
+
+        <!-- 图标路径 -->
+        <iconPath>UI/Icons/Spells/NoahHeal</iconPath>
+
+        <!-- 显示与施法设置：贴身释放 -->
+        <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
+        <disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>
+        <jobDef>CastAbilityOnThingMelee</jobDef>
+        <stunTargetWhileCasting>true</stunTargetWhileCasting>
+
+        <!-- 动词属性：近战接触，咏唱2秒 -->
+        <verbProperties>
+            <verbClass>RimWorld.Verb_CastAbilityTouch</verbClass>
+            <range>-1</range>
+            <warmupTime>2</warmupTime>
+            <drawAimPie>false</drawAimPie>
+            <targetParams>
+                <canTargetPawns>true</canTargetPawns>
+                <canTargetSelf>false</canTargetSelf>
+                <canTargetAnimals>false</canTargetAnimals>
+            </targetParams>
+        </verbProperties>
+
+        <!-- 技能效果组件 -->
+        <comps>
+            <li Class="FamiliaMyth.Abilities.CompProperties_NoahHeal" />
+        </comps>
+
+        <!-- 咏唱文本 -->
+        <incantationLines>
+            <li>此刻幽远森林之歌</li>
+            <li>往昔生命之曲</li>
+            <li>请向有求于汝之人</li>
+			<li>降下治愈之慈悲</li>
+			<li>「诺亚治愈」</li>
+        </incantationLines>
+    </FamiliaMyth.Abilities.SpellDef>
+
+</Defs>

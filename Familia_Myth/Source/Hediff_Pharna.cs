@@ -1,3 +1,4 @@
+using FamiliaMyth.Abilities;
 using RimWorld;
 using System.Text;
 using Verse;
@@ -36,7 +37,9 @@ namespace FamiliaMyth.Pharna
         //发展能力
         public List<DevelopableAbility> developableAbilities = new();
         //技能
+        public List<Skill> skills = new();
         //魔法
+        public List<Spell> spells = new();
 
         public float experience;    //经验值
         public float exploits;      //伟业值
@@ -57,9 +60,9 @@ namespace FamiliaMyth.Pharna
         public override void PostAdd(DamageInfo? dinfo)
         {
             // Hediff_Level.PostAdd要求Part != null，自动设置为躯干
-            if (this.Part == null && this.pawn != null)
+            if (Part == null && pawn != null)
             {
-                this.Part = this.pawn.RaceProps.body.corePart;
+                Part = pawn.RaceProps.body.corePart;
             }
             base.PostAdd(dinfo);
         }
@@ -162,6 +165,7 @@ namespace FamiliaMyth.Pharna
             //消耗伟业值
             exploits -= MaxExploit;
 
+            //升级奖励在仪式奖励中给予
             //升级
             ChangeLevel(1);
         }
@@ -182,6 +186,39 @@ namespace FamiliaMyth.Pharna
             }
             experience += capped;
             return true;
+        }
+
+        public bool GainExploits(float amount)
+        {
+            if (amount <= 0f) return false;
+            float capped = Math.Min(amount, MaxExploit - exploits);
+            exploits += capped;
+            return true;
+        }
+
+        public override IEnumerable<Gizmo> GetGizmos()
+        {
+            foreach (var spell in spells)
+            {
+                if (spell != null)
+                {
+                    foreach (var gizmo in spell.GetGizmos())
+                    {
+                        yield return gizmo;
+                    }
+                }
+            }
+
+            foreach (var skill in skills)
+            {
+                if (skill?.GetGizmos() != null)
+                {
+                    foreach (var gizmo in skill.GetGizmos())
+                    {
+                        yield return gizmo;
+                    }
+                }
+            }
         }
 
         public static string GetRank(float value)
@@ -209,6 +246,8 @@ namespace FamiliaMyth.Pharna
             Scribe_Values.Look(ref willPotential, "willPotential", 0f);
 
             Scribe_Collections.Look(ref developableAbilities, "developAbilities", LookMode.Deep);
+            Scribe_Collections.Look(ref skills, "skills", LookMode.Deep);
+            Scribe_Collections.Look(ref spells, "spells", LookMode.Deep);
 
             Scribe_Values.Look(ref experience, "experience", 0f);
             Scribe_Values.Look(ref exploits, "exploits", 0f);
@@ -226,10 +265,5 @@ namespace FamiliaMyth.Pharna
 
             return null;
         }
-    }
-
-    public static class PharnaGrowthHelper
-    {
-
     }
 }

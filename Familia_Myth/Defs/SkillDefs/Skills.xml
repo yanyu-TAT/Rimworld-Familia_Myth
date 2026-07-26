@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <FamiliaMyth.Abilities.SkillDef>
+    <defName>Skill_Ember</defName>
+    <label>余烬</label>
+    <description>濒死时触发，短时间内强制维持生存并高速修复伤势，之后强制昏迷。</description>
+    <skillClass>FamiliaMyth.Abilities.Skill_Ember</skillClass>
+    <rarity>Unique</rarity>
+    <skillType>Triggered</skillType>
+    <cooldown>10000</cooldown>
+    <warmup>0</warmup>
+    <duration>15</duration>
+    <checkInterval>60</checkInterval>
+    <iconPath>UI/Skills/Ember</iconPath>
+    <gizmoClass>Gizmo_SkillForSelf</gizmoClass>
+  </FamiliaMyth.Abilities.SkillDef>
+
+  <FamiliaMyth.Abilities.SkillDef>
+    <defName>Skill_BerserkerChaos</defName>
+    <label>狂化招乱</label>
+    <description>常态生效，受伤越重，近战伤害越高。</description>
+    <skillClass>FamiliaMyth.Abilities.Skill_BerserkerChaos</skillClass>
+    <rarity>Rare</rarity>
+    <skillType>Passive</skillType>
+    <cooldown>0</cooldown>
+    <warmup>0</warmup>
+    <duration>0</duration>
+    <checkInterval>60</checkInterval>
+    <iconPath>UI/Skills/BerserkerChaos</iconPath>
+    <gizmoClass>Gizmo_SkillForSelf</gizmoClass>
+  </FamiliaMyth.Abilities.SkillDef>
+
+</Defs>

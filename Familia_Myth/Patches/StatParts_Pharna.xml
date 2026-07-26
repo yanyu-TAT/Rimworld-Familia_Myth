@@ -37,6 +37,13 @@
             </li>
         </value>
     </Operation>
+    <!-- 狂化招乱：受伤越重，近战伤害越高 -->
+    <Operation Class="PatchOperationAdd">
+        <xpath>Defs/StatDef[defName="MeleeDamageFactor"]/parts</xpath>
+        <value>
+            <li Class="FamiliaMyth.Abilities.StatPart_BerserkerChaos" />
+        </value>
+    </Operation>
 
     <!-- 负重能力: val *= (1 + k * 0.00050) -->
     <Operation Class="PatchOperationSequence">
@@ -448,5 +455,117 @@
             </li>
         </value>
     </Operation>
+
+
+    <!-- ==================== 魔力 (Mana) ====================== -->
+
+    <!-- 魔力：心灵熵阈值上限（Offset 叠加） -->
+    <Operation Class="PatchOperationAdd">
+        <xpath>Defs/StatDef[defName="PsychicEntropyMax"]/parts</xpath>
+        <value>
+            <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                <statusType>Mana</statusType>
+                <mode>Offset</mode>
+                <a>0.05000</a>
+                <displayAsPercent>false</displayAsPercent>
+            </li>
+        </value>
+    </Operation>
+
+    <!-- 魔力：冥想精神力获取每日提升（Offset 叠加） -->
+    <!-- 原版无 parts 节点，需先创建 -->
+    <Operation Class="PatchOperationSequence">
+        <operations>
+            <li Class="PatchOperationTest">
+                <xpath>Defs/StatDef[defName="MeditationFocusGain"]/parts</xpath>
+                <success>Invert</success>
+            </li>
+            <li Class="PatchOperationAdd">
+                <xpath>Defs/StatDef[defName="MeditationFocusGain"]</xpath>
+                <value><parts /></value>
+            </li>
+        </operations>
+    </Operation>
+    <Operation Class="PatchOperationAdd">
+        <xpath>Defs/StatDef[defName="MeditationFocusGain"]/parts</xpath>
+        <value>
+            <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                <statusType>Mana</statusType>
+                <mode>Offset</mode>
+                <a>0.00010</a>
+                <displayAsPercent>false</displayAsPercent>
+            </li>
+        </value>
+    </Operation>
+
+    <!-- ==================== 发展能力系统 ====================== -->
+
+    <!-- 魔导：心灵熵消散速度（PsychicEntropyRecoveryRate） -->
+    <!-- 原版已有 parts 节点，直接注入 StatPart_DevelopableAbility -->
+    <Operation Class="PatchOperationAdd">
+        <xpath>Defs/StatDef[defName="PsychicEntropyRecoveryRate"]/parts</xpath>
+        <value>
+            <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
+        </value>
+    </Operation>
+
+    <!-- [预留] 魔导：额外的精神力存储（PsyfocusMax） -->
+    <!-- 注意：原版不存在 PsyfocusMax StatDef，待后续版本实现 -->
+    <!--
+    <Operation Class="PatchOperationAdd">
+        <xpath>Defs/StatDef[defName="PsyfocusMax"]</xpath>
+        <value><parts /></value>
+    </Operation>
+    <Operation Class="PatchOperationAdd">
+        <xpath>Defs/StatDef[defName="PsyfocusMax"]/parts</xpath>
+        <value>
+            <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
+        </value>
+    </Operation>
+    -->
+
+    <!-- ==================== 异常抗性 (AbnormalResistance) ====================== -->
+
+    <!-- 异常抗性：免疫速度（原版已有 parts） -->
+    <Operation Class="PatchOperationAdd">
+        <xpath>Defs/StatDef[defName="ImmunityGainSpeed"]/parts</xpath>
+        <value>
+            <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
+        </value>
+    </Operation>
+
+    <!-- 异常抗性：环境毒素抗性（原版无 parts 节点，需先创建） -->
+    <Operation Class="PatchOperationSequence">
+        <operations>
+            <li Class="PatchOperationTest">
+                <xpath>Defs/StatDef[defName="ToxicEnvironmentResistance"]/parts</xpath>
+                <success>Invert</success>
+            </li>
+            <li Class="PatchOperationAdd">
+                <xpath>Defs/StatDef[defName="ToxicEnvironmentResistance"]</xpath>
+                <value><parts /></value>
+            </li>
+        </operations>
+    </Operation>
+    <Operation Class="PatchOperationAdd">
+        <xpath>Defs/StatDef[defName="ToxicEnvironmentResistance"]/parts</xpath>
+        <value>
+            <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
+        </value>
+    </Operation>
+
+    <!-- 异常抗性：毒素抗性（ToxicResistance StatDef 不存在于原版，暂不实现） -->
+    <!--
+    <Operation Class="PatchOperationAdd">
+        <xpath>Defs/StatDef[defName="ToxicResistance"]</xpath>
+        <value><parts /></value>
+    </Operation>
+    <Operation Class="PatchOperationAdd">
+        <xpath>Defs/StatDef[defName="ToxicResistance"]/parts</xpath>
+        <value>
+            <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
+        </value>
+    </Operation>
+    -->
 
 </Patch>

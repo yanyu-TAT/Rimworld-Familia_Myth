@@ -24,7 +24,7 @@ namespace FamiliaMyth.Debug
                     DebugMenuOptionMode.Tool,
                     () =>
                     {
-                        foreach (var pawn in Find.CurrentMap.thingGrid.ThingsAt(UI.MouseCell()).OfType<Pawn>())
+                        foreach (var pawn in Find.CurrentMap.thingGrid.ThingsAt(Verse.UI.MouseCell()).OfType<Pawn>())
                         {
                             Hediff_Pharna.GetPharna(pawn)?.GainStatus(type, DefaultAmount);
                         }
@@ -46,6 +46,15 @@ namespace FamiliaMyth.Debug
         {
             if (Hediff_Pharna.GetPharna(pawn) != null) return;
             pawn.health.AddHediff(HediffDef.Named("Hediff_Pharna"));
+        }
+
+        [DebugAction("Familia Myth", "Pharna +100 Eploits",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        public static void AddExploits(Pawn pawn)
+        {
+            var pharna = Hediff_Pharna.GetPharna(pawn);
+            pharna?.GainExploits(DefaultAmount);
         }
     }
 }

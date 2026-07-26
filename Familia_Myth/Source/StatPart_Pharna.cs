@@ -16,17 +16,13 @@ namespace FamiliaMyth.Pharna
         public float a;
         public bool displayAsPercent = true;
 
-        private static HediffDef cachedPharnaDef;
-        private static HediffDef PharnaDef => cachedPharnaDef ??= DefDatabase<HediffDef>.GetNamed("Hediff_Pharna");
-
         public override void TransformValue(StatRequest req, ref float val)
         {
             if (!req.HasThing || !req.Thing.Spawned || !(req.Thing is Pawn pawn))
                 return;
-            if (pawn.health == null || pawn.health.hediffSet == null)
-                return;
 
-            if (pawn.health.hediffSet.GetFirstHediffOfDef(PharnaDef) is not Hediff_Pharna pharna) return;
+            var pharna = Hediff_Pharna.GetPharna(pawn);
+            if (pharna == null) return;
 
             float status = pharna.GetFullStatus(statusType);
             switch (mode)
@@ -44,17 +40,16 @@ namespace FamiliaMyth.Pharna
         {
             if (!req.HasThing || !req.Thing.Spawned || !(req.Thing is Pawn pawn))
                 return null;
-            if (pawn.health == null || pawn.health.hediffSet == null)
-                return null;
 
-            if (pawn.health.hediffSet.GetFirstHediffOfDef(PharnaDef) is not Hediff_Pharna pharna) return null;
+            var pharna = Hediff_Pharna.GetPharna(pawn);
+            if (pharna == null) return "";
 
             int fullStatus = (int) pharna.GetFullStatus(statusType);
             int curStatus = (int) pharna.GetCurrentStatus(statusType);
             string rank = Hediff_Pharna.GetRank(curStatus);
             int level = pharna.level;
             //说明文本，例：Lv.3 敏捷F399: +35.5%
-            string s = "FamiliaMyth.Pharna".Translate() + "(Lv." + level.ToString() + " " + Hediff_Pharna.GetStatusName(statusType) + rank + curStatus.ToString() + "): ";
+            string s = "Lv." + level.ToString() + " " + Hediff_Pharna.GetStatusName(statusType) + rank + curStatus.ToString() + ": ";
 
             //添加符号
             if (mode == StatPartMode.ExpDecay || mode == StatPartMode.Factor)

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- 基础魔导发展能力：提升心灵熵恢复速率与上限 -->
+  <!-- 由于原版不存在PsyfocusMax StatDef，我们通过提升心灵熵上限来实现类似精神力存储扩充的效果 -->
+  <FamiliaMyth.Abilities.DevelopableAbilityDef>
+    <defName>DevelopableAbility_Magic</defName>
+    <label>魔导</label>
+    <description>提升心灵熵消散速度与心灵熵上限的发展能力。通过冥想和灵能使用提升熟练度。</description>
+    <abilityClass>FamiliaMyth.Abilities.DevelopableAbility_Magic</abilityClass>
+    <maxProficiency>999</maxProficiency>
+    <rarity>Rare</rarity>
+  </FamiliaMyth.Abilities.DevelopableAbilityDef>
+
+  <!-- 异常抗性发展能力：提升免疫速度与毒素抗性 -->
+  <FamiliaMyth.Abilities.DevelopableAbilityDef>
+    <defName>DevelopableAbiility_AbnormalResistance</defName>
+    <label>异常抗性</label>
+    <description>提升免疫获得速度，毒素抗性以及抵抗疾病概率的发展能力。在恶劣环境中生存或抵抗疾病时提升熟练度。</description>
+    <abilityClass>FamiliaMyth.Abilities.DevelopableAbiility_AbnormalResistance</abilityClass>
+    <maxProficiency>999</maxProficiency>
+    <rarity>Common</rarity>
+  </FamiliaMyth.Abilities.DevelopableAbilityDef>
+
+</Defs>
