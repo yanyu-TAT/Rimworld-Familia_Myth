@@ -5,7 +5,7 @@ namespace FamiliaMyth.Abilities
 {
     public class HediffComp_EmberInEffect : HediffComp
     {
-        private const float InjuryHealPerTick = 2f;
+        private const float InjuryHealPerTick = 20f;
         public override void CompPostTick(ref float severityAdjustment)
         {
             base.CompPostTick(ref severityAdjustment);
@@ -15,7 +15,12 @@ namespace FamiliaMyth.Abilities
             var missingParts = Pawn.health.hediffSet.GetMissingPartsCommonAncestors()
                 .OrderByDescending(i => i.Part.coverageAbsWithChildren);
 
-            foreach (var mp in missingParts)
+            // 过滤掉父部件也在恢复列表中的子部件
+            var partsToRestore = missingParts
+                .Where(mp => !missingParts.Any(other => other != mp && IsAncestorOf(other.Part, mp.Part)))
+                .ToList();
+
+            foreach (var mp in partsToRestore)
             {
                 var part = mp.Part;
                 
@@ -23,20 +28,22 @@ namespace FamiliaMyth.Abilities
                 if (Pawn.health.hediffSet.PartOrAnyAncestorHasDirectlyAddedParts(part))
                     continue;
 
-                Pawn.health.RestorePart(part);
-
+                Pawn.health.RestorePart(part, checkStateChange : false);
+                Log.Message($"[FamiliaMyth] {Pawn.Name} restored part {part.Label}");
                 var injury = (Hediff_Injury)HediffMaker.MakeHediff(HediffDefOf.Cut, Pawn, part);
                 float maxHp = part.def.GetMaxHealth(Pawn);
-                injury.Severity = Math.Max(1f, maxHp * 0.99f);
-                Pawn.health.AddHediff(injury);
+                injury.Severity = maxHp * 0.9f;
+                Pawn.health.AddHediff(injury, part);
             }
+
+            Pawn.health.CheckForStateChange(null, null);
 
             //治疗伤势
             float budget = InjuryHealPerTick;
             //按照伤势严重度排序（仅治愈重伤）
             var injuries = Pawn.health.hediffSet.hediffs
                 .OfType<Hediff_Injury>()
-                .Where(i => i.Severity > 0.8f)
+                .Where(i => i.Severity > i.Part.def.GetMaxHealth(Pawn) * 0.5f)
                 .OrderByDescending(i => i.Severity);
 
             foreach (var item in injuries)
@@ -51,6 +58,18 @@ namespace FamiliaMyth.Abilities
             var bloodLoss = Pawn.health.hediffSet.GetFirstHediffOfDef(HediffDefOf.BloodLoss);
             if (bloodLoss != null)
                 bloodLoss.Severity = Math.Min(0.8f, bloodLoss.Severity);
+        }
+
+        // 辅助方法：检查 ancestor 是否是 part 的祖先
+        static bool IsAncestorOf(BodyPartRecord ancestor, BodyPartRecord part)
+        {
+            var parent = part.parent;
+            while (parent != null)
+            {
+                if (parent == ancestor) return true;
+                parent = parent.parent;
+            }
+            return false;
         }
 
         public override void CompPostPostRemoved()

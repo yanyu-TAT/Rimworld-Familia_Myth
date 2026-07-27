@@ -17,7 +17,7 @@
         <spellType>Heal</spellType>
 
         <!-- 图标路径 -->
-        <iconPath>UI/Icons/Spells/NoahHeal</iconPath>
+        <iconPath>Familia_Myth/UI/Icons/Spells/NoahHeal</iconPath>
 
         <!-- 显示与施法设置：贴身释放 -->
         <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>

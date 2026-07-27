@@ -144,6 +144,22 @@ namespace FamiliaMyth.Pharna
             return status && exploits >= MaxExploit;
         }
 
+        public override void PostTick()
+        {
+            //Log.Message($"Ticking Hediff_Pharna for pawn {pawn?.LabelShort ?? "null"}");
+            base.PostTick();
+
+            foreach(var skill in skills)
+            {
+                skill?.Tick(pawn);
+            }
+
+            foreach (var spell in spells)
+            {
+                spell?.AbilityTick();
+            }
+        }
+
         public void Ascend()
         {
             //保留潜在值

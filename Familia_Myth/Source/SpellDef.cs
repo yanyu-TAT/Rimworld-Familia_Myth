@@ -11,9 +11,8 @@ namespace FamiliaMyth.Abilities
         public RewardRarity rarity;
         public SpellType spellType = SpellType.Special;
 
-        public float warmup = 0f;
-
         public List<string> incantationLines;
+        public float Warmup => incantationLines.Count * 0.5f;
 
         public Spell CreateSpell()
         {

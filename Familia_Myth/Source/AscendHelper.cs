@@ -15,8 +15,8 @@ namespace FamiliaMyth.Pharna
     public enum RewardRarity
     {
         Common,     //通常
-        Rare,       //稀有
-        Special,    //特殊
+        Uncommon,   //稀有
+        Rare,       //罕见
         Unique      //独有
     }
 
@@ -82,9 +82,9 @@ namespace FamiliaMyth.Pharna
             var weight = rarity switch
             {
                 RewardRarity.Common => 20,
-                RewardRarity.Rare => 10,
-                RewardRarity.Special => 0, //须由特殊途径获取（后续实现）
-                RewardRarity.Unique => 1, 
+                RewardRarity.Uncommon => 10,
+                RewardRarity.Rare => 1, 
+                RewardRarity.Unique => 0, //须由特殊途径获取（后续实现）
                 _ => 0
             };
             rewards.Add((() => (IAscendReward)Activator.CreateInstance(type), weight));

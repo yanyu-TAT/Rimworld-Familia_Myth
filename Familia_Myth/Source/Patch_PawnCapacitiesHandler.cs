@@ -5,19 +5,18 @@ using Verse;
 
 namespace FamiliaMyth.Patch
 {
-    public class Patch_PawnCapacitiesHandler
+    [HarmonyPatch(typeof(PawnCapacitiesHandler), nameof(PawnCapacitiesHandler.GetLevel))]
+    public static class Patch_PawnCapacitiesHandler
     {
         private static PawnCapacityDef def;
         private static PawnCapacityDef Def => def ??= DefDatabase<PawnCapacityDef>.GetNamed("Metabolism");
-
-        [HarmonyPostfix]
-        [HarmonyPatch(typeof(PawnCapacitiesHandler), nameof(PawnCapacitiesHandler.GetLevel))]
-        public static void GetLevel(PawnCapacitiesHandler __instance, PawnCapacityDef capacity, ref float __result)
+        public static void Postfix(PawnCapacitiesHandler __instance, PawnCapacityDef capacity, ref float __result)
         {
+            //Log.Message("[FamiliaMyth] GetLevel called for " + capacity.defName);
             var pawnField = AccessTools.Field(typeof(PawnCapacitiesHandler), "pawn");
-            var pawn = pawnField?.GetValue(__instance) as Pawn;
-            if (pawn == null || pawn.Dead) return;
+            if (pawnField?.GetValue(__instance) is not Pawn pawn || pawn.Dead) return;
 
+            //要求余烬触发中
             if (pawn.health?.hediffSet?.GetFirstHediffOfDef(HediffDef.Named("EmberInEffect")) == null)
                 return;
 
@@ -29,7 +28,8 @@ namespace FamiliaMyth.Patch
                capacity == PawnCapacityDefOf.BloodFiltration ||
                capacity == Def)
             {
-                __result = Mathf.Max(__result, 1f); // 锁定最低100%
+                __result = Mathf.Max(__result, 1.2f); // 锁定最低120%
+                //Log.Message($"[FamiliaMyth] {pawn.Name} has EmberInEffect, setting {capacity.defName} to {__result}");
             }
         }
     }

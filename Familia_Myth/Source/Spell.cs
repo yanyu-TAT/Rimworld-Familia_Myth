@@ -13,7 +13,7 @@ namespace FamiliaMyth.Abilities
         public RewardType RewardType => RewardType.Spell;
 
         protected int LineCount => spellDef?.incantationLines.Count ?? 1;
-        protected int IntervalTicks => Mathf.Max(1, (int)(spellDef.warmup * 60f / LineCount));
+        protected int IntervalTicks => 60;
         protected int CurrentTick => Find.TickManager.TicksGame;
 
         public RewardRarity Rarity => spellDef.rarity;

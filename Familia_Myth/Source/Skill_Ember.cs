@@ -6,10 +6,29 @@ namespace FamiliaMyth.Abilities
 {
     public class Skill_Ember : Skill
     {
+        public static HashSet<Pawn> downedPawns = new();
         public override bool CheckCondition(Pawn caster)
         {
             //tick方法中不触发效果，由patch监听触发效果
             return false;
+        }
+
+        public override void Tick(Pawn pawn)
+        {
+            //Log.Message($"Ticking for pawn {pawn?.Name}");
+            base.Tick(pawn);
+            if (Find.TickManager.TicksGame % (int)def.checkInterval != 0) return;
+
+            //状态变化时触发
+            bool isDowned = pawn.Downed;
+            if (isDowned && !downedPawns.Contains(pawn))
+            {
+                //Log.Message($"Pawn {pawn.Name} is downed.");
+                downedPawns.Add(pawn);
+                TryApplyOnDowned(pawn);
+            }
+            if (!isDowned && downedPawns.Contains(pawn))
+                downedPawns.Remove(pawn);
         }
 
         public override bool ApplyEffect(Pawn pawn, LocalTargetInfo target)
@@ -18,43 +37,30 @@ namespace FamiliaMyth.Abilities
 
             var ember = HediffMaker.MakeHediff(HediffDef.Named("EmberInEffect"), pawn);
             var comp = ember.TryGetComp<HediffComp_Disappears>();
-            comp?.SetDuration((int)(def.duration * 60));
+            if (comp != null)
+                comp.ticksToDisappear = ((int)(def.duration * 60));
             pawn.health.AddHediff(ember);
+            //Log.Message("Ember Effect Apllied");
             return true;
         }
 
-        public bool TryApplyOnKill(Pawn pawn, DamageInfo? dinfo, Hediff exactCulprit)
+        public bool TryApplyOnDowned(Pawn downed)
         {
-            if (pawn == null || pawn.Dead) return false;
-
-            bool f = false;
-            if (dinfo.HasValue)
-            {
-                var d = dinfo.Value.Def;
-
-                if (d == DamageDefOf.SurgicalCut) return false; //手术不触发
-                if (!d.ExternalViolenceFor(pawn)) return false; //非外伤不触发
-
-                f = true;
-            }
-            if (!f) 
-            {
-                if (exactCulprit == null)
-                {
-                    Log.Warning("[FamiliaMyth] Pawn with ember skill killed by unknown damage");
-                    return false;
-                }
-                else if (exactCulprit is not Hediff_Injury && exactCulprit.def != HediffDefOf.BloodLoss)
-                {
-                    return false; 
-                }
-            }
-
+            if (downed == null) return false;
             //检测冷却
             if (IsCooldown) return false;
+            //Log.Message("Not in cooldown");
+            if (downed.health?.hediffSet?.hediffs is not List<Hediff> hediffs) return false;
+            //强制倒地（麻醉等）不触发
+            if (downed.health.forceDowned) return false;
+            //Log.Message("Not forced downed");
+            //没有受伤不触发
+            if (!hediffs.OfType<Hediff_Injury>().Any()) return false;
+            //Log.Message("Got injuries");
 
-            if (ApplyEffect(pawn, pawn))
+            if (ApplyEffect(downed, downed))
             {
+                Messages.Message($"由于被击倒，{downed.Name.ToStringShort} 的技能：余烬 已触发", MessageTypeDefOf.PositiveEvent);
                 //进入冷却
                 SetCooldown();
                 return true;
@@ -62,21 +68,11 @@ namespace FamiliaMyth.Abilities
             return false;
         }
 
-        public override void Tick(Pawn pawn)
+        public override void Apply(Hediff_Pharna pharna)
         {
-            base.Tick(pawn);
-
-            //更新当前状态
-            var state = pawn.health.hediffSet.GetFirstHediffOfDef(HediffDef.Named("EmberState"));
-            if (state == null)
-            {
-                state = HediffMaker.MakeHediff(HediffDef.Named("EmberState"), pawn);
-                pawn.health.AddHediff(state);
-            }
-
-            //severity: 0.1 = 可适用 0.5 = 生效中 0.9 = 冷却中
-            bool inEffect = pawn.health.hediffSet.GetFirstHediffOfDef(HediffDef.Named("EmberInEffect")) != null;
-            state.Severity = inEffect ? 0.5f : (IsCooldown ? 0.9f : 0.1f);
+            base.Apply(pharna);
+            var hediff = HediffMaker.MakeHediff(DefDatabase<HediffDef>.GetNamed("EmberState"), pharna.pawn);
+            pharna.pawn.health.AddHediff(hediff);
         }
     }
 }

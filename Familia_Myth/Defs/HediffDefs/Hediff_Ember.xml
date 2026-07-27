@@ -4,13 +4,18 @@
   <HediffDef>
     <defName>EmberInEffect</defName>
     <label>余烬</label>
-    <description>濒死时触发的求生本能。持续期间快速修复伤势。</description>
+    <description>被击倒时触发的求生本能。持续期间快速修复伤势。</description>
     <hediffClass>HediffWithComps</hediffClass>
     <isBad>false</isBad>
     <initialSeverity>1</initialSeverity>
+    <stages>
+      <li>
+        <painFactor>0</painFactor>
+      </li>
+    </stages>
     <comps>
       <li Class="HediffCompProperties_Disappears">
-        <disappearsAfterTicks>900</disappearsAfterTicks>
+        <disappearsAfterTicks>9000</disappearsAfterTicks>
         <showRemainingTime>true</showRemainingTime>
       </li>
       <li>
@@ -21,26 +26,17 @@
 
   <HediffDef>
     <defName>EmberState</defName>
-    <label>余烬状态</label>
+    <label>技能（余烬）</label>
     <description>用于显示余烬技能当前状态。</description>
-    <hediffClass>HediffWithComps</hediffClass>
+    <hediffClass>FamiliaMyth.Abilities.Hediff_SkillState</hediffClass>
     <isBad>false</isBad>
-    <initialSeverity>0.0</initialSeverity>
-    <maxSeverity>1.0</maxSeverity>
-    <stages>
-      <li>
-        <minSeverity>0.0</minSeverity>
-        <label>可适用</label>
+    <initialSeverity>1.0</initialSeverity>
+    <comps>
+      <li Class="FamiliaMyth.Abilities.HediffCompProperties_SkillState">
+        <skillDefName>Skill_Ember</skillDefName>
+        <inEffectHediff>EmberInEffect</inEffectHediff>
       </li>
-      <li>
-        <minSeverity>0.4</minSeverity>
-        <label>生效中</label>
-      </li>
-      <li>
-        <minSeverity>0.8</minSeverity>
-        <label>冷却中</label>
-      </li>
-    </stages>
+    </comps>
   </HediffDef>
 
   <HediffDef>

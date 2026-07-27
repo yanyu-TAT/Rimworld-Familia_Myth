@@ -77,8 +77,8 @@ namespace FamiliaMyth.UI
             string rarityTag = reward.Rarity switch
             {
                 RewardRarity.Unique => "★独有",
-                RewardRarity.Special => "★特殊",
-                RewardRarity.Rare => "★稀有",
+                RewardRarity.Rare => "★特殊",
+                RewardRarity.Uncommon => "★稀有",
                 RewardRarity.Common => "★通常",
                 _ => ""
             };

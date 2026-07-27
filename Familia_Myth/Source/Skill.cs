@@ -13,6 +13,7 @@ namespace FamiliaMyth.Abilities
         public int CooldownTicks => (int)(def.cooldown * 60f);
         protected int CurrentTick => Find.TickManager.TicksGame;
         public bool IsCooldown => CurrentTick - lastCastTick < CooldownTicks;
+        public float RemainingCooldown => Math.Max(0, CooldownTicks - (CurrentTick - lastCastTick)) / 60f;
 
         public RewardType RewardType => RewardType.Skill;
 
@@ -100,9 +101,10 @@ namespace FamiliaMyth.Abilities
             Scribe_Values.Look(ref lastCastTick, "lastCastTick");
         }
 
-        public void Apply(Hediff_Pharna pharna)
+        public virtual void Apply(Hediff_Pharna pharna)
         {
             pharna.skills.Add(this);
+            lastCastTick = CurrentTick - CooldownTicks; // 初始化时设置为可立即使用
         }
     }
 }

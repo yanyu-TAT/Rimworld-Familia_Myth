@@ -9,7 +9,7 @@ namespace FamiliaMyth.Patch
     {
         [HarmonyPostfix]
         [HarmonyPatch(typeof(RecordsUtility), nameof(RecordsUtility.Notify_PawnDowned))]
-        public static void Notify_PawnDowned(Pawn downed, Pawn instigator) 
+        public static void Notify_PawnDowned(Pawn downed, Pawn instigator)
         {
             //非友方单位
             if (downed == null || instigator == null || downed.Faction == instigator.Faction) return;
