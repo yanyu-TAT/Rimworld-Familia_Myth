@@ -19,13 +19,14 @@ namespace FamiliaMyth.Abilities
             Pawn targetPawn = target.Pawn;
             if (caster == null || targetPawn == null) return;
 
-            // 包扎所有伤口
+            // 包扎所有伤口并治愈
             foreach (Hediff hediff in targetPawn.health.hediffSet.hediffs)
             {
                 if (hediff is Hediff_Injury injury)
                 {
                     HediffComp_TendDuration tendComp = injury.TryGetComp<HediffComp_TendDuration>();
                     tendComp?.CompTended(1f, 1f);
+                    injury.Heal(Math.Min(injury.Severity, 5));
                 }
             }
 

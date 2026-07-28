@@ -11,7 +11,7 @@
         <spellClass>FamiliaMyth.Abilities.Spell_NoahHeal</spellClass>
 
         <!-- 稀有度 -->
-        <rarity>Rare</rarity>
+        <rarity>Uncommon</rarity>
 
         <!-- 魔法类型：治疗魔法 -->
         <spellType>Heal</spellType>
@@ -29,7 +29,7 @@
         <verbProperties>
             <verbClass>RimWorld.Verb_CastAbilityTouch</verbClass>
             <range>-1</range>
-            <warmupTime>2</warmupTime>
+            <warmupTime>4</warmupTime>
             <drawAimPie>false</drawAimPie>
             <targetParams>
                 <canTargetPawns>true</canTargetPawns>

@@ -6,7 +6,7 @@
     <label>余烬</label>
     <description>被击倒时触发，短时间内强制维持生存并高速修复伤势，之后强制昏迷。</description>
     <skillClass>FamiliaMyth.Abilities.Skill_Ember</skillClass>
-    <rarity>Unique</rarity>
+    <rarity>Rare</rarity>
     <skillType>Triggered</skillType>
     <cooldown>1000</cooldown>
     <warmup>0</warmup>
@@ -21,7 +21,7 @@
     <label>狂化招乱</label>
     <description>常态生效，受伤越重，近战伤害越高。</description>
     <skillClass>FamiliaMyth.Abilities.Skill_BerserkerChaos</skillClass>
-    <rarity>Rare</rarity>
+    <rarity>Uncommon</rarity>
     <skillType>Passive</skillType>
     <cooldown>0</cooldown>
     <warmup>0</warmup>

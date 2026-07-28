@@ -12,7 +12,8 @@ namespace FamiliaMyth.Abilities
         public SpellType spellType = SpellType.Special;
 
         public List<string> incantationLines;
-        public float Warmup => incantationLines.Count * 0.5f;
+        public float lineInterval = 1f;
+        public float Warmup => (incantationLines.Count - 1) * lineInterval;
 
         public Spell CreateSpell()
         {

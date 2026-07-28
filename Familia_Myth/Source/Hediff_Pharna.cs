@@ -237,6 +237,18 @@ namespace FamiliaMyth.Pharna
             }
         }
 
+        public IEnumerable<string> GetRewards()
+        {
+            foreach (var spell in spells)
+                yield return spell.GetType().Name;
+
+            foreach (var skill in skills)
+                yield return skill.GetType().Name;
+
+            foreach (var developAbleability in developableAbilities)
+                yield return developAbleability.GetType().Name;
+        }
+
         public static string GetRank(float value)
         {
             int t = ((int)value) / 100;

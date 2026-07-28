@@ -1,6 +1,5 @@
-ï»¿using FamiliaMyth.Pharna;
+using FamiliaMyth.Pharna;
 using RimWorld;
-using System.Runtime.InteropServices;
 using UnityEngine;
 using Verse;
 
@@ -8,12 +7,13 @@ namespace FamiliaMyth.Abilities
 {
     public class Spell : Ability, IExposable, IAscendReward
     {
+        private static readonly Color LineColor = new Color(0.3f, 0.8f, 0.9f);
         public SpellDef spellDef;
 
         public RewardType RewardType => RewardType.Spell;
 
         protected int LineCount => spellDef?.incantationLines.Count ?? 1;
-        protected int IntervalTicks => 60;
+        protected int IntervalTicks => (int)spellDef.lineInterval * 60;
         protected int CurrentTick => Find.TickManager.TicksGame;
 
         public RewardRarity Rarity => spellDef.rarity;
@@ -23,6 +23,8 @@ namespace FamiliaMyth.Abilities
         public string Description => spellDef.description;
 
         protected int lastLineTick = -9999;
+        protected bool wasWarmingUp = false;
+        protected int lineIndex; 
 
         public void RewardInitialize()
         {
@@ -36,17 +38,27 @@ namespace FamiliaMyth.Abilities
             if (spellDef == null || spellDef.incantationLines.NullOrEmpty())
                 return;
 
-            if (verb == null || !verb.WarmingUp || verb.CasterPawn == null)
+            if (verb == null || verb.CasterPawn == null)
                 return;
 
-            // æ ¹æ® Verb.WarmupProgress åˆ†é…å’å”±è¡Œ
-            float warmupProgress = verb.WarmupProgress;
-            int lineIndex = Mathf.FloorToInt(warmupProgress * LineCount);
-            lineIndex = Mathf.Clamp(lineIndex, 0, LineCount - 1);
-            if (CurrentTick - lastLineTick >= IntervalTicks)
+            if (!wasWarmingUp && verb.WarmingUp)
+            {
+                //¿ªÊ¼Ó½³ª
+                lineIndex = 0;
+                wasWarmingUp = true;
+            }
+            if (wasWarmingUp && !verb.WarmingUp)
+            {
+                //½áÎ²
+                wasWarmingUp = false;
+                Vector3 loc = pawn.DrawPos + new Vector3(0f, 0f, 1.5f);
+                MoteMaker.ThrowText(loc, pawn.Map, spellDef.incantationLines[lineIndex++], LineColor);
+            }
+            
+            if (CurrentTick - lastLineTick >= IntervalTicks && wasWarmingUp)
             {
                 Vector3 loc = pawn.DrawPos + new Vector3(0f, 0f, 1.5f);
-                MoteMaker.ThrowText(loc, pawn.Map, spellDef.incantationLines[lineIndex], Color.blue);
+                MoteMaker.ThrowText(loc, pawn.Map, spellDef.incantationLines[lineIndex++], LineColor);
                 lastLineTick = CurrentTick;
             }
         }
@@ -55,6 +67,7 @@ namespace FamiliaMyth.Abilities
         {
             pawn = pharna.pawn;
             Initialize();
+            verb.verbProps.warmupTime = spellDef.Warmup;
             pharna.spells.Add(this);
         }
 

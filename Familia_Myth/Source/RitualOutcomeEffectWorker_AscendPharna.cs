@@ -47,11 +47,7 @@ namespace FamiliaMyth.Ritual
             //根据仪式效果提供升级奖励
             var rewards = AscendHelper.GetRandomRewards(10).ToList();
             if (rewards.Count > 0)
-            {
-                foreach (var reward in rewards)
-                    reward.RewardInitialize();
                 Find.WindowStack.Add(new Dialog_AscendReward(pharna, rewards));
-            }
 
             //根据仪式效果赋予 能力落差后遗症
 

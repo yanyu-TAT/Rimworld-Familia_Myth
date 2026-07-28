@@ -1,4 +1,5 @@
 ﻿using FamiliaMyth.Pharna;
+using FamiliaMyth.UI;
 using LudeonTK;
 using RimWorld;
 using Verse;
@@ -29,7 +30,7 @@ namespace FamiliaMyth.Debug
                         {
                             var pharna = Hediff_Pharna.GetPharna(pawn);
                             pharna?.GainStatus(type, DefaultAmount);
-                            MoteMaker.ThrowText(pawn.DrawPos, pawn.Map, $"{pharna?.GetCurrentStatus(type)}");
+                            MoteMaker.ThrowText(pawn.DrawPos, pawn.Map, $"{Hediff_Pharna.GetStatusName(type)}:{pharna?.GetCurrentStatus(type)}");
                         }
                     }
                 ));
@@ -88,15 +89,38 @@ namespace FamiliaMyth.Debug
                         {
                             var pharna = Hediff_Pharna.GetPharna(pawn);
                             if (pharna == null) continue;
-
+                            List<string> rewardNames = pharna.GetRewards().ToList();
                             var r = Factory();
-                            r.RewardInitialize();
-                            r.Apply(pharna);
+                            if (!rewardNames.Contains(r.GetType().Name))
+                            {
+                                r.RewardInitialize();
+                                r.Apply(pharna);
+                            }
                         }
                     }
                 ));
             }
             Find.WindowStack.Add(new Dialog_DebugOptionListLister(options));
+        }
+
+        /// <summary>
+        /// 调试指令：显示升华奖励窗口
+        /// </summary>
+        /// <param name="pawn">选中的殖民者</param>
+        [DebugAction("Familia Myth", "Show Ascend Window",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        public static void ShowAscendWindow(Pawn pawn)
+        {
+            var pharna = Hediff_Pharna.GetPharna(pawn); 
+            if (pharna == null) return;
+            var rewards = AscendHelper.GetRandomRewards(10).ToList();
+            if (rewards.Count > 0)
+            {
+                foreach (var reward in rewards)
+                    reward.RewardInitialize();
+                Find.WindowStack.Add(new Dialog_AscendReward(pharna, rewards));
+            }
         }
     }
 }
