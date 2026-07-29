@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- 公会使者任务选择信件 -->
+  <!-- 玩家与使者对话后弹出此信件，提供接受/拒绝/了解更多选项 -->
+  <LetterDef ParentName="CustomChoiceLetterBase">
+    <defName>AcceptMissionFromEnvoy</defName>
+    <letterClass>FamiliaMyth.Incidents.ChoiceLetter_MissionOffer</letterClass>
+  </LetterDef>
+
+</Defs>

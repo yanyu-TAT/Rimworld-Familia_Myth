@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- 公会使者角色定义 -->
+  <!-- 出自《地错》原作，负责传达公会任务委托的使者 -->
+  <!-- 特征：高社交/智力，低战斗力，用于任务发起者 -->
+  <PawnKindDef>
+    <defName>Guild_Envoy</defName>
+    <label>公会使者</label>
+    <labelPlural>公会使者</labelPlural>
+    <labelMale>公会使者</labelMale>
+    <labelMalePlural>公会使者</labelMalePlural>
+    <labelFemale>公会使者</labelFemale>
+    <labelFemalePlural>公会使者</labelFemalePlural>
+
+    <!-- 种族：人类（必须指定，否则无法生成） -->
+    <race>Human</race>
+
+    <!-- 默认所属派系：公会 -->
+    <defaultFactionDef>Guild</defaultFactionDef>
+
+    <!-- 战斗能力：极低（使者不参与战斗） -->
+    <combatPower>0.05</combatPower>
+    <isFighter>false</isFighter>
+
+    <!-- 装备配置 -->
+    <!-- 服装预算：150~300银 -->
+    <apparelMoney>150~300</apparelMoney>
+    <apparelTags>
+      <li>OutlanderFormal</li>
+    </apparelTags>
+    <!-- 强制装备：黑色夹克和黑色贝雷帽 -->
+    <apparelRequired>
+      <li>Apparel_Jacket</li>
+      <li>Apparel_Beret</li>
+    </apparelRequired>
+    <!-- 强制服装颜色为黑色 -->
+    <apparelColor>(30,30,30)</apparelColor>
+
+    <!-- 技能配置（RimWorld 原版可用技能） -->
+    <!-- 可用：Animals, Artistic, Building, Cooking, Crafting, Intellectual, Medicine, Melee, Mining, Plants, Shooting, Social -->
+    <skills>
+      <li>
+        <skill>Social</skill>
+        <range>18</range>
+      </li>
+      <li>
+        <skill>Intellectual</skill>
+        <range>10</range>
+      </li>
+      <li>
+        <skill>Artistic</skill>
+        <range>4</range>
+      </li>
+      <li>
+        <skill>Medicine</skill>
+        <range>8</range>
+      </li>
+    </skills>
+
+    <!-- 初始抗性和意志范围（人类派系必须指定） -->
+    <initialResistanceRange>10~17</initialResistanceRange>
+    <initialWillRange>0~1</initialWillRange>
+
+    <!-- 战斗允许：不允许主动攻击 -->
+    <canBeSapper>false</canBeSapper>
+    <canBeScattered>false</canBeScattered>
+    <canArriveManhunter>false</canArriveManhunter>
+
+    <!-- 其他 -->
+    <nakedChance>0</nakedChance>
+    <canOpenDoors>true</canOpenDoors>
+    <showInDebugSpawner>true</showInDebugSpawner>
+    <destroyGearOnDrop>false</destroyGearOnDrop>
+    <canStrip>false</canStrip>
+  </PawnKindDef>
+
+</Defs>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- 公会派系定义 -->
+  <!-- 出自《地错》原作，公会是独立于各国的组织 -->
+  <!-- 主要用于生成任务发起者（公会使者），本身不设据点 -->
+  <FactionDef>
+    <defName>Guild</defName>
+    <label>公会</label>
+
+    <!-- 基础标识 -->
+    <isPlayer>false</isPlayer>
+    <humanlikeFaction>true</humanlikeFaction>
+    <hidden>false</hidden>
+    <techLevel>Industrial</techLevel>
+    <listOrderPriority>600</listOrderPriority>
+
+    <!-- 人员称呼 -->
+    <pawnSingular>公会成员</pawnSingular>
+    <pawnsPlural>公会成员</pawnsPlural>
+    <leaderTitle>公会会长</leaderTitle>
+    <leaderTitleFemale>公会会长</leaderTitleFemale>
+
+    <!-- 派系关系 -->
+    <naturalEnemy>false</naturalEnemy>
+    <permanentEnemy>false</permanentEnemy>
+    <permanentEnemyToEveryoneExceptPlayer>false</permanentEnemyToEveryoneExceptPlayer>
+
+    <!-- 据点生成：不生成据点，仅作为任务NPC派系存在 -->
+    <settlementGenerationWeight>0</settlementGenerationWeight>
+    <requiredCountAtGameStart>0</requiredCountAtGameStart>
+    <startingCountAtWorldCreation>0</startingCountAtWorldCreation>
+    <maxCountAtGameStart>0</maxCountAtGameStart>
+    <canMakeRandomly>false</canMakeRandomly>
+
+    <!-- 禁用不相关的功能 -->
+    <raidsForbidden>true</raidsForbidden>
+    <canRequestTraders>false</canRequestTraders>
+    <canRequestMilitaryAid>false</canRequestMilitaryAid>
+    <canRequestOrbitalTrader>false</canRequestOrbitalTrader>
+    <canGenerateQuestSites>true</canGenerateQuestSites>
+
+    <!-- 派系颜色：金色 -->
+    <colorSpectrum>
+      <li>(0.95, 0.85, 0.2)</li>
+    </colorSpectrum>
+
+    <!-- 背景故事筛选（人类派系必须指定） -->
+    <backstoryFilters>
+      <li>
+        <categories>
+          <li>Outlander</li>
+        </categories>
+        <commonality>0.95</commonality>
+      </li>
+      <li>
+        <categories>
+          <li>Offworld</li>
+        </categories>
+        <commonality>0.05</commonality>
+      </li>
+    </backstoryFilters>
+
+    <!-- 掠夺战利品曲线（人类派系必须指定） -->
+    <raidLootValueFromPointsCurve>
+      <points>
+        <li>(0, 0)</li>
+        <li>(100, 50)</li>
+        <li>(500, 200)</li>
+        <li>(1000, 400)</li>
+      </points>
+    </raidLootValueFromPointsCurve>
+
+    <!-- 派系分类 -->
+    <categoryTag>Xenotype</categoryTag>
+    <displayInFactionSelection>false</displayInFactionSelection>
+  </FactionDef>
+
+</Defs>

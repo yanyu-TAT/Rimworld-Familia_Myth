@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- 讨伐伟业任务脚本定义 -->
+  <!-- 玩家通过此任务击败敌人来获取伟业值（Exploits） -->
+  <!-- 流程：公会使者进入据点 → 对话接取 → 创建任务 → 讨伐敌人 → 获得伟业值 -->
+  <QuestScriptDef>
+    <defName>Quest_Mission</defName>
+    <!-- 任务在玩家接受时创建，创建后自动开始 -->
+    <autoAccept>true</autoAccept>
+    <defaultHidden>false</defaultHidden>
+    <isRootSpecial>true</isRootSpecial>
+    <!-- 作为事件，权重设为0 -->
+    <rootSelectionWeight>0</rootSelectionWeight>
+    <!-- 最低触发点数要求 -->
+    <rootMinPoints>200</rootMinPoints>
+    <!-- 不受人口影响 -->
+    <affectedByPopulation>false</affectedByPopulation>
+
+    <!-- 任务名称生成规则 -->
+    <questNameRules>
+      <rulesStrings>
+        <li>questName->[missionTitle]的委托</li>
+        <li>missionTitle->冒险者公会</li>
+      </rulesStrings>
+    </questNameRules>
+
+    <!-- 任务描述生成规则 -->
+    <questDescriptionRules>
+      <rulesStrings>
+        <li>questDescription->公会使者带来了一份委托。[enemyDesc]正在[label]附近聚集，威胁着周边地区的安全。请指派受恩惠的冒险者前去消除威胁。\n\n完成后，接取者与其他受恩惠参与者将共同获得伟业值作为奖励。</li>
+        <li>enemyDesc->[enemiesCount]个[enemiesLabel]</li>
+      </rulesStrings>
+    </questDescriptionRules>
+
+    <!-- 根节点：QuestNode_Sequence 包含所有子节点 -->
+    <root Class="QuestNode_Sequence">
+      <nodes>
+
+        <!-- 自定义根节点：已简化为空操作（使者由IncidentWorker生成） -->
+        <li Class="FamiliaMyth.Quest.QuestNode_Root_GuildEnvoy" />
+
+        <!-- autoAccept=true 时任务创建后自动执行，不需要等待 AcceptMission 信号 -->
+        <li Class="QuestNode_Sequence">
+          <nodes>
+
+            <!-- 计算难度和伟业值奖励 -->
+            <li Class="FamiliaMyth.Quest.QuestNode_Mission_SetDifficulty">
+              <storeDifficultyAs>difficulty</storeDifficultyAs>
+              <storeExploitsAs>totalExploits</storeExploitsAs>
+              <baseExploits>50</baseExploits>
+              <difficultyMultiplier>1.0</difficultyMultiplier>
+            </li>
+
+            <!-- 获取目标地点tile -->
+            <li Class="QuestNode_GetSiteTile">
+              <storeAs>siteTile</storeAs>
+              <preferCloserTiles>true</preferCloserTiles>
+            </li>
+
+            <!-- 生成讨伐站点 -->
+            <li Class="QuestNode_SubScript">
+              <def>Util_GenerateSite</def>
+            </li>
+
+            <!-- 将站点添加到世界地图，使其可见 -->
+            <li Class="QuestNode_SpawnWorldObjects">
+              <worldObjects>$site</worldObjects>
+            </li>
+
+            <!-- 等待敌人被消灭，触发奖励 -->
+            <li Class="QuestNode_Signal">
+              <inSignal>site.AllEnemiesDefeated</inSignal>
+              <node Class="QuestNode_Sequence">
+                <nodes>
+                  <!-- 发放伟业值奖励 -->
+                  <li Class="FamiliaMyth.Quest.QuestNode_GainExploits">
+                    <acceptor>$acceptor</acceptor>
+                    <totalExploits>$totalExploits</totalExploits>
+                  </li>
+                  <!-- 发送 rewardsReady 信号触发奖励发放 -->
+                  <li Class="QuestNode_SendSignals">
+                    <outSignals>
+                      <li>rewardsReady</li>
+                    </outSignals>
+                  </li>
+                  <!-- 任务成功结束 -->
+                  <li Class="QuestNode_End">
+                    <outcome>Success</outcome>
+                  </li>
+                </nodes>
+              </node>
+            </li>
+
+            <!-- 任务超时处理（站点未在限时内完成） -->
+            <li Class="QuestNode_WorldObjectTimeout">
+              <worldObject>$site</worldObject>
+              <delayTicksRange>720000~1680000</delayTicksRange>
+              <destroyOnCleanup>true</destroyOnCleanup>
+              <node Class="QuestNode_Sequence">
+                <nodes>
+                  <li Class="QuestNode_Letter">
+                    <label>任务过期</label>
+                    <text>敌人已经撤退，任务[resolvedQuestName]已过期。</text>
+                  </li>
+                  <li Class="QuestNode_End">
+                    <outcome>Fail</outcome>
+                  </li>
+                </nodes>
+              </node>
+            </li>
+
+          </nodes>
+        </li>
+
+      </nodes>
+    </root>
+  </QuestScriptDef>
+
+</Defs>

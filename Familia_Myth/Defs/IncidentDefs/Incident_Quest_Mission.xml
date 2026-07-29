@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- 讨伐伟业任务触发事件 -->
+  <!-- 当玩家殖民地存在恩惠持有者时，有几率触发此事件 -->
+  <!-- 派遣公会使者进入玩家据点，通过与使者对话接取任务 -->
+  <IncidentDef>
+    <defName>GiveQuest_Mission</defName>
+    <label>公会使者到访</label>
+    <category>FactionArrival</category>
+    <workerClass>FamiliaMyth.Incidents.IncidentWorker_GuildEnvoy</workerClass>
+    <letterDef>PositiveEvent</letterDef>
+    <letterLabel>公会使者到访</letterLabel>
+    <!-- 绑定的任务脚本定义 -->
+    <questScriptDef>Quest_Mission</questScriptDef>
+    <!-- 触发概率（基础值，实际受故事讲述者调整） -->
+    <baseChance>0.2</baseChance>
+    <!-- 最早触发天数（游戏开始3天后才可能触发） -->
+    <earliestDay>3</earliestDay>
+    <!-- 目标标签：玩家殖民地地图事件 -->
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+  </IncidentDef>
+
+</Defs>

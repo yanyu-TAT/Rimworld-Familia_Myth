@@ -204,12 +204,17 @@ namespace FamiliaMyth.Pharna
             return true;
         }
 
-        public bool GainExploits(float amount)
+        /// <summary>
+        /// 伟业值增量与等级成反比
+        /// </summary>
+        /// <param name="amount">预定的伟业值</param>
+        /// <returns>实际增加的伟业值</returns>
+        public float GainExploits(float amount)
         {
-            if (amount <= 0f) return false;
-            float capped = Math.Min(amount, MaxExploit - exploits);
-            exploits += capped;
-            return true;
+            if (amount <= 0f) return 0;
+            float capped = Math.Min(amount, (MaxExploit - exploits) * level);
+            exploits += capped / level;
+            return capped;
         }
 
         public override IEnumerable<Gizmo> GetGizmos()
