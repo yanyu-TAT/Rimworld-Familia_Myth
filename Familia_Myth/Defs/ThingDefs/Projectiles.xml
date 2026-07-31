@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<!-- ==================== 风弹 (Wind Missile) ===================== -->
+	<ThingDef ParentName="BaseBullet">
+		<defName>Projectile_WindMissile</defName>
+		<label>风弹</label>
+		<description>光明之风生成的风弹，可追踪敌人或引爆造成范围伤害</description>
+
+		<thingClass>FamiliaMyth.Abilities.Projectile_WindMissile</thingClass>
+
+		<graphicData>
+			<texPath>Familia_Myth/Things/Projectile/WindMissile</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<shaderType>Transparent</shaderType>
+			<drawSize>1.0</drawSize>
+		</graphicData>
+
+		<projectile>
+			<damageDef>Bomb</damageDef>
+			<damageAmountBase>10</damageAmountBase>
+			<armorPenetrationBase>2</armorPenetrationBase>
+			<stoppingPower>10</stoppingPower>
+			<speed>60</speed>
+			<flyOverhead>false</flyOverhead>
+			<alwaysFreeIntercept>true</alwaysFreeIntercept>
+		</projectile>
+	</ThingDef>
+
+</Defs>

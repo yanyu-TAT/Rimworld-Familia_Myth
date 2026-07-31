@@ -29,7 +29,7 @@ namespace FamiliaMyth.Core
             TryAddRitual(ideo, "Ritual_GrantPharna", "RitualPattern_GrantPharna");
             TryAddRitual(ideo, "Ritual_AscendPharna", "RitualPattern_AscendPharna");
 
-            Log.Message("===================Rituals Added==================");
+            Log.Message("[FamiliaMyth] Rituals Added");
         }
 
         private void TryAddRitual(Ideo ideo, string preceptDefName, string patternDefName)

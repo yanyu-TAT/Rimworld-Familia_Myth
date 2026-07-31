@@ -12,7 +12,14 @@ namespace FamiliaMyth.Abilities
         public SpellType spellType = SpellType.Special;
 
         public List<string> incantationLines;
+        public bool hasSpellKey = false;
+        public string spellKey = "";
+        public string spellKeyDescription = "";
         public float lineInterval = 1f;
+        
+        /// <summary>
+        /// 咏唱秒数
+        /// </summary>
         public float Warmup => (incantationLines.Count - 1) * lineInterval;
 
         public Spell CreateSpell()

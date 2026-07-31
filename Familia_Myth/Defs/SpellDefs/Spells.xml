@@ -53,4 +53,59 @@
         </incantationLines>
     </FamiliaMyth.Abilities.SpellDef>
 
+	<!-- ==================== 光明之风 (Luminous Wind) ===================== -->
+	<FamiliaMyth.Abilities.SpellDef>
+		<defName>Spell_LuminousWind</defName>
+		<label>光明之风</label>
+		<description>咏唱过程中召唤数个风弹，结束时自动追踪附近敌人</description>
+
+		<!-- 魔法实现类 -->
+		<spellClass>FamiliaMyth.Abilities.Spell_LuminousWind</spellClass>
+
+		<!-- 稀有度 -->
+		<rarity>Rare</rarity>
+
+		<!-- 魔法类型：攻击魔法 -->
+		<spellType>Attack</spellType>
+
+		<!-- 图标路径 -->
+		<iconPath>Familia_Myth/UI/Icons/Spells/LuminousWind</iconPath>
+
+		<!-- 显示与施法设置：自身释放 -->
+		<displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
+		<disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>
+
+		<!-- 动词属性：自身施法（warmupTime由代码根据咏唱行数计算覆盖） -->
+		<verbProperties>
+			<verbClass>RimWorld.Verb_CastAbility</verbClass>
+			<targetable>false</targetable>
+			<nonInterruptingSelfCast>true</nonInterruptingSelfCast>
+			<range>-1</range>
+			<warmupTime>1</warmupTime>
+			<drawAimPie>false</drawAimPie>
+			<targetParams>
+				<canTargetSelf>true</canTargetSelf>
+			</targetParams>
+		</verbProperties>
+
+		<!-- 咏唱文本 -->
+		<incantationLines>
+			<li>如今远去的森林穹苍</li>
+			<li>无穷夜天镶嵌的无限星斗</li>
+			<li>回应愚昧如我的声音</li>
+			<li>再度赐我星火加护</li>
+			<li>予弃汝而去者光明慈悲</li>
+			<li>来吧，漂泊的风，流浪的旅人</li>
+			<li>飞越天空，奔驰荒野</li>
+			<li>以胜过万物的速度疾行</li>
+			<li>蕴含群星光辉征讨敌人</li>
+			<li>「光明之风」</li>
+		</incantationLines>
+		<lineInterval>1</lineInterval>
+
+		<!-- 引爆咒 -->
+		<hasSpellKey>true</hasSpellKey>
+		<spellKey>「Luvia」</spellKey>
+		<spellKeyDescription>引爆所有风弹，造成范围伤害</spellKeyDescription>
+	</FamiliaMyth.Abilities.SpellDef>
 </Defs>

@@ -5,9 +5,12 @@ using Verse;
 
 namespace FamiliaMyth.Abilities
 {
+    [StaticConstructorOnStartup]
     public class Spell : Ability, IExposable, IAscendReward
     {
-        private static readonly Color LineColor = new Color(0.3f, 0.8f, 0.9f);
+        private static readonly Color LineColor = new(0.3f, 0.8f, 0.9f);
+        private static readonly Texture2D SpellKeyTexture = ContentFinder<Texture2D>.Get("Familia_Myth/UI/Commands/SpellKey", true);
+
         public SpellDef spellDef;
 
         public RewardType RewardType => RewardType.Spell;
@@ -22,9 +25,11 @@ namespace FamiliaMyth.Abilities
 
         public string Description => spellDef.description;
 
+        public List<Projectile_MagicMissileBase> activeProjectiles = new();
+
         protected int lastLineTick = -9999;
         protected bool wasWarmingUp = false;
-        protected int lineIndex; 
+        protected int lineIndex = 0; 
 
         public void RewardInitialize()
         {
@@ -43,25 +48,61 @@ namespace FamiliaMyth.Abilities
 
             if (!wasWarmingUp && verb.WarmingUp)
             {
-                //��ʼӽ��
+                //开始咏唱
                 lineIndex = 0;
                 wasWarmingUp = true;
+                WarmUpStart();
             }
             if (wasWarmingUp && !verb.WarmingUp)
             {
-                //��β
+                //结尾
                 wasWarmingUp = false;
                 Vector3 loc = pawn.DrawPos + new Vector3(0f, 0f, 1.5f);
                 MoteMaker.ThrowText(loc, pawn.Map, spellDef.incantationLines[lineIndex++], LineColor);
+                WarmUpFinish();
             }
-            
-            if (CurrentTick - lastLineTick >= IntervalTicks && wasWarmingUp)
+
+            if (wasWarmingUp)
             {
-                Vector3 loc = pawn.DrawPos + new Vector3(0f, 0f, 1.5f);
-                MoteMaker.ThrowText(loc, pawn.Map, spellDef.incantationLines[lineIndex++], LineColor);
-                lastLineTick = CurrentTick;
+                if (CurrentTick - lastLineTick >= IntervalTicks)
+                {
+                    Vector3 loc = pawn.DrawPos + new Vector3(0f, 0f, 1.5f);
+                    MoteMaker.ThrowText(loc, pawn.Map, spellDef.incantationLines[lineIndex++], LineColor);
+                    lastLineTick = CurrentTick;
+                }
+                TickWarmUp();
             }
         }
+
+        protected virtual void OnSpellKeyCasted()
+        {
+            if (spellDef.hasSpellKey)
+            {
+                Vector3 loc = pawn.DrawPos + new Vector3(0f, 0f, 1.5f);
+                MoteMaker.ThrowText(loc, pawn.Map, spellDef.spellKey, LineColor);
+                NotifyAll("SpellKey");
+            }
+        }
+
+        protected virtual void WarmUpStart() { }
+
+        protected virtual void WarmUpFinish() { }
+
+        protected virtual void TickWarmUp() { }
+
+        protected void NotifyAll(string message)
+        {
+            var toDos = GetActionsFor(message);
+            foreach (var toDo in toDos)
+                toDo();
+        }
+
+        /// <summary>
+        /// 获取接受对应消息后对应魔法弹的行为引用
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns>无参无返回值的方法引用集合</returns>
+        protected List<Action> GetActionsFor(string message) => activeProjectiles.Select(p => p.NotifyBy(message)).ToList();
 
         public void Apply(Hediff_Pharna pharna)
         {
@@ -71,8 +112,9 @@ namespace FamiliaMyth.Abilities
             pharna.spells.Add(this);
         }
 
-        public virtual float GetCurrentSpellPower(Pawn caster)
+        public virtual float GetCurrentSpellPower()
         {
+            var caster = pawn;
             if (caster == null) return 1f;
 
             float power = 1f;
@@ -116,6 +158,36 @@ namespace FamiliaMyth.Abilities
             }
 
             return Math.Max(power, 0f);
+        }
+
+        public override IEnumerable<Command> GetGizmos()
+        {
+            foreach (var command in base.GetGizmos())
+                yield return command;
+
+            if (spellDef.hasSpellKey)
+            {
+                Command_Action spellKey = new()
+                {
+                    defaultLabel = "引爆咒：" + spellDef.label,
+                    defaultDesc = spellDef.spellKeyDescription,
+                    icon = SpellKeyTexture,
+                    action = () =>
+                    {
+                        OnSpellKeyCasted();
+                    }
+                };
+                yield return spellKey;
+            }
+        }
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_Values.Look(ref lastLineTick, "lastLineTick");
+            Scribe_Values.Look(ref lineIndex, "lineIndex");
+            Scribe_Values.Look(ref wasWarmingUp, "wasWarmingUp");
+            Scribe_Collections.Look(ref activeProjectiles, "activeProjectiles", LookMode.Reference);
         }
     }
 
