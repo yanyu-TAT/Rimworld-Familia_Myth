@@ -15,6 +15,9 @@ namespace FamiliaMyth.Abilities
         protected Vector3 acceleration;
         protected Vector3 position;
 
+        public Vector3 Velocity => velocity;
+        public Vector3 Acceleration => acceleration;
+
         public virtual bool CanHit => true;
 
         public Vector3 ExactPosition => position;
@@ -43,11 +46,11 @@ namespace FamiliaMyth.Abilities
             if (missile != null && missile.Spawned)
             {
                 var a = acceleration + velocity * k;
-                if (a.magnitude < 1e-3f)
+                if (a.magnitude < 1e-5f)
                     a = Vector3.zero;
 
                 velocity += a * delta;
-                if (velocity.magnitude < 1e-3f)
+                if (velocity.magnitude < 1e-5f)
                     velocity = Vector3.zero;
 
                 position += velocity * delta;
@@ -148,6 +151,8 @@ namespace FamiliaMyth.Abilities
         public OrbitState_Line(Projectile_MagicMissileBase missile, Vector3 direction, float speed = 1f) : base(missile)
         {
             this.direction = direction.normalized;
+            if (direction.magnitude < 1e-5f)
+                this.direction = Vector3.forward;
             this.speed = speed;
         }
         public OrbitState_Line(Projectile_MagicMissileBase missile, Vector3 start, Vector3 end, float speed = 1f) : this(missile, (end - start).normalized, speed){ }
@@ -158,7 +163,7 @@ namespace FamiliaMyth.Abilities
         public override void UpdateInterval(int delta)
         {
             acceleration = Vector3.zero;
-            velocity = direction.normalized * speed;
+            velocity = direction * speed;
             base.UpdateInterval(delta);
         }
 

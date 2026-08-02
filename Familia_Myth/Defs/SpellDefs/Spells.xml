@@ -108,4 +108,56 @@
 		<spellKey>「Luvia」</spellKey>
 		<spellKeyDescription>引爆所有风弹，造成范围伤害</spellKeyDescription>
 	</FamiliaMyth.Abilities.SpellDef>
+
+	<!-- ==================== 齐射火标枪 (Fusillade Flame Spears) ===================== -->
+	<FamiliaMyth.Abilities.SpellDef>
+		<defName>Spell_FusilladeFlameSpears</defName>
+		<label>齐射火标枪</label>
+		<description>咏唱过程中锁定扇形范围内敌人，结束时发射火标枪轰炸目标附近区域</description>
+
+		<!-- 魔法实现类 -->
+		<spellClass>FamiliaMyth.Abilities.Spell_FusilladeFlameSpears</spellClass>
+
+		<!-- 稀有度 -->
+		<rarity>Rare</rarity>
+
+		<!-- 魔法类型：攻击魔法 -->
+		<spellType>Attack</spellType>
+
+		<!-- 图标路径 -->
+		<iconPath>Familia_Myth/UI/Icons/Spells/NoahHeal</iconPath>
+
+		<!-- 显示与施法设置 -->
+		<displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
+		<disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>
+
+		<!-- 动词属性 -->
+		<verbProperties>
+			<verbClass>FamiliaMyth.Abilities.Verb_CastAbility_FanTarget</verbClass>
+			<range>60</range>
+			<warmupTime>3</warmupTime>
+			<drawAimPie>false</drawAimPie>
+			<targetParams>
+				<canTargetPawns>true</canTargetPawns>
+				<canTargetLocations>true</canTargetLocations>
+				<canTargetSelf>false</canTargetSelf>
+				<canTargetAnimals>true</canTargetAnimals>
+			</targetParams>
+		</verbProperties>
+
+		<!-- 咏唱文本 -->
+		<incantationLines>
+			<li>高傲的战士们</li>
+			<li>森林的射手们</li>
+			<li>进逼的掠夺者在前</li>
+			<li>拿起你们的弓</li>
+			<li>回应同胞的声音</li>
+			<li>搭箭上弦点起烈焰</li>
+			<li>森林的灯火——</li>
+			<li>命你放箭，精灵的火矢</li>
+			<li>如雨骤降，火烧蛮族</li>
+			<li>「齐射火标枪」</li>
+		</incantationLines>
+		<lineInterval>1</lineInterval>
+	</FamiliaMyth.Abilities.SpellDef>
 </Defs>

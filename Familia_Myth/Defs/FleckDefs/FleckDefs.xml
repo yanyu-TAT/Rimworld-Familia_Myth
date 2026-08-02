@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ThingDef ParentName="MoteBase">
+		<defName>MigicMissileBurst</defName>
+		<thingClass>MoteThrown</thingClass>
+		<graphicData>
+			<texPath>Things/Mote/ExplosionFlash</texPath>
+			<shaderType>MoteGlow</shaderType>
+			<color>(1, 1, 1, 1)</color>
+		</graphicData>
+		<mote>
+			<fadeInTime>0.05</fadeInTime>
+			<solidTime>0.2</solidTime>
+			<fadeOutTime>0.5</fadeOutTime>
+			<growthRate>30</growthRate>
+		</mote>
+	</ThingDef>
+
+	<FleckDef>
+		<defName>MagicMissileGlow</defName>
+		<fleckSystemClass>FleckSystemStatic</fleckSystemClass>
+		<graphicData>
+			<graphicClass>Graphic_Fleck</graphicClass>
+			<texPath>Things/Mote/ExplosionFlash</texPath>
+			<shaderType>MoteGlow</shaderType>
+			<color>(1, 1, 1, 1)</color>
+		</graphicData>
+		<fadeInTime>0</fadeInTime>
+		<solidTime>0.2</solidTime>
+		<fadeOutTime>0.5</fadeOutTime>
+	</FleckDef>
+
+	<FleckDef>
+		<defName>LineIndicator</defName>
+		<fleckSystemClass>FleckSystemStatic</fleckSystemClass>
+		<graphicData>
+			<graphicClass>Graphic_Fleck</graphicClass>
+			<texPath>Familia_Myth/Things/Mote/LineSolid</texPath>
+			<shaderType>MoteGlow</shaderType>
+			<color>(1, 1, 1, 1)</color>
+		</graphicData>
+		<fadeInTime>0</fadeInTime>
+		<solidTime>0.05</solidTime>
+		<fadeOutTime>0</fadeOutTime>
+	</FleckDef>
+</Defs>

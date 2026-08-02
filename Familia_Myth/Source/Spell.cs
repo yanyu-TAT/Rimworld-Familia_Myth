@@ -31,7 +31,7 @@ namespace FamiliaMyth.Abilities
         protected bool wasWarmingUp = false;
         protected int lineIndex = 0; 
 
-        public void RewardInitialize()
+        public virtual void RewardInitialize()
         {
             spellDef = DefDatabase<SpellDef>.GetNamed(GetType().Name, false);
             def = spellDef; 
@@ -57,21 +57,24 @@ namespace FamiliaMyth.Abilities
             {
                 //结尾
                 wasWarmingUp = false;
-                Vector3 loc = pawn.DrawPos + new Vector3(0f, 0f, 1.5f);
-                MoteMaker.ThrowText(loc, pawn.Map, spellDef.incantationLines[lineIndex++], LineColor);
+                ThrowIncantation(lineIndex++);
                 WarmUpFinish();
             }
 
             if (wasWarmingUp)
             {
                 if (CurrentTick - lastLineTick >= IntervalTicks)
-                {
-                    Vector3 loc = pawn.DrawPos + new Vector3(0f, 0f, 1.5f);
-                    MoteMaker.ThrowText(loc, pawn.Map, spellDef.incantationLines[lineIndex++], LineColor);
-                    lastLineTick = CurrentTick;
-                }
+                    ThrowIncantation(lineIndex++);
                 TickWarmUp();
             }
+        }
+
+        private void ThrowIncantation(int a)
+        {
+            if (a >= spellDef.incantationLines.Count) return;
+            Vector3 loc = pawn.DrawPos + new Vector3(0f, 0f, 1.5f);
+            MoteMaker.ThrowText(loc, pawn.Map, spellDef.incantationLines[a], LineColor);
+            lastLineTick = CurrentTick;
         }
 
         protected virtual void OnSpellKeyCasted()
@@ -104,7 +107,7 @@ namespace FamiliaMyth.Abilities
         /// <returns>无参无返回值的方法引用集合</returns>
         protected List<Action> GetActionsFor(string message) => activeProjectiles.Select(p => p.NotifyBy(message)).ToList();
 
-        public void Apply(Hediff_Pharna pharna)
+        public virtual void Apply(Hediff_Pharna pharna)
         {
             pawn = pharna.pawn;
             Initialize();

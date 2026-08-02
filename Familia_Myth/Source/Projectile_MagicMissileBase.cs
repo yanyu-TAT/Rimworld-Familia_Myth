@@ -1,4 +1,5 @@
-﻿using RimWorld;
+﻿using NAudio.Wave;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -10,9 +11,166 @@ namespace FamiliaMyth.Abilities
 
         protected static HashSet<IntVec3> checkCells = new();
 
+        protected int FadeInTicks = -1;
+
+        protected MaterialPropertyBlock matPropertyBlock;
+
+        private int CurrentTick => Find.TickManager.TicksGame;
+
+        private int pulseOffset;
+
         public Spell Spell => spell;
 
         public BaseMagicMissileState currentState;
+
+        protected static Dictionary<string, Color> cachedEdgeColors = new();
+
+        /// <summary>
+        /// 当前魔法弹的贴图边缘的平均颜色
+        /// </summary>
+        protected Color EdgeColor
+        {
+            get
+            {
+                var path = def.graphicData.texPath;
+                if (cachedEdgeColors.TryGetValue(path, out var color))
+                    return color;
+
+                var filePath = Path.Combine(def.modContentPack.RootDir, "Textures", path + ".png");
+                if (!File.Exists(filePath))
+                {
+                    Log.Warning($"[FamiliaMyth]Texture file not found!: {filePath}");
+                    return Color.white;
+                }
+
+                var tex = new Texture2D(2, 2);
+                ImageConversion.LoadImage(tex, File.ReadAllBytes(filePath));
+
+                var colors = GetColorList(tex);
+                var avgColor = colors.Count > 0
+                    ? new Color(
+                        colors.Sum(c => c.r) / colors.Count,
+                        colors.Sum(c => c.g) / colors.Count,
+                        colors.Sum(c => c.b) / colors.Count,
+                        1)
+                    : Color.white;
+
+                //销毁
+                UnityEngine.Object.Destroy(tex);
+                cachedEdgeColors[path] = avgColor;
+                return avgColor;
+            }
+        }
+
+        /// <summary>
+        /// 获取贴图最边缘的像素的颜色列表
+        /// </summary>
+        /// <param name="tex"></param>
+        /// <returns></returns>
+        private List<Color> GetColorList(Texture2D tex)
+        {
+            int w = tex.width, h = tex.height;
+            var pixels = tex.GetPixels();
+
+            var isTransparent = new bool[w, h];
+            Vector2Int start = new(-1, -1);
+            //找出最左上不透明像素
+            for (int y = 0; y < h; y++)
+                for (int x = 0; x < w; x++)
+                    isTransparent[x, y] = pixels[y * w + x].a <= 0.01f;
+
+            for (int y = 0; y < h && start.x == -1; y++)
+                for (int x = 0; x < w && start.x == -1; x++)
+                {
+                    if (isTransparent[x, y]) continue;
+                    // 检查8邻域是否有透明像素
+                    for (int dy = -1; dy <= 1; dy++)
+                    {
+                        for (int dx = -1; dx <= 1; dx++)
+                        {
+                            if (dx == 0 && dy == 0) continue;
+                            int nx = x + dx, ny = y + dy;
+                            if (nx < 0 || nx >= w || ny < 0 || ny >= h || isTransparent[nx, ny])
+                            {
+                                start = new Vector2Int(x, y);
+                                break;
+                            }
+                        }
+                        if (start.x != -1) break;
+                    }
+                }
+
+
+            List<Color> result = new();
+            if (start.x == -1) return result;
+
+            //顺时针遍历
+            int[] dxx = { 1, 1, 0, -1, -1, -1, 0, 1 };
+            int[] dyy = { 0, -1, -1, -1, 0, 1, 1, 1 };
+
+            //从起始点左侧进入
+            Vector2Int prevP = new(start.x - 1, start.y);
+            if (prevP.x >= 0 && prevP.x < w && !isTransparent[prevP.x, prevP.y])
+            {
+                // start 左侧不是背景，需要从 start 的 8 邻域中找一个透明的作为 prevP
+                bool foundBg = false;
+                for (int i = 0; i < 8; i++)
+                {
+                    int nx = start.x + dxx[i];
+                    int ny = start.y + dyy[i];
+                    if (nx < 0 || nx >= w || ny < 0 || ny >= h || isTransparent[nx, ny])
+                    {
+                        prevP = new Vector2Int(nx, ny);
+                        foundBg = true;
+                        break;
+                    }
+                }
+                if (!foundBg) return result; // 孤立点
+            }
+
+            Vector2Int curP = start;
+            result.Add(pixels[curP.y * w + curP.x]);
+
+            while (true)
+            {
+                //上个像素索引
+                var lastDir = -1;
+                for (int i = 0; i < 8; i++)
+                    if (curP + new Vector2Int(dxx[i], dyy[i]) == prevP)
+                    {
+                        lastDir = i;
+                        break;
+                    }
+
+                //顺时针搜索不透明像素
+                var startDir = (lastDir + 1) % 8;
+                var foundDir = -1;
+                for (int i = 0; i < 8; i++)
+                {
+                    var dir = (startDir + i) % 8;
+                    var next = curP + new Vector2Int(dxx[dir], dyy[dir]);
+                    if (next.x >= 0 && next.x < w && next.y >= 0 && next.y < h && !isTransparent[next.x, next.y])
+                    {
+                        foundDir = dir;
+                        break;
+                    }
+                }
+
+                //孤立点
+                if (foundDir == -1) break;
+
+                var nextP = curP + new Vector2Int(dxx[foundDir], dyy[foundDir]);
+                result.Add(pixels[curP.y * w + curP.x]);
+
+                //轮廓闭合
+                if (nextP == start) break;
+
+                prevP = curP;
+                curP = nextP;
+            }
+
+            return result;
+        }
 
         /// <summary>
         /// 初始化，设置spell引用
@@ -24,6 +182,11 @@ namespace FamiliaMyth.Abilities
             this.spell = spell;
             launcher = spell.pawn;
             HitFlags = ProjectileHitFlags.All;
+            FadeInTicks = 30; //0.5s
+            pulseOffset = Rand.Int % 60; //随机闪烁
+
+            //仅占位
+            destination = origin = spell.pawn.Position.ToVector3Shifted();
         }
 
         /// <summary>
@@ -47,6 +210,15 @@ namespace FamiliaMyth.Abilities
                 Destroy();
                 return;
             }
+
+            //淡入计时
+            if (FadeInTicks > 0)
+            {
+                FadeInTicks -= delta;
+                if (FadeInTicks < 0) FadeInTicks = 0;
+            }
+
+            //位置未改变，返回
             if (ExactPosition == prevPosition) return;
 
             //判定碰撞
@@ -55,9 +227,65 @@ namespace FamiliaMyth.Abilities
 
             //移动
             Position = ExactPosition.ToIntVec3();
+
+            //每两帧放一次特效
+            if (CurrentTick % 2 == 0)  
+            {
+                FleckCreationData glow = FleckMaker.GetDataStatic(
+                    ExactPosition + Vector3.up * def.Altitude, 
+                    Map,
+                    DefDatabase<FleckDef>.GetNamed("MagicMissileGlow"),
+                    scale: 0.9f);
+                glow.instanceColor = EdgeColor.WithAlpha(0.8f);
+                Map.flecks.CreateFleck(glow);
+            }
         }
 
+        public override Color DrawColor
+        {
+            get
+            {
+                var color = base.DrawColor;
+
+                //淡入效果
+                if (FadeInTicks > 0)
+                    color = color.WithAlpha(Mathf.Clamp01(1f - FadeInTicks / 30f));
+
+                //闪烁效果
+                var k = 0.9f + 0.2f * Mathf.Sin((CurrentTick + pulseOffset) * 0.05f);
+                color *= k;
+
+                return color;
+            }
+        }
+
+        /// <summary>
+        /// 覆写绘制方法，使用MaterialPropertyBlock设置颜色
+        /// </summary>
+        protected override void DrawAt(Vector3 drawLoc, bool flip = false)
+        {
+            matPropertyBlock ??= new MaterialPropertyBlock();
+            matPropertyBlock.SetColor(ShaderPropertyIDs.Color, DrawColor);
+
+            var mesh = MeshPool.GridPlane(def.graphicData.drawSize);
+            Graphics.DrawMesh(mesh, drawLoc, ExactRotation, DrawMat, 0, null, 0, matPropertyBlock, false, false, false);
+            Comps_PostDraw();
+        }
+
+        public override int UpdateRateTicks => 1;
+
         public override Vector3 ExactPosition => currentState.ExactPosition + Vector3.up * def.Altitude;
+
+        public override Quaternion ExactRotation
+        {
+            get
+            {
+                var dir = currentState.Acceleration;
+                if (dir.magnitude < 1e-5f) dir = currentState.Velocity;
+                if (dir.magnitude < 1e-5f) return Quaternion.identity;
+                return Quaternion.LookRotation(dir.normalized);
+            }
+        }
 
         protected bool CheckHitLine(Vector3 A, Vector3 B)
         {

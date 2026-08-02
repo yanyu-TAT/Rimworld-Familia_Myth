@@ -48,6 +48,12 @@ namespace FamiliaMyth.Abilities
                 damAmount: (int)(DamageAmount * 1.5),
                 armorPenetration: ArmorPenetration);
 
+            //更大的爆炸特效
+            MoteThrown mote = (MoteThrown)ThingMaker.MakeThing(ThingDef.Named("Mote_WindBurst"));
+            mote.Scale = 4f;
+            mote.instanceColor = EdgeColor;
+            GenSpawn.Spawn(mote, Position, Map);
+
             //销毁
             Destroy();
         }
@@ -66,11 +72,12 @@ namespace FamiliaMyth.Abilities
                     null, DamageInfo.SourceCategory.ThingOrUnknown);
                 hitThing.TakeDamage(dinfo).AssociateWithLog(log);
             }
-            else
-            {
-                // 地面特效
-                FleckMaker.Static(ExactPosition, Map, FleckDefOf.ShotHit_Dirt);
-            }
+
+            //爆炸特效
+            MoteThrown mote = (MoteThrown)ThingMaker.MakeThing(ThingDef.Named("MigicMissileBurst"));
+            mote.instanceColor = EdgeColor;
+            GenSpawn.Spawn(mote, Position, Map);
+
             base.Impact(hitThing, blockedByShield);
         }
     }

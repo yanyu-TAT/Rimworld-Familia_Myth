@@ -12,7 +12,7 @@
 		<graphicData>
 			<texPath>Familia_Myth/Things/Projectile/WindMissile</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
-			<shaderType>Transparent</shaderType>
+			<shaderType>TransparentPostLight</shaderType>
 			<drawSize>1.0</drawSize>
 		</graphicData>
 
