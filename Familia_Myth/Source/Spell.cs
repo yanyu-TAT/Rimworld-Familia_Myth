@@ -6,7 +6,7 @@ using Verse;
 namespace FamiliaMyth.Abilities
 {
     [StaticConstructorOnStartup]
-    public class Spell : Ability, IExposable, IAscendReward
+    public class Spell : Ability, IAscendReward
     {
         private static readonly Color LineColor = new(0.3f, 0.8f, 0.9f);
         private static readonly Texture2D SpellKeyTexture = ContentFinder<Texture2D>.Get("Familia_Myth/UI/Commands/SpellKey", true);
@@ -17,7 +17,7 @@ namespace FamiliaMyth.Abilities
 
         protected int LineCount => spellDef?.incantationLines.Count ?? 1;
         protected int IntervalTicks => (int)spellDef.lineInterval * 60;
-        protected int CurrentTick => Find.TickManager.TicksGame;
+        protected static int CurrentTick => Find.TickManager.TicksGame;
 
         public RewardRarity Rarity => spellDef.rarity;
 

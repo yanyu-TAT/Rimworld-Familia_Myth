@@ -15,12 +15,12 @@ namespace FamiliaMyth.Abilities
 
         public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
         {
-            Pawn caster = parent.pawn;
-            Pawn targetPawn = target.Pawn;
+            var caster = parent.pawn;
+            var targetPawn = target.Pawn;
             if (caster == null || targetPawn == null) return;
 
             // 包扎所有伤口并治愈
-            foreach (Hediff hediff in targetPawn.health.hediffSet.hediffs)
+            foreach (var hediff in targetPawn.health.hediffSet.hediffs)
             {
                 if (hediff is Hediff_Injury injury)
                 {

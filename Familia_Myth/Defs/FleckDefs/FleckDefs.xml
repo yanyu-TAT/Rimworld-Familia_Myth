@@ -43,4 +43,19 @@
 		<solidTime>0.05</solidTime>
 		<fadeOutTime>0</fadeOutTime>
 	</FleckDef>
+
+	<ThingDef ParentName="MoteBase">
+		<defName>Mote_TargetLock</defName>
+		<thingClass>FamiliaMyth.Abilities.Mote_TargetLock</thingClass>
+		<graphicData>
+			<texPath>Familia_Myth/Things/Mote/TargetLock</texPath>
+			<shaderType>MoteGlow</shaderType>
+			<color>(1, 1, 1, 1)</color>
+		</graphicData>
+		<mote>
+			<fadeInTime>0.5</fadeInTime>
+			<solidTime>999999</solidTime>
+			<fadeOutTime>0.2</fadeOutTime>
+		</mote>
+	</ThingDef>
 </Defs>
