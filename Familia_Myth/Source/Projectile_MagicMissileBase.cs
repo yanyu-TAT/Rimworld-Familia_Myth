@@ -100,7 +100,6 @@ namespace FamiliaMyth.Abilities
                     }
                 }
 
-
             List<Color> result = new();
             if (start.x == -1) return result;
 

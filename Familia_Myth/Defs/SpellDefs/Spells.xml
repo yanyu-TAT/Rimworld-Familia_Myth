@@ -125,7 +125,7 @@
 		<spellType>Attack</spellType>
 
 		<!-- 图标路径 -->
-		<iconPath>Familia_Myth/UI/Icons/Spells/NoahHeal</iconPath>
+		<iconPath>Familia_Myth/UI/Icons/Spells/FusilladeFlameSpears</iconPath>
 
 		<!-- 显示与施法设置 -->
 		<displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>

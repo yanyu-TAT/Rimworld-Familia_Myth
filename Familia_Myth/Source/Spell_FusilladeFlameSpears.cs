@@ -22,9 +22,8 @@ namespace FamiliaMyth.Abilities
         private int lockOnIntervalTicks = -1;
         private int lastLockOnTick = -99999;
 
-        //射击总时间
-        private const int TotalShootTicks = 300;
-        private int shootIntervalTicks = -1;
+        //射击间隔
+        private const int ShootIntervalTicks = 10;
         private int lastShootTick = -99999;
         private bool isShooting = false;
         private float curPolylineAngle;
@@ -148,10 +147,8 @@ namespace FamiliaMyth.Abilities
             DrawWithProgress(1f, 30);
             DrawWithProgress(1f, 30);
 
-            //计算射击间隔
-            shootIntervalTicks = TotalShootTicks / lockedTargets.Count;
             //初始化射击
-            lastShootTick = CurrentTick - shootIntervalTicks;
+            lastShootTick = CurrentTick - ShootIntervalTicks;
             isShooting = true;
             SetParamsForNewTarget();
         }
@@ -165,7 +162,7 @@ namespace FamiliaMyth.Abilities
             //射击
             if (lockedTargets.Count > 0)
             {
-                var shootProgress = (float)(CurrentTick - lastShootTick) / shootIntervalTicks;
+                var shootProgress = (float)(CurrentTick - lastShootTick) / ShootIntervalTicks;
                 if (shootProgress >= 1f)
                 {
                     //过滤友军
@@ -178,10 +175,9 @@ namespace FamiliaMyth.Abilities
                     GenExplosion.DoExplosion(
                         curRandCell, pawn.Map, 5f, DamageDefOf.Bomb, pawn,
                         ignoredThings: ignored);
-
                     //删除锁定特效
                     var localTarget = lockedTargets.First();
-                    if (moteTargets.TryGetValue(localTarget, out var mote))
+                    while (moteTargets.TryGetValue(localTarget, out var mote))
                     {
                         mote.Destroy();
                         moteTargets.Remove(localTarget);
@@ -191,7 +187,7 @@ namespace FamiliaMyth.Abilities
                     lockedTargets.RemoveAt(0);
                     SetParamsForNewTarget();
                 }
-                else if (CurrentTick % 2 == 0) //每两帧绘制
+                else  //每帧绘制
                 {
                     var A = pawn.Position.ToVector3();
                     var B = curRandCell.ToVector3();
@@ -204,12 +200,20 @@ namespace FamiliaMyth.Abilities
                     var b = CB.magnitude;
                     var pa = Mathf.Clamp01(shootProgress * (a + b) / a);
                     var pb = Mathf.Clamp01((shootProgress * (a + b) - a) / b);
-                    ConnectingLine(A, A + AC * pa, 0.5f, pawn.Map);
-                    ConnectingLine(C, C + CB * pb, 0.5f, pawn.Map);
+                    ConnectingLine(A, A + AC * pa, 0.2f, pawn.Map);
+                    ConnectingLine(C, C + CB * pb, 0.2f, pawn.Map);
                 }
             }
             else
+            {
+                //射击结束
                 isShooting = false;
+
+                //删除所有生成的锁定特效
+                foreach(var d in moteTargets) 
+                    d.Value.Destroy();
+                moteTargets.Clear();
+            }
         }
 
         private void SetParamsForNewTarget()
@@ -219,7 +223,6 @@ namespace FamiliaMyth.Abilities
             var angle = (curRandCell - pawn.Position).AngleFlat;
             curPolylineAngle *= Mathf.DeltaAngle(angle, prevTargetAngle) > 0 ? -1 : 1;
         }
-
 
         /// <summary>
         /// 绘制扇形指示线
