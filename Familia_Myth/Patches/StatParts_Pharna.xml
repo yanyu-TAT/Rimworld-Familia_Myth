@@ -8,36 +8,43 @@
     <!-- Offset:   val += k * a                                        -->
     <!-- Factor:   val *= (1 + k * a)                                  -->
     <!-- ExpDecay: val *= a ^ k                                        -->
+    <!--                                                              -->
+    <!-- 重构说明：改用 PatchOperationConditional 模式，参考           -->
+    <!-- IsekaiLeveling 的 IsekaiStatPatches.xml 实现。                -->
+    <!-- match: <parts> 已存在时追加 StatPart                          -->
+    <!-- nomatch: <parts> 不存在时创建并同时注入 StatPart              -->
     <!-- ============================================================ -->
 
 
     <!-- ==================== 力量 (Strength) ======================= -->
 
     <!-- 近战伤害系数: val += k * 0.00075 -->
-    <Operation Class="PatchOperationSequence">
-        <success>Always</success>
-        <operations>
-            <li Class="PatchOperationTest">
-                <xpath>Defs/StatDef[defName="MeleeDamageFactor"]/parts</xpath>
-                <success>Invert</success>
-            </li>
-            <li Class="PatchOperationAdd">
-                <xpath>Defs/StatDef[defName="MeleeDamageFactor"]</xpath>
-                <value><parts /></value>
-            </li>
-        </operations>
-    </Operation>
-    <Operation Class="PatchOperationAdd">
+    <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="MeleeDamageFactor"]/parts</xpath>
-        <value>
-            <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
-                <statusType>Strength</statusType>
-                <mode>Offset</mode>
-                <a>0.00075</a>
-            </li>
-        </value>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="MeleeDamageFactor"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                    <statusType>Strength</statusType>
+                    <mode>Offset</mode>
+                    <a>0.00075</a>
+                </li>
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="MeleeDamageFactor"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                        <statusType>Strength</statusType>
+                        <mode>Offset</mode>
+                        <a>0.00075</a>
+                    </li>
+                </parts>
+            </value>
+        </nomatch>
     </Operation>
-    <!-- 狂化招乱：受伤越重，近战伤害越高 -->
+    <!-- 狂化招乱：受伤越重，近战伤害越高（parts 已由上方保证存在） -->
     <Operation Class="PatchOperationAdd">
         <xpath>Defs/StatDef[defName="MeleeDamageFactor"]/parts</xpath>
         <value>
@@ -46,525 +53,614 @@
     </Operation>
 
     <!-- 负重能力: val *= (1 + k * 0.00050) -->
-    <Operation Class="PatchOperationSequence">
-        <success>Always</success>
-        <operations>
-            <li Class="PatchOperationTest">
-                <xpath>Defs/StatDef[defName="CarryingCapacity"]/parts</xpath>
-                <success>Invert</success>
-            </li>
-            <li Class="PatchOperationAdd">
-                <xpath>Defs/StatDef[defName="CarryingCapacity"]</xpath>
-                <value><parts /></value>
-            </li>
-        </operations>
-    </Operation>
-    <Operation Class="PatchOperationAdd">
+    <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="CarryingCapacity"]/parts</xpath>
-        <value>
-            <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
-                <statusType>Strength</statusType>
-                <mode>Factor</mode>
-                <a>0.00050</a>
-            </li>
-        </value>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="CarryingCapacity"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                    <statusType>Strength</statusType>
+                    <mode>Factor</mode>
+                    <a>0.00050</a>
+                </li>
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="CarryingCapacity"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                        <statusType>Strength</statusType>
+                        <mode>Factor</mode>
+                        <a>0.00050</a>
+                    </li>
+                </parts>
+            </value>
+        </nomatch>
     </Operation>
 
 
     <!-- ==================== 耐久 (Endurance) ===================== -->
 
     <!-- 锐器护甲: val += k * 0.00025 -->
-    <Operation Class="PatchOperationSequence">
-        <success>Always</success>
-        <operations>
-            <li Class="PatchOperationTest">
-                <xpath>Defs/StatDef[defName="ArmorRating_Sharp"]/parts</xpath>
-                <success>Invert</success>
-            </li>
-            <li Class="PatchOperationAdd">
-                <xpath>Defs/StatDef[defName="ArmorRating_Sharp"]</xpath>
-                <value><parts /></value>
-            </li>
-        </operations>
-    </Operation>
-    <Operation Class="PatchOperationAdd">
+    <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="ArmorRating_Sharp"]/parts</xpath>
-        <value>
-            <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
-                <statusType>Endurance</statusType>
-                <mode>Offset</mode>
-                <a>0.00025</a>
-            </li>
-        </value>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="ArmorRating_Sharp"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                    <statusType>Endurance</statusType>
+                    <mode>Offset</mode>
+                    <a>0.00025</a>
+                </li>
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="ArmorRating_Sharp"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                        <statusType>Endurance</statusType>
+                        <mode>Offset</mode>
+                        <a>0.00025</a>
+                    </li>
+                </parts>
+            </value>
+        </nomatch>
     </Operation>
 
     <!-- 钝器护甲: val += k * 0.00025 -->
-    <Operation Class="PatchOperationSequence">
-        <success>Always</success>
-        <operations>
-            <li Class="PatchOperationTest">
-                <xpath>Defs/StatDef[defName="ArmorRating_Blunt"]/parts</xpath>
-                <success>Invert</success>
-            </li>
-            <li Class="PatchOperationAdd">
-                <xpath>Defs/StatDef[defName="ArmorRating_Blunt"]</xpath>
-                <value><parts /></value>
-            </li>
-        </operations>
-    </Operation>
-    <Operation Class="PatchOperationAdd">
+    <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="ArmorRating_Blunt"]/parts</xpath>
-        <value>
-            <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
-                <statusType>Endurance</statusType>
-                <mode>Offset</mode>
-                <a>0.00025</a>
-            </li>
-        </value>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="ArmorRating_Blunt"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                    <statusType>Endurance</statusType>
+                    <mode>Offset</mode>
+                    <a>0.00025</a>
+                </li>
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="ArmorRating_Blunt"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                        <statusType>Endurance</statusType>
+                        <mode>Offset</mode>
+                        <a>0.00025</a>
+                    </li>
+                </parts>
+            </value>
+        </nomatch>
     </Operation>
 
     <!-- 热能护甲: val += k * 0.00009 -->
-    <Operation Class="PatchOperationSequence">
-        <success>Always</success>
-        <operations>
-            <li Class="PatchOperationTest">
-                <xpath>Defs/StatDef[defName="ArmorRating_Heat"]/parts</xpath>
-                <success>Invert</success>
-            </li>
-            <li Class="PatchOperationAdd">
-                <xpath>Defs/StatDef[defName="ArmorRating_Heat"]</xpath>
-                <value><parts /></value>
-            </li>
-        </operations>
-    </Operation>
-    <Operation Class="PatchOperationAdd">
+    <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="ArmorRating_Heat"]/parts</xpath>
-        <value>
-            <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
-                <statusType>Endurance</statusType>
-                <mode>Offset</mode>
-                <a>0.00009</a>
-            </li>
-        </value>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="ArmorRating_Heat"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                    <statusType>Endurance</statusType>
+                    <mode>Offset</mode>
+                    <a>0.00009</a>
+                </li>
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="ArmorRating_Heat"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                        <statusType>Endurance</statusType>
+                        <mode>Offset</mode>
+                        <a>0.00009</a>
+                    </li>
+                </parts>
+            </value>
+        </nomatch>
     </Operation>
 
     <!-- 愈合系数: val += k * 0.00007 -->
-    <Operation Class="PatchOperationSequence">
-        <success>Always</success>
-        <operations>
-            <li Class="PatchOperationTest">
-                <xpath>Defs/StatDef[defName="InjuryHealingFactor"]/parts</xpath>
-                <success>Invert</success>
-            </li>
-            <li Class="PatchOperationAdd">
-                <xpath>Defs/StatDef[defName="InjuryHealingFactor"]</xpath>
-                <value><parts /></value>
-            </li>
-        </operations>
-    </Operation>
-    <Operation Class="PatchOperationAdd">
+    <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="InjuryHealingFactor"]/parts</xpath>
-        <value>
-            <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
-                <statusType>Endurance</statusType>
-                <mode>Offset</mode>
-                <a>0.00007</a>
-            </li>
-        </value>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="InjuryHealingFactor"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                    <statusType>Endurance</statusType>
+                    <mode>Offset</mode>
+                    <a>0.00007</a>
+                </li>
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="InjuryHealingFactor"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                        <statusType>Endurance</statusType>
+                        <mode>Offset</mode>
+                        <a>0.00007</a>
+                    </li>
+                </parts>
+            </value>
+        </nomatch>
     </Operation>
 
     <!-- 受伤系数: val *= 0.9999 ^ k -->
-    <Operation Class="PatchOperationSequence">
-        <success>Always</success>
-        <operations>
-            <li Class="PatchOperationTest">
-                <xpath>Defs/StatDef[defName="IncomingDamageFactor"]/parts</xpath>
-                <success>Invert</success>
-            </li>
-            <li Class="PatchOperationAdd">
-                <xpath>Defs/StatDef[defName="IncomingDamageFactor"]</xpath>
-                <value><parts /></value>
-            </li>
-        </operations>
-    </Operation>
-    <Operation Class="PatchOperationAdd">
+    <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="IncomingDamageFactor"]/parts</xpath>
-        <value>
-            <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
-                <statusType>Endurance</statusType>
-                <mode>ExpDecay</mode>
-                <a>0.9999</a>
-            </li>
-        </value>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="IncomingDamageFactor"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                    <statusType>Endurance</statusType>
+                    <mode>ExpDecay</mode>
+                    <a>0.9999</a>
+                </li>
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="IncomingDamageFactor"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                        <statusType>Endurance</statusType>
+                        <mode>ExpDecay</mode>
+                        <a>0.9999</a>
+                    </li>
+                </parts>
+            </value>
+        </nomatch>
     </Operation>
 
     <!-- 硬直时间: val *= 0.9995 ^ k -->
-    <Operation Class="PatchOperationSequence">
-        <success>Always</success>
-        <operations>
-            <li Class="PatchOperationTest">
-                <xpath>Defs/StatDef[defName="StaggerDurationFactor"]/parts</xpath>
-                <success>Invert</success>
-            </li>
-            <li Class="PatchOperationAdd">
-                <xpath>Defs/StatDef[defName="StaggerDurationFactor"]</xpath>
-                <value><parts /></value>
-            </li>
-        </operations>
-    </Operation>
-    <Operation Class="PatchOperationAdd">
+    <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="StaggerDurationFactor"]/parts</xpath>
-        <value>
-            <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
-                <statusType>Endurance</statusType>
-                <mode>ExpDecay</mode>
-                <a>0.9995</a>
-            </li>
-        </value>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="StaggerDurationFactor"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                    <statusType>Endurance</statusType>
+                    <mode>ExpDecay</mode>
+                    <a>0.9995</a>
+                </li>
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="StaggerDurationFactor"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                        <statusType>Endurance</statusType>
+                        <mode>ExpDecay</mode>
+                        <a>0.9995</a>
+                    </li>
+                </parts>
+            </value>
+        </nomatch>
     </Operation>
 
     <!-- 疼痛阈值: val *= 0.9995 ^ k (降低阈值=更耐痛) -->
-    <Operation Class="PatchOperationSequence">
-        <success>Always</success>
-        <operations>
-            <li Class="PatchOperationTest">
-                <xpath>Defs/StatDef[defName="PainShockThreshold"]/parts</xpath>
-                <success>Invert</success>
-            </li>
-            <li Class="PatchOperationAdd">
-                <xpath>Defs/StatDef[defName="PainShockThreshold"]</xpath>
-                <value><parts /></value>
-            </li>
-        </operations>
-    </Operation>
-    <Operation Class="PatchOperationAdd">
+    <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="PainShockThreshold"]/parts</xpath>
-        <value>
-            <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
-                <statusType>Endurance</statusType>
-                <mode>ExpDecay</mode>
-                <a>0.9995</a>
-            </li>
-        </value>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="PainShockThreshold"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                    <statusType>Endurance</statusType>
+                    <mode>ExpDecay</mode>
+                    <a>0.9995</a>
+                </li>
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="PainShockThreshold"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                        <statusType>Endurance</statusType>
+                        <mode>ExpDecay</mode>
+                        <a>0.9995</a>
+                    </li>
+                </parts>
+            </value>
+        </nomatch>
     </Operation>
 
     <!-- 休息下降速率: val *= 0.9998 ^ k (降低=更少需要休息) -->
-    <Operation Class="PatchOperationSequence">
-        <success>Always</success>
-        <operations>
-            <li Class="PatchOperationTest">
-                <xpath>Defs/StatDef[defName="RestFallRateFactor"]/parts</xpath>
-                <success>Invert</success>
-            </li>
-            <li Class="PatchOperationAdd">
-                <xpath>Defs/StatDef[defName="RestFallRateFactor"]</xpath>
-                <value><parts /></value>
-            </li>
-        </operations>
-    </Operation>
-    <Operation Class="PatchOperationAdd">
+    <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="RestFallRateFactor"]/parts</xpath>
-        <value>
-            <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
-                <statusType>Endurance</statusType>
-                <mode>ExpDecay</mode>
-                <a>0.9998</a>
-            </li>
-        </value>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="RestFallRateFactor"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                    <statusType>Endurance</statusType>
+                    <mode>ExpDecay</mode>
+                    <a>0.9998</a>
+                </li>
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="RestFallRateFactor"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                        <statusType>Endurance</statusType>
+                        <mode>ExpDecay</mode>
+                        <a>0.9998</a>
+                    </li>
+                </parts>
+            </value>
+        </nomatch>
     </Operation>
 
 
     <!-- ==================== 灵巧 (Dexterity) ===================== -->
 
     <!-- 全局工作速度: val += k * 0.00030 -->
-    <Operation Class="PatchOperationSequence">
-        <success>Always</success>
-        <operations>
-            <li Class="PatchOperationTest">
-                <xpath>Defs/StatDef[defName="WorkSpeedGlobal"]/parts</xpath>
-                <success>Invert</success>
-            </li>
-            <li Class="PatchOperationAdd">
-                <xpath>Defs/StatDef[defName="WorkSpeedGlobal"]</xpath>
-                <value><parts /></value>
-            </li>
-        </operations>
-    </Operation>
-    <Operation Class="PatchOperationAdd">
+    <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="WorkSpeedGlobal"]/parts</xpath>
-        <value>
-            <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
-                <statusType>Dexterity</statusType>
-                <mode>Offset</mode>
-                <a>0.00030</a>
-                <displayAsPercent>false</displayAsPercent>
-            </li>
-        </value>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="WorkSpeedGlobal"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                    <statusType>Dexterity</statusType>
+                    <mode>Offset</mode>
+                    <a>0.00030</a>
+                    <displayAsPercent>false</displayAsPercent>
+                </li>
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="WorkSpeedGlobal"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                        <statusType>Dexterity</statusType>
+                        <mode>Offset</mode>
+                        <a>0.00030</a>
+                        <displayAsPercent>false</displayAsPercent>
+                    </li>
+                </parts>
+            </value>
+        </nomatch>
     </Operation>
 
     <!-- 近战冷却系数: val *= 0.9998 ^ k -->
-    <Operation Class="PatchOperationSequence">
-        <success>Always</success>
-        <operations>
-            <li Class="PatchOperationTest">
-                <xpath>Defs/StatDef[defName="MeleeCooldownFactor"]/parts</xpath>
-                <success>Invert</success>
-            </li>
-            <li Class="PatchOperationAdd">
-                <xpath>Defs/StatDef[defName="MeleeCooldownFactor"]</xpath>
-                <value><parts /></value>
-            </li>
-        </operations>
-    </Operation>
-    <Operation Class="PatchOperationAdd">
+    <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="MeleeCooldownFactor"]/parts</xpath>
-        <value>
-            <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
-                <statusType>Dexterity</statusType>
-                <mode>ExpDecay</mode>
-                <a>0.9998</a>
-            </li>
-        </value>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="MeleeCooldownFactor"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                    <statusType>Dexterity</statusType>
+                    <mode>ExpDecay</mode>
+                    <a>0.9998</a>
+                </li>
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="MeleeCooldownFactor"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                        <statusType>Dexterity</statusType>
+                        <mode>ExpDecay</mode>
+                        <a>0.9998</a>
+                    </li>
+                </parts>
+            </value>
+        </nomatch>
     </Operation>
 
     <!-- 瞄准时间: val *= 0.9995 ^ k -->
-    <Operation Class="PatchOperationSequence">
-        <success>Always</success>
-        <operations>
-            <li Class="PatchOperationTest">
-                <xpath>Defs/StatDef[defName="AimingDelayFactor"]/parts</xpath>
-                <success>Invert</success>
-            </li>
-            <li Class="PatchOperationAdd">
-                <xpath>Defs/StatDef[defName="AimingDelayFactor"]</xpath>
-                <value><parts /></value>
-            </li>
-        </operations>
-    </Operation>
-    <Operation Class="PatchOperationAdd">
+    <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="AimingDelayFactor"]/parts</xpath>
-        <value>
-            <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
-                <statusType>Dexterity</statusType>
-                <mode>ExpDecay</mode>
-                <a>0.9995</a>
-            </li>
-        </value>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="AimingDelayFactor"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                    <statusType>Dexterity</statusType>
+                    <mode>ExpDecay</mode>
+                    <a>0.9995</a>
+                </li>
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="AimingDelayFactor"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                        <statusType>Dexterity</statusType>
+                        <mode>ExpDecay</mode>
+                        <a>0.9995</a>
+                    </li>
+                </parts>
+            </value>
+        </nomatch>
     </Operation>
 
     <!-- 远程冷却: val *= 0.9998 ^ k -->
-    <Operation Class="PatchOperationSequence">
-        <success>Always</success>
-        <operations>
-            <li Class="PatchOperationTest">
-                <xpath>Defs/StatDef[defName="RangedCooldownFactor"]/parts</xpath>
-                <success>Invert</success>
-            </li>
-            <li Class="PatchOperationAdd">
-                <xpath>Defs/StatDef[defName="RangedCooldownFactor"]</xpath>
-                <value><parts /></value>
-            </li>
-        </operations>
-    </Operation>
-    <Operation Class="PatchOperationAdd">
+    <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="RangedCooldownFactor"]/parts</xpath>
-        <value>
-            <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
-                <statusType>Dexterity</statusType>
-                <mode>ExpDecay</mode>
-                <a>0.9998</a>
-            </li>
-        </value>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="RangedCooldownFactor"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                    <statusType>Dexterity</statusType>
+                    <mode>ExpDecay</mode>
+                    <a>0.9998</a>
+                </li>
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="RangedCooldownFactor"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                        <statusType>Dexterity</statusType>
+                        <mode>ExpDecay</mode>
+                        <a>0.9998</a>
+                    </li>
+                </parts>
+            </value>
+        </nomatch>
     </Operation>
 
     <!-- 射击精度: val += k * 0.00030 -->
-    <Operation Class="PatchOperationSequence">
-        <success>Always</success>
-        <operations>
-            <li Class="PatchOperationTest">
-                <xpath>Defs/StatDef[defName="ShootingAccuracyPawn"]/parts</xpath>
-                <success>Invert</success>
-            </li>
-            <li Class="PatchOperationAdd">
-                <xpath>Defs/StatDef[defName="ShootingAccuracyPawn"]</xpath>
-                <value><parts /></value>
-            </li>
-        </operations>
-    </Operation>
-    <Operation Class="PatchOperationAdd">
+    <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="ShootingAccuracyPawn"]/parts</xpath>
-        <value>
-            <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
-                <statusType>Dexterity</statusType>
-                <mode>Offset</mode>
-                <a>0.00030</a>
-            </li>
-        </value>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="ShootingAccuracyPawn"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                    <statusType>Dexterity</statusType>
+                    <mode>Offset</mode>
+                    <a>0.00030</a>
+                </li>
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="ShootingAccuracyPawn"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                        <statusType>Dexterity</statusType>
+                        <mode>Offset</mode>
+                        <a>0.00030</a>
+                    </li>
+                </parts>
+            </value>
+        </nomatch>
     </Operation>
 
 
     <!-- ==================== 敏捷 (Agility) ====================== -->
 
     <!-- 移动速度: val *= (1 + k * 0.00025) -->
-    <Operation Class="PatchOperationSequence">
-        <success>Always</success>
-        <operations>
-            <li Class="PatchOperationTest">
-                <xpath>Defs/StatDef[defName="MoveSpeed"]/parts</xpath>
-                <success>Invert</success>
-            </li>
-            <li Class="PatchOperationAdd">
-                <xpath>Defs/StatDef[defName="MoveSpeed"]</xpath>
-                <value><parts /></value>
-            </li>
-        </operations>
-    </Operation>
-    <Operation Class="PatchOperationAdd">
+    <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="MoveSpeed"]/parts</xpath>
-        <value>
-            <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
-                <statusType>Agility</statusType>
-                <mode>Factor</mode>
-                <a>0.00025</a>
-            </li>
-        </value>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="MoveSpeed"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                    <statusType>Agility</statusType>
+                    <mode>Factor</mode>
+                    <a>0.00025</a>
+                </li>
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="MoveSpeed"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                        <statusType>Agility</statusType>
+                        <mode>Factor</mode>
+                        <a>0.00025</a>
+                    </li>
+                </parts>
+            </value>
+        </nomatch>
     </Operation>
 
     <!-- 近战闪避: val += k * 0.00100 (原始值，经 postProcessCurve 后映射为百分比) -->
-    <Operation Class="PatchOperationSequence">
-        <success>Always</success>
-        <operations>
-            <li Class="PatchOperationTest">
-                <xpath>Defs/StatDef[defName="MeleeDodgeChance"]/parts</xpath>
-                <success>Invert</success>
-            </li>
-            <li Class="PatchOperationAdd">
-                <xpath>Defs/StatDef[defName="MeleeDodgeChance"]</xpath>
-                <value><parts /></value>
-            </li>
-        </operations>
-    </Operation>
-    <Operation Class="PatchOperationAdd">
+    <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="MeleeDodgeChance"]/parts</xpath>
-        <value>
-            <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
-                <statusType>Agility</statusType>
-                <mode>Offset</mode>
-                <a>0.00100</a>
-                <displayAsPercent>false</displayAsPercent>
-            </li>
-        </value>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="MeleeDodgeChance"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                    <statusType>Agility</statusType>
+                    <mode>Offset</mode>
+                    <a>0.00100</a>
+                    <displayAsPercent>false</displayAsPercent>
+                </li>
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="MeleeDodgeChance"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                        <statusType>Agility</statusType>
+                        <mode>Offset</mode>
+                        <a>0.00100</a>
+                        <displayAsPercent>false</displayAsPercent>
+                    </li>
+                </parts>
+            </value>
+        </nomatch>
     </Operation>
 
 
     <!-- ==================== 魔力 (Mana) ====================== -->
 
     <!-- 魔力：心灵熵阈值上限（Offset 叠加） -->
-    <Operation Class="PatchOperationAdd">
+    <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="PsychicEntropyMax"]/parts</xpath>
-        <value>
-            <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
-                <statusType>Mana</statusType>
-                <mode>Offset</mode>
-                <a>0.05000</a>
-                <displayAsPercent>false</displayAsPercent>
-            </li>
-        </value>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="PsychicEntropyMax"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                    <statusType>Mana</statusType>
+                    <mode>Offset</mode>
+                    <a>0.05000</a>
+                    <displayAsPercent>false</displayAsPercent>
+                </li>
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="PsychicEntropyMax"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                        <statusType>Mana</statusType>
+                        <mode>Offset</mode>
+                        <a>0.05000</a>
+                        <displayAsPercent>false</displayAsPercent>
+                    </li>
+                </parts>
+            </value>
+        </nomatch>
     </Operation>
 
     <!-- 魔力：冥想精神力获取每日提升（Offset 叠加） -->
-    <!-- 原版无 parts 节点，需先创建 -->
-    <Operation Class="PatchOperationSequence">
-        <operations>
-            <li Class="PatchOperationTest">
-                <xpath>Defs/StatDef[defName="MeditationFocusGain"]/parts</xpath>
-                <success>Invert</success>
-            </li>
-            <li Class="PatchOperationAdd">
-                <xpath>Defs/StatDef[defName="MeditationFocusGain"]</xpath>
-                <value><parts /></value>
-            </li>
-        </operations>
-    </Operation>
-    <Operation Class="PatchOperationAdd">
+    <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="MeditationFocusGain"]/parts</xpath>
-        <value>
-            <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
-                <statusType>Mana</statusType>
-                <mode>Offset</mode>
-                <a>0.00010</a>
-                <displayAsPercent>false</displayAsPercent>
-            </li>
-        </value>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="MeditationFocusGain"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                    <statusType>Mana</statusType>
+                    <mode>Offset</mode>
+                    <a>0.00010</a>
+                    <displayAsPercent>false</displayAsPercent>
+                </li>
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="MeditationFocusGain"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                        <statusType>Mana</statusType>
+                        <mode>Offset</mode>
+                        <a>0.00010</a>
+                        <displayAsPercent>false</displayAsPercent>
+                    </li>
+                </parts>
+            </value>
+        </nomatch>
     </Operation>
+
 
     <!-- ==================== 发展能力系统 ====================== -->
 
     <!-- 魔导：心灵熵消散速度（PsychicEntropyRecoveryRate） -->
-    <!-- 原版已有 parts 节点，直接注入 StatPart_DevelopableAbility -->
-    <Operation Class="PatchOperationAdd">
+    <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="PsychicEntropyRecoveryRate"]/parts</xpath>
-        <value>
-            <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
-        </value>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="PsychicEntropyRecoveryRate"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="PsychicEntropyRecoveryRate"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
+                </parts>
+            </value>
+        </nomatch>
     </Operation>
 
     <!-- [预留] 魔导：额外的精神力存储（PsyfocusMax） -->
     <!-- 注意：原版不存在 PsyfocusMax StatDef，待后续版本实现 -->
     <!--
-    <Operation Class="PatchOperationAdd">
-        <xpath>Defs/StatDef[defName="PsyfocusMax"]</xpath>
-        <value><parts /></value>
-    </Operation>
-    <Operation Class="PatchOperationAdd">
+    <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="PsyfocusMax"]/parts</xpath>
-        <value>
-            <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
-        </value>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="PsyfocusMax"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="PsyfocusMax"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
+                </parts>
+            </value>
+        </nomatch>
     </Operation>
     -->
 
+
     <!-- ==================== 异常抗性 (AbnormalResistance) ====================== -->
 
-    <!-- 异常抗性：免疫速度（原版已有 parts） -->
-    <Operation Class="PatchOperationAdd">
+    <!-- 异常抗性：免疫速度 -->
+    <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="ImmunityGainSpeed"]/parts</xpath>
-        <value>
-            <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
-        </value>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="ImmunityGainSpeed"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="ImmunityGainSpeed"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
+                </parts>
+            </value>
+        </nomatch>
     </Operation>
 
-    <!-- 异常抗性：环境毒素抗性（原版无 parts 节点，需先创建） -->
-    <Operation Class="PatchOperationSequence">
-        <operations>
-            <li Class="PatchOperationTest">
-                <xpath>Defs/StatDef[defName="ToxicEnvironmentResistance"]/parts</xpath>
-                <success>Invert</success>
-            </li>
-            <li Class="PatchOperationAdd">
-                <xpath>Defs/StatDef[defName="ToxicEnvironmentResistance"]</xpath>
-                <value><parts /></value>
-            </li>
-        </operations>
-    </Operation>
-    <Operation Class="PatchOperationAdd">
+    <!-- 异常抗性：环境毒素抗性 -->
+    <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="ToxicEnvironmentResistance"]/parts</xpath>
-        <value>
-            <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
-        </value>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="ToxicEnvironmentResistance"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="ToxicEnvironmentResistance"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
+                </parts>
+            </value>
+        </nomatch>
     </Operation>
 
     <!-- 异常抗性：毒素抗性（ToxicResistance StatDef 不存在于原版，暂不实现） -->
     <!--
-    <Operation Class="PatchOperationAdd">
-        <xpath>Defs/StatDef[defName="ToxicResistance"]</xpath>
-        <value><parts /></value>
-    </Operation>
-    <Operation Class="PatchOperationAdd">
+    <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="ToxicResistance"]/parts</xpath>
-        <value>
-            <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
-        </value>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="ToxicResistance"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="ToxicResistance"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
+                </parts>
+            </value>
+        </nomatch>
     </Operation>
     -->
 

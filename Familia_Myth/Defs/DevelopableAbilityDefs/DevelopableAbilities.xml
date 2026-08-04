@@ -10,6 +10,7 @@
     <abilityClass>FamiliaMyth.Abilities.DevelopableAbility_Magic</abilityClass>
     <maxProficiency>999</maxProficiency>
     <rarity>Uncommon</rarity>
+    <traitDefName>Trait_DevelopableAbility_Magic</traitDefName>
   </FamiliaMyth.Abilities.DevelopableAbilityDef>
 
   <!-- 异常抗性发展能力：提升免疫速度与毒素抗性 -->
@@ -20,6 +21,7 @@
     <abilityClass>FamiliaMyth.Abilities.DevelopableAbiility_AbnormalResistance</abilityClass>
     <maxProficiency>999</maxProficiency>
     <rarity>Common</rarity>
+    <traitDefName>Trait_DevelopableAbility_AbnormalResistance</traitDefName>
   </FamiliaMyth.Abilities.DevelopableAbilityDef>
 
 </Defs>

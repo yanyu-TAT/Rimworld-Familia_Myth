@@ -122,5 +122,20 @@ namespace FamiliaMyth.Debug
                 Find.WindowStack.Add(new Dialog_AscendReward(pharna, rewards));
             }
         }
+
+        [DebugAction("Familia Myth", "All Developable Ability Gain +100 Proficiency",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        public static void GainDevelopableAbilityProficiency(Pawn pawn)
+        {
+            var pharna = Hediff_Pharna.GetPharna(pawn);
+            if (pharna?.developableAbilities == null) return;
+            foreach (var ability in pharna.developableAbilities)
+            {
+                if (ability == null) continue;
+                ability.GainProficiency(DefaultAmount);
+                MoteMaker.ThrowText(pawn.Position.ToVector3(), pawn.Map, $"{ability.Proficiency}");
+            }
+        }
     }
 }

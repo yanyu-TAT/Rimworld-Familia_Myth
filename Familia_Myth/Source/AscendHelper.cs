@@ -22,6 +22,7 @@ namespace FamiliaMyth.Pharna
 
     public interface IAscendReward
     {
+
         RewardType RewardType { get; }
         RewardRarity Rarity { get; }
 

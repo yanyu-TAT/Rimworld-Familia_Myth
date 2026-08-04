@@ -9,8 +9,7 @@ namespace FamiliaMyth.Abilities
     /// </summary>
     public class DevelopableAbiility_AbnormalResistance : DevelopableAbility
     {
-
-        public override bool ApplyModifiers(Hediff_Pharna pharna, StatDef stat, ref float value)
+        public override bool ApplyModifiers(StatDef stat, ref float value)
         {
             if (pharna == null || stat == null) return false;
             if (stat == StatDefOf.ImmunityGainSpeed)
@@ -32,14 +31,13 @@ namespace FamiliaMyth.Abilities
             return false;
         }
 
-        public override string GetExplanation(Hediff_Pharna pharna, StatDef stat)
+        public override string GetExplanation(StatDef stat)
         {
 
             if (pharna == null || stat == null)
                 return "";
             string label = "FamiliaMyth.DevelopableAbilityAbnormalResistanceLabel".Translate();
-            string rank = GetRank(proficiency);
-            string str = "Lv." + pharna.level.ToString() + " " + label + rank + proficiency.ToString() + ": ";
+            string str = "Lv." + pharna.level.ToString() + " " + label + Rank + proficiency.ToString() + ": ";
             if (stat == StatDefOf.ImmunityGainSpeed)
             {
                 str += "+" + (proficiency * 0.005f).ToStringPercent();

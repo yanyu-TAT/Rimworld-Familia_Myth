@@ -1,5 +1,6 @@
 ﻿using FamiliaMyth.Pharna;
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace FamiliaMyth.Abilities
@@ -10,7 +11,10 @@ namespace FamiliaMyth.Abilities
     public abstract class DevelopableAbility : IExposable, IAscendReward
     {
         public DevelopableAbilityDef def;
-        public float proficiency; //熟练度
+
+        protected float proficiency; //熟练度
+        public float Proficiency => proficiency;
+
         protected static readonly List<string> ranks = new();
 
         public RewardType RewardType => RewardType.DevelopableAbility;
@@ -20,6 +24,8 @@ namespace FamiliaMyth.Abilities
         public string Label => def.label;
 
         public string Description => def.description;
+
+        protected Hediff_Pharna pharna;
 
         public void RewardInitialize()
         {
@@ -37,6 +43,20 @@ namespace FamiliaMyth.Abilities
             ranks.Add("SSS");
         }
 
+        protected TraitDef traitDef;
+        protected TraitDef TraitDef =>
+            traitDef ??= DefDatabase<TraitDef>.GetNamed(def.traitDefName);
+
+        /// <summary>
+        /// 将 proficiency 映射到 Trait degree
+        /// </summary>
+        public int Degree => Mathf.Min(((int)proficiency) / 100, 11);
+
+        /// <summary>
+        /// 创建对应的 Trait 实例
+        /// </summary>
+        public Trait ToTrait => new(TraitDef, Degree, forced: true);
+
         /// <summary>
         /// 对指定的数据进行修正
         /// </summary>
@@ -44,7 +64,7 @@ namespace FamiliaMyth.Abilities
         /// <param name="stat">修正值的类型def</param>
         /// <param name="value">修正值的引用</param>
         /// <returns>修正成功/失败</returns>
-        public abstract bool ApplyModifiers(Hediff_Pharna pharna, StatDef stat, ref float value);
+        public abstract bool ApplyModifiers(StatDef stat, ref float value);
 
         /// <summary>
         /// 获取数据修正中的描述，例:"魔导I12:+0.55"
@@ -52,18 +72,24 @@ namespace FamiliaMyth.Abilities
         /// <param name="pharna">生效中的恩惠</param>
         /// <param name="stat">修正值的类型def</param>
         /// <returns>输出的描述</returns>
-        public abstract string GetExplanation(Hediff_Pharna pharna, StatDef stat);
+        public abstract string GetExplanation(StatDef stat);
 
-        protected static string GetRank(float value)
-        {
-            int t = ((int)value) / 100;
-            t = t >= 12 ? 11 : t;
-            return ranks[t];
-        }
+        protected string Rank => ranks[Degree];
 
         public virtual bool GainProficiency(float amout)
         {
+            var prevDegree = Degree;
             proficiency += amout;
+            //升级
+            if (Degree !=  prevDegree)
+            {
+                if (pharna.pawn?.story?.traits?.HasTrait(TraitDef) ?? false)
+                {
+                    var trait = pharna.pawn.story.traits.GetTrait(TraitDef);
+                    pharna.pawn.story.traits.RemoveTrait(trait);
+                }
+                pharna.pawn.story.traits.GainTrait(ToTrait);
+            }
             return true;
         }
 
@@ -71,11 +97,19 @@ namespace FamiliaMyth.Abilities
         {
             Scribe_Defs.Look(ref def, "def");
             Scribe_Values.Look(ref proficiency, "proficiency", 0f);
+            Scribe_References.Look(ref pharna, "pharna");
         }
 
-        public void Apply(Hediff_Pharna pharna)
+        public void Apply(Hediff_Pharna p)
         {
+            pharna = p;
             pharna.developableAbilities.Add(this);
+
+            if (!pharna.pawn?.story?.traits?.HasTrait(TraitDef) ?? false)
+            {
+                var temp = ToTrait;
+                pharna.pawn.story.traits.GainTrait(temp);
+            }
         }
     }
 }

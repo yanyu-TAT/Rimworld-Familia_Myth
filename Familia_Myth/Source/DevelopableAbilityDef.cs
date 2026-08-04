@@ -13,6 +13,7 @@ namespace FamiliaMyth.Abilities
         public float maxProficiency = 999f; //熟练度上限
         public RewardRarity rarity = RewardRarity.Common; //稀有度
         public List<StatModifier> modifiers = new();
+        public string traitDefName; //对应的特性的DefName
 
         public DevelopableAbility CreateAbility()
         {

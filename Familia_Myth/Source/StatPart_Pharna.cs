@@ -1,4 +1,3 @@
-using FamiliaMyth.Core;
 using RimWorld;
 using Verse;
 
@@ -18,73 +17,97 @@ namespace FamiliaMyth.Pharna
 
         public override void TransformValue(StatRequest req, ref float val)
         {
-            if (!req.HasThing || !req.Thing.Spawned || !(req.Thing is Pawn pawn))
-                return;
-
-            var pharna = Hediff_Pharna.GetPharna(pawn);
-            if (pharna == null) return;
-
-            float status = pharna.GetFullStatus(statusType);
-            switch (mode)
+            try
             {
-                case StatPartMode.Offset:
-                    val += a * status;break;
-                case StatPartMode.Factor:
-                    val *= 1 + a * status;break;
-                case StatPartMode.ExpDecay:
-                    val *= (float)Math.Pow(a, status);break;
+                Transform(req, ref val);
+            }
+            catch { }
+
+            void Transform(StatRequest req, ref float val)
+            {
+                if (!req.HasThing || !req.Thing.Spawned || req.Thing is not Pawn pawn)
+                    return;
+
+                var pharna = Hediff_Pharna.GetPharna(pawn);
+                if (pharna == null) return;
+
+                float status = pharna.GetFullStatus(statusType);
+                switch (mode)
+                {
+                    case StatPartMode.Offset:
+                        val += a * status; break;
+                    case StatPartMode.Factor:
+                        val *= 1 + a * status; break;
+                    case StatPartMode.ExpDecay:
+                        val *= (float)Math.Pow(a, status); break;
+                }
+
+                return;
             }
         }
 
         public override string ExplanationPart(StatRequest req)
         {
-            if (!req.HasThing || !req.Thing.Spawned || !(req.Thing is Pawn pawn))
-                return null;
-
-            var pharna = Hediff_Pharna.GetPharna(pawn);
-            if (pharna == null) return "";
-
-            int fullStatus = (int) pharna.GetFullStatus(statusType);
-            int curStatus = (int) pharna.GetCurrentStatus(statusType);
-            string rank = Hediff_Pharna.GetRank(curStatus);
-            int level = pharna.level;
-            //说明文本，例：Lv.3 敏捷F399: +35.5%
-            string s = "Lv." + level.ToString() + " " + Hediff_Pharna.GetStatusName(statusType) + rank + curStatus.ToString() + ": ";
-
-            //添加符号
-            if (mode == StatPartMode.ExpDecay || mode == StatPartMode.Factor)
+            try
             {
-                s += "x";
+                return GetExplanation(req);
             }
-            else if (a >= 0)
+            catch
             {
-                s += "+";
-            } else
-            {
-                s += "-";
+                return "";
             }
 
-            //计算数值
-            switch (mode)
+            string GetExplanation(StatRequest req)
             {
-                case StatPartMode.Offset:
-                    s += displayAsPercent
-                        ? (a * fullStatus).ToStringPercent()
-                        : (a * fullStatus).ToString("G3");
-                    break;
-                case StatPartMode.Factor:
-                    s += displayAsPercent
-                        ? (1 + a * fullStatus).ToStringPercent()
-                        : (1 + a * fullStatus).ToString("G3");
-                    break;
-                case StatPartMode.ExpDecay:
-                    s += displayAsPercent
-                        ? ((float)Math.Pow(a, fullStatus)).ToStringPercent()
-                        : ((float)Math.Pow(a, fullStatus)).ToString("G3");
-                    break;
-            }
+                if (!req.HasThing || !req.Thing.Spawned || req.Thing is not Pawn pawn)
+                    return null;
 
-            return s;
+                var pharna = Hediff_Pharna.GetPharna(pawn);
+                if (pharna == null) return "";
+
+                int fullStatus = (int)pharna.GetFullStatus(statusType);
+                int curStatus = (int)pharna.GetCurrentStatus(statusType);
+                string rank = Hediff_Pharna.GetRank(curStatus);
+                int level = pharna.level;
+                //说明文本，例：Lv.3 敏捷F399: +35.5%
+                string s = "Lv." + level.ToString() + " " + Hediff_Pharna.GetStatusName(statusType) + rank + curStatus.ToString() + ": ";
+
+                //添加符号
+                if (mode == StatPartMode.ExpDecay || mode == StatPartMode.Factor)
+                {
+                    s += "x";
+                }
+                else if (a >= 0)
+                {
+                    s += "+";
+                }
+                else
+                {
+                    s += "-";
+                }
+
+                //计算数值
+                switch (mode)
+                {
+                    case StatPartMode.Offset:
+                        s += displayAsPercent
+                            ? (a * fullStatus).ToStringPercent()
+                            : (a * fullStatus).ToString("G3");
+                        break;
+                    case StatPartMode.Factor:
+                        s += displayAsPercent
+                            ? (1 + a * fullStatus).ToStringPercent()
+                            : (1 + a * fullStatus).ToString("G3");
+                        break;
+                    case StatPartMode.ExpDecay:
+                        s += displayAsPercent
+                            ? ((float)Math.Pow(a, fullStatus)).ToStringPercent()
+                            : ((float)Math.Pow(a, fullStatus)).ToString("G3");
+                        break;
+                }
+
+                return s;
+            }
         }
     }
 }
