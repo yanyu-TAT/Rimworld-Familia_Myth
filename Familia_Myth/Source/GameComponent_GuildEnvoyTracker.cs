@@ -1,19 +1,22 @@
-﻿using Verse;
+using FamiliaMyth.Quest;
+using Verse;
 
 namespace FamiliaMyth.Incidents
 {
     public class GameComponent_GuildEnvoyTracker : GameComponent
     {
-        public Dictionary<int, MissionParams> envoys = new();
-        public List<Pawn> notSpoken = new();
+        public static GameComponent_GuildEnvoyTracker Instance => Current.Game?.GetComponent<GameComponent_GuildEnvoyTracker>();
 
-        public GameComponent_GuildEnvoyTracker()
-        {
-        }
 
-        public GameComponent_GuildEnvoyTracker(Game game)
-        {
-        }
+        private Dictionary<int, GuildQuestGenerator> envoys = new();
+        private List<Pawn> notSpoken = new();
+
+        public static Dictionary<int, GuildQuestGenerator> Envoys => Instance?.envoys ?? new();
+        public static List<Pawn> NotSpoken => Instance?.notSpoken ?? new();
+
+        public GameComponent_GuildEnvoyTracker() { }
+
+        public GameComponent_GuildEnvoyTracker(Game game) { }
 
         public override void ExposeData()
         {

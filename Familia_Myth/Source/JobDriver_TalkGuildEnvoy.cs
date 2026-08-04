@@ -1,4 +1,5 @@
-﻿using Verse;
+using FamiliaMyth.Quest;
+using Verse;
 using Verse.AI;
 
 namespace FamiliaMyth.Incidents
@@ -24,28 +25,37 @@ namespace FamiliaMyth.Incidents
                 Pawn envoy = TargetPawnA;
                 if (envoy == null || !envoy.Spawned) return;
                 //移除未对话
-                IncidentWorker_GuildEnvoy.NotSpoken.Remove(envoy);
+                GameComponent_GuildEnvoyTracker.NotSpoken.Remove(envoy);
                 //发送信件
                 SendChoiceLetter(envoy);
             });
         }
         private void SendChoiceLetter(Pawn envoy)
         {
-            if (LetterMaker.MakeLetter(
-                label: "公会使者",
-                text: "使者向你介绍了委托的详情。\n\n" +
-                      "公会在附近发现了一处邪恶派阀据点，\n" +
-                      "放任不管会严重危害周边治安。\n" +
-                      "现请求派出冒险者前去肃清。\n\n" +
-                      "是否接受？",
-                def: DefDatabase<LetterDef>.GetNamed("AcceptMissionFromEnvoy"),
-                lookTargets: envoy) is ChoiceLetter_MissionOffer letter)
+            if (!GameComponent_GuildEnvoyTracker.Envoys.TryGetValue(envoy.thingIDNumber, out var gen))
+                return;
+
+            var letter = LetterMaker.MakeLetter(
+                label: gen.def?.label ?? "公会使者",
+                text: gen.LetterText ?? "使者向你介绍了委托的详情。",
+                def: DefDatabase<LetterDef>.GetNamed(
+                    gen.Type == Quest.QuestType.Daily 
+                    ? "AcceptDailyQuestFromEnvoy" 
+                    : "AcceptRankUpQuestFromEnvoy"),
+                lookTargets: envoy);
+            if (letter != null && letter is IQuestProvider provider)
             {
-                letter.envoy = envoy;
+                provider.Envoy = envoy;
+                provider.QuestDef = gen.def;
                 Find.LetterStack.ReceiveLetter(letter);
-                if (Find.WindowStack.IsOpen<Dialog_NodeTree>() == false)
+                if (!Find.WindowStack.IsOpen<Dialog_NodeTree>())
                     letter.OpenLetter();
             }
         }
+    }
+    public interface IQuestProvider
+    {
+        Pawn Envoy { get; set; }
+        GuildQuestDef QuestDef { get; set; }
     }
 }

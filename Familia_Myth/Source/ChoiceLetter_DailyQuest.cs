@@ -1,4 +1,5 @@
-﻿using FamiliaMyth.Pharna;
+using FamiliaMyth.Pharna;
+using FamiliaMyth.Quest;
 using RimWorld;
 using RimWorld.QuestGen;
 using Verse;
@@ -6,9 +7,10 @@ using Verse.AI.Group;
 
 namespace FamiliaMyth.Incidents
 {
-    public class ChoiceLetter_MissionOffer : ChoiceLetter
+    public class ChoiceLetter_DailyQuest : ChoiceLetter, IQuestProvider
     {
         public Pawn envoy;
+        public GuildQuestDef questDef;
 
         public override bool CanDismissWithRightClick => false;
 
@@ -78,8 +80,8 @@ namespace FamiliaMyth.Incidents
                         if (envoy.Spawned)
                         {
                             // 使者直接离开
-                            if (IncidentWorker_GuildEnvoy.Envoys.ContainsKey(envoy.thingIDNumber))
-                                IncidentWorker_GuildEnvoy.Envoys.Remove(envoy.thingIDNumber);
+                            if (GameComponent_GuildEnvoyTracker.Envoys.ContainsKey(envoy.thingIDNumber))
+                                GameComponent_GuildEnvoyTracker.Envoys.Remove(envoy.thingIDNumber);
                             Find.LetterStack.RemoveLetter(this);
                             EnvoyLeave();
                         }
@@ -117,12 +119,16 @@ namespace FamiliaMyth.Incidents
             }
         }
 
+        public Pawn Envoy { get => envoy; set => envoy = value; }
+
+        public GuildQuestDef QuestDef{ get => questDef; set => questDef = value; }
+
         private void EnvoyLeave()
         {
             var lord = envoy.GetLord();
             envoy.Map?.lordManager?.RemoveLord(lord);
 
-            // 创建新的离开 Lord
+            //离开地图
             var exitJob = new LordJob_ExitMapBest();
             var newLord = LordMaker.MakeNewLord(envoy.Faction, exitJob, envoy.Map);
             newLord.AddPawn(envoy);
@@ -132,27 +138,17 @@ namespace FamiliaMyth.Incidents
         {
             if (acceptor == null || envoy == null) return;
 
-            if (!IncidentWorker_GuildEnvoy.Envoys.TryGetValue(envoy.thingIDNumber, out MissionParams missionParams))
+            if (!GameComponent_GuildEnvoyTracker.Envoys.TryGetValue(envoy.thingIDNumber, out var gen))
             {
-                Log.Error($"[FamiliaMyth] Can't Find Corresponding MissionParams For {envoy.Name.ToStringShort}");
+                Log.Error($"[FamiliaMyth] Can't Find Corresponding Generator For {envoy.Name.ToStringShort}");
                 return;
             }
 
-            Slate slate = new();
-            slate.Set("map", missionParams.map);
-            slate.Set("points", missionParams.points);
-            slate.Set("siteFaction", missionParams.siteFaction);
-            slate.Set("sitePartsParams", missionParams.sitePartsParams);
-            slate.Set("envoy", envoy);
-            slate.Set("acceptor", acceptor);
-            slate.Set("initialAcceptor", acceptor);
-
-            var quest = QuestUtility.GenerateQuestAndMakeAvailable(DefDatabase<QuestScriptDef>.GetNamed("Quest_Mission"), slate);
+            var quest = gen.SummonQuest(envoy, acceptor);
             if (quest != null)
             {
-                // 移除使者的映射（任务已创建）
-                IncidentWorker_GuildEnvoy.Envoys.Remove(envoy.thingIDNumber);
-                // 将新Quest关联到当前信件
+                //移除使者
+                GameComponent_GuildEnvoyTracker.Envoys.Remove(envoy.thingIDNumber);
                 this.quest = quest;
             }
         }

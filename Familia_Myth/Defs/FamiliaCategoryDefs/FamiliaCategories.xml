@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- 探索类眷族分类 -->
+  <FamiliaMyth.Familia.FamiliaCategoryDef>
+    <defName>Explorer</defName>
+    <label>探索类</label>
+    <description>专注于探索和战斗的眷族。</description>
+    <sortOrder>0</sortOrder>
+    <rankDefs>
+      <li>ExplorerRank_I</li>
+      <li>ExplorerRank_II</li>
+      <li>ExplorerRank_III</li>
+    </rankDefs>
+    <dailyQuests>
+      <li>GuildQuest_Daily_SiteClearance</li>
+    </dailyQuests>
+    <rankUpQuests>
+      <li>GuildQuest_RankUp_SiteClearance</li>
+    </rankUpQuests>
+  </FamiliaMyth.Familia.FamiliaCategoryDef>
+
+</Defs>

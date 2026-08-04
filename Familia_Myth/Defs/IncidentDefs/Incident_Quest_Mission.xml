@@ -2,22 +2,21 @@
 <Defs>
 
   <!-- 讨伐伟业任务触发事件 -->
-  <!-- 当玩家殖民地存在恩惠持有者时，有几率触发此事件 -->
   <!-- 派遣公会使者进入玩家据点，通过与使者对话接取任务 -->
+  <!-- 该事件不占叙述者随机事件配额，由 GameComponent_GuildEnvoyTracker -->
+  <!-- 通过 IncidentQueue（Find.Storyteller.incidentQueue.Add）按间隔定点额外触发 -->
   <IncidentDef>
-    <defName>GiveQuest_Mission</defName>
+    <defName>GiveQuest_Daily</defName>
     <label>公会使者到访</label>
     <category>FactionArrival</category>
     <workerClass>FamiliaMyth.Incidents.IncidentWorker_GuildEnvoy</workerClass>
     <letterDef>PositiveEvent</letterDef>
     <letterLabel>公会使者到访</letterLabel>
-    <!-- 绑定的任务脚本定义 -->
-    <questScriptDef>Quest_Mission</questScriptDef>
-    <!-- 触发概率（基础值，实际受故事讲述者调整） -->
-    <baseChance>0.2</baseChance>
-    <!-- 最早触发天数（游戏开始3天后才可能触发） -->
-    <earliestDay>3</earliestDay>
-    <!-- 目标标签：玩家殖民地地图事件 -->
+    <!-- 绑定的任务脚本定义（供查阅；实际任务由 category.dailyQuests 决定） -->
+    <questScriptDef>Quest_Daily_SiteClearance</questScriptDef>
+    <!-- 触发概率：0 = 不由叙述者随机挑选，仅由 IncidentQueue 定点触发 -->
+    <baseChance>0</baseChance>
+    <!-- 目标标签：玩家殖民地地图事件（DefaultParmsNow/CanFireNow 使用） -->
     <targetTags>
       <li>Map_PlayerHome</li>
     </targetTags>

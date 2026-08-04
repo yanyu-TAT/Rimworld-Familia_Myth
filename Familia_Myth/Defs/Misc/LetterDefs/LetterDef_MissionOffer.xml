@@ -2,10 +2,18 @@
 <Defs>
 
   <!-- 公会使者任务选择信件 -->
-  <!-- 玩家与使者对话后弹出此信件，提供接受/拒绝/了解更多选项 -->
+  <!-- 玩家与使者对话后由 JobDriver_TalkGuildEnvoy 依任务类型弹出对应信件 -->
+
+  <!-- 日常任务 -->
   <LetterDef ParentName="CustomChoiceLetterBase">
-    <defName>AcceptMissionFromEnvoy</defName>
-    <letterClass>FamiliaMyth.Incidents.ChoiceLetter_MissionOffer</letterClass>
+    <defName>AcceptDailyQuestFromEnvoy</defName>
+    <letterClass>FamiliaMyth.Incidents.ChoiceLetter_DailyQuest</letterClass>
+  </LetterDef>
+
+  <!-- 强制升级考核 -->
+  <LetterDef ParentName="CustomChoiceLetterBase">
+    <defName>AcceptRankUpQuestFromEnvoy</defName>
+    <letterClass>Familia_Myth.Source.ChoiceLetter_RankUpQuest</letterClass>
   </LetterDef>
 
 </Defs>

@@ -5,7 +5,7 @@
   <!-- 玩家通过此任务击败敌人来获取伟业值（Exploits） -->
   <!-- 流程：公会使者进入据点 → 对话接取 → 创建任务 → 讨伐敌人 → 获得伟业值 -->
   <QuestScriptDef>
-    <defName>Quest_Mission</defName>
+    <defName>Quest_Daily_SiteClearance</defName>
     <!-- 任务在玩家接受时创建，创建后自动开始 -->
     <autoAccept>true</autoAccept>
     <defaultHidden>false</defaultHidden>
@@ -21,7 +21,7 @@
     <questNameRules>
       <rulesStrings>
         <li>questName->[missionTitle]的委托</li>
-        <li>missionTitle->冒险者公会</li>
+        <li>missionTitle->公会</li>
       </rulesStrings>
     </questNameRules>
 
@@ -44,8 +44,8 @@
         <li Class="QuestNode_Sequence">
           <nodes>
 
-            <!-- 计算难度和伟业值奖励 -->
-            <li Class="FamiliaMyth.Quest.QuestNode_Mission_SetDifficulty">
+            <!-- 计算难度、伟业值奖励与站点威胁 -->
+            <li Class="FamiliaMyth.Quest.QuestNode_DailySetDifficulty">
               <storeDifficultyAs>difficulty</storeDifficultyAs>
               <storeExploitsAs>totalExploits</storeExploitsAs>
               <baseExploits>50</baseExploits>
@@ -77,6 +77,11 @@
                   <li Class="FamiliaMyth.Quest.QuestNode_GainExploits">
                     <acceptor>$acceptor</acceptor>
                     <totalExploits>$totalExploits</totalExploits>
+                  </li>
+                  <!-- 发放眷族升级点数（供评级升级） -->
+                  <li Class="FamiliaMyth.Quest.QuestNode_GainUpgradePoints">
+                    <category>$category</category>
+                    <amount>10</amount>
                   </li>
                   <!-- 发送 rewardsReady 信号触发奖励发放 -->
                   <li Class="QuestNode_SendSignals">

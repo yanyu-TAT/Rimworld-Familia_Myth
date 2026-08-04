@@ -1,4 +1,6 @@
+using FamiliaMyth.Familia;
 using FamiliaMyth.Pharna;
+using FamiliaMyth.Quest;
 using RimWorld;
 using RimWorld.Planet;
 using Verse;
@@ -10,10 +12,8 @@ namespace FamiliaMyth.Incidents
     {
         public const int TimeoutTicks = 120000; //2 days
 
-        public static Dictionary<int, MissionParams> Envoys => Current.Game?
-            .GetComponent<GameComponent_GuildEnvoyTracker>()?.envoys ?? new();
-        public static List<Pawn> NotSpoken => Current.Game?
-            .GetComponent<GameComponent_GuildEnvoyTracker>()?.notSpoken ?? new();
+        private static Dictionary<int, GuildQuestGenerator> Envoys => GameComponent_GuildEnvoyTracker.Envoys ?? new();
+        private static List<Pawn> NotSpoken => GameComponent_GuildEnvoyTracker.NotSpoken ?? new();
 
         protected override bool CanFireNowSub(IncidentParms parms)
         {
@@ -26,55 +26,32 @@ namespace FamiliaMyth.Incidents
         {
             if (parms.target is not Map map) return false;
 
-            //根据殖民地财富值和殖民者恩惠等级计算点数
-            var point = StorytellerUtility.DefaultSiteThreatPointsNow();
-            var m = 1f;
-            foreach (var pawn in map.mapPawns.AllPawnsSpawned.Where(p => p.Faction == Faction.OfPlayer && p.IsColonist))
-                if (Hediff_Pharna.GetPharna(pawn) is Hediff_Pharna pharna)
-                    m += (pharna.level - 1) * (pharna.level - 1) / 10;
-            point *= m;
+            //从可挑选的种类中随机挑选
+            var cats = DefDatabase<FamiliaCategoryDef>.AllDefs
+                .Where(c => c.dailyQuests != null && c.dailyQuests.Count > 0)
+                .ToList();
+            if (cats.Count == 0) return false;
+            var category = cats.RandomElement();
+            var questDef = category.dailyQuests.RandomElement();
 
-            //随机敌对派系
-            var faction = Find.FactionManager.RandomEnemyFaction(
-                allowHidden: false,
-                allowNonHumanlike: true,
-                allowDefeated: false);
-            if (faction == null) return false;
+            //生成参数
+            var gen = (GuildQuestGenerator)Activator.CreateInstance(questDef.generatorClass);
+            gen.def = questDef;
+            gen.SetupParams(map);
 
-            //构建站点
-            var outpostDef = DefDatabase<SitePartDef>.GetNamed("Outpost");
-            if (outpostDef == null) return false;
-            var partParams = new SitePartParams
-            {
-                threatPoints = point   // 直接使用全部威胁点数
-            };
-            List<SitePartDefWithParams> sitePartsParams = new()
-            {
-                new(outpostDef, partParams)
-            };
-
-            //保存参数
-            var missionParams = new MissionParams
-            {
-                map = map,
-                points = point,
-                siteFaction = faction,
-                sitePartsParams = sitePartsParams,
-            };
-
-            var envoy = GenerateEnvoy(map, missionParams);
+            var envoy = GenerateEnvoy(map);
             if (envoy == null) return false;
             
             SendArrivalLetter(envoy);
-            Envoys.Add(envoy.thingIDNumber, missionParams);
+            Envoys[envoy.thingIDNumber] = gen;
             NotSpoken.Add(envoy);
 
             return true;
         }
 
-        private Pawn GenerateEnvoy(Map map, MissionParams missionParams)
+        private Pawn GenerateEnvoy(Map map)
         {
-            //检查是否有多余的储存
+            //检查是否有多余使者
             var pawns = map.mapPawns.AllPawnsSpawned;
             var toRemove = new List<int>();
             foreach (var ky in Envoys)
@@ -122,29 +99,6 @@ namespace FamiliaMyth.Incidents
             ChoiceLetter letter = LetterMaker.MakeLetter(
                 label, text, LetterDefOf.NeutralEvent, envoy);
             Find.LetterStack.ReceiveLetter(letter);
-        }
-    }
-
-    public class MissionParams : IExposable
-    {
-        public Map map;
-        public float points;
-        public Faction siteFaction;
-        public List<SitePartDefWithParams> sitePartsParams;
-
-        public void ExposeData()
-        {
-            Scribe_References.Look(ref map, "map");
-            Scribe_Values.Look(ref points, "points");
-            Scribe_References.Look(ref siteFaction, "siteFaction");
-
-            //无法保存，直接生成
-            if (Scribe.mode == LoadSaveMode.PostLoadInit && sitePartsParams == null)
-            {
-                var outpostDef = DefDatabase<SitePartDef>.GetNamed("Outpost");
-                var partParams = new SitePartParams { threatPoints = points };
-                sitePartsParams = new() { new(outpostDef, partParams) };
-            }
         }
     }
 }

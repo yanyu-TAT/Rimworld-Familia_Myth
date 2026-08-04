@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- 强制升级考核任务脚本 -->
+  <!-- 由 GuildQuestGenerator_RankUP_SiteClearance.QuestScriptDefName 引用 -->
+  <!-- 流程：达标 → 考核使者 → 对话 → 接受 → 生成强化站点 → 清剿 → 晋升 -->
+  <QuestScriptDef>
+    <defName>Quest_RankUp_SiteClearance</defName>
+    <autoAccept>true</autoAccept>
+    <defaultHidden>false</defaultHidden>
+    <isRootSpecial>true</isRootSpecial>
+    <rootSelectionWeight>0</rootSelectionWeight>
+    <rootMinPoints>200</rootMinPoints>
+    <affectedByPopulation>false</affectedByPopulation>
+
+    <questNameRules>
+      <rulesStrings>
+        <li>questName->强制任务</li>
+        <li>missionTitle->公会</li>
+      </rulesStrings>
+    </questNameRules>
+
+    <questDescriptionRules>
+      <rulesStrings>
+        <li>questDescription->公会使者带来了强制任务。敌人已在附近集结，正在威胁着周边地区。请倾全部战力，证明眷族的实力。\n\n完成后即可提升眷族评级。</li>
+      </rulesStrings>
+    </questDescriptionRules>
+
+    <root Class="QuestNode_Sequence">
+      <nodes>
+
+        <!-- 考核根节点：读取 $category、计算难度、生成站点参数 -->
+        <li Class="Familia_Myth.Source.QuestNode_Root_RankUp">
+          <category>$category</category>
+        </li>
+
+        <li Class="QuestNode_Sequence">
+          <nodes>
+
+            <!-- 获取目标地点tile -->
+            <li Class="QuestNode_GetSiteTile">
+              <storeAs>siteTile</storeAs>
+              <preferCloserTiles>true</preferCloserTiles>
+            </li>
+
+            <!-- 生成强制考核站点 -->
+            <li Class="QuestNode_SubScript">
+              <def>Util_GenerateSite</def>
+            </li>
+
+            <!-- 将站点添加到世界地图 -->
+            <li Class="QuestNode_SpawnWorldObjects">
+              <worldObjects>$site</worldObjects>
+            </li>
+
+            <!-- 清剿所有敌人后完成考核并晋升 -->
+            <li Class="QuestNode_Signal">
+              <inSignal>site.AllEnemiesDefeated</inSignal>
+              <node Class="QuestNode_Sequence">
+                <nodes>
+                  <li Class="FamiliaMyth.Quest.QuestNode_RankUpComplete">
+                    <categoryDef>$category</categoryDef>
+                  </li>
+                  <li Class="QuestNode_End">
+                    <outcome>Success</outcome>
+                  </li>
+                </nodes>
+              </node>
+            </li>
+
+            <!-- 超时失败 -->
+            <li Class="QuestNode_WorldObjectTimeout">
+              <worldObject>$site</worldObject>
+              <delayTicksRange>720000~1680000</delayTicksRange>
+              <destroyOnCleanup>true</destroyOnCleanup>
+              <node Class="QuestNode_Sequence">
+                <nodes>
+                  <li Class="QuestNode_Letter">
+                    <label>强制任务失败</label>
+                    <text>强制任务[resolvedQuestName]已超时，眷族晋升暂时搁置。</text>
+                  </li>
+                  <li Class="QuestNode_End">
+                    <outcome>Fail</outcome>
+                  </li>
+                </nodes>
+              </node>
+            </li>
+
+          </nodes>
+        </li>
+
+      </nodes>
+    </root>
+  </QuestScriptDef>
+
+</Defs>

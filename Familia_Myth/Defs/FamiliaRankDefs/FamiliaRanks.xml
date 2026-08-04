@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- 探索类评级链（seniority 递增） -->
+  <!-- upgradePointsRequired：升到本级所需累计升级点数 -->
+
+  <FamiliaMyth.Familia.FamiliaRankDef>
+    <defName>ExplorerRank_I</defName>
+    <label>探索类 · I 级</label>
+    <categoryDef>Explorer</categoryDef>
+    <seniority>0</seniority>
+    <upgradePointsRequired>0</upgradePointsRequired>
+    <description>初入公会的探索类眷族。</description>
+  </FamiliaMyth.Familia.FamiliaRankDef>
+
+  <FamiliaMyth.Familia.FamiliaRankDef>
+    <defName>ExplorerRank_II</defName>
+    <label>探索类 · II 级</label>
+    <categoryDef>Explorer</categoryDef>
+    <seniority>1</seniority>
+    <upgradePointsRequired>60</upgradePointsRequired>
+    <description>已能在委托中独当一面的探索类眷族。</description>
+  </FamiliaMyth.Familia.FamiliaRankDef>
+
+  <FamiliaMyth.Familia.FamiliaRankDef>
+    <defName>ExplorerRank_III</defName>
+    <label>探索类 · III 级</label>
+    <categoryDef>Explorer</categoryDef>
+    <seniority>2</seniority>
+    <upgradePointsRequired>150</upgradePointsRequired>
+    <description>公会中备受信赖的高级探索类眷族。</description>
+  </FamiliaMyth.Familia.FamiliaRankDef>
+
+</Defs>

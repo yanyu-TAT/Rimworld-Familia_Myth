@@ -1,4 +1,4 @@
-﻿using FamiliaMyth.Incidents;
+using FamiliaMyth.Incidents;
 using FamiliaMyth.Quest;
 using HarmonyLib;
 using RimWorld;
@@ -14,7 +14,7 @@ namespace FamiliaMyth.Patch
         {
             if (__instance.kindDef?.defName != "Guild_Envoy") return;
             if (selPawn == null || selPawn.Faction != Faction.OfPlayer) return;
-            if (!IncidentWorker_GuildEnvoy.NotSpoken.Contains(__instance)) return;
+            if (!GameComponent_GuildEnvoyTracker.NotSpoken.Contains(__instance)) return;
 
             var list = __result.ToList();
 
