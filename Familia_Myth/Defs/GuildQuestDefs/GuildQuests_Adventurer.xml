@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-  <!-- 冒险类 · 探索（据点清剿）日常任务 -->
+  <!-- 探索类 · 日常任务（据点清剿） -->
   <!-- 由 IncidentWorker_GuildEnvoy 随机挑选，交给使者载体 -->
   <FamiliaMyth.Quest.GuildQuestDef>
     <defName>GuildQuest_Daily_SiteClearance</defName>
-    <label>探索委托</label>
+    <label>据点清剿</label>
     <generatorClass>FamiliaMyth.Quest.GuildQuestGenerator_Daily_SiteClearance</generatorClass>
-    <category>Adventurer</category>
+    <category>Explorer</category>
     <type>Daily</type>
     <letterText>使者向你介绍了委托的详情。\n\n公会在附近发现了一处邪恶派阀据点，\n放任不管会严重危害周边治安。\n现请求派出冒险者前去肃清。\n\n完成后将获得伟业值，并提升眷族在「冒险者向」方面的评级。\n\n是否接受？</letterText>
   </FamiliaMyth.Quest.GuildQuestDef>
 
-  <!-- 冒险类 · 升级考核（强制任务） -->
+  <!-- 探索类 · （强制任务）据点清剿 -->
   <!-- 达到升级点数后由 GameComponent_FamiliaRankTracker 触发，不可拒绝 -->
   <FamiliaMyth.Quest.GuildQuestDef>
     <defName>GuildQuest_RankUp_SiteClearance</defName>
-    <label>升级考核</label>
+    <label>据点清剿</label>
     <generatorClass>FamiliaMyth.Quest.GuildQuestGenerator_RankUP_SiteClearance</generatorClass>
-    <category>Adventurer</category>
+    <category>Explorer</category>
     <type>RankUp</type>
     <letterText>公会的考核使者已至，请求检验眷族实力。\n\n该任务不可拒绝，难度较高，请尽量派出全部战力。\n完成任务即可提升眷族在「探索类」方面的评级。\n\n是否接受强制升级考核？</letterText>
   </FamiliaMyth.Quest.GuildQuestDef>

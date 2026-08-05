@@ -27,8 +27,12 @@
 	<!-- Refusal: colonist does not meet ascend requirements (ability>=D and enough exploits) -->
 	<FamiliaMyth.NotMeetAscendRequirementRefusion>Insufficient exploits or basic ability too low</FamiliaMyth.NotMeetAscendRequirementRefusion>
 
-	<!-- 经验值 -->
-	<FamiliaMyth.Experience>Experience</FamiliaMyth.Experience>
-	<!-- 伟业值 -->
+	<!-- Exploits -->
 	<FamiliaMyth.Exploits>Exploits</FamiliaMyth.Exploits>
+
+	<!-- Familia rank page: culture icon card title -->
+	<FamiliaMyth.FamiliaCulture>Familia Culture</FamiliaMyth.FamiliaCulture>
+	<!-- Familia rank page: unknown culture placeholder -->
+	<FamiliaMyth.UnknownCulture>Unknown Culture</FamiliaMyth.UnknownCulture>
+
 </LanguageData>

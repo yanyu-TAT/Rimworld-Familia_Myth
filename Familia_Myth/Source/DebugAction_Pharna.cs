@@ -89,7 +89,7 @@ namespace FamiliaMyth.Debug
                         {
                             var pharna = Hediff_Pharna.GetPharna(pawn);
                             if (pharna == null) continue;
-                            List<string> rewardNames = pharna.GetRewards().ToList();
+                            List<string> rewardNames = pharna.GetRewardNames().ToList();
                             var r = Factory();
                             if (!rewardNames.Contains(r.GetType().Name))
                             {
@@ -114,7 +114,7 @@ namespace FamiliaMyth.Debug
         {
             var pharna = Hediff_Pharna.GetPharna(pawn); 
             if (pharna == null) return;
-            var rewards = AscendHelper.GetRandomRewards(10).ToList();
+            var rewards = AscendHelper.GetRandomRewardsFor(10, pharna).ToList();
             if (rewards.Count > 0)
             {
                 foreach (var reward in rewards)

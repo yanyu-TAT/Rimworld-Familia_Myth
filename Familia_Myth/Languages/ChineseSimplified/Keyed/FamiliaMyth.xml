@@ -32,4 +32,9 @@
 	<!-- 伟业值 -->
 	<FamiliaMyth.Exploits>伟业值</FamiliaMyth.Exploits>
 
+	<!-- 眷族评级 UI：文化图标卡标题 -->
+	<FamiliaMyth.FamiliaCulture>眷族文化</FamiliaMyth.FamiliaCulture>
+	<!-- 眷族评级 UI：未知文化占位 -->
+	<FamiliaMyth.UnknownCulture>未知文化</FamiliaMyth.UnknownCulture>
+
 </LanguageData>

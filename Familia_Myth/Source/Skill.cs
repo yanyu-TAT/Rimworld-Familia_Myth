@@ -26,7 +26,6 @@ namespace FamiliaMyth.Abilities
         public void RewardInitialize()
         {
             def = DefDatabase<SkillDef>.GetNamed(GetType().Name, false);
-
         }
 
         protected virtual void SetCooldown()

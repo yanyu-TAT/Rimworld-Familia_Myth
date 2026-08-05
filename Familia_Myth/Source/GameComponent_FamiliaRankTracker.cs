@@ -21,7 +21,7 @@ namespace FamiliaMyth.Familia
             guildDef ??= DefDatabase<FactionDef>.GetNamed("Guild");
 
         public static IncidentDef incidentDef;
-        public static IncidentDef IncidentDeff =>
+        public static IncidentDef IncidentDef =>
             incidentDef ??= DefDatabase<IncidentDef>.GetNamed("GiveQuest_Daily");
 
         private int incidentInterval = -1;
@@ -54,8 +54,8 @@ namespace FamiliaMyth.Familia
         {
             var map = Find.AnyPlayerHomeMap ?? Find.CurrentMap;
             if (map == null) return false;
-            return incidentDef.Worker.CanFireNow(
-                StorytellerUtility.DefaultParmsNow(incidentDef.category, map));
+            return IncidentDef.Worker.CanFireNow(
+                StorytellerUtility.DefaultParmsNow(IncidentDef.category, map));
         }
 
         public override void GameComponentTick()
@@ -66,8 +66,8 @@ namespace FamiliaMyth.Familia
                 var map = Find.AnyPlayerHomeMap ?? Find.CurrentMap;
                 if (map == null) return;
 
-                var parms = StorytellerUtility.DefaultParmsNow(incidentDef.category, map);
-                Find.Storyteller?.incidentQueue?.Add(incidentDef, GenDate.TicksPerDay, parms, GenDate.TicksPerDay * 3);
+                var parms = StorytellerUtility.DefaultParmsNow(IncidentDef.category, map);
+                Find.Storyteller?.incidentQueue?.Add(IncidentDef, GenDate.TicksPerDay, parms, GenDate.TicksPerDay * 3);
             }
         }
 

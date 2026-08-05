@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 	<ThingDef ParentName="MoteBase">
-		<defName>MigicMissileBurst</defName>
+		<defName>MagicMissileBurst</defName>
 		<thingClass>MoteThrown</thingClass>
 		<graphicData>
 			<texPath>Things/Mote/ExplosionFlash</texPath>

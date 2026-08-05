@@ -94,6 +94,7 @@ namespace Familia_Myth.Source
                 this.quest = quest;
                 GameComponent_FamiliaRankTracker.Instance?.GetState(gen.Category)?.OnRankUpQuestStart(quest.id);
             }
+            GameComponent_GuildEnvoyTracker.Envoys.Remove(envoy.thingIDNumber);
         }
     }
 }

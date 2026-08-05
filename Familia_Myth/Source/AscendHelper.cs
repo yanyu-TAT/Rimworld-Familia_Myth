@@ -1,6 +1,5 @@
 using FamiliaMyth.Abilities;
-using HarmonyLib;
-using JetBrains.Annotations;
+using UnityEngine;
 using Verse;
 
 namespace FamiliaMyth.Pharna
@@ -33,6 +32,14 @@ namespace FamiliaMyth.Pharna
         string Label { get; }
         string Description { get; }
 
+        Color RarityColor => Rarity switch
+        {
+            RewardRarity.Common => new Color(0.3f, 0.8f, 0.9f),
+            RewardRarity.Uncommon => new Color(1f, 0.3f, 1f),
+            RewardRarity.Rare => new Color(1f, 0.75f, 0.2f),
+            RewardRarity.Unique => new Color(1f, 0.1f, 0.1f),
+            _ => Color.white
+        };
     }
 
     public static class AscendHelper
@@ -40,8 +47,6 @@ namespace FamiliaMyth.Pharna
         public static List<(Func<IAscendReward> Factory, int Weight)> rewards = new();
 
         private static int totalWeight = 0;
-
-        private static readonly Random random = new();
 
         //通过Def为魔法注册
         static AscendHelper()
@@ -93,35 +98,31 @@ namespace FamiliaMyth.Pharna
         }
 
         /// <summary>
-        /// 获取随机奖励
+        /// 为对应的恩惠获取不重复的随机奖励
         /// </summary>
         /// <param name="n">奖励数量</param>
         /// <returns>实例集合</returns>
-        public static List<IAscendReward> GetRandomRewards(int n)
+        public static List<IAscendReward> GetRandomRewardsFor(int n, Hediff_Pharna pharna)
         {
-            var k = rewards.ToList();
-            var t = rewards.ToList();
-            var tt = totalWeight;
-            t.Clear();
-
-            while (n > t.Count && k.Count > 0 && tt > 0)
+            List<(Func<IAscendReward> Factory, int Weight)> result = new();
+            var pool = rewards.Where(r =>
             {
-                var w = 0;
-                var r = random.Next(tt);
-                foreach (var reward in k)
-                {
-                    w += reward.Weight;
-                    if (w > r)
-                    {
-                        t.Add(reward);
-                        k.Remove(reward);
-                        tt -= reward.Weight;
-                        break;
-                    }
-                }
-            }
+                var reward = r.Factory();
+                reward.RewardInitialize();
+                return !pharna.HasReward(reward);
+            }).ToList();
 
-            return t.Select( f =>
+            for (int i = 0; i < n; i++)
+                if (pool.TryRandomElementByWeight(r => r.Weight, out var r))
+                {
+                    result.Add(r);
+                    pool.Remove(r);
+                }
+
+            if (result.Count == 0)
+                Log.Warning($"Can't Get Any Reward For {pharna.pawn.Name.ToStringShort}");
+
+            return result.Select( f =>
             {
                 var reward = f.Factory();
                 reward.RewardInitialize();

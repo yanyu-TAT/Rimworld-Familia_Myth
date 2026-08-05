@@ -242,7 +242,16 @@ namespace FamiliaMyth.Pharna
             }
         }
 
-        public IEnumerable<string> GetRewards()
+        public bool HasReward(IAscendReward reward)
+        {
+            if (reward == null) return false;
+            if (spells.Any(t => t.Label == reward.Label)) return true;
+            if (skills.Any(t => t.Label == reward.Label)) return true;
+            if (developableAbilities.Any(t => t.Label == reward.Label)) return true;
+            return false;
+        }
+
+        public IEnumerable<string> GetRewardNames()
         {
             foreach (var spell in spells)
                 yield return spell.GetType().Name;

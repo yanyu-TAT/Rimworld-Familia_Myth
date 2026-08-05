@@ -21,7 +21,7 @@ namespace FamiliaMyth.UI
             public int edge;
             public int index;
         }
-        private List<Hieroglyph> hieroglyphs = new();
+        private readonly List<Hieroglyph> hieroglyphs = new();
 
         private const int GlyphsPerEdge = 50;
         private const float GlyphMargin = 20f;
@@ -38,7 +38,7 @@ namespace FamiliaMyth.UI
         public Dialog_AscendReward(Hediff_Pharna pharna, List<IAscendReward> rewards)
         {
             this.pharna = pharna;
-            List<string> rewardNames = pharna.GetRewards().ToList();
+            List<string> rewardNames = pharna.GetRewardNames().ToList();
             this.rewards = rewards.Where(r => !rewardNames.Contains(r.GetType().Name)).ToList();
 
             forcePause = true;
@@ -81,15 +81,6 @@ namespace FamiliaMyth.UI
                 }
             }
         }
-
-        private static Color GetRarityColor(RewardRarity rarity) => rarity switch
-        {
-            RewardRarity.Common => new Color(0.3f, 0.8f, 0.9f),
-            RewardRarity.Uncommon => new Color(1f, 0.3f, 1f),
-            RewardRarity.Rare => new Color(1f, 0.75f, 0.2f),
-            RewardRarity.Unique => new Color(1f, 0.1f, 0.1f),
-            _ => Color.white
-        };
 
         public override Vector2 InitialSize => new(WindowWidth, WindowHeight);
 
@@ -196,7 +187,7 @@ namespace FamiliaMyth.UI
 
         private void DrawRewardCard(Rect cardRect, IAscendReward reward)
         {
-            var color = GetRarityColor(reward.Rarity);
+            var color = reward.RarityColor;
 
             // 卡片背景
             Widgets.DrawBoxSolid(cardRect, new Color(0.1f, 0.1f, 0.13f, 0.92f));

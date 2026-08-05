@@ -49,7 +49,7 @@ namespace FamiliaMyth.Abilities
                 armorPenetration: ArmorPenetration);
 
             //更大的爆炸特效
-            MoteThrown mote = (MoteThrown)ThingMaker.MakeThing(ThingDef.Named("Mote_WindBurst"));
+            MoteThrown mote = (MoteThrown)ThingMaker.MakeThing(ThingDef.Named("MagicMissileBurst"));
             mote.Scale = 4f;
             mote.instanceColor = EdgeColor;
             GenSpawn.Spawn(mote, Position, Map);

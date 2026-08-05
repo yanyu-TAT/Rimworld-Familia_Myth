@@ -28,6 +28,21 @@ namespace FamiliaMyth.Quest
 
             if (category == null)
                 yield return $"Invalid Category For Quest {defName}";
+
+            string ss = "";
+            GuildQuestGenerator gen = null;
+            try
+            {
+                gen = Generator;
+            } catch (Exception e)
+            {
+                ss = $"Invalid Generator For Quest {defName} : {e.ToString()}";
+            }
+
+            if (gen == null)
+            {
+                yield return ss;
+            }
         }
     }
 
