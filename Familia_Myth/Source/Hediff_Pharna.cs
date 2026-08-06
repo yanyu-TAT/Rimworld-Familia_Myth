@@ -1,6 +1,7 @@
 using FamiliaMyth.Abilities;
 using RimWorld;
 using System.Text;
+using UnityEngine;
 using Verse;
 
 namespace FamiliaMyth.Pharna
@@ -46,6 +47,12 @@ namespace FamiliaMyth.Pharna
 
         //能力值上限
         public float maxStatus = 999f;
+
+        //美德触发间隔（10-0.001x）天
+        protected int VirtueTriggerInterval => (int)((10f - 0.001 * GetFullStatus(PharnaStatusType.Will)) * GenDate.TicksPerDay);
+        protected int lastVirtueTriggeredTick = 99999;
+        public bool IsVirtueCooldown => Find.TickManager.TicksGame - lastVirtueTriggeredTick <= VirtueTriggerInterval;
+        public VirtueType? currentVirtue = null;
 
         static Hediff_Pharna(){
             for (char c = 'I'; c >= 'A'; c--)
@@ -240,6 +247,19 @@ namespace FamiliaMyth.Pharna
                     }
                 }
             }
+
+            if (DebugSettings.ShowDevGizmos && IsVirtueCooldown)
+            {
+                yield return new Command_Action
+                {
+                    defaultLabel = "DEV: Reset virtue cooldown",
+                    action = delegate
+                    {
+                        lastVirtueTriggeredTick = Find.TickManager.TicksGame - VirtueTriggerInterval;
+                        currentVirtue = null;
+                    }
+                };
+            }
         }
 
         public bool HasReward(IAscendReward reward)
@@ -293,6 +313,9 @@ namespace FamiliaMyth.Pharna
 
             Scribe_Values.Look(ref experience, "experience", 0f);
             Scribe_Values.Look(ref exploits, "exploits", 0f);
+
+            Scribe_Values.Look(ref lastVirtueTriggeredTick, "lastVirtueTriggeredTick", 99999);
+            Scribe_Values.Look(ref currentVirtue, "currentVirtue", null);
         }
 
         private static HediffDef cachedPharnaDef;
@@ -306,6 +329,20 @@ namespace FamiliaMyth.Pharna
                 return pharna;
 
             return null;
+        }
+
+        public void SetVirtueCooldown()
+        {
+            lastVirtueTriggeredTick = Find.TickManager.TicksGame;
+            currentVirtue = null;
+        }
+
+        public bool TryTriggerVirtue()
+        {
+            if (IsVirtueCooldown) return false;
+            //0.75 * (1 - e ^ -0.00025 * x)
+            float c = 0.75f * (1 - Mathf.Exp(-0.00025f * GetFullStatus(PharnaStatusType.Will)));
+            return Rand.Chance(c);
         }
     }
 }

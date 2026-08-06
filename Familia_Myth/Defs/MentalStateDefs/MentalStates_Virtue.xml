@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- =============================================================== -->
+  <!-- 美德精神状态定义                                                -->
+  <!-- 由 Patch_MentalBreaker 在崩溃前随机触发，                          -->
+  <!-- 持续 1~2 天（由 MentalState_Virtue.PostStart 设置 forceRecoverAfterTicks）。 -->
+  <!-- stateClass 使用命名空间前缀 FamiliaMyth.Pharna                   -->
+  <!-- =============================================================== -->
+
+  <MentalStateDef Name="VirtueMentalStateBase" Abstract="True">
+    <stateClass>FamiliaMyth.Pharna.MentalState_Virtue</stateClass>
+    <category>Misc</category>
+    <!-- 实际持续时间由 PostStart 的 forceRecoverAfterTicks（1~2天）决定，此处在避免随机恢复 -->
+    <minTicksBeforeRecovery>1</minTicksBeforeRecovery>
+    <maxTicksBeforeRecovery>999999</maxTicksBeforeRecovery>
+    <recoveryMtbDays>999</recoveryMtbDays>
+    <nameColor>(0.3, 0.9, 0.7)</nameColor>
+    <beginLetterDef>PositiveEvent</beginLetterDef>
+    <inCaravanCanDo>true</inCaravanCanDo>
+    <recoverFromSleep>true</recoverFromSleep>
+  </MentalStateDef>
+
+  <MentalStateDef ParentName="VirtueMentalStateBase">
+    <defName>MentalState_Virtue_Stalwart</defName>
+    <label>FamiliaMyth.Virtue.Stalwart.Label</label>
+    <beginLetterLabel>FamiliaMyth.Virtue.Stalwart.BeginLetterLabel</beginLetterLabel>
+    <beginLetter>FamiliaMyth.Virtue.Stalwart.BeginLetter</beginLetter>
+    <recoveryMessage>FamiliaMyth.Virtue.Stalwart.RecoveryMessage</recoveryMessage>
+    <baseInspectLine>FamiliaMyth.Virtue.Stalwart.InspectLine</baseInspectLine>
+  </MentalStateDef>
+
+  <MentalStateDef ParentName="VirtueMentalStateBase">
+    <defName>MentalState_Virtue_Courageous</defName>
+    <label>FamiliaMyth.Virtue.Courageous.Label</label>
+    <beginLetterLabel>FamiliaMyth.Virtue.Courageous.BeginLetterLabel</beginLetterLabel>
+    <beginLetter>FamiliaMyth.Virtue.Courageous.BeginLetter</beginLetter>
+    <recoveryMessage>FamiliaMyth.Virtue.Courageous.RecoveryMessage</recoveryMessage>
+    <baseInspectLine>FamiliaMyth.Virtue.Courageous.InspectLine</baseInspectLine>
+  </MentalStateDef>
+
+  <MentalStateDef ParentName="VirtueMentalStateBase">
+    <defName>MentalState_Virtue_Focused</defName>
+    <label>FamiliaMyth.Virtue.Focused.Label</label>
+    <beginLetterLabel>FamiliaMyth.Virtue.Focused.BeginLetterLabel</beginLetterLabel>
+    <beginLetter>FamiliaMyth.Virtue.Focused.BeginLetter</beginLetter>
+    <recoveryMessage>FamiliaMyth.Virtue.Focused.RecoveryMessage</recoveryMessage>
+    <baseInspectLine>FamiliaMyth.Virtue.Focused.InspectLine</baseInspectLine>
+  </MentalStateDef>
+
+  <MentalStateDef ParentName="VirtueMentalStateBase">
+    <defName>MentalState_Virtue_Powerful</defName>
+    <label>FamiliaMyth.Virtue.Powerful.Label</label>
+    <beginLetterLabel>FamiliaMyth.Virtue.Powerful.BeginLetterLabel</beginLetterLabel>
+    <beginLetter>FamiliaMyth.Virtue.Powerful.BeginLetter</beginLetter>
+    <recoveryMessage>FamiliaMyth.Virtue.Powerful.RecoveryMessage</recoveryMessage>
+    <baseInspectLine>FamiliaMyth.Virtue.Powerful.InspectLine</baseInspectLine>
+  </MentalStateDef>
+
+  <MentalStateDef ParentName="VirtueMentalStateBase">
+    <defName>MentalState_Virtue_Vigorous</defName>
+    <label>FamiliaMyth.Virtue.Vigorous.Label</label>
+    <beginLetterLabel>FamiliaMyth.Virtue.Vigorous.BeginLetterLabel</beginLetterLabel>
+    <beginLetter>FamiliaMyth.Virtue.Vigorous.BeginLetter</beginLetter>
+    <recoveryMessage>FamiliaMyth.Virtue.Vigorous.RecoveryMessage</recoveryMessage>
+    <baseInspectLine>FamiliaMyth.Virtue.Vigorous.InspectLine</baseInspectLine>
+  </MentalStateDef>
+
+</Defs>

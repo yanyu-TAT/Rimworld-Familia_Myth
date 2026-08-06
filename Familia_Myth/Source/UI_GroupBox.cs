@@ -57,6 +57,8 @@ namespace FamiliaMyth.UI
         }
 
         private static Texture2D hgradCache;
+        public static Color ColorAccent = Color.white;
+
         private static void VGradientHighlight(Rect r, float intensity, Color color)
         {
             if (hgradCache == null)

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- =============================================================== -->
+  <!-- 美德心情 Thought 定义                                            -->
+  <!-- 由 HediffComp_ThoughtSetter 在添加美德 Buff 时写入、移除时清除。   -->
+  <!-- HediffComp_ThoughtSetter 会将其 moodOffset 值覆盖到记忆上，        -->
+  <!-- 因此 baseMoodEffect 与之保持一致（+15）。                         -->
+  <!-- =============================================================== -->
+
+  <ThoughtDef>
+    <defName>Thought_Virtue_Vigorous_Morale</defName>
+    <!-- HediffComp_ThoughtSetter 要求记忆类 Thought（会 cast 为 Thought_Memory），
+         必须显式指定 thoughtClass，否则默认按 Thought_Situational 实例化导致强制转换失败 -->
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <label>FamiliaMyth.VirtueThought.Vigorous.Label</label>
+    <stages>
+      <li>
+        <label>FamiliaMyth.VirtueThought.Vigorous.StageLabel</label>
+        <description>FamiliaMyth.VirtueThought.Vigorous.Description</description>
+        <baseMoodEffect>15</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+</Defs>

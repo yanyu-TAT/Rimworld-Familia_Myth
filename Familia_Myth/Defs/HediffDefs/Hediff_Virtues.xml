@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- =============================================================== -->
+  <!-- 美德 Buff 定义                                               -->
+  <!-- 由 MentalState_Virtue 在 PostStart 添加、在 PostEnd 移除。         -->
+  <!-- 通用效果（×150%工作速率、×50%休息下降、+50%学习速率）每种皆有。   -->
+  <!-- 范围效果通过 HediffCompProperties_GiveHediffsInRange 授予周围友方  -->
+  <!-- （注意：该组件会排除拥有者自身，因此拥有者自身效果写在主 Buff 上）。 -->
+  <!-- =============================================================== -->
+
+  <!-- ==================== 坚定 (Stalwart) ========================== -->
+  <!-- +50% 三项防御、80% 受伤减免、×50% 出血速率 -->
+  <HediffDef>
+    <defName>Hediff_VirtueBuff_Stalwart</defName>
+    <hediffClass>HediffWithComps</hediffClass>
+    <label>FamiliaMyth.VirtueBuff.Stalwart.Label</label>
+    <description>FamiliaMyth.VirtueBuff.Stalwart.Description</description>
+    <isBad>false</isBad>
+    <initialSeverity>1</initialSeverity>
+    <maxSeverity>1</maxSeverity>
+    <comps>
+      <li Class="HediffCompProperties_DisappearsOnDeath"/>
+    </comps>
+    <stages>
+      <li>
+        <statFactors>
+          <WorkSpeedGlobal>1.5</WorkSpeedGlobal>
+          <RestFallRateFactor>0.5</RestFallRateFactor>
+          <GlobalLearningFactor>1.5</GlobalLearningFactor>
+          <ArmorRating_Sharp>1.5</ArmorRating_Sharp>
+          <ArmorRating_Blunt>1.5</ArmorRating_Blunt>
+          <ArmorRating_Heat>1.5</ArmorRating_Heat>
+          <IncomingDamageFactor>0.8</IncomingDamageFactor>
+        </statFactors>
+        <totalBleedFactor>0.5</totalBleedFactor>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <!-- ==================== 无畏 (Courageous) ======================== -->
+  <!-- +1 移动速度、-50% 硬直时间、+100% 疼痛阈值 -->
+  <HediffDef>
+    <defName>Hediff_VirtueBuff_Courageous</defName>
+    <hediffClass>HediffWithComps</hediffClass>
+    <label>FamiliaMyth.VirtueBuff.Courageous.Label</label>
+    <description>FamiliaMyth.VirtueBuff.Courageous.Description</description>
+    <isBad>false</isBad>
+    <initialSeverity>1</initialSeverity>
+    <maxSeverity>1</maxSeverity>
+    <comps>
+      <li Class="HediffCompProperties_DisappearsOnDeath"/>
+    </comps>
+    <stages>
+      <li>
+        <statOffsets>
+          <MoveSpeed>1.0</MoveSpeed>
+        </statOffsets>
+        <statFactors>
+          <WorkSpeedGlobal>1.5</WorkSpeedGlobal>
+          <RestFallRateFactor>0.5</RestFallRateFactor>
+          <GlobalLearningFactor>1.5</GlobalLearningFactor>
+          <StaggerDurationFactor>0.5</StaggerDurationFactor>
+          <PainShockThreshold>2.0</PainShockThreshold>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <!-- ==================== 专注 (Focused) =========================== -->
+  <!-- 自己及一定范围内友方 +8 射击精度、-50% 瞄准时间 -->
+  <HediffDef>
+    <defName>Hediff_VirtueBuff_Focused</defName>
+    <hediffClass>HediffWithComps</hediffClass>
+    <label>FamiliaMyth.VirtueBuff.Focused.Label</label>
+    <description>FamiliaMyth.VirtueBuff.Focused.Description</description>
+    <isBad>false</isBad>
+    <initialSeverity>1</initialSeverity>
+    <maxSeverity>1</maxSeverity>
+    <comps>
+      <li Class="HediffCompProperties_DisappearsOnDeath"/>
+      <li Class="HediffCompProperties_GiveHediffsInRange">
+        <range>10.0</range>
+        <targetingParameters>
+          <canTargetBuildings>false</canTargetBuildings>
+          <canTargetAnimals>false</canTargetAnimals>
+          <canTargetMechs>false</canTargetMechs>
+          <onlyTargetColonists>true</onlyTargetColonists>
+        </targetingParameters>
+        <hediff>Hediff_VirtueAura_Focused</hediff>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <statOffsets>
+          <ShootingAccuracyPawn>8.0</ShootingAccuracyPawn>
+        </statOffsets>
+        <statFactors>
+          <WorkSpeedGlobal>1.5</WorkSpeedGlobal>
+          <RestFallRateFactor>0.5</RestFallRateFactor>
+          <GlobalLearningFactor>1.5</GlobalLearningFactor>
+          <AimingDelayFactor>0.5</AimingDelayFactor>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <!-- ==================== 勇猛 (Powerful) ========================== -->
+  <!-- ×150% 近战伤害、×80% 近战冷却、自己及范围友方 +0.5 移速 -->
+  <HediffDef>
+    <defName>Hediff_VirtueBuff_Powerful</defName>
+    <hediffClass>HediffWithComps</hediffClass>
+    <label>FamiliaMyth.VirtueBuff.Powerful.Label</label>
+    <description>FamiliaMyth.VirtueBuff.Powerful.Description</description>
+    <isBad>false</isBad>
+    <initialSeverity>1</initialSeverity>
+    <maxSeverity>1</maxSeverity>
+    <comps>
+      <li Class="HediffCompProperties_DisappearsOnDeath"/>
+      <li Class="HediffCompProperties_GiveHediffsInRange">
+        <range>15.0</range>
+        <targetingParameters>
+          <canTargetBuildings>false</canTargetBuildings>
+          <canTargetAnimals>false</canTargetAnimals>
+          <canTargetMechs>false</canTargetMechs>
+          <onlyTargetColonists>true</onlyTargetColonists>
+        </targetingParameters>
+        <hediff>Hediff_VirtueAura_Powerful</hediff>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <statOffsets>
+          <MoveSpeed>0.5</MoveSpeed>
+        </statOffsets>
+        <statFactors>
+          <WorkSpeedGlobal>1.5</WorkSpeedGlobal>
+          <RestFallRateFactor>0.5</RestFallRateFactor>
+          <GlobalLearningFactor>1.5</GlobalLearningFactor>
+          <MeleeDamageFactor>1.5</MeleeDamageFactor>
+          <MeleeCooldownFactor>0.8</MeleeCooldownFactor>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <!-- ==================== 振奋 (Vigorous) ========================== -->
+  <!-- 自己及范围友方 +15 心情、+1 移速 -->
+  <HediffDef>
+    <defName>Hediff_VirtueBuff_Vigorous</defName>
+    <hediffClass>HediffWithComps</hediffClass>
+    <label>FamiliaMyth.VirtueBuff.Vigorous.Label</label>
+    <description>FamiliaMyth.VirtueBuff.Vigorous.Description</description>
+    <isBad>false</isBad>
+    <initialSeverity>1</initialSeverity>
+    <maxSeverity>1</maxSeverity>
+    <comps>
+      <li Class="HediffCompProperties_DisappearsOnDeath"/>
+      <li Class="HediffCompProperties_ThoughtSetter">
+        <thought>Thought_Virtue_Vigorous_Morale</thought>
+        <moodOffset>15</moodOffset>
+      </li>
+      <li Class="HediffCompProperties_GiveHediffsInRange">
+        <range>10.0</range>
+        <targetingParameters>
+          <canTargetBuildings>false</canTargetBuildings>
+          <canTargetAnimals>false</canTargetAnimals>
+          <canTargetMechs>false</canTargetMechs>
+          <onlyTargetColonists>true</onlyTargetColonists>
+        </targetingParameters>
+        <hediff>Hediff_VirtueAura_Vigorous</hediff>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <statOffsets>
+          <MoveSpeed>1.0</MoveSpeed>
+        </statOffsets>
+        <statFactors>
+          <WorkSpeedGlobal>1.5</WorkSpeedGlobal>
+          <RestFallRateFactor>0.5</RestFallRateFactor>
+          <GlobalLearningFactor>1.5</GlobalLearningFactor>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <!-- =============================================================== -->
+  <!-- 范围 Buff（由前往友方获得，必须有 HediffComp_Disappears）          -->
+  <!-- =============================================================== -->
+
+  <!-- 专注范围：+8 射击精度、-50% 瞄准时间 -->
+  <HediffDef>
+    <defName>Hediff_VirtueAura_Focused</defName>
+    <hediffClass>HediffWithComps</hediffClass>
+    <label>FamiliaMyth.VirtueAura.Focused.Label</label>
+    <description>FamiliaMyth.VirtueAura.Focused.Description</description>
+    <isBad>false</isBad>
+    <initialSeverity>1</initialSeverity>
+    <maxSeverity>1</maxSeverity>
+    <comps>
+      <li Class="HediffCompProperties_Disappears"/>
+      <li Class="HediffCompProperties_DisappearsOnDeath"/>
+    </comps>
+    <stages>
+      <li>
+        <statOffsets>
+          <ShootingAccuracyPawn>8.0</ShootingAccuracyPawn>
+        </statOffsets>
+        <statFactors>
+          <AimingDelayFactor>0.5</AimingDelayFactor>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <!-- 勇猛范围：+0.5 移速 -->
+  <HediffDef>
+    <defName>Hediff_VirtueAura_Powerful</defName>
+    <hediffClass>HediffWithComps</hediffClass>
+    <label>FamiliaMyth.VirtueAura.Powerful.Label</label>
+    <description>FamiliaMyth.VirtueAura.Powerful.Description</description>
+    <isBad>false</isBad>
+    <initialSeverity>1</initialSeverity>
+    <maxSeverity>1</maxSeverity>
+    <comps>
+      <li Class="HediffCompProperties_Disappears"/>
+      <li Class="HediffCompProperties_DisappearsOnDeath"/>
+    </comps>
+    <stages>
+      <li>
+        <statOffsets>
+          <MoveSpeed>0.5</MoveSpeed>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <!-- 振奋范围：+15 心情、+1 移速 -->
+  <HediffDef>
+    <defName>Hediff_VirtueAura_Vigorous</defName>
+    <hediffClass>HediffWithComps</hediffClass>
+    <label>FamiliaMyth.VirtueAura.Vigorous.Label</label>
+    <description>FamiliaMyth.VirtueAura.Vigorous.Description</description>
+    <isBad>false</isBad>
+    <initialSeverity>1</initialSeverity>
+    <maxSeverity>1</maxSeverity>
+    <comps>
+      <li Class="HediffCompProperties_ThoughtSetter">
+        <thought>Thought_Virtue_Vigorous_Morale</thought>
+        <moodOffset>15</moodOffset>
+      </li>
+      <li Class="HediffCompProperties_Disappears"/>
+      <li Class="HediffCompProperties_DisappearsOnDeath"/>
+    </comps>
+    <stages>
+      <li>
+        <statOffsets>
+          <MoveSpeed>1.0</MoveSpeed>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+</Defs>

@@ -1,4 +1,4 @@
-﻿using FamiliaMyth.Pharna;
+using FamiliaMyth.Pharna;
 using FamiliaMyth.UI;
 using LudeonTK;
 using RimWorld;
@@ -32,8 +32,7 @@ namespace FamiliaMyth.Debug
                             pharna?.GainStatus(type, DefaultAmount);
                             MoteMaker.ThrowText(pawn.DrawPos, pawn.Map, $"{Hediff_Pharna.GetStatusName(type)}:{pharna?.GetCurrentStatus(type)}");
                         }
-                    }
-                ));
+                    }));
             }
 
             Find.WindowStack.Add(new Dialog_DebugOptionListLister(options));
@@ -136,6 +135,35 @@ namespace FamiliaMyth.Debug
                 ability.GainProficiency(DefaultAmount);
                 MoteMaker.ThrowText(pawn.Position.ToVector3(), pawn.Map, $"{ability.Proficiency}");
             }
+        }
+
+        [DebugAction("Familia Myth", "Trigger Virtue",
+            actionType = DebugActionType.Action,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        public static void TriggerVirtue()
+        {
+            var options = new List<DebugMenuOption>();
+            foreach (VirtueType type in Enum.GetValues(typeof(VirtueType)))
+            {
+                options.Add(new DebugMenuOption(
+                    type.ToString(),
+                    DebugMenuOptionMode.Tool,
+                    () =>
+                    {
+                        foreach (var pawn in Find.CurrentMap.thingGrid.ThingsAt(Verse.UI.MouseCell()).OfType<Pawn>())
+                        {
+                            var pharna = Hediff_Pharna.GetPharna(pawn);
+                            if (pharna != null)
+                            {
+                                pharna.currentVirtue = type;
+                                var def = DefDatabase<MentalStateDef>.GetNamed($"MentalState_Virtue_{type}");
+                                pawn.mindState.mentalStateHandler.TryStartMentalState(def);
+                            }
+                        }
+                    }));
+            }
+
+            Find.WindowStack.Add(new Dialog_DebugOptionListLister(options));
         }
     }
 }

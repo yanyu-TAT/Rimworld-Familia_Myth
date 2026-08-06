@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <!-- 美德光环：附着在触发美德的殖民者身上并缓慢浮动 -->
+  <ThingDef ParentName="MoteBase">
+    <defName>Mote_VirtueHalo</defName>
+    <thingClass>FamiliaMyth.Pharna.Mote_Floating</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <mote>
+      <fadeInTime>5</fadeInTime>
+      <!-- 美德持续1~2天(约1000~2000秒)，solidTime取较大值保证存活，结束时由代码Destroy -->
+      <solidTime>99999</solidTime>
+      <fadeOutTime>5</fadeOutTime>
+      <!-- 光环悬浮在头顶上方 -->
+      <attachedDrawOffset>(0, 0, 0.8)</attachedDrawOffset>
+    </mote>
+    <graphicData>
+      <drawSize>1.5</drawSize>
+      <texPath>Familia_Myth/Things/Mote/VirtueHalo</texPath>
+      <shaderType>MoteGlow</shaderType>
+    </graphicData>
+  </ThingDef>
+</Defs>
