@@ -1,6 +1,8 @@
 ﻿using FamiliaMyth.Pharna;
 using RimWorld;
+using UnityEngine;
 using Verse;
+using Verse.Noise;
 
 namespace FamiliaMyth.Abilities
 {
@@ -30,6 +32,8 @@ namespace FamiliaMyth.Abilities
 
             return false;
         }
+
+        public float DiseaseResistChance => 0.2f + Proficiency * 0.00075f;
 
         public override string GetExplanation(StatDef stat)
         {

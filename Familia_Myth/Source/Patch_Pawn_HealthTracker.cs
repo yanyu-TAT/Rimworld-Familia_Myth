@@ -11,6 +11,7 @@ namespace FamiliaMyth.Patch
             if (___pawn == null || !__result) return;
             //Log.Message($"Kill {___pawn.Name}");
             var hediff = ___pawn.health?.hediffSet?.GetFirstHediffOfDef(HediffDef.Named("EmberInEffect"));
+            //余烬生效时拦截死亡
             if (hediff != null)
                 __result = false;
         }

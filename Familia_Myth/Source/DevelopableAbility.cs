@@ -111,5 +111,12 @@ namespace FamiliaMyth.Abilities
                 pharna.pawn.story.traits.GainTrait(temp);
             }
         }
+
+        public virtual void Tick() { }
+
+        public virtual IEnumerable<Gizmo> GetGizmos()
+        {
+            return null;
+        }
     }
 }

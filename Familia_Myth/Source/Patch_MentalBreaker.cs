@@ -24,15 +24,7 @@ namespace FamiliaMyth.Patch
                 __result = false;
                 return false;
             }
-            if (!pharna.TryTriggerVirtue()) return true;
-
-            var values = Enum.GetValues(typeof(VirtueType));
-            var type = (VirtueType)values.GetValue(Rand.Range(0, values.Length));
-            var def = DefDatabase<MentalStateDef>.GetNamed($"MentalState_Virtue_{type}");
-
-            if (def == null) return true;
-            pharna.currentVirtue = type;
-            if (pawn.mindState.mentalStateHandler.TryStartMentalState(def))
+            if (pharna.TryTriggerVirtue())
             {
                 __result = true;
                 return false;

@@ -165,6 +165,17 @@ namespace FamiliaMyth.Pharna
             {
                 spell?.AbilityTick();
             }
+
+            foreach (var developableAbility in developableAbilities)
+            {
+                developableAbility?.Tick();
+            }
+
+            //疼痛百分比 * 0.002/tick
+            if (pawn?.health?.hediffSet != null)
+            {
+                GainStatus(PharnaStatusType.Will, 0.002f * pawn.health.hediffSet.PainTotal);
+            }
         }
 
         public void Ascend()
@@ -226,11 +237,13 @@ namespace FamiliaMyth.Pharna
 
         public override IEnumerable<Gizmo> GetGizmos()
         {
+            base.GetGizmos();
             foreach (var spell in spells)
             {
-                if (spell != null)
+                var gizmos = spell?.GetGizmos();
+                if (gizmos != null)
                 {
-                    foreach (var gizmo in spell.GetGizmos())
+                    foreach (var gizmo in gizmos)
                     {
                         yield return gizmo;
                     }
@@ -239,17 +252,32 @@ namespace FamiliaMyth.Pharna
 
             foreach (var skill in skills)
             {
-                if (skill?.GetGizmos() != null)
+                var gizmos = skill?.GetGizmos();
+                if (gizmos != null)
                 {
-                    foreach (var gizmo in skill.GetGizmos())
+                    foreach (var gizmo in gizmos)
                     {
                         yield return gizmo;
                     }
                 }
             }
 
+            foreach (var developableAbility in developableAbilities)
+            {
+                var gizmos = developableAbility?.GetGizmos();
+                if (gizmos != null)
+                {
+                    foreach (var gizmo in gizmos)
+                    {
+                        yield return gizmo;
+                    }
+                }
+            }
+
+            //调试指令
             if (DebugSettings.ShowDevGizmos && IsVirtueCooldown)
             {
+                //重置美德冷却
                 yield return new Command_Action
                 {
                     defaultLabel = "DEV: Reset virtue cooldown",
@@ -337,12 +365,26 @@ namespace FamiliaMyth.Pharna
             currentVirtue = null;
         }
 
-        public bool TryTriggerVirtue()
+        public bool TryTriggerVirtue(float factor = 1f)
         {
             if (IsVirtueCooldown) return false;
             //0.75 * (1 - e ^ -0.00025 * x)
-            float c = 0.75f * (1 - Mathf.Exp(-0.00025f * GetFullStatus(PharnaStatusType.Will)));
-            return Rand.Chance(c);
+            float c = 0.75f * (1 - Mathf.Exp(-0.00025f * GetFullStatus(PharnaStatusType.Will))) * factor;
+            if (!Rand.Chance(c)) return false;
+
+            var values = Enum.GetValues(typeof(VirtueType));
+            var type = (VirtueType)values.GetValue(Rand.Range(0, values.Length));
+            var def = DefDatabase<MentalStateDef>.GetNamed($"MentalState_Virtue_{type}");
+
+            if (def == null) return false;
+            currentVirtue = type;
+            return pawn.mindState.mentalStateHandler.TryStartMentalState(def);
+        }
+
+        public override void Notify_PawnPostApplyDamage(DamageInfo dinfo, float totalDamageDealt)
+        {
+            base.Notify_PawnPostApplyDamage(dinfo, totalDamageDealt);
+            TryTriggerVirtue(0.1f);
         }
     }
 }

@@ -21,7 +21,7 @@
     <label>狂化招乱</label>
     <description>常态生效，受伤越重，近战伤害越高。</description>
     <skillClass>FamiliaMyth.Abilities.Skill_BerserkerChaos</skillClass>
-    <rarity>Uncommon</rarity>
+    <rarity>Common</rarity>
     <skillType>Passive</skillType>
     <cooldown>0</cooldown>
     <warmup>0</warmup>

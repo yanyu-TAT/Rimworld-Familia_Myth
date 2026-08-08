@@ -145,7 +145,7 @@
   </HediffDef>
 
   <!-- ==================== 振奋 (Vigorous) ========================== -->
-  <!-- 自己及范围友方 +15 心情、+1 移速 -->
+  <!-- 自己及范围友方 +15 心情、+1 移速、+25% 近战闪避 -->
   <HediffDef>
     <defName>Hediff_VirtueBuff_Vigorous</defName>
     <hediffClass>HediffWithComps</hediffClass>
@@ -175,6 +175,7 @@
       <li>
         <statOffsets>
           <MoveSpeed>1.0</MoveSpeed>
+          <MeleeDodgeChance>0.25</MeleeDodgeChance>
         </statOffsets>
         <statFactors>
           <WorkSpeedGlobal>1.5</WorkSpeedGlobal>
@@ -236,7 +237,7 @@
     </stages>
   </HediffDef>
 
-  <!-- 振奋范围：+15 心情、+1 移速 -->
+  <!-- 振奋范围：+15 心情、+1 移速、+25% 近战闪避 -->
   <HediffDef>
     <defName>Hediff_VirtueAura_Vigorous</defName>
     <hediffClass>HediffWithComps</hediffClass>
@@ -257,6 +258,7 @@
       <li>
         <statOffsets>
           <MoveSpeed>1.0</MoveSpeed>
+          <MeleeDodgeChance>0.25</MeleeDodgeChance>
         </statOffsets>
       </li>
     </stages>

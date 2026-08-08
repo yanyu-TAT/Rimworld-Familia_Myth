@@ -643,8 +643,7 @@
         </nomatch>
     </Operation>
 
-    <!-- 异常抗性：毒素抗性（ToxicResistance StatDef 不存在于原版，暂不实现） -->
-    <!--
+    <!-- 异常抗性：毒素抗性（ToxicResistance） -->
     <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="ToxicResistance"]/parts</xpath>
         <match Class="PatchOperationAdd">
@@ -662,6 +661,5 @@
             </value>
         </nomatch>
     </Operation>
-    -->
 
 </Patch>
