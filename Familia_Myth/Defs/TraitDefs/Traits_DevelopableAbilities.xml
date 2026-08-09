@@ -142,4 +142,74 @@
     </degreeDatas>
   </TraitDef>
 
+  <!-- 高效循环发展能力特性 -->
+  <TraitDef>
+    <defName>Trait_DevelopableAbility_EfficientCirculation</defName>
+    <label>高效循环</label>
+    <description>由恩惠赋予的高效循环发展能力，降低营养消耗并提升进食回复休息值。</description>
+    <commonality>0</commonality>
+    <degreeDatas>
+      <li>
+        <label>高效循环I</label>
+        <degree>0</degree>
+        <description>[PAWN_nameDef]拥有基础高效循环能力。</description>
+      </li>
+      <li>
+        <label>高效循环H</label>
+        <degree>1</degree>
+        <description>[PAWN_nameDef]的高效循环能力有所提升。</description>
+      </li>
+      <li>
+        <label>高效循环G</label>
+        <degree>2</degree>
+        <description>[PAWN_nameDef]的高效循环能力稳步提升。</description>
+      </li>
+      <li>
+        <label>高效循环F</label>
+        <degree>3</degree>
+        <description>[PAWN_nameDef]的高效循环能力显著提升。</description>
+      </li>
+      <li>
+        <label>高效循环E</label>
+        <degree>4</degree>
+        <description>[PAWN_nameDef]的高效循环能力达到进阶水平。</description>
+      </li>
+      <li>
+        <label>高效循环D</label>
+        <degree>5</degree>
+        <description>[PAWN_nameDef]的高效循环能力达到精进水平。</description>
+      </li>
+      <li>
+        <label>高效循环C</label>
+        <degree>6</degree>
+        <description>[PAWN_nameDef]的高效循环能力达到高阶水平。</description>
+      </li>
+      <li>
+        <label>高效循环B</label>
+        <degree>7</degree>
+        <description>[PAWN_nameDef]的高效循环能力达到卓越水平。</description>
+      </li>
+      <li>
+        <label>高效循环A</label>
+        <degree>8</degree>
+        <description>[PAWN_nameDef]的高效循环能力达到顶尖水平。</description>
+      </li>
+      <li>
+        <label>高效循环S</label>
+        <degree>9</degree>
+        <description>[PAWN_nameDef]的高效循环能力超凡脱俗。</description>
+      </li>
+      <li>
+        <label>高效循环SS</label>
+        <degree>10</degree>
+        <description>[PAWN_nameDef]的高效循环能力达到传说级别。</description>
+      </li>
+      <li>
+        <label>高效循环SSS</label>
+        <degree>11</degree>
+        <description>[PAWN_nameDef]的高效循环能力已臻化境。</description>
+      </li>
+    </degreeDatas>
+  </TraitDef>
+
 </Defs>

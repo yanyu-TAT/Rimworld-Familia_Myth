@@ -100,7 +100,7 @@ namespace FamiliaMyth.Abilities
             Scribe_References.Look(ref pharna, "pharna");
         }
 
-        public void Apply(Hediff_Pharna p)
+        public virtual void Apply(Hediff_Pharna p)
         {
             pharna = p;
             pharna.developableAbilities.Add(this);

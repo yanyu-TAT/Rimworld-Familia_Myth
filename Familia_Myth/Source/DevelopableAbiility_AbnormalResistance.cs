@@ -1,8 +1,5 @@
-﻿using FamiliaMyth.Pharna;
-using RimWorld;
-using UnityEngine;
+﻿using RimWorld;
 using Verse;
-using Verse.Noise;
 
 namespace FamiliaMyth.Abilities
 {

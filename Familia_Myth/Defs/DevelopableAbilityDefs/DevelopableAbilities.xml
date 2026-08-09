@@ -24,4 +24,15 @@
     <traitDefName>Trait_DevelopableAbility_AbnormalResistance</traitDefName>
   </FamiliaMyth.Abilities.DevelopableAbilityDef>
 
+  <!-- 高效循环发展能力：休息值高时降低营养消耗，摄入营养时回复休息值 -->
+  <FamiliaMyth.Abilities.DevelopableAbilityDef>
+    <defName>DevelopableAbility_EfficientCirculation</defName>
+    <label>高效循环</label>
+    <description>提升身体能量循环效率的发展能力。休息充足时降低营养消耗，进食时按比例回复休息值。</description>
+    <abilityClass>FamiliaMyth.Abilities.DevelopableAbility_EfficientCirculation</abilityClass>
+    <maxProficiency>999</maxProficiency>
+    <rarity>Common</rarity>
+    <traitDefName>Trait_DevelopableAbility_EfficientCirculation</traitDefName>
+  </FamiliaMyth.Abilities.DevelopableAbilityDef>
+
 </Defs>
