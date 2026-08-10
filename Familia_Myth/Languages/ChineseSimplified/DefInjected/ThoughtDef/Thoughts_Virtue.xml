@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- ==================== 美德心情 Thought =============== -->
+  <!-- 键名遵循 RimWorld Def 翻译约定：DefName.fieldName -->
+  <!-- {0} 会被替换为殖民者姓名 -->
+  <!-- stages.0 对应 ThoughtDef 的第一个阶段 -->
+
+  <Thought_Virtue_Vigorous_Morale.label>美德：振奋</Thought_Virtue_Vigorous_Morale.label>
+  <Thought_Virtue_Vigorous_Morale.stages.0.label>振奋</Thought_Virtue_Vigorous_Morale.stages.0.label>
+  <Thought_Virtue_Vigorous_Morale.stages.0.description>同伴的振奋让我也感到精神振奋</Thought_Virtue_Vigorous_Morale.stages.0.description>
+
+</LanguageData>

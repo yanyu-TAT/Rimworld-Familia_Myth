@@ -35,6 +35,9 @@
 	<!-- Familia rank page: unknown culture placeholder -->
 	<FamiliaMyth.UnknownCulture>Unknown Culture</FamiliaMyth.UnknownCulture>
 
+	<!-- Flame Affinity: stat panel modifier explanation -->
+	<FamiliaMyth.FlameAffinityLabel>Flame Affinity: Heat Armor +2, Max Comfy Temperature +1000°C, Flammability +1</FamiliaMyth.FlameAffinityLabel>
+
 	<!-- ================ Virtue System ================ -->
 
 	<!-- Virtue mental states -->

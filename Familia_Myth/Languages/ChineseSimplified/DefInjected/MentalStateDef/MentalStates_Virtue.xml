@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- ==================== 美德精神状态 ==================== -->
+  <!-- 键名遵循 RimWorld Def 翻译约定：DefName.fieldName -->
+  <!-- {0} 会被替换为殖民者姓名；[PAWN_pronoun] 为代词 -->
+
+  <!-- 坚定 (Stalwart) -->
+  <MentalState_Virtue_Stalwart.label>坚定</MentalState_Virtue_Stalwart.label>
+  <MentalState_Virtue_Stalwart.beginLetterLabel>美德：坚定</MentalState_Virtue_Stalwart.beginLetterLabel>
+  <MentalState_Virtue_Stalwart.beginLetter>{0}的意志受到考验：[PAWN_pronoun]变得坚定不移</MentalState_Virtue_Stalwart.beginLetter>
+  <MentalState_Virtue_Stalwart.recoveryMessage>{0}已经恢复了</MentalState_Virtue_Stalwart.recoveryMessage>
+  <MentalState_Virtue_Stalwart.baseInspectLine>美德：坚定</MentalState_Virtue_Stalwart.baseInspectLine>
+
+  <!-- 无畏 (Courageous) -->
+  <MentalState_Virtue_Courageous.label>无畏</MentalState_Virtue_Courageous.label>
+  <MentalState_Virtue_Courageous.beginLetterLabel>美德：无畏</MentalState_Virtue_Courageous.beginLetterLabel>
+  <MentalState_Virtue_Courageous.beginLetter>{0}的恐惧被驱散了：[PAWN_pronoun]变得无所畏惧</MentalState_Virtue_Courageous.beginLetter>
+  <MentalState_Virtue_Courageous.recoveryMessage>{0}已经恢复了</MentalState_Virtue_Courageous.recoveryMessage>
+  <MentalState_Virtue_Courageous.baseInspectLine>美德：无畏</MentalState_Virtue_Courageous.baseInspectLine>
+
+  <!-- 专注 (Focused) -->
+  <MentalState_Virtue_Focused.label>专注</MentalState_Virtue_Focused.label>
+  <MentalState_Virtue_Focused.beginLetterLabel>美德：专注</MentalState_Virtue_Focused.beginLetterLabel>
+  <MentalState_Virtue_Focused.beginLetter>{0}的思绪不再迷惘：[PAWN_pronoun]此刻全神贯注</MentalState_Virtue_Focused.beginLetter>
+  <MentalState_Virtue_Focused.recoveryMessage>{0}已经恢复了</MentalState_Virtue_Focused.recoveryMessage>
+  <MentalState_Virtue_Focused.baseInspectLine>美德：专注</MentalState_Virtue_Focused.baseInspectLine>
+
+  <!-- 勇猛 (Powerful) -->
+  <MentalState_Virtue_Powerful.label>勇猛</MentalState_Virtue_Powerful.label>
+  <MentalState_Virtue_Powerful.beginLetterLabel>美德：勇猛</MentalState_Virtue_Powerful.beginLetterLabel>
+  <MentalState_Virtue_Powerful.beginLetter>{0}的战意已经点燃：[PAWN_pronoun]已经势不可挡</MentalState_Virtue_Powerful.beginLetter>
+  <MentalState_Virtue_Powerful.recoveryMessage>{0}已经恢复了</MentalState_Virtue_Powerful.recoveryMessage>
+  <MentalState_Virtue_Powerful.baseInspectLine>美德：勇猛</MentalState_Virtue_Powerful.baseInspectLine>
+
+  <!-- 振奋 (Vigorous) -->
+  <MentalState_Virtue_Vigorous.label>振奋</MentalState_Virtue_Vigorous.label>
+  <MentalState_Virtue_Vigorous.beginLetterLabel>美德：振奋</MentalState_Virtue_Vigorous.beginLetterLabel>
+  <MentalState_Virtue_Vigorous.beginLetter>{0}的精神不再：[PAWN_pronoun]现在振奋昂扬</MentalState_Virtue_Vigorous.beginLetter>
+  <MentalState_Virtue_Vigorous.recoveryMessage>{0}已经恢复了</MentalState_Virtue_Vigorous.recoveryMessage>
+  <MentalState_Virtue_Vigorous.baseInspectLine>美德：振奋</MentalState_Virtue_Vigorous.baseInspectLine>
+
+</LanguageData>

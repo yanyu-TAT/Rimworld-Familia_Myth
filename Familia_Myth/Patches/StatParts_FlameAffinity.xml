@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+    <!-- ============================================================ -->
+    <!-- Familia Myth - 火焰亲和 StatPart 注入补丁                      -->
+    <!-- 将 StatPart_FlameAffinity 注入原版 StatDef 的 <parts> 列表    -->
+    <!-- 持有火焰亲和技能时：                                          -->
+    <!--   ArmorRating_Heat     热能护甲 +2                            -->
+    <!--   ComfyTemperatureMax  最高舒适温度 +1000                     -->
+    <!--   Flammability         易燃性 +1                              -->
+    <!-- ============================================================ -->
+
+    <!-- 热能护甲 -->
+    <Operation Class="PatchOperationConditional">
+        <xpath>Defs/StatDef[defName="ArmorRating_Heat"]/parts</xpath>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="ArmorRating_Heat"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Abilities.StatPart_FlameAffinity">
+                    <statType>ArmorHeat</statType>
+                </li>
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="ArmorRating_Heat"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Abilities.StatPart_FlameAffinity">
+                        <statType>ArmorHeat</statType>
+                    </li>
+                </parts>
+            </value>
+        </nomatch>
+    </Operation>
+
+    <!-- 最高舒适温度 -->
+    <Operation Class="PatchOperationConditional">
+        <xpath>Defs/StatDef[defName="ComfyTemperatureMax"]/parts</xpath>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="ComfyTemperatureMax"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Abilities.StatPart_FlameAffinity">
+                    <statType>ComfyTemp</statType>
+                </li>
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="ComfyTemperatureMax"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Abilities.StatPart_FlameAffinity">
+                        <statType>ComfyTemp</statType>
+                    </li>
+                </parts>
+            </value>
+        </nomatch>
+    </Operation>
+
+    <!-- 易燃性 -->
+    <Operation Class="PatchOperationConditional">
+        <xpath>Defs/StatDef[defName="Flammability"]/parts</xpath>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="Flammability"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Abilities.StatPart_FlameAffinity">
+                    <statType>Flammability</statType>
+                </li>
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="Flammability"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Abilities.StatPart_FlameAffinity">
+                        <statType>Flammability</statType>
+                    </li>
+                </parts>
+            </value>
+        </nomatch>
+    </Operation>
+
+</Patch>

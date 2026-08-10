@@ -351,7 +351,7 @@ namespace FamiliaMyth.Pharna
 
         public static Hediff_Pharna GetPharna(Pawn pawn)
         {
-            if (pawn == null || pawn.health == null || pawn.health.hediffSet == null) return null;
+            if (pawn?.health?.hediffSet == null) return null;
 
             if (pawn.health.hediffSet.GetFirstHediffOfDef(PharnaDef) is Hediff_Pharna pharna)
                 return pharna;
@@ -386,5 +386,10 @@ namespace FamiliaMyth.Pharna
             base.Notify_PawnPostApplyDamage(dinfo, totalDamageDealt);
             TryTriggerVirtue(0.1f);
         }
+    }
+
+    public static class PharnaUtilities
+    {
+
     }
 }

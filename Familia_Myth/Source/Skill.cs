@@ -41,7 +41,6 @@ namespace FamiliaMyth.Abilities
         /// <summary>
         /// 主动技能尝试释放，如果可释放则调用ApplyEffct，并根据返回的结果进入冷却
         /// </summary>
-        /// <returns>释放结果</returns>
         public virtual void TryCast()
         {
             if (Owner == null) return;
@@ -54,7 +53,7 @@ namespace FamiliaMyth.Abilities
 
             if (!def.needTarget)
             {
-                if (ApplyEffect(Owner))
+                if (ApplyEffect(null))
                     lastCastTick = CurrentTick;
                 return;
             }
@@ -85,7 +84,7 @@ namespace FamiliaMyth.Abilities
             if (Find.TickManager.TicksGame % (int)def.checkInterval != 0) return;
             if (!CanCast(out _)) return;
 
-            if (ApplyEffect(Owner))
+            if (ApplyEffect(null))
                 lastCastTick = CurrentTick;
         }
 
@@ -144,7 +143,9 @@ namespace FamiliaMyth.Abilities
             lastCastTick = CurrentTick - CooldownTicks; //初始化时设置为可立即使用
         }
 
-        //鼠标悬停在按钮上时的行为
+        /// <summary>
+        /// 鼠标悬停在按钮上时的行为
+        /// </summary>
         public virtual void OnHovering() { }
     }
 }

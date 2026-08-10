@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- ==================== 美德 Buff ====================== -->
+  <!-- 键名遵循 RimWorld Def 翻译约定：DefName.fieldName -->
+  <!-- 注意：Hediff description 不支持 {0} 替换，请使用不含变量的静态文本 -->
+
+  <!-- 坚定：+50% 三项防御、80% 受伤减免、×50% 出血速率 -->
+  <Hediff_VirtueBuff_Stalwart.label>美德：坚定</Hediff_VirtueBuff_Stalwart.label>
+  <Hediff_VirtueBuff_Stalwart.description>意志坚定，身心坚不可摧</Hediff_VirtueBuff_Stalwart.description>
+
+  <!-- 无畏：+1 移速、-50% 硬直、+100% 疼痛阈值 -->
+  <Hediff_VirtueBuff_Courageous.label>美德：无畏</Hediff_VirtueBuff_Courageous.label>
+  <Hediff_VirtueBuff_Courageous.description>勇气充盈，我已无所畏惧</Hediff_VirtueBuff_Courageous.description>
+
+  <!-- 专注：自己及友方 +8 射击精度、-50% 瞄准 -->
+  <Hediff_VirtueBuff_Focused.label>美德：专注</Hediff_VirtueBuff_Focused.label>
+  <Hediff_VirtueBuff_Focused.description>精神集中，脑中思绪清明</Hediff_VirtueBuff_Focused.description>
+
+  <!-- 勇猛：×150% 近战伤害、×80% 近战冷却，自己及友方 +0.5 移速 -->
+  <Hediff_VirtueBuff_Powerful.label>美德：勇猛</Hediff_VirtueBuff_Powerful.label>
+  <Hediff_VirtueBuff_Powerful.description>力量澎湃，此刻战意昂扬</Hediff_VirtueBuff_Powerful.description>
+
+  <!-- 振奋：自己及友方 +15 心情、+1 移速 -->
+  <Hediff_VirtueBuff_Vigorous.label>美德：振奋</Hediff_VirtueBuff_Vigorous.label>
+  <Hediff_VirtueBuff_Vigorous.description>活力焕发，全身充满干劲</Hediff_VirtueBuff_Vigorous.description>
+
+  <!-- ==================== 美德范围 Buff ================== -->
+  <!-- 范围内友方获得的光环增益 -->
+
+  <Hediff_VirtueAura_Focused.label>美德：专注</Hediff_VirtueAura_Focused.label>
+  <Hediff_VirtueAura_Focused.description>受身边同伴的专注感染，全神贯注</Hediff_VirtueAura_Focused.description>
+
+  <Hediff_VirtueAura_Powerful.label>美德：勇猛</Hediff_VirtueAura_Powerful.label>
+  <Hediff_VirtueAura_Powerful.description>受身边同伴的气概鼓舞，健步如飞</Hediff_VirtueAura_Powerful.description>
+
+  <Hediff_VirtueAura_Vigorous.label>美德：振奋</Hediff_VirtueAura_Vigorous.label>
+  <Hediff_VirtueAura_Vigorous.description>被身边同伴的活力感染，斗志昂扬</Hediff_VirtueAura_Vigorous.description>
+
+</LanguageData>

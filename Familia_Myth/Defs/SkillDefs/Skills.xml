@@ -44,4 +44,18 @@
     <iconPath>Familia_Myth/UI/Icons/Skills/SwordRain</iconPath>
   </FamiliaMyth.Abilities.SkillDef>
 
+  <FamiliaMyth.Abilities.SkillDef>
+    <defName>Skill_FlameAffinity</defName>
+    <label>火焰亲和</label>
+    <description>常态生效，热能护甲大幅提高，最高舒适温度大幅提高，易燃性提高，不再畏惧火焰，着火时每秒恢复1点生命。</description>
+    <skillClass>FamiliaMyth.Abilities.Skill_FlameAffinity</skillClass>
+    <rarity>Uncommon</rarity>
+    <skillType>Passive</skillType>
+    <cooldown>0</cooldown>
+    <warmup>0</warmup>
+    <duration>0</duration>
+    <checkInterval>60</checkInterval>
+    <iconPath>UI/Skills/FlameAffinity</iconPath>
+  </FamiliaMyth.Abilities.SkillDef>
+
 </Defs>
