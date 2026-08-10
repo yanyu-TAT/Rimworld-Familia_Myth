@@ -8,6 +8,15 @@ namespace FamiliaMyth.Core
     /// </summary>
     public class GameComponent_FamiliaMyth : GameComponent
     {
+        public static GameComponent_FamiliaMyth Instance => Current.Game?.GetComponent<GameComponent_FamiliaMyth>();
+
+        public static List<(int tick, Action action)> pendingActions = new();
+
+        public static void Schedule(int tick, Action action)
+        {
+            pendingActions.Add((tick + Find.TickManager.TicksGame, action));
+        }
+
         public GameComponent_FamiliaMyth(Game game) : base() { }
 
         public override void FinalizeInit()
@@ -30,6 +39,17 @@ namespace FamiliaMyth.Core
             TryAddRitual(ideo, "Ritual_AscendPharna", "RitualPattern_AscendPharna");
 
             Log.Message("[FamiliaMyth] Rituals Added");
+        }
+
+        public override void GameComponentTick()
+        {
+            if (pendingActions.NullOrEmpty()) return;
+            var list = pendingActions.Where(a => a.tick <= Find.TickManager.TicksGame).ToList();
+            foreach(var act in list)
+            {
+                act.action();
+                pendingActions.Remove(act);
+            }
         }
 
         private void TryAddRitual(Ideo ideo, string preceptDefName, string patternDefName)

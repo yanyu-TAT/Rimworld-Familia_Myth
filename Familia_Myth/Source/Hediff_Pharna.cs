@@ -158,7 +158,7 @@ namespace FamiliaMyth.Pharna
 
             foreach(var skill in skills)
             {
-                skill?.Tick(pawn);
+                skill?.Tick();
             }
 
             foreach (var spell in spells)

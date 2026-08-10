@@ -7,39 +7,41 @@ namespace FamiliaMyth.Abilities
     public class Skill_Ember : Skill
     {
         public static HashSet<Pawn> downedPawns = new();
-        public override bool CheckCondition(Pawn caster)
+
+        //tick方法中不触发效果，由patch监听触发效果
+        public override bool CanCast(out string failReason)
         {
-            //tick方法中不触发效果，由patch监听触发效果
+            failReason = null;
             return false;
         }
 
-        public override void Tick(Pawn pawn)
+        public override void Tick()
         {
             //Log.Message($"Ticking for pawn {pawn?.Name}");
-            base.Tick(pawn);
+            base.Tick();
             if (Find.TickManager.TicksGame % (int)def.checkInterval != 0) return;
 
             //状态变化时触发
-            bool isDowned = pawn.Downed;
-            if (isDowned && !downedPawns.Contains(pawn))
+            bool isDowned = Owner.Downed;
+            if (isDowned && !downedPawns.Contains(Owner))
             {
                 //Log.Message($"Pawn {pawn.Name} is downed.");
-                downedPawns.Add(pawn);
-                TryApplyOnDowned(pawn);
+                downedPawns.Add(Owner);
+                TryApplyOnDowned(Owner);
             }
-            if (!isDowned && downedPawns.Contains(pawn))
-                downedPawns.Remove(pawn);
+            if (!isDowned && downedPawns.Contains(Owner))
+                downedPawns.Remove(Owner);
         }
 
-        public override bool ApplyEffect(Pawn pawn, LocalTargetInfo target)
+        public override bool ApplyEffect(LocalTargetInfo target)
         {
-            if (pawn?.health == null) return false;
+            if (Owner?.health == null) return false;
 
-            var ember = HediffMaker.MakeHediff(HediffDef.Named("EmberInEffect"), pawn);
+            var ember = HediffMaker.MakeHediff(HediffDef.Named("EmberInEffect"), Owner);
             var comp = ember.TryGetComp<HediffComp_Disappears>();
             if (comp != null)
                 comp.ticksToDisappear = ((int)(def.duration * 60));
-            pawn.health.AddHediff(ember);
+            Owner.health.AddHediff(ember);
             //Log.Message("Ember Effect Apllied");
             return true;
         }
@@ -58,7 +60,7 @@ namespace FamiliaMyth.Abilities
             if (!hediffs.OfType<Hediff_Injury>().Any()) return false;
             //Log.Message("Got injuries");
 
-            if (ApplyEffect(downed, downed))
+            if (ApplyEffect(downed))
             {
                 Messages.Message($"由于被击倒，{downed.Name.ToStringShort} 的技能：余烬 已触发", MessageTypeDefOf.PositiveEvent);
                 //进入冷却

@@ -44,6 +44,20 @@
 		<fadeOutTime>0</fadeOutTime>
 	</FleckDef>
 
+	<FleckDef>
+		<defName>SwordRainImpact</defName>
+		<fleckSystemClass>FleckSystemStatic</fleckSystemClass>
+		<graphicData>
+			<graphicClass>Graphic_Fleck</graphicClass>
+			<texPath>Things/Mote/ExplosionFlash</texPath>
+			<shaderType>MoteGlow</shaderType>
+			<color>(0.85, 0.95, 1, 1)</color>
+		</graphicData>
+		<fadeInTime>0</fadeInTime>
+		<solidTime>0.3</solidTime>
+		<fadeOutTime>1</fadeOutTime>
+	</FleckDef>
+
 	<ThingDef ParentName="MoteBase">
 		<defName>Mote_TargetLock</defName>
 		<thingClass>FamiliaMyth.Abilities.Mote_TargetLock</thingClass>

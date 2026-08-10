@@ -6,7 +6,7 @@ namespace FamiliaMyth.Abilities
 {
     public class Skill_BerserkerChaos : Skill
     {
-        public override bool ApplyEffect(Pawn pawn, LocalTargetInfo target)
+        public override bool ApplyEffect(LocalTargetInfo target)
         {
             return true;
         }

@@ -1,4 +1,4 @@
-﻿using FamiliaMyth.Pharna;
+using FamiliaMyth.Pharna;
 using RimWorld;
 using Verse;
 
@@ -11,19 +11,26 @@ namespace FamiliaMyth.Abilities
         public RewardRarity rarity;
         public SkillType skillType;
 
+        public bool needTarget = false;
+
         public float cooldown = 0f;
         public float warmup = 0f;
         public float duration = 0f;
         public float checkInterval = 60f;
 
         public string iconPath;
-        public string gizmoClass;
 
         public Skill CreateSkill()
         {
             var skill = (Skill)Activator.CreateInstance(skillClass);
             skill.def = this;
             return skill;
+        }
+
+        public override IEnumerable<string> ConfigErrors()
+        {
+            if (skillType != SkillType.Active && needTarget)
+                yield return $"Non-Active Skill {defName} Can't Have Target. \"needTarget\" Should Be False.";
         }
     }
     public enum SkillType

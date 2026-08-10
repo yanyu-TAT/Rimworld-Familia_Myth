@@ -13,7 +13,6 @@
     <duration>150</duration>
     <checkInterval>20</checkInterval>
     <iconPath>UI/Skills/Ember</iconPath>
-    <gizmoClass>Gizmo_SkillForSelf</gizmoClass>
   </FamiliaMyth.Abilities.SkillDef>
 
   <FamiliaMyth.Abilities.SkillDef>
@@ -28,7 +27,21 @@
     <duration>0</duration>
     <checkInterval>60</checkInterval>
     <iconPath>UI/Skills/BerserkerChaos</iconPath>
-    <gizmoClass>Gizmo_SkillForSelf</gizmoClass>
+  </FamiliaMyth.Abilities.SkillDef>
+
+  <FamiliaMyth.Abilities.SkillDef>
+    <defName>Skill_SwordRain</defName>
+    <label>剑雨滂沱</label>
+    <description>持有锐伤近战武器时可释放，对周围4格范围内敌人造成两次100%伤害；造成击杀或倒地则立刻重置冷却（最多两次）。</description>
+    <skillClass>FamiliaMyth.Abilities.Skill_SwordRain</skillClass>
+    <rarity>Uncommon</rarity>
+    <skillType>Active</skillType>
+    <needTarget>false</needTarget>
+    <cooldown>40</cooldown>
+    <warmup>0</warmup>
+    <duration>0</duration>
+    <checkInterval>60</checkInterval>
+    <iconPath>Familia_Myth/UI/Icons/Skills/SwordRain</iconPath>
   </FamiliaMyth.Abilities.SkillDef>
 
 </Defs>

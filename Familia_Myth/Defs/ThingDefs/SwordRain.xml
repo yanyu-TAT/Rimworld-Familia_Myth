@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<!-- ==================== 剑雨滂沱 - 落剑 ===================== -->
+	<!-- 纯视觉个体：Skill_SwordRain 对每个受伤敌人位置生成，落地时触发 SwordRainImpact 爆闪-->
+	<ThingDef ParentName="SkyfallerBase">
+		<defName>SwordRain_FallingSword</defName>
+		<label>落剑</label>
+		<description>技能剑雨滂沱生成的剑</description>
+		<thingClass>FamiliaMyth.Abilities.Skyfaller_Sword</thingClass>
+		<graphicData>
+			<texPath>Familia_Myth/Things/Mote/Sword</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<shaderType>TransparentPostLight</shaderType>
+			<drawSize>1.2</drawSize>
+		</graphicData>
+		<skyfaller>
+			<movementType>Accelerate</movementType>
+			<hitRoof>false</hitRoof>
+			<angleCurve>
+				<points>
+					<li>(0,0)</li>
+					<li>(1,0)</li>
+				</points>
+			</angleCurve>
+			<speed>1</speed>
+			<ticksToImpactRange><min>30</min><max>40</max></ticksToImpactRange>
+			<fadeInTicks>8</fadeInTicks>
+			<fadeOutTicks>8</fadeOutTicks>
+			<impactSound>DropPod_Impact</impactSound>
+			<rotateGraphicTowardsDirection>true</rotateGraphicTowardsDirection>
+		</skyfaller>
+	</ThingDef>
+
+</Defs>
