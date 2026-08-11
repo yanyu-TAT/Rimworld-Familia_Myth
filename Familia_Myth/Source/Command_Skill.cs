@@ -43,7 +43,7 @@ namespace FamiliaMyth.Abilities
             {
                 Rect rect = new(topLeft.x, topLeft.y, GetWidth(maxWidth), 75f);
 
-                //冷却时灰色覆盖层随进度从上至下
+                //冷却时淡绿色覆盖层随进度从上至下
                 float coverH = rect.height * f;
                 GUI.DrawTexture(
                     new Rect(rect.x, rect.y + (rect.height - coverH),

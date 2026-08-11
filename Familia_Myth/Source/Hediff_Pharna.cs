@@ -1,3 +1,4 @@
+using Familia_Myth.Source;
 using FamiliaMyth.Abilities;
 using RimWorld;
 using System.Text;
@@ -71,6 +72,13 @@ namespace FamiliaMyth.Pharna
             {
                 Part = pawn.RaceProps.body.corePart;
             }
+
+            var renderer = MapComponent_Pharna.Instance;
+            if (renderer != null)
+                renderer.pawnsWithPharna.Add(pawn);
+            else
+                Log.Warning($"[FamiliaMyth] Can't Get Map Component When Adding Pharna Hediff For {pawn.Name.ToStringShort}");
+
             base.PostAdd(dinfo);
         }
 
@@ -175,6 +183,14 @@ namespace FamiliaMyth.Pharna
             if (pawn?.health?.hediffSet != null)
             {
                 GainStatus(PharnaStatusType.Will, 0.002f * pawn.health.hediffSet.PainTotal);
+            }
+        }
+
+        public void Update()
+        {
+            foreach (var skill in skills)
+            {
+                skill.Update();
             }
         }
 
@@ -386,10 +402,5 @@ namespace FamiliaMyth.Pharna
             base.Notify_PawnPostApplyDamage(dinfo, totalDamageDealt);
             TryTriggerVirtue(0.1f);
         }
-    }
-
-    public static class PharnaUtilities
-    {
-
     }
 }

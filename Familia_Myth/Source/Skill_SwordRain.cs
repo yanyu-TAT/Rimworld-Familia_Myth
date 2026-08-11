@@ -123,17 +123,17 @@ namespace FamiliaMyth.Abilities
             }
         }
 
-        public override void Tick()
+        public override void Update()
         {
             if (Owner == null || !Owner.Spawned) return;
             if (!finished)
-                GenDraw.DrawRadiusRing(Owner.Position, Radius, new(0.4f, 0.4f, 0.8f, 1f));
+                GenDraw.DrawRadiusRing(Owner.Position, Radius, new(0.4f, 0.5f, 0.9f, 1f));
         }
 
         public override void OnHovering()
         {
             if (Owner == null || !Owner.Spawned || !CanCast(out _)) return;
-            GenDraw.DrawRadiusRing(Owner.Position, Radius, new(0.4f, 0.4f, 0.8f, 0.75f));
+            GenDraw.DrawRadiusRing(Owner.Position, Radius, new(0.4f, 0.4f, 0.8f, 0.8f));
         }
 
         private IEnumerable<Pawn> GetEnemiesInRange()

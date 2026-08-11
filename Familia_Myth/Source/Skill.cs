@@ -147,5 +147,10 @@ namespace FamiliaMyth.Abilities
         /// 鼠标悬停在按钮上时的行为
         /// </summary>
         public virtual void OnHovering() { }
+
+        /// <summary>
+        /// 每个渲染帧调用的绘制行为
+        /// </summary>
+        public virtual void Update() { }
     }
 }

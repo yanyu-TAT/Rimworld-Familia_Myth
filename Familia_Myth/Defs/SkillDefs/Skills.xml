@@ -47,7 +47,7 @@
   <FamiliaMyth.Abilities.SkillDef>
     <defName>Skill_FlameAffinity</defName>
     <label>火焰亲和</label>
-    <description>常态生效，热能护甲大幅提高，最高舒适温度大幅提高，易燃性提高，不再畏惧火焰，着火时每秒恢复1点生命。</description>
+    <description>常态生效，热能护甲大幅提高，最高舒适温度大幅提高，易燃性提高，不再畏惧火焰，燃烧时持续恢复伤势</description>
     <skillClass>FamiliaMyth.Abilities.Skill_FlameAffinity</skillClass>
     <rarity>Uncommon</rarity>
     <skillType>Passive</skillType>
@@ -56,6 +56,20 @@
     <duration>0</duration>
     <checkInterval>60</checkInterval>
     <iconPath>UI/Skills/FlameAffinity</iconPath>
+  </FamiliaMyth.Abilities.SkillDef>
+
+  <FamiliaMyth.Abilities.SkillDef>
+    <defName>Skill_Provoke</defName>
+    <label>吸引仇恨</label>
+    <description>征召时可释放，使周围20格内的敌人将攻击目标变为自己，持续3小时。</description>
+    <skillClass>FamiliaMyth.Abilities.Skill_Provoke</skillClass>
+    <rarity>Common</rarity>
+    <skillType>Active</skillType>
+    <needTarget>false</needTarget>
+    <cooldown>40</cooldown>
+    <warmup>0</warmup>
+    <duration>120</duration>
+    <checkInterval>60</checkInterval>
   </FamiliaMyth.Abilities.SkillDef>
 
 </Defs>
