@@ -4,7 +4,7 @@
   <HediffDef>
     <defName>ProvokeInEffect</defName>
     <label>吸引仇恨</label>
-    <description>正在吸引周围敌人的仇恨，将他们的攻击目标转移到自己身上。</description>
+    <description>正在吸引周围敌人的仇恨，使其攻击目标变为自己。</description>
     <hediffClass>HediffWithComps</hediffClass>
     <isBad>false</isBad>
     <initialSeverity>1</initialSeverity>

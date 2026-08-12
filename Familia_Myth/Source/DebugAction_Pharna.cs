@@ -113,7 +113,7 @@ namespace FamiliaMyth.Debug
         {
             var pharna = Hediff_Pharna.GetPharna(pawn); 
             if (pharna == null) return;
-            var rewards = AscendHelper.GetRandomRewardsFor(10, pharna).ToList();
+            var rewards = AscendHelper.GetRandomRewardsFor(100, pharna).ToList();
             if (rewards.Count > 0)
             {
                 foreach (var reward in rewards)

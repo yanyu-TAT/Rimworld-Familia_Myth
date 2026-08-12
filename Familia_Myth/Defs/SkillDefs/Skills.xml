@@ -12,7 +12,6 @@
     <warmup>0</warmup>
     <duration>150</duration>
     <checkInterval>20</checkInterval>
-    <iconPath>UI/Skills/Ember</iconPath>
   </FamiliaMyth.Abilities.SkillDef>
 
   <FamiliaMyth.Abilities.SkillDef>
@@ -26,7 +25,6 @@
     <warmup>0</warmup>
     <duration>0</duration>
     <checkInterval>60</checkInterval>
-    <iconPath>UI/Skills/BerserkerChaos</iconPath>
   </FamiliaMyth.Abilities.SkillDef>
 
   <FamiliaMyth.Abilities.SkillDef>
@@ -55,13 +53,12 @@
     <warmup>0</warmup>
     <duration>0</duration>
     <checkInterval>60</checkInterval>
-    <iconPath>UI/Skills/FlameAffinity</iconPath>
   </FamiliaMyth.Abilities.SkillDef>
 
   <FamiliaMyth.Abilities.SkillDef>
     <defName>Skill_Provoke</defName>
     <label>吸引仇恨</label>
-    <description>征召时可释放，使周围20格内的敌人将攻击目标变为自己，持续3小时。</description>
+    <description>征召时可释放，使周围20格内的敌人攻击目标变为自己，持续3小时。</description>
     <skillClass>FamiliaMyth.Abilities.Skill_Provoke</skillClass>
     <rarity>Common</rarity>
     <skillType>Active</skillType>
@@ -70,6 +67,7 @@
     <warmup>0</warmup>
     <duration>120</duration>
     <checkInterval>60</checkInterval>
+	<iconPath>Familia_Myth/UI/Icons/Skills/Provoke</iconPath>
   </FamiliaMyth.Abilities.SkillDef>
 
 </Defs>

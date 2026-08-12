@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using Verse;
 
 namespace FamiliaMyth.Abilities
@@ -126,11 +126,21 @@ namespace FamiliaMyth.Abilities
         {
             //目标丢失则保持速度直线运动
             if (target == null || !target.Spawned)
-                missile.currentState = new OrbitState_Line(missile, velocity, velocity.magnitude);
+            {
+                missile.currentState = new OrbitState_Line(this, velocity, velocity.magnitude);
+                return;
+            }
 
             //加速度指向目标运动
             acceleration = (target.Position.ToVector3() - ExactPosition).normalized * acceleration.magnitude;
             base.UpdateInterval(delta);
+
+            //吸附到目标格，防止过速导致的抖动
+            if ((target.Position.ToVector3() - position).sqrMagnitude < 0.3f * 0.3f)
+            {
+                position = target.Position.ToVector3();
+                velocity = Vector3.zero;
+            }
         }
 
         public override void ExposeData()
@@ -157,6 +167,17 @@ namespace FamiliaMyth.Abilities
         }
         public OrbitState_Line(Projectile_MagicMissileBase missile, Vector3 start, Vector3 end, float speed = 1f) : this(missile, (end - start).normalized, speed){ }
         public OrbitState_Line(Projectile_MagicMissileBase missile, IntVec3 start, IntVec3 end, float speed = 1f) : this(missile, start.ToVector3(), end.ToVector3(), speed) { }
+
+        public OrbitState_Line(BaseMagicMissileState other, Vector3 direction, float speed = 1f) : base(other)
+        {
+            this.direction = direction.normalized;
+            if (direction.magnitude < 1e-5f)
+                this.direction = Vector3.forward;
+            this.speed = speed;
+        }
+
+        public OrbitState_Line(BaseMagicMissileState other, Vector3 start, Vector3 end, float speed = 1f) : this(other, (end - start).normalized, speed) { }
+        public OrbitState_Line(BaseMagicMissileState other, IntVec3 start, IntVec3 end, float speed = 1f) : this(other, start.ToVector3(), end.ToVector3(), speed) { }
 
         public OrbitState_Line() { }
 

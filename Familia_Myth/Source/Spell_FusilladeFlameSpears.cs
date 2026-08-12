@@ -82,6 +82,10 @@ namespace FamiliaMyth.Abilities
             if (!target.Faction?.HostileTo(pawn.Faction) ?? true)
                 return false;
 
+            //可视
+            if (!verb.TryFindShootLineFromTo(pawn.Position, target, out _, true))
+                return false;
+
             return CanLockPosition(target.Position);
         }
 

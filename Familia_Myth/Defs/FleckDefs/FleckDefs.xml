@@ -17,17 +17,21 @@
 	</ThingDef>
 
 	<FleckDef>
-		<defName>MagicMissileGlow</defName>
-		<fleckSystemClass>FleckSystemStatic</fleckSystemClass>
+		<defName>MagicMissileTrail</defName>
+		<fleckSystemClass>Verse.FleckSystemThrown</fleckSystemClass>
+		<altitudeLayer>Projectile</altitudeLayer>
 		<graphicData>
-			<graphicClass>Graphic_Fleck</graphicClass>
-			<texPath>Things/Mote/ExplosionFlash</texPath>
+			<graphicClass>Graphic_FleckPulse</graphicClass>
+			<texPath>Familia_Myth/Things/Mote/LineTrail</texPath>
 			<shaderType>MoteGlow</shaderType>
 			<color>(1, 1, 1, 1)</color>
+			<drawSize>(0.1, 1.2)</drawSize>
 		</graphicData>
-		<fadeInTime>0</fadeInTime>
-		<solidTime>0.2</solidTime>
-		<fadeOutTime>0.5</fadeOutTime>
+		<fadeInTime>0.02</fadeInTime>
+		<solidTime>0.05</solidTime>
+		<fadeOutTime>0.35</fadeOutTime>
+		<growthRate>0.5</growthRate>
+		<rotateTowardsMoveDirection>true</rotateTowardsMoveDirection>
 	</FleckDef>
 
 	<FleckDef>
@@ -72,4 +76,21 @@
 			<fadeOutTime>0.2</fadeOutTime>
 		</mote>
 	</ThingDef>
+
+	<FleckDef>
+		<defName>ArcsRayChargeSpark</defName>
+		<fleckSystemClass>Verse.FleckSystemThrown</fleckSystemClass>
+		<altitudeLayer>Projectile</altitudeLayer>
+		<graphicData>
+			<graphicClass>Graphic_Fleck</graphicClass>
+			<texPath>Familia_Myth/Things/Mote/ChargeSpark</texPath>
+			<shaderType>MoteGlow</shaderType>
+			<color>(1, 1, 1, 1)</color>
+			<drawSize>(0.2, 0.2)</drawSize>
+		</graphicData>
+		<fadeInTime>0.05</fadeInTime>
+		<solidTime>0.05</solidTime>
+		<fadeOutTime>0.4</fadeOutTime>
+	</FleckDef>
+
 </Defs>

@@ -1,3 +1,31 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
+
+	<!-- ==================== 光箭伤害  ===================== -->
+	<DamageDef>
+		<defName>LightArrow</defName>
+		<label>光箭</label>
+
+		<!-- 无视承伤系数：覆写 DamageWorker 预放大抵消 IncomingDamageFactor -->
+		<workerClass>FamiliaMyth.Abilities.DamageWorker_NoDamageFactor</workerClass>
+		<externalViolence>true</externalViolence>
+
+		<deathMessage>{0} has been pierced to death.</deathMessage>
+		<hediff>Stab</hediff>
+		<hediffSkin>Cut</hediffSkin>
+		<hediffSolid>Crack</hediffSolid>
+		<harmAllLayersUntilOutside>true</harmAllLayersUntilOutside>
+		<impactSoundType>Bullet</impactSoundType>
+		<armorCategory>Sharp</armorCategory>
+		<overkillPctToDestroyPart>0.5~0.8</overkillPctToDestroyPart>
+		<isRanged>true</isRanged>
+		<makesAnimalsFlee>true</makesAnimalsFlee>
+
+		<modExtensions>
+			<li Class="FamiliaMyth.Abilities.DamageFactorIgnore_Extension">
+				<ignoreFactor>1</ignoreFactor>
+			</li>
+		</modExtensions>
+	</DamageDef>
+
 </Defs>

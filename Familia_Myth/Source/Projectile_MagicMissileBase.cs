@@ -1,4 +1,4 @@
-﻿using NAudio.Wave;
+using NAudio.Wave;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -22,6 +22,14 @@ namespace FamiliaMyth.Abilities
         public Spell Spell => spell;
 
         public BaseMagicMissileState currentState;
+
+        private static FleckDef trailDef;
+        private static FleckDef TrailDef =>
+            trailDef ??= DefDatabase<FleckDef>.GetNamed("MagicMissileTrail");
+
+        private Vector3 prevPosition;
+
+        private bool hasPrevPosition;
 
         protected static Dictionary<string, Color> cachedEdgeColors = new();
 
@@ -199,16 +207,42 @@ namespace FamiliaMyth.Abilities
 
         protected override void TickInterval(int delta)
         {
-            var prevPosition = ExactPosition;
             currentState.UpdateInterval(delta);
+            var cur = ExactPosition;
+
+            //首帧初始化
+            if (!hasPrevPosition)
+            {
+                prevPosition = cur;
+                hasPrevPosition = true;
+            }
+            var prev = prevPosition;
 
             //地图外销毁
-            if (!ExactPosition.InBounds(Map))
+            if (!cur.InBounds(Map))
             {
-                Position = prevPosition.ToIntVec3();
+                Position = prev.ToIntVec3();
                 Destroy();
                 return;
             }
+
+            //沿 prev→cur 移动线段生成流线曳光（等距补点，保证连续）
+            var moveDir = cur - prev;
+            var dist = moveDir.magnitude;
+            if (dist > 1e-5f)
+            {
+                var dir = moveDir / dist;
+                const float step = 0.22f;
+                for (float d = 0f; d < dist; d += step)
+                {
+                    var pos = prev + dir * d;
+                    var data = FleckMaker.GetDataStatic(pos, Map, TrailDef, 1f);
+                    data.velocity = dir * 0.6f; //沿轨迹方向小速度，形成流线
+                    data.instanceColor = EdgeColor.WithAlpha(0.85f);
+                    Map.flecks.CreateFleck(data);
+                }
+            }
+            prevPosition = cur;
 
             //淡入计时
             if (FadeInTicks > 0)
@@ -218,26 +252,14 @@ namespace FamiliaMyth.Abilities
             }
 
             //位置未改变，返回
-            if (ExactPosition == prevPosition) return;
+            if (cur == prev) return;
 
             //判定碰撞
-            if (CheckHitLine(prevPosition, ExactPosition))
+            if (CheckHitLine(prev, cur))
                 return;
 
             //移动
-            Position = ExactPosition.ToIntVec3();
-
-            //每两帧放一次特效
-            if (CurrentTick % 2 == 0)  
-            {
-                FleckCreationData glow = FleckMaker.GetDataStatic(
-                    ExactPosition + Vector3.up * def.Altitude, 
-                    Map,
-                    DefDatabase<FleckDef>.GetNamed("MagicMissileGlow"),
-                    scale: 0.9f);
-                glow.instanceColor = EdgeColor.WithAlpha(0.8f);
-                Map.flecks.CreateFleck(glow);
-            }
+            Position = cur.ToIntVec3();
         }
 
         public override Color DrawColor
@@ -251,7 +273,7 @@ namespace FamiliaMyth.Abilities
                     color = color.WithAlpha(Mathf.Clamp01(1f - FadeInTicks / 30f));
 
                 //闪烁效果
-                var k = 0.9f + 0.2f * Mathf.Sin((CurrentTick + pulseOffset) * 0.05f);
+                var k = 0.9f + 0.1f * Mathf.Sin((CurrentTick + pulseOffset) * 0.05f);
                 color *= k;
 
                 return color;
@@ -286,19 +308,24 @@ namespace FamiliaMyth.Abilities
             }
         }
 
+        public virtual bool CanShieldBlock => true;
+
         protected bool CheckHitLine(Vector3 A, Vector3 B)
         {
             //坐标不变不检测
             if (A == B) return false;
 
             //检测护盾拦截
-            var list = Map.listerThings.ThingsInGroup(ThingRequestGroup.ProjectileInterceptor);
-            foreach (var thing in list)
-                if (thing.TryGetComp<CompProjectileInterceptor>().CheckIntercept(this, A, B))
-                {
-                    Impact(null, true);
-                    return true;
-                }
+            if (CanShieldBlock)
+            {
+                var list = Map.listerThings.ThingsInGroup(ThingRequestGroup.ProjectileInterceptor).ToList();
+                foreach (var thing in list)
+                    if (thing.TryGetComp<CompProjectileInterceptor>().CheckIntercept(this, A, B))
+                    {
+                        Impact(null, true);
+                        return true;
+                    }
+            }
 
             var a = A.ToIntVec3(); var b = B.ToIntVec3();
             //不变仅检测当前格
@@ -331,10 +358,10 @@ namespace FamiliaMyth.Abilities
 
         protected bool CheckHitCell(IntVec3 cell)
         {
-            var thingList = cell.GetThingList(Map);
+            var thingList = cell.GetThingList(Map).ToList();
             foreach(var thing in thingList)
             {
-                if (CanHit(thing))
+                if (CanHitAt(thing))
                 {
                     //碰撞墙体
                     if (thing.def.Fillage == FillCategory.Full)
@@ -377,7 +404,7 @@ namespace FamiliaMyth.Abilities
 
         protected virtual void ExtraImpact() { }
 
-        protected new bool CanHit(Thing thing)
+        protected virtual bool CanHitAt(Thing thing)
         {
             return currentState.CanHit && base.CanHit(thing);
         }

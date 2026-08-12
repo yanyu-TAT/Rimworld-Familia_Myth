@@ -45,7 +45,7 @@ namespace FamiliaMyth.Ritual
             pharna.Ascend();
 
             //根据仪式效果提供升级奖励
-            var rewards = AscendHelper.GetRandomRewardsFor(10, pharna).ToList();
+            var rewards = AscendHelper.GetRandomRewardsFor(3, pharna).ToList();
             if (rewards.Count > 0)
                 Find.WindowStack.Add(new Dialog_AscendReward(pharna, rewards));
 

@@ -16,9 +16,7 @@ namespace FamiliaMyth.Abilities
         private BodyPartRecord MiddleFinger =>
             middleFinger ??= Owner?.RaceProps?.body?
             .GetPartsWithDef(DefDatabase<BodyPartDef>.GetNamed("Finger"))
-            .FirstOrDefault(p => 
-            (p.customLabel == "right middle finger" && p.parent?.customLabel == "right hand") ||
-            (p.customLabel == "left middle finger" && p.parent?.customLabel == "left hand"));
+            .FirstOrDefault(p => p.IsInGroup(DefDatabase<BodyPartGroupDef>.GetNamed("MiddleFingers")));
 
         public override bool CanCast(out string failReason)
         {

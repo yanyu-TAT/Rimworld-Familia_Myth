@@ -27,4 +27,30 @@
 		</projectile>
 	</ThingDef>
 
+	<!-- ==================== 光箭 (Arcs Ray) ===================== -->
+	<ThingDef ParentName="BaseBullet">
+		<defName>Projectile_ArcsRay</defName>
+		<label>光箭</label>
+		<description>光箭魔法凝聚的贯穿之矢，可追踪目标并穿透路径上的敌人与建筑</description>
+
+		<thingClass>FamiliaMyth.Abilities.Projectile_ArcsRay</thingClass>
+
+		<graphicData>
+			<texPath>Familia_Myth/Things/Projectile/ArcsRay</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<shaderType>TransparentPostLight</shaderType>
+			<drawSize>2.5</drawSize>
+		</graphicData>
+
+		<projectile>
+			<damageDef>LightArrow</damageDef>
+			<damageAmountBase>50</damageAmountBase>
+			<armorPenetrationBase>0</armorPenetrationBase>
+			<stoppingPower>10</stoppingPower>
+			<speed>60</speed>
+			<flyOverhead>false</flyOverhead>
+			<alwaysFreeIntercept>true</alwaysFreeIntercept>
+		</projectile>
+	</ThingDef>
+
 </Defs>

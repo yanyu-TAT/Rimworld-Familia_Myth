@@ -34,19 +34,27 @@ namespace FamiliaMyth.Abilities
             } 
             else
             {
-                currentState = new OrbitState_Line(this, caster.Position, Position, 0.2f);
+                currentState = new OrbitState_Line(currentState, caster.Position, Position, 0.2f);
             }
         }
 
         protected override void ExtraImpact()
         {
+            //过滤友军
+            var ignored = new List<Thing>();
+            foreach (var cell in GenRadial.RadialCellsAround(Position, 5f, true))
+                foreach (var thing in cell.GetThingList(launcher.Map))
+                    if (thing is Pawn p && p.Faction == launcher.Faction)
+                        ignored.Add(p);
+
             //爆炸
             GenExplosion.DoExplosion(
                 Position, Map,
                 radius: 2.5f,
                 DamageDefOf.Bomb, Launcher,
                 damAmount: (int)(DamageAmount * 1.5),
-                armorPenetration: ArmorPenetration);
+                armorPenetration: ArmorPenetration,
+                ignoredThings: ignored);
 
             //更大的爆炸特效
             MoteThrown mote = (MoteThrown)ThingMaker.MakeThing(ThingDef.Named("MagicMissileBurst"));
@@ -74,7 +82,7 @@ namespace FamiliaMyth.Abilities
             }
 
             //爆炸特效
-            MoteThrown mote = (MoteThrown)ThingMaker.MakeThing(ThingDef.Named("MigicMissileBurst"));
+            MoteThrown mote = (MoteThrown)ThingMaker.MakeThing(ThingDef.Named("MagicMissileBurst"));
             mote.instanceColor = EdgeColor;
             GenSpawn.Spawn(mote, Position, Map);
 
