@@ -24,6 +24,16 @@ namespace FamiliaMyth.Abilities
 
         public Pawn Caster => missile?.Launcher as Pawn;
 
+        public void SetV(Vector3 v)
+        {
+            velocity = v;
+        }
+
+        public void SetA(Vector3 v)
+        {
+            acceleration = v;
+        } 
+
         public BaseMagicMissileState() { }
 
         public BaseMagicMissileState(Projectile_MagicMissileBase missile)

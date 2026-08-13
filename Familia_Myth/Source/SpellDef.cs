@@ -1,5 +1,6 @@
 using FamiliaMyth.Pharna;
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace FamiliaMyth.Abilities
@@ -16,17 +17,54 @@ namespace FamiliaMyth.Abilities
         public string spellKey = "";
         public string spellKeyDescription = "";
         public float lineInterval = 1f;
+
+        public List<MagicCircleLayer> magicCircles;
+
+        public Color themeColor = Color.white;
         
         /// <summary>
         /// 咏唱秒数
         /// </summary>
         public float Warmup => (incantationLines.Count - 1) * lineInterval;
 
+        public List<MagicCircleLayer> DefaultMagicCircles
+        {
+            get
+            {
+                var result = new List<MagicCircleLayer>();
+                int cnt = (int)rarity + 1;
+                for (int i = 0; i < cnt; i++)
+                {
+                    var layer = new MagicCircleLayer
+                    {
+                        texPath = $"Familia_Myth/Things/Mote/MagicCircles/{Rand.Range(1, 4)}",
+                        drawColor = themeColor,
+                        scaleFrom = 0.5f,
+                        size = new((i + 1) * 5, (i + 1) * 5),
+                        altitude = i * 0.01f,
+                        rotate = 20 * Rand.Value * Rand.Sign,
+                        appearProgress = i * 0.25f
+                    };
+                    result.Add(layer);
+                }
+                return result;
+            }
+        }
+
         public Spell CreateSpell()
         {
             var spell = (Spell)Activator.CreateInstance(spellClass);
             spell.def = this;
             return spell;
+        }
+
+        public override IEnumerable<string> ConfigErrors()
+        {
+            foreach (var s in base.ConfigErrors())
+                yield return s;
+
+            if (rarity == RewardRarity.Unique && magicCircles.NullOrEmpty())
+                yield return "Unique Spells Should Have Unique Magic Circles";
         }
     }
 
@@ -39,5 +77,17 @@ namespace FamiliaMyth.Abilities
         Debuff,     //减益魔法
         Enchant,    //赋予魔法
         Special     //其他特殊魔法（分身，速攻等）
+    }
+
+    public class MagicCircleLayer
+    {
+        public string texPath;
+        public float appearProgress = 0f;   //出现时间占咏唱时间的百分比
+        public Color drawColor = Color.white;   //额外覆盖的颜色
+        public float rotate = 0f;   //转速，顺正逆负
+        public float altitude = 0f; //高度
+        public float scaleFrom = 1f;    //初始缩放
+        public Vector2 size = new(1f, 1f);
+        public ShaderTypeDef shaderType;
     }
 }

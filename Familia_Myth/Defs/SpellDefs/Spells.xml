@@ -16,6 +16,9 @@
         <!-- 魔法类型：治疗魔法 -->
         <spellType>Heal</spellType>
 
+        <!-- 代表色：绿色 -->
+        <themeColor>(0.3, 0.8, 0.35, 1)</themeColor>
+
         <!-- 图标路径 -->
         <iconPath>Familia_Myth/UI/Icons/Spells/NoahHeal</iconPath>
 
@@ -67,6 +70,9 @@
 
 		<!-- 魔法类型：攻击魔法 -->
 		<spellType>Attack</spellType>
+
+		<!-- 代表色：浅绿色 -->
+		<themeColor>(0.55, 0.95, 0.6, 1)</themeColor>
 
 		<!-- 图标路径 -->
 		<iconPath>Familia_Myth/UI/Icons/Spells/LuminousWind</iconPath>
@@ -124,6 +130,9 @@
 		<!-- 魔法类型：攻击魔法 -->
 		<spellType>Attack</spellType>
 
+		<!-- 代表色：红色 -->
+		<themeColor>(1, 0.25, 0.2, 1)</themeColor>
+
 		<!-- 图标路径 -->
 		<iconPath>Familia_Myth/UI/Icons/Spells/FusilladeFlameSpears</iconPath>
 
@@ -176,6 +185,9 @@
 
 		<!-- 魔法类型：攻击魔法 -->
 		<spellType>Attack</spellType>
+
+		<!-- 代表色：浅银色 -->
+		<themeColor>(0.8, 0.82, 0.88, 1)</themeColor>
 
 		<!-- 图标路径 -->
 		<iconPath>Familia_Myth/UI/Icons/Spells/ArcsRay</iconPath>

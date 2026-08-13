@@ -11,6 +11,10 @@ namespace FamiliaMyth.Abilities
         private static readonly Color LineColor = new(0.3f, 0.8f, 0.9f);
         private static readonly Texture2D SpellKeyTexture = ContentFinder<Texture2D>.Get("Familia_Myth/UI/Commands/SpellKey", true);
 
+        private static ThingDef magicCircleDef;
+        private static ThingDef MagicCircleDef =>
+            magicCircleDef ??= DefDatabase<ThingDef>.GetNamed("Mote_MagicCircleLayer");
+
         public SpellDef spellDef;
 
         public RewardType RewardType => RewardType.Spell;
@@ -27,6 +31,8 @@ namespace FamiliaMyth.Abilities
 
         public List<Projectile_MagicMissileBase> activeProjectiles = new();
 
+        public List<Mote_MagicCircle> activeMotes = new();
+
         protected int lastLineTick = -9999;
         protected bool wasWarmingUp = false;
         protected int lineIndex = 0; 
@@ -34,7 +40,11 @@ namespace FamiliaMyth.Abilities
         public virtual void RewardInitialize()
         {
             spellDef = DefDatabase<SpellDef>.GetNamed(GetType().Name, false);
-            def = spellDef; 
+            def = spellDef;
+
+            //尝试随机生成魔法阵样式
+            if (spellDef.magicCircles.NullOrEmpty())
+                spellDef.magicCircles = spellDef.DefaultMagicCircles;
         }
 
         public override void AbilityTick()
@@ -52,6 +62,7 @@ namespace FamiliaMyth.Abilities
                 lineIndex = 0;
                 wasWarmingUp = true;
                 WarmUpStart();
+                MagicCircleStart();
             }
             if (wasWarmingUp && !verb.WarmingUp)
             {
@@ -59,14 +70,55 @@ namespace FamiliaMyth.Abilities
                 wasWarmingUp = false;
                 ThrowIncantation(lineIndex++);
                 WarmUpFinish();
+                MagicCircleEnd();
             }
 
             if (wasWarmingUp)
             {
+                //咏唱进行中
                 if (CurrentTick - lastLineTick >= IntervalTicks)
                     ThrowIncantation(lineIndex++);
                 TickWarmUp();
+                TickMagicCircle();
             }
+        }
+
+        private void MagicCircleEnd()
+        {
+            activeMotes.Clear();
+        }
+
+        private void MagicCircleStart()
+        {
+            if (spellDef.magicCircles.NullOrEmpty()) return;
+            activeMotes.Clear();
+            TickMagicCircle();
+        }
+
+        private void TickMagicCircle()
+        {
+            if (spellDef.magicCircles.NullOrEmpty() || pawn?.Map == null) return;
+
+            //生成
+            var layers = spellDef.magicCircles;
+            float progress = verb.WarmupProgress;
+            for (int i = 0; i < layers.Count; i++)
+            {
+                if (i < activeMotes.Count && activeMotes[i]?.Spawned == true) continue;
+                if (progress < layers[i].appearProgress) continue;
+                var mote = (Mote_MagicCircle)ThingMaker.MakeThing(MagicCircleDef);
+                mote.Init(layers[i]);
+                mote.Attach(pawn);
+                GenSpawn.Spawn(mote, pawn.Position, pawn.Map);
+
+                if (i < activeMotes.Count) 
+                    activeMotes[i] = mote;
+                else 
+                    activeMotes.Add(mote);
+            }
+
+            //维持
+            foreach (var mote in activeMotes) mote?.Maintain();
         }
 
         private void ThrowIncantation(int a)

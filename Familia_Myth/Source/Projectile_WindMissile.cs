@@ -30,7 +30,8 @@ namespace FamiliaMyth.Abilities
             if (target != null)
             {
                 TrackedThings.Add(target);
-                currentState = new TrackingState(currentState, target, 0.01f);
+                currentState = new TrackingState(currentState, target, 0.025f);
+                currentState.SetV(Rand.UnitVector3 * Rand.Range(0.2f, 0.4f));
             } 
             else
             {

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <!-- 咏唱法阵单层特效：附着在施法者脚下，由 Spell 的 magicCircles 定义各层贴图与出现时机 -->
+  <ThingDef ParentName="MoteBase">
+    <defName>Mote_MagicCircleLayer</defName>
+    <thingClass>FamiliaMyth.Abilities.Mote_MagicCircle</thingClass>
+    <altitudeLayer>MoteLow</altitudeLayer>
+    <mote>
+      <fadeInTime>1.0</fadeInTime>
+      <!-- solidTime取极大值保证咏唱期间存活，结束时由 Spell 停止维持后按 fadeOutTime 淡出并销毁 -->
+      <solidTime>999999999</solidTime>
+      <fadeOutTime>0.6</fadeOutTime>
+      <needsMaintenance>true</needsMaintenance>
+      <fadeOutUnmaintained>true</fadeOutUnmaintained>
+    </mote>
+    <graphicData>
+      <!-- 实际贴图由代码按层覆写，此处仅为占位 -->
+      <graphicClass>Graphic_Mote</graphicClass>
+      <texPath>Familia_Myth/Things/Mote/ChargeSpark</texPath>
+      <shaderType>MoteGlow</shaderType>
+      <color>(1, 1, 1, 1)</color>
+    </graphicData>
+  </ThingDef>
+</Defs>
