@@ -58,20 +58,24 @@ namespace FamiliaMyth.Abilities
                 return;
             }
 
-            LocalTargetInfo target = null;
-            Find.Targeter.BeginTargeting(TargetingParms, t => target = t);
-            if (ApplyEffect(target))
-                lastCastTick = CurrentTick;
+            Find.Targeter.BeginTargeting(
+                TargetingParms,
+                t => 
+                { 
+                    if (t.IsValid && ApplyEffect(t)) 
+                        lastCastTick = CurrentTick; 
+                },
+                null,                 //高亮（默认）
+                null,                 //过滤器
+                Owner,                //施法者
+                null,                 //选择状态结束时行为
+                null,                 //鼠标额外贴图
+                true,                 //是否播放确认音效
+                null,                 //选择时GUI层每帧行为
+                OnTargeting);   //选择时世界层每帧行为
         }
 
-        public virtual TargetingParameters TargetingParms
-            => new()
-            {
-                canTargetPawns = true,
-                canTargetBuildings = false,
-                canTargetLocations = true,
-                canTargetSelf = false
-            };
+        public virtual TargetingParameters TargetingParms => TargetingParameters.ForThing();
 
         /// <summary>
         /// 每tick检查被动效果是否适用，如果可适用则调用ApplyEffect，并根据返回的结果进入冷却
@@ -152,5 +156,11 @@ namespace FamiliaMyth.Abilities
         /// 每个渲染帧调用的绘制行为
         /// </summary>
         public virtual void Update() { }
+
+        /// <summary>
+        /// 目标选择时的每帧渲染
+        /// </summary>
+        /// <param name="targetInfo">Targeter返回的目标</param>
+        protected virtual void OnTargeting(LocalTargetInfo targetInfo) { }
     }
 }

@@ -82,7 +82,7 @@ namespace FamiliaMyth.Abilities
                 data.velocity = (tip - start).normalized * Rand.Range(0.35f, 0.7f);
                 data.scale = Rand.Range(0.6f, 1f);
                 data.rotation = Rand.Range(0f, 360f);
-                data.instanceColor = Color.white.WithAlpha(0.75f);
+                data.instanceColor = Color.white.WithAlpha(0.5f);
 
                 pawn.Map.flecks.CreateFleck(data);
             }

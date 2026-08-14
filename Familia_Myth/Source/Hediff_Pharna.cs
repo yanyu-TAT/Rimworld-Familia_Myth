@@ -367,9 +367,7 @@ namespace FamiliaMyth.Pharna
 
         public static Hediff_Pharna GetPharna(Pawn pawn)
         {
-            if (pawn?.health?.hediffSet == null) return null;
-
-            if (pawn.health.hediffSet.GetFirstHediffOfDef(PharnaDef) is Hediff_Pharna pharna)
+            if (pawn?.health?.hediffSet?.GetFirstHediffOfDef(PharnaDef) is Hediff_Pharna pharna)
                 return pharna;
 
             return null;

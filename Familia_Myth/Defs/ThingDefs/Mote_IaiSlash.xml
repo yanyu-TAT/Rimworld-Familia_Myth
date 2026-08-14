@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- 居合拔刀气刃斩 - 纳刀护盾：附着施法者，居合期间吸收伤害。
+       存活依赖 Skill_IaiSpiritSlash.Tick 每tick Maintain（needsMaintenance=true）；
+       3秒后拔刀 isSneathing=false 停止维持，经 fadeOutUnmaintained 淡出销毁。
+       solidTime 取 10s，保证 EndOfLife(Lifespan) 不早于固定居合时长(3s) -->
+  <ThingDef ParentName="MoteBase">
+    <defName>Mote_Sneathe</defName>
+    <thingClass>FamiliaMyth.Abilities.Mote_Sneathe</thingClass>
+    <!-- MoteOverheadLow：位于角色身体之上、头顶光环之下，适合罩身护盾 -->
+    <altitudeLayer>MoteOverheadLow</altitudeLayer>
+    <mote>
+      <fadeInTime>0.2</fadeInTime>
+      <solidTime>10</solidTime>
+      <fadeOutTime>0.8</fadeOutTime>
+      <needsMaintenance>true</needsMaintenance>
+      <fadeOutUnmaintained>true</fadeOutUnmaintained>
+    </mote>
+    <graphicData>
+      <graphicClass>Graphic_Mote</graphicClass>
+      <texPath>Familia_Myth/Things/Mote/Sneathe</texPath>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>3</drawSize>
+      <!-- 颜色由代码 instanceColor 覆写；此处留白由贴图原色决定 -->
+      <color>(1, 1, 1, 1)</color>
+    </graphicData>
+  </ThingDef>
+
+  <!-- 居合拔刀气刃斩 - 拔刀剑光：静态一次性特效，沿冲刺路径生成。
+       linearScale(宽=位移距离, 高=5)与 exactRotation 由代码设置；
+       fadeOut 阶段 Mote_Slash.TimeInterval 将 z 收窄到 0 模拟光弧消散 -->
+  <ThingDef ParentName="MoteBase">
+    <defName>Mote_Slash</defName>
+    <thingClass>FamiliaMyth.Abilities.Mote_Slash</thingClass>
+    <altitudeLayer>MoteOverheadLow</altitudeLayer>
+    <mote>
+      <fadeInTime>0.1</fadeInTime>
+      <solidTime>0</solidTime>
+      <fadeOutTime>1.2</fadeOutTime>
+    </mote>
+    <graphicData>
+      <graphicClass>Graphic_Mote</graphicClass>
+      <texPath>Familia_Myth/Things/Mote/Slash</texPath>
+      <shaderType>MoteGlow</shaderType>
+      <!-- 缩放由代码 linearScale 控制，此处保持 1 不做额外放大 -->
+      <drawSize>1</drawSize>
+    </graphicData>
+  </ThingDef>
+
+</Defs>

@@ -4,7 +4,7 @@
   <FamiliaMyth.Abilities.SkillDef>
     <defName>Skill_Ember</defName>
     <label>余烬</label>
-    <description>被击倒时触发，短时间内强制维持生存并高速修复伤势，之后强制昏迷。</description>
+    <description>被击倒时触发：短时间内强制维持生存并高速修复伤势，之后强制昏迷。</description>
     <skillClass>FamiliaMyth.Abilities.Skill_Ember</skillClass>
     <rarity>Rare</rarity>
     <skillType>Triggered</skillType>
@@ -17,7 +17,7 @@
   <FamiliaMyth.Abilities.SkillDef>
     <defName>Skill_BerserkerChaos</defName>
     <label>狂化招乱</label>
-    <description>常态生效，受伤越重，近战伤害越高。</description>
+    <description>常态生效：受伤越重，近战伤害越高。</description>
     <skillClass>FamiliaMyth.Abilities.Skill_BerserkerChaos</skillClass>
     <rarity>Common</rarity>
     <skillType>Passive</skillType>
@@ -30,7 +30,7 @@
   <FamiliaMyth.Abilities.SkillDef>
     <defName>Skill_SwordRain</defName>
     <label>剑雨滂沱</label>
-    <description>持有锐伤近战武器时可释放，对周围4格范围内敌人造成两次100%伤害；造成击杀或倒地则立刻重置冷却（最多两次）。</description>
+    <description>持有锐伤近战武器时可释放：对周围4格范围内敌人造成两次100%伤害；造成击杀或倒地则立刻重置冷却（最多两次）。</description>
     <skillClass>FamiliaMyth.Abilities.Skill_SwordRain</skillClass>
     <rarity>Uncommon</rarity>
     <skillType>Active</skillType>
@@ -45,7 +45,7 @@
   <FamiliaMyth.Abilities.SkillDef>
     <defName>Skill_FlameAffinity</defName>
     <label>火焰亲和</label>
-    <description>常态生效，热能护甲大幅提高，最高舒适温度大幅提高，易燃性提高，不再畏惧火焰，燃烧时持续恢复伤势</description>
+    <description>常态生效：热能护甲大幅提高，最高舒适温度大幅提高，易燃性提高，不再畏惧火焰，燃烧时持续恢复伤势</description>
     <skillClass>FamiliaMyth.Abilities.Skill_FlameAffinity</skillClass>
     <rarity>Uncommon</rarity>
     <skillType>Passive</skillType>
@@ -58,7 +58,7 @@
   <FamiliaMyth.Abilities.SkillDef>
     <defName>Skill_Provoke</defName>
     <label>吸引仇恨</label>
-    <description>征召时可释放，使周围20格内的敌人攻击目标变为自己，持续3小时。</description>
+    <description>征召时可释放：使周围20格内的敌人攻击目标变为自己，持续3小时。</description>
     <skillClass>FamiliaMyth.Abilities.Skill_Provoke</skillClass>
     <rarity>Common</rarity>
     <skillType>Active</skillType>
@@ -68,6 +68,20 @@
     <duration>120</duration>
     <checkInterval>60</checkInterval>
 	<iconPath>Familia_Myth/UI/Icons/Skills/Provoke</iconPath>
+  </FamiliaMyth.Abilities.SkillDef>
+
+  <FamiliaMyth.Abilities.SkillDef>
+    <defName>Skill_IaiSpiritSlash</defName>
+    <label>居合拔刀气刃斩</label>
+    <description>持有近战武器（锐伤）时可释放：进入居合状态，期间吸收所有受到的伤害；3秒后拔刀向指定方向闪现一段距离，并对路径附近敌人造成100%伤害+50%吸收的伤害。</description>
+    <skillClass>FamiliaMyth.Abilities.Skill_IaiSpiritSlash</skillClass>
+    <rarity>Rare</rarity>
+    <skillType>Active</skillType>
+    <needTarget>true</needTarget>
+    <cooldown>80</cooldown>
+    <warmup>0</warmup>
+    <duration>0</duration>
+    <checkInterval>60</checkInterval>
   </FamiliaMyth.Abilities.SkillDef>
 
 </Defs>
