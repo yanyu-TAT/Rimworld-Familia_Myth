@@ -10,7 +10,7 @@ namespace FamiliaMyth.Abilities
     {
         private const int SneatheTicks = 180;
         private const float DashDistance = 10f;
-        private const float PathDamageRadius = 1.5f;
+        private const float PathDamageRadius = 2f;
 
         public float absorbedDamage;
 

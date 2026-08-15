@@ -181,7 +181,7 @@
 		<spellClass>FamiliaMyth.Abilities.Spell_ArcsRay</spellClass>
 
 		<!-- 稀有度 -->
-		<rarity>Rare</rarity>
+		<rarity>Uncommon</rarity>
 
 		<!-- 魔法类型：攻击魔法 -->
 		<spellType>Attack</spellType>

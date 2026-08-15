@@ -15,6 +15,10 @@ namespace FamiliaMyth.Abilities
         private static ThingDef MagicCircleDef =>
             magicCircleDef ??= DefDatabase<ThingDef>.GetNamed("Mote_MagicCircleLayer");
 
+        private static StatDef spellPowerDef;
+        private static StatDef SpellPowerDef =>
+            spellPowerDef ??= DefDatabase<StatDef>.GetNamed("SpellPower");
+
         public SpellDef spellDef;
 
         public RewardType RewardType => RewardType.Spell;
@@ -169,50 +173,8 @@ namespace FamiliaMyth.Abilities
 
         public virtual float GetCurrentSpellPower()
         {
-            var caster = pawn;
-            if (caster == null) return 1f;
-
-            float power = 1f;
-            var pharna = Hediff_Pharna.GetPharna(caster);
-            if (pharna != null)
-            {
-                power += pharna.GetFullStatus(PharnaStatusType.Mana) * 0.001f;
-
-                if (pharna.skills != null)
-                {
-                    foreach (var skill in pharna.skills)
-                    {
-                        if (skill is ISpellPowerModifier modifier)
-                        {
-                            modifier.ApplySpellPowerModifier(ref power);
-                        }
-                    }
-                }
-
-                if (pharna.developableAbilities != null)
-                {
-                    foreach (var ability in pharna.developableAbilities)
-                    {
-                        if (ability is ISpellPowerModifier modifier)
-                        {
-                            modifier.ApplySpellPowerModifier(ref power);
-                        }
-                    }
-                }
-
-                if (caster?.health?.hediffSet != null)
-                {
-                    foreach (var hediff in caster.health.hediffSet.hediffs)
-                    {
-                        if (hediff is ISpellPowerModifier modifier)
-                        {
-                            modifier.ApplySpellPowerModifier(ref power);
-                        }
-                    }
-                }
-            }
-
-            return Math.Max(power, 0f);
+            if (pawn == null) return 1f;
+            return pawn.GetStatValue(SpellPowerDef);
         }
 
         public override IEnumerable<Command> GetGizmos()

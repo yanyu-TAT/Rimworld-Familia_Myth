@@ -82,6 +82,7 @@
     <warmup>0</warmup>
     <duration>0</duration>
     <checkInterval>60</checkInterval>
+	<iconPath>Familia_Myth/UI/Icons/Skills/IaiSpiritSlash</iconPath>
   </FamiliaMyth.Abilities.SkillDef>
 
 </Defs>

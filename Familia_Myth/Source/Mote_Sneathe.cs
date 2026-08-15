@@ -7,7 +7,7 @@ namespace FamiliaMyth.Abilities
     {
         public void Hit(float damage)
         {
-            float s = Mathf.Clamp01(linearScale.x - 0.0025f * damage);
+            float s = Mathf.Clamp01(linearScale.x - 0.005f * damage);
             linearScale = new(s, 1, s);
         }
 
