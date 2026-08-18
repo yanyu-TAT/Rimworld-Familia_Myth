@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="MoteBase">
+    <defName>Mote_Clock</defName>
+    <thingClass>FamiliaMyth.Abilities.Mote_Clock</thingClass>
+    <altitudeLayer>MoteLow</altitudeLayer>
+    <mote>
+	  <fadeInTime>1</fadeInTime>
+      <solidTime>999999999</solidTime>
+      <fadeOutTime>0.3</fadeOutTime>
+      <needsMaintenance>true</needsMaintenance>
+      <fadeOutUnmaintained>true</fadeOutUnmaintained>
+    </mote>
+    <graphicData>
+      <!-- 占位贴图，实际绘制由 Init() 中创建的 Graphic 覆盖 -->
+      <graphicClass>Graphic_Mote</graphicClass>
+      <texPath>Familia_Myth/Things/Mote/ChargeSpark</texPath>
+      <shaderType>MoteGlow</shaderType>
+    </graphicData>
+  </ThingDef>
+</Defs>

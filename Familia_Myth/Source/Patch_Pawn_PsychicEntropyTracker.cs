@@ -45,5 +45,20 @@ namespace FamiliaMyth.Patch
                 magic?.GainProficiency(Math.Abs(offset) * 5f); //每1%精神力消耗0.05点
             }
         }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(Pawn_PsychicEntropyTracker), nameof(Pawn_PsychicEntropyTracker.NeedToShowGizmo))]
+        public static void Postfix_NeedToShowGizmo(ref bool __result, Pawn_PsychicEntropyTracker __instance)
+        {
+            if (__result) return;
+            //拥有魔法时强制显示灵能ui
+            if ((Hediff_Pharna.GetPharna(__instance.Pawn)?.spells?.Count > 0))
+            {
+                __result = true;
+                //初始化精神力
+                if (__instance.CurrentPsyfocus < 0f)
+                    __instance.SetInitialPsyfocusLevel();
+            }
+        }
     }
 }

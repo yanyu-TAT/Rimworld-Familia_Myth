@@ -76,7 +76,7 @@ namespace FamiliaMyth.Abilities
             }
 
             //计时后拔刀
-            GameComponent_FamiliaMyth.Schedule(SneatheTicks, Dash);
+            GameComponent_FamiliaMyth.Schedule(SneatheTicks, Dash, Owner);
             return true;
         }
 

@@ -1,3 +1,4 @@
+using FamiliaMyth.Abilities;
 using RimWorld;
 using Verse;
 
@@ -10,11 +11,11 @@ namespace FamiliaMyth.Core
     {
         public static GameComponent_FamiliaMyth Instance => Current.Game?.GetComponent<GameComponent_FamiliaMyth>();
 
-        public static List<(int tick, Action action)> pendingActions = new();
+        public static List<(int tick, Action action, Thing giver)> pendingActions = new();
 
-        public static void Schedule(int tick, Action action)
+        public static void Schedule(int tick, Action action, Thing giver)
         {
-            pendingActions.Add((tick + Find.TickManager.TicksGame, action));
+            pendingActions.Add((tick, action, giver));
         }
 
         public GameComponent_FamiliaMyth(Game game) : base() { }
@@ -44,7 +45,13 @@ namespace FamiliaMyth.Core
         public override void GameComponentTick()
         {
             if (pendingActions.NullOrEmpty()) return;
-            var list = pendingActions.Where(a => a.tick <= Find.TickManager.TicksGame).ToList();
+            pendingActions.ForEach(a =>
+            {
+                if (Spell_TheWorld.ShouldTick(a.giver))
+                    a.tick--;
+            });
+
+            var list = pendingActions.Where(a => a.tick <= 0).ToList();
             foreach(var act in list)
             {
                 act.action();

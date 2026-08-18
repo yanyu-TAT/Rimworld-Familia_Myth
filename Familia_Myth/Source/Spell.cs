@@ -28,10 +28,11 @@ namespace FamiliaMyth.Abilities
         protected static int CurrentTick => Find.TickManager.TicksGame;
 
         public RewardRarity Rarity => spellDef.rarity;
-
         public string Label => spellDef.label;
-
         public string Description => spellDef.description;
+
+        protected float PsyfocusCostPerTick => (def?.PsyfocusCost / (spellDef.Warmup * 60f)) ?? 0f;
+        protected float EntropyGainPerTick => (def?.EntropyGain / (spellDef.Warmup * 60f)) ?? 0f;
 
         public List<Projectile_MagicMissileBase> activeProjectiles = new();
 
@@ -39,7 +40,10 @@ namespace FamiliaMyth.Abilities
 
         protected int lastLineTick = -9999;
         protected bool wasWarmingUp = false;
-        protected int lineIndex = 0; 
+        protected int lineIndex = 0;
+
+        protected float actualPsy;
+        protected float actualEnt;
 
         public virtual void RewardInitialize()
         {
@@ -49,6 +53,29 @@ namespace FamiliaMyth.Abilities
             //尝试随机生成魔法阵样式
             if (spellDef.magicCircles.NullOrEmpty())
                 spellDef.magicCircles = spellDef.DefaultMagicCircles;
+        }
+
+        public override AcceptanceReport CanCast
+        {
+            get
+            {
+                AcceptanceReport canCast = base.CanCast;
+                if (!canCast) return canCast;
+                var tracker = pawn?.psychicEntropy;
+                if (tracker == null) return true;
+
+                float gain = def.EntropyGain - tracker.RecoveryRate * spellDef.Warmup;
+                if (tracker.WouldOverflowEntropy(gain))
+                    return "CommandPsycastWouldExceedEntropy".Translate(def.label);
+
+                float cost = def.PsyfocusCost;
+                if (cost > float.Epsilon && cost > tracker.CurrentPsyfocus + 0.0005f)
+                    return "CommandPsycastNotEnoughPsyfocus".Translate(
+                        def.PsyfocusCostPercent, tracker.CurrentPsyfocus.ToStringPercent("0.#"),
+                        def.label.Named("PSYCASTNAME"), pawn.Named("CASTERNAME"));
+
+                return true;
+            }
         }
 
         public override void AbilityTick()
@@ -67,6 +94,8 @@ namespace FamiliaMyth.Abilities
                 wasWarmingUp = true;
                 WarmUpStart();
                 MagicCircleStart();
+                actualEnt = 0;
+                actualPsy = 0;
             }
             if (wasWarmingUp && !verb.WarmingUp)
             {
@@ -84,6 +113,18 @@ namespace FamiliaMyth.Abilities
                     ThrowIncantation(lineIndex++);
                 TickWarmUp();
                 TickMagicCircle();
+
+                //咏唱时每tick消耗精神力和增加心灵熵
+                var tracker = pawn?.psychicEntropy;
+                if (tracker == null) return;
+                float prePsy = tracker.CurrentPsyfocus;
+                float preEnt = tracker.EntropyValue;
+                tracker.OffsetPsyfocusDirectly(-PsyfocusCostPerTick);
+                tracker.TryAddEntropy(EntropyGainPerTick);
+
+                //记录实际值
+                actualPsy += Mathf.Max(0, prePsy - tracker.CurrentPsyfocus);
+                actualEnt += Mathf.Max(0, tracker.EntropyValue - preEnt);
             }
         }
 
@@ -127,7 +168,7 @@ namespace FamiliaMyth.Abilities
 
         private void ThrowIncantation(int a)
         {
-            if (a >= spellDef.incantationLines.Count) return;
+            if (a >= LineCount) return;
             Vector3 loc = pawn.DrawPos + new Vector3(0f, 0f, 1.5f);
             MoteMaker.ThrowText(loc, pawn.Map, spellDef.incantationLines[a], LineColor);
             lastLineTick = CurrentTick;
@@ -204,7 +245,16 @@ namespace FamiliaMyth.Abilities
             Scribe_Values.Look(ref lastLineTick, "lastLineTick");
             Scribe_Values.Look(ref lineIndex, "lineIndex");
             Scribe_Values.Look(ref wasWarmingUp, "wasWarmingUp");
+            Scribe_Values.Look(ref actualEnt, "actualEnt");
+            Scribe_Values.Look(ref actualPsy, "actualPsy");
             Scribe_Collections.Look(ref activeProjectiles, "activeProjectiles", LookMode.Reference);
+            Scribe_Collections.Look(ref activeMotes, "activeMotes", LookMode.Reference);
+
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                foreach (var mote in activeMotes)
+                    mote?.Maintain();
+            }
         }
     }
 

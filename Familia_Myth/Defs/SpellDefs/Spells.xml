@@ -229,4 +229,81 @@
 		<spellKey>「光华」</spellKey>
 		<spellKeyDescription>引爆光箭，造成范围眩晕和伤害</spellKeyDescription>
 	</FamiliaMyth.Abilities.SpellDef>
+
+	<!-- ==================== The World ===================== -->
+	<FamiliaMyth.Abilities.SpellDef>
+		<defName>Spell_TheWorld</defName>
+		<label>The World</label>
+		<description>展开时滞领域，范围内除发动者以外的事物的时间将被停止。</description>
+
+		<!-- 魔法实现类 -->
+		<spellClass>FamiliaMyth.Abilities.Spell_TheWorld</spellClass>
+
+		<!-- 稀有度 -->
+		<rarity>Rare</rarity>
+
+		<!-- 魔法类型：领域魔法 -->
+		<spellType>Field</spellType>
+
+		<!-- 代表色：偏深蓝的银色 -->
+		<themeColor>(0.6, 0.65, 0.78, 1)</themeColor>
+
+		<magicCircles>
+			<li>
+				<texPath>Familia_Myth/Things/Mote/MagicCircles/TheWorld1</texPath>
+				<size>(24,24)</size>
+				<scaleFrom>0.5</scaleFrom>
+				<drawColor>(1,1,1,0.6)</drawColor>
+			</li>
+			<li>
+				<texPath>Familia_Myth/Things/Mote/MagicCircles/TheWorld2</texPath>
+				<size>(24,24)</size>
+				<rotate>5.0</rotate>
+				<altitude>0.01</altitude>
+				<drawColor>(1,1,1,0.6)</drawColor>
+			</li>
+			<li>
+				<texPath>Familia_Myth/Things/Mote/MagicCircles/TheWorld3</texPath>
+				<size>(24,24)</size>
+				<altitude>0.02</altitude>
+				<drawColor>(1,1,1,0.6)</drawColor>
+			</li>
+		</magicCircles>
+
+		<!-- 图标路径 -->
+		<iconPath>Familia_Myth/UI/Icons/Spells/TheWorld</iconPath>
+
+		<!-- 显示与施法设置 -->
+		<displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
+		<disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>
+
+		<!-- 动词属性：自身施法 -->
+		<verbProperties>
+			<verbClass>RimWorld.Verb_CastAbility</verbClass>
+			<targetable>false</targetable>
+			<nonInterruptingSelfCast>true</nonInterruptingSelfCast>
+			<range>-1</range>
+			<warmupTime>1</warmupTime>
+			<drawAimPie>false</drawAimPie>
+			<targetParams>
+				<canTargetSelf>true</canTargetSelf>
+			</targetParams>
+		</verbProperties>
+
+		<!-- 咏唱文本 -->
+		<incantationLines>
+			<li>月之时计指向终点</li>
+			<li>万物喧嚣就此落幕</li>
+			<li>屏息凝神，万众瞩目</li>
+			<li>好了，别眨眼——</li>
+			<li>完美而潇洒的舞台即将揭晓</li>
+			<li>「The World」</li>
+		</incantationLines>
+		<lineInterval>1.2</lineInterval>
+
+		<!-- 引爆咒 -->
+		<hasSpellKey>true</hasSpellKey>
+		<spellKey>「时间开始流动」</spellKey>
+		<spellKeyDescription>立刻结束时停，根据剩余时间回复精神力和降低心灵熵</spellKeyDescription>
+	</FamiliaMyth.Abilities.SpellDef>
 </Defs>

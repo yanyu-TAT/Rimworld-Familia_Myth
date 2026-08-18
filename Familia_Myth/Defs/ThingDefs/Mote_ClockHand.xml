@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="MoteBase">
+    <defName>Mote_ClockHand</defName>
+    <thingClass>FamiliaMyth.Abilities.Mote_ClockHand</thingClass>
+    <altitudeLayer>MoteLow</altitudeLayer>
+    <mote>
+      <fadeInTime>1</fadeInTime>
+      <solidTime>999999999</solidTime>
+      <fadeOutTime>0.3</fadeOutTime>
+      <needsMaintenance>true</needsMaintenance>
+      <fadeOutUnmaintained>true</fadeOutUnmaintained>
+    </mote>
+    <graphicData>
+      <graphicClass>Graphic_Mote</graphicClass>
+      <texPath>Familia_Myth/Things/Mote/ClockHand</texPath>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(16,64)</drawSize>
+      <color>(0.6,0.65,0.78,0.6)</color>
+    </graphicData>
+  </ThingDef>
+</Defs>

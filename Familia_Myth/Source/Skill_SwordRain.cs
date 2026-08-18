@@ -61,7 +61,7 @@ namespace FamiliaMyth.Abilities
             {
                 if (Owner.Dead || Owner.Downed || Owner.Map == null) return;
                 Hit(verb);
-            });
+            }, Owner);
 
             return true;
         }

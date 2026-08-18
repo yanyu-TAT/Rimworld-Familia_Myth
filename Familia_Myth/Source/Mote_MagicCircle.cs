@@ -13,7 +13,7 @@ namespace FamiliaMyth.Abilities
             rotationRate = layer.rotate;
             yOffset = layer.altitude;
             linearScale = new(layer.scaleFrom, 1f, layer.scaleFrom);
-            exactRotation = Rand.Range(0, 360);
+            exactRotation = layer.initialRotation;
 
             var gd = new GraphicData
             {

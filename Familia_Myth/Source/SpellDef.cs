@@ -43,7 +43,8 @@ namespace FamiliaMyth.Abilities
                         size = new((i + 1) * 5, (i + 1) * 5),
                         altitude = i * 0.01f,
                         rotate = 20 * Rand.Value * Rand.Sign,
-                        appearProgress = i * 0.25f
+                        appearProgress = i * 0.25f,
+                        initialRotation = Rand.Range(0f, 360f)
                     };
                     result.Add(layer);
                 }
@@ -76,6 +77,7 @@ namespace FamiliaMyth.Abilities
         Buff,       //增益魔法
         Debuff,     //减益魔法
         Enchant,    //赋予魔法
+        Field,      //领域魔法
         Special     //其他特殊魔法（分身，速攻等）
     }
 
@@ -84,10 +86,11 @@ namespace FamiliaMyth.Abilities
         public string texPath;
         public float appearProgress = 0f;   //出现时间占咏唱时间的百分比
         public Color drawColor = Color.white;   //额外覆盖的颜色
+        public float initialRotation = 0f;  //初始角度
         public float rotate = 0f;   //转速，顺正逆负
         public float altitude = 0f; //高度
         public float scaleFrom = 1f;    //初始缩放
-        public Vector2 size = new(1f, 1f);
-        public ShaderTypeDef shaderType;
+        public Vector2 size = new(1f, 1f); //绘制尺寸
+        public ShaderTypeDef shaderType; //默认MoteGlow
     }
 }
