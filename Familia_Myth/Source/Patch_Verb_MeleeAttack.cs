@@ -1,4 +1,4 @@
-﻿using FamiliaMyth.Pharna;
+using FamiliaMyth.Pharna;
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -45,7 +45,7 @@ namespace FamiliaMyth.Patch
                 if (__instance.CurrentTarget.Thing is Pawn pawn)
                 {
                     //闪避成功每次5点
-                    Hediff_Pharna.GetPharna(pawn)?.GainStatus(PharnaStatusType.Agility, 5f);
+                    pawn.GetPharna()?.GainStatus(PharnaStatusType.Agility, 5f);
                 }
             }
         }

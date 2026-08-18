@@ -1,4 +1,4 @@
-﻿using FamiliaMyth.Pharna;
+using FamiliaMyth.Pharna;
 using Verse;
 
 namespace FamiliaMyth.Abilities
@@ -23,7 +23,7 @@ namespace FamiliaMyth.Abilities
         public HediffDef cachedHediffDef;
         public HediffDef HediffDef => cachedHediffDef ??= DefDatabase<HediffDef>.GetNamed(Props.inEffectHediff);
 
-        private Hediff_Pharna Pharna => Hediff_Pharna.GetPharna(Pawn);
+        private Hediff_Pharna Pharna => Pawn.GetPharna();
 
         private Skill cachedSkill;
         private Skill Skill => cachedSkill ??= Pharna?.skills?.FirstOrDefault(t => t.def.defName == SkillDeff.defName);

@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+using HarmonyLib;
 using RimWorld;
 using FamiliaMyth.Pharna;
 using Verse;
@@ -12,7 +12,7 @@ namespace FamiliaMyth.Patch
         {
             if (sDef == null) return;
 
-            Hediff_Pharna pharna = Hediff_Pharna.GetPharna(___pawn);
+            Hediff_Pharna pharna = ___pawn.GetPharna();
             if (pharna == null) return;
 
             //每次攻击1点

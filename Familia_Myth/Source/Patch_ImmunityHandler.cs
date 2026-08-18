@@ -25,7 +25,7 @@ namespace FamiliaMyth.Patch
                 if (pawn.health.hediffSet.GetFirstHediffOfDef(HediffDef.Named("Hediff_AbnormalResistanceImmunity")) != null)
                     return;
 
-                var pharna = Hediff_Pharna.GetPharna(pawn);
+                var pharna = pawn.GetPharna();
                 if (pharna?.developableAbilities?.FirstOrDefault(a => a is DevelopableAbiility_AbnormalResistance) 
                     is not DevelopableAbiility_AbnormalResistance abr) return;
 
@@ -48,7 +48,7 @@ namespace FamiliaMyth.Patch
                 if (hediff?.def == null || ___pawn == null) return;
                 if (!hediff.def.PossibleToDevelopImmunityNaturally()) return;
 
-                var pharna = Hediff_Pharna.GetPharna(___pawn);
+                var pharna = ___pawn.GetPharna();
                 var abr = pharna?.developableAbilities?.FirstOrDefault(a => a is DevelopableAbiility_AbnormalResistance) as DevelopableAbiility_AbnormalResistance;
                 abr?.GainProficiency(5f); //每次痊愈+5
             }
@@ -69,7 +69,7 @@ namespace FamiliaMyth.Patch
                 var pawn = __instance?.Pawn;
                 if (pawn == null) return;
 
-                var pharna = Hediff_Pharna.GetPharna(pawn);
+                var pharna = pawn.GetPharna();
                 if (pharna?.developableAbilities?.FirstOrDefault(a => a is DevelopableAbiility_AbnormalResistance)
                     is not DevelopableAbiility_AbnormalResistance abr) return;
 

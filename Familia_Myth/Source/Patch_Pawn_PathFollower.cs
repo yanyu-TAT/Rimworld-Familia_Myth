@@ -1,4 +1,4 @@
-﻿using FamiliaMyth.Pharna;
+using FamiliaMyth.Pharna;
 using HarmonyLib;
 using Verse;
 using Verse.AI;
@@ -19,7 +19,7 @@ namespace FamiliaMyth.Patch
             {
                 //Log.Message("冲刺！冲！");
                 //移动每格0.25点
-                Hediff_Pharna.GetPharna(___pawn)?.GainStatus(PharnaStatusType.Agility, 0.25f);
+                ___pawn.GetPharna()?.GainStatus(PharnaStatusType.Agility, 0.25f);
             }
         }
     }

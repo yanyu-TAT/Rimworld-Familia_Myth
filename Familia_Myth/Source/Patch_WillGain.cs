@@ -14,7 +14,7 @@ namespace FamiliaMyth.Patch
 
         public static void Postfix(JobDriver_Meditate __instance)
         {
-            Hediff_Pharna.GetPharna(__instance.pawn)?.GainStatus(PharnaStatusType.Will, WillPerTick);
+            __instance.pawn.GetPharna()?.GainStatus(PharnaStatusType.Will, WillPerTick);
         }
     }
 
@@ -27,7 +27,7 @@ namespace FamiliaMyth.Patch
             if (__result)
             {
                 //灵感每次10点
-                Hediff_Pharna.GetPharna(__instance.pawn)?.GainStatus(PharnaStatusType.Will, 10f);
+                __instance.pawn.GetPharna()?.GainStatus(PharnaStatusType.Will, 10f);
             }
         }
     }
@@ -45,7 +45,7 @@ namespace FamiliaMyth.Patch
             foreach (var colonist in Find.CurrentMap.mapPawns.FreeColonistsSpawned)
             {
                 //仁善每次全员20点
-                Hediff_Pharna.GetPharna(colonist)?.GainStatus(PharnaStatusType.Will, 20f);
+                colonist.GetPharna()?.GainStatus(PharnaStatusType.Will, 20f);
             }
         }
     }
@@ -64,8 +64,8 @@ namespace FamiliaMyth.Patch
                 return;
             }
             //深入交流/美言每次双方2点
-            Hediff_Pharna.GetPharna(PawnRef(__instance))?.GainStatus(PharnaStatusType.Will, 2f);
-            Hediff_Pharna.GetPharna(recipient)?.GainStatus(PharnaStatusType.Will, 2f);
+            PawnRef(__instance).GetPharna()?.GainStatus(PharnaStatusType.Will, 2f);
+            recipient.GetPharna()?.GainStatus(PharnaStatusType.Will, 2f);
         }
     }
 }

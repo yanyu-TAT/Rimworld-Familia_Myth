@@ -28,7 +28,7 @@ namespace FamiliaMyth.Pharna
                 if (!req.HasThing || !req.Thing.Spawned || req.Thing is not Pawn pawn)
                     return;
 
-                var pharna = Hediff_Pharna.GetPharna(pawn);
+                var pharna = pawn.GetPharna();
                 if (pharna == null) return;
 
                 float status = pharna.GetFullStatus(statusType);
@@ -62,7 +62,7 @@ namespace FamiliaMyth.Pharna
                 if (!req.HasThing || !req.Thing.Spawned || req.Thing is not Pawn pawn)
                     return null;
 
-                var pharna = Hediff_Pharna.GetPharna(pawn);
+                var pharna = pawn.GetPharna();
                 if (pharna == null) return "";
 
                 int fullStatus = (int)pharna.GetFullStatus(statusType);

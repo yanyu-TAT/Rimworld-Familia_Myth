@@ -1,4 +1,4 @@
-﻿using FamiliaMyth.Pharna;
+using FamiliaMyth.Pharna;
 using Verse;
 
 namespace Familia_Myth.Source
@@ -19,7 +19,7 @@ namespace Familia_Myth.Source
             base.MapComponentUpdate();
             foreach(var pawn in pawnsWithPharna.ToList())
             {
-                if (Hediff_Pharna.GetPharna(pawn) is not Hediff_Pharna pharna)
+                if (pawn.GetPharna() is not Hediff_Pharna pharna)
                 {
                     pawnsWithPharna.Remove(pawn);
                     continue;

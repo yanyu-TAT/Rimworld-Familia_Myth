@@ -1,4 +1,4 @@
-﻿using FamiliaMyth.Abilities;
+using FamiliaMyth.Abilities;
 using FamiliaMyth.Pharna;
 using HarmonyLib;
 using Verse;
@@ -11,7 +11,7 @@ namespace FamiliaMyth.Patch
         public static void Postfix(Pawn ingester, float __result)
         {
             if (ingester == null) return;
-            var pharna = Hediff_Pharna.GetPharna(ingester);
+            var pharna = ingester.GetPharna();
             if (pharna == null) return;
 
             //每点摄入的营养值1点

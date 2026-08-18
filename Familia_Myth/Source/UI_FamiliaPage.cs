@@ -1,4 +1,4 @@
-﻿using FamiliaMyth.Familia;
+using FamiliaMyth.Familia;
 using FamiliaMyth.Pharna;
 using RimWorld;
 using System.Collections.Generic;
@@ -198,7 +198,7 @@ namespace FamiliaMyth.UI
 
             List<Pawn> members = new();
             foreach (var p in Find.CurrentMap.mapPawns.AllPawnsSpawned)
-                if (p.IsColonist && p.Faction == Faction.OfPlayerSilentFail && Hediff_Pharna.GetPharna(p) != null)
+                if (p.IsColonist && p.Faction == Faction.OfPlayerSilentFail && p.GetPharna() != null)
                     members.Add(p);
 
             var aliveIds = new HashSet<int>(members.Select(p => p.thingIDNumber));
@@ -214,7 +214,7 @@ namespace FamiliaMyth.UI
             {
                 if (!rewardScrollByPawn.TryGetValue(p.thingIDNumber, out var rs))
                     rs = Vector2.zero;
-                DrawMemberCard(new(0f, y, view.width, MemberCardHeight), Hediff_Pharna.GetPharna(p), ref rs);
+                DrawMemberCard(new(0f, y, view.width, MemberCardHeight), p.GetPharna(), ref rs);
                 rewardScrollByPawn[p.thingIDNumber] = rs;
                 y += MemberCardHeight + MemberCardGap;
             }

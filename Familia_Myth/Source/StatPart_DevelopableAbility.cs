@@ -1,4 +1,4 @@
-﻿using FamiliaMyth.Pharna;
+using FamiliaMyth.Pharna;
 using RimWorld;
 using System.Text;
 using Verse;
@@ -23,7 +23,7 @@ namespace FamiliaMyth.Abilities
                 if (!req.HasThing || !req.Thing.Spawned || req.Thing is not Pawn pawn)
                     return "";
 
-                var pharna = Hediff_Pharna.GetPharna(pawn);
+                var pharna = pawn.GetPharna();
                 if (pharna?.developableAbilities == null) return "";
 
                 var sb = new StringBuilder();
@@ -50,7 +50,7 @@ namespace FamiliaMyth.Abilities
                 if (!req.HasThing || !req.Thing.Spawned || req.Thing is not Pawn pawn)
                     return;
 
-                var pharna = Hediff_Pharna.GetPharna(pawn);
+                var pharna = pawn.GetPharna();
                 if (pharna?.developableAbilities == null) return;
 
                 foreach (var ability in pharna.developableAbilities)

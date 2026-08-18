@@ -15,7 +15,7 @@ namespace FamiliaMyth.Patch
 
             if (pawn == null) return true;
 
-            var pharna = Hediff_Pharna.GetPharna(pawn);
+            var pharna = pawn.GetPharna();
             if (pharna == null) return true;
 
             //处于美德状态时拦截其他将触发的精神状态

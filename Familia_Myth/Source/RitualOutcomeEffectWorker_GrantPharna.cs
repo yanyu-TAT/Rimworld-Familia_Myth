@@ -34,7 +34,7 @@ namespace FamiliaMyth.Ritual
             }
 
             //检查是否已有恩惠
-            if (Hediff_Pharna.GetPharna(pawn) != null)
+            if (pawn.GetPharna() != null)
             {
                 extraOutcomeDesc = string.Empty;
                 Log.Warning("[FamiliaMyth] The recipent have been already granted pharna");

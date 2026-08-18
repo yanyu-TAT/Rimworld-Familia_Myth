@@ -11,7 +11,7 @@ namespace FamiliaMyth.Patch
         [HarmonyPostfix]
         public static void Postfix(Pawn billDoer, List<Thing> products)
         {
-            var pharna = Hediff_Pharna.GetPharna(billDoer);
+            var pharna = billDoer.GetPharna();
             var amount = 0f;
             if (pharna == null) return;
             foreach (var item in products)

@@ -1,4 +1,4 @@
-﻿using FamiliaMyth.Pharna;
+using FamiliaMyth.Pharna;
 using RimWorld;
 using System.Text;
 using Verse;
@@ -17,7 +17,7 @@ namespace FamiliaMyth.Abilities
             static void Transform(StatRequest req, ref float val)
             {
                 if (req.Thing is not Pawn pawn) return;
-                var pharna = Hediff_Pharna.GetPharna(pawn);
+                var pharna = pawn.GetPharna();
                 if (pharna == null) return;
 
                 val += pharna.GetFullStatus(PharnaStatusType.Mana) * ManaFactor;
@@ -52,7 +52,7 @@ namespace FamiliaMyth.Abilities
             static string Explain(StatRequest req)
             {
                 if (req.Thing is not Pawn pawn) return "";
-                var pharna = Hediff_Pharna.GetPharna(pawn);
+                var pharna = pawn.GetPharna();
                 if (pharna == null) return "";
 
                 var sb = new StringBuilder();

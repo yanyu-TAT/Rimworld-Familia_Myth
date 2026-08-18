@@ -23,7 +23,7 @@ namespace FamiliaMyth.Ritual
             base.ApplyExtraOutcome(totalPresence, jobRitual, outcome, out extraOutcomeDesc, ref letterLookTargets);
 
             Pawn pawn = jobRitual.PawnWithRole("recipient");
-            Hediff_Pharna pharna = Hediff_Pharna.GetPharna(pawn);
+            Hediff_Pharna pharna = pawn.GetPharna();
 
             //检查是否已有恩惠
             if (pharna == null)

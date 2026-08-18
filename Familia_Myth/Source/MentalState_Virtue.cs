@@ -21,7 +21,7 @@ namespace FamiliaMyth.Pharna
             forceRecoverAfterTicks = duration;
 
             //获取美德种类并设定
-            var pharna = Hediff_Pharna.GetPharna(pawn);
+            var pharna = pawn.GetPharna();
             if (pharna == null)
             {
                 Log.Warning($"Pawn {pawn.Name.ToStringShort} Hasn't Got Pharna But Triggered Virtue");
@@ -59,7 +59,7 @@ namespace FamiliaMyth.Pharna
         public override void PostEnd()
         {
             //设置冷却
-            var pharna = Hediff_Pharna.GetPharna(pawn);
+            var pharna = pawn.GetPharna();
             if (pharna == null)
             {
                 Log.Warning($"Pawn {pawn.Name.ToStringShort} Hasn't Got Pharna But Triggered Virtue");

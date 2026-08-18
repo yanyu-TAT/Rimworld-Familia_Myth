@@ -79,7 +79,7 @@ namespace FamiliaMyth.Quest
             float m = 1f;
             foreach (var pawn in map.mapPawns.AllPawnsSpawned
                 .Where(p => p.Faction == Faction.OfPlayer && p.IsColonist))
-                if (Hediff_Pharna.GetPharna(pawn) is Hediff_Pharna pharna)
+                if (pawn.GetPharna() is Hediff_Pharna pharna)
                     m += (pharna.level - 1) * (pharna.level - 1) / 10f;
             return m;
         }

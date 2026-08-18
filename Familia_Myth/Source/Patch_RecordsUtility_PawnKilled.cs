@@ -14,7 +14,7 @@ namespace FamiliaMyth.Patch
             //非友方单位
             if (killed == null || killer == null || killed.Faction == killer.Faction) return;
 
-            var pharna = Hediff_Pharna.GetPharna(killer);
+            var pharna = killer.GetPharna();
 
             //每次击杀8点
             pharna?.GainStatus(PharnaStatusType.Strength, 8f);

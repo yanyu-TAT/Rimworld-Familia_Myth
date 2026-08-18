@@ -45,7 +45,7 @@ namespace FamiliaMyth.Incidents
                                 .Where(p => p.IsColonist && p.Faction == Faction.OfPlayer);
                             foreach (var pawn in colonists)
                             {
-                                if (Hediff_Pharna.GetPharna(pawn) == null) continue;
+                                if (pawn.GetPharna() == null) continue;
                                 options.Add(new FloatMenuOption(pawn.LabelCap, () =>
                                 {
                                     CreateQuest(pawn);

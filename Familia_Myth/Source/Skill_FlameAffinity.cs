@@ -1,4 +1,4 @@
-﻿using FamiliaMyth.Pharna;
+using FamiliaMyth.Pharna;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -40,7 +40,7 @@ namespace FamiliaMyth.Abilities
 
         public static bool HasFlameAffinity(Pawn pawn)
         {
-            var pharna = Hediff_Pharna.GetPharna(pawn);
+            var pharna = pawn.GetPharna();
             if (pharna?.skills == null) return false;
             return pharna.skills.Any(s => s is Skill_FlameAffinity);
         }

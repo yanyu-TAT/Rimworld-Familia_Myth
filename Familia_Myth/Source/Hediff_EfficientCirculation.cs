@@ -1,4 +1,4 @@
-﻿using FamiliaMyth.Pharna;
+using FamiliaMyth.Pharna;
 using UnityEngine;
 using Verse;
 
@@ -14,7 +14,7 @@ namespace FamiliaMyth.Abilities
             {
                 if (ability == null)
                 {
-                    if (Hediff_Pharna.GetPharna(pawn).developableAbilities.FirstOrDefault(d => d is DevelopableAbility_EfficientCirculation)
+                    if (pawn.GetPharna().developableAbilities.FirstOrDefault(d => d is DevelopableAbility_EfficientCirculation)
                         is DevelopableAbility_EfficientCirculation abi)
                         ability = abi;
                 }

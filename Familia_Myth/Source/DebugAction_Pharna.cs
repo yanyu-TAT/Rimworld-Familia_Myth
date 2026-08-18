@@ -28,7 +28,7 @@ namespace FamiliaMyth.Debug
                     {
                         foreach (var pawn in Find.CurrentMap.thingGrid.ThingsAt(Verse.UI.MouseCell()).OfType<Pawn>())
                         {
-                            var pharna = Hediff_Pharna.GetPharna(pawn);
+                            var pharna = pawn.GetPharna();
                             pharna?.GainStatus(type, DefaultAmount);
                             MoteMaker.ThrowText(pawn.DrawPos, pawn.Map, $"{Hediff_Pharna.GetStatusName(type)}:{pharna?.GetCurrentStatus(type)}");
                         }
@@ -47,7 +47,7 @@ namespace FamiliaMyth.Debug
             allowedGameStates = AllowedGameStates.PlayingOnMap)]
         public static void GrantPharna(Pawn pawn)
         {
-            if (Hediff_Pharna.GetPharna(pawn) != null) return;
+            if (pawn.GetPharna() != null) return;
             pawn.health.AddHediff(HediffDef.Named("Hediff_Pharna"));
         }
 
@@ -60,7 +60,7 @@ namespace FamiliaMyth.Debug
             allowedGameStates = AllowedGameStates.PlayingOnMap)]
         public static void AddExploits(Pawn pawn)
         {
-            var pharna = Hediff_Pharna.GetPharna(pawn);
+            var pharna = pawn.GetPharna();
             pharna?.GainExploits(DefaultAmount);
             MoteMaker.ThrowText(pawn.DrawPos, pawn.Map, $"{pharna?.exploits}");
         }
@@ -86,7 +86,7 @@ namespace FamiliaMyth.Debug
                     {
                         foreach (var pawn in Find.CurrentMap.thingGrid.ThingsAt(Verse.UI.MouseCell()).OfType<Pawn>())
                         {
-                            var pharna = Hediff_Pharna.GetPharna(pawn);
+                            var pharna = pawn.GetPharna();
                             if (pharna == null) continue;
                             List<string> rewardNames = pharna.GetRewardNames().ToList();
                             var r = Factory();
@@ -111,7 +111,7 @@ namespace FamiliaMyth.Debug
             allowedGameStates = AllowedGameStates.PlayingOnMap)]
         public static void ShowAscendWindow(Pawn pawn)
         {
-            var pharna = Hediff_Pharna.GetPharna(pawn); 
+            var pharna = pawn.GetPharna(); 
             if (pharna == null) return;
             var rewards = AscendHelper.GetRandomRewardsFor(100, pharna).ToList();
             if (rewards.Count > 0)
@@ -127,7 +127,7 @@ namespace FamiliaMyth.Debug
             allowedGameStates = AllowedGameStates.PlayingOnMap)]
         public static void GainDevelopableAbilityProficiency(Pawn pawn)
         {
-            var pharna = Hediff_Pharna.GetPharna(pawn);
+            var pharna = pawn.GetPharna();
             if (pharna?.developableAbilities == null) return;
             foreach (var ability in pharna.developableAbilities)
             {
@@ -152,7 +152,7 @@ namespace FamiliaMyth.Debug
                     {
                         foreach (var pawn in Find.CurrentMap.thingGrid.ThingsAt(Verse.UI.MouseCell()).OfType<Pawn>())
                         {
-                            var pharna = Hediff_Pharna.GetPharna(pawn);
+                            var pharna = pawn.GetPharna();
                             if (pharna != null)
                             {
                                 pharna.currentVirtue = type;

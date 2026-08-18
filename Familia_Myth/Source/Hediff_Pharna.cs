@@ -365,6 +365,7 @@ namespace FamiliaMyth.Pharna
         private static HediffDef cachedPharnaDef;
         private static HediffDef PharnaDef => cachedPharnaDef ??= DefDatabase<HediffDef>.GetNamed("Hediff_Pharna");
 
+        [Obsolete("Use Extension Method Of Class Pawn Instead")]
         public static Hediff_Pharna GetPharna(Pawn pawn)
         {
             if (pawn?.health?.hediffSet?.GetFirstHediffOfDef(PharnaDef) is Hediff_Pharna pharna)
@@ -399,6 +400,20 @@ namespace FamiliaMyth.Pharna
         {
             base.Notify_PawnPostApplyDamage(dinfo, totalDamageDealt);
             TryTriggerVirtue(0.1f);
+        }
+    }
+
+    public static class PharnaUtility
+    {
+        private static HediffDef cachedPharnaDef;
+        private static HediffDef PharnaDef => cachedPharnaDef ??= DefDatabase<HediffDef>.GetNamed("Hediff_Pharna");
+
+        public static Hediff_Pharna GetPharna(this Pawn pawn)
+        {
+            if (pawn?.health?.hediffSet?.GetFirstHediffOfDef(PharnaDef) is Hediff_Pharna pharna)
+                return pharna;
+
+            return null;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using FamiliaMyth.Core;
+using FamiliaMyth.Core;
 using FamiliaMyth.Pharna;
 using RimWorld;
 using UnityEngine;
@@ -229,7 +229,7 @@ namespace FamiliaMyth.Abilities
 
         public static Skill_IaiSpiritSlash GetActiveSkill(Pawn pawn)
         {
-            var pharna = Hediff_Pharna.GetPharna(pawn);
+            var pharna = pawn.GetPharna();
             var skill = pharna?.skills?.FirstOrDefault(s => s is Skill_IaiSpiritSlash);
             if (skill is Skill_IaiSpiritSlash iai && iai.isSneathing)
                 return iai;

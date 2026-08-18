@@ -23,7 +23,7 @@ namespace FamiliaMyth.Abilities
             string Explain(StatRequest req)
             {
                 if (req.Thing is not Pawn pawn) return "";
-                var pharna = Hediff_Pharna.GetPharna(pawn);
+                var pharna = pawn.GetPharna();
                 if (pharna?.skills?.OfType<Skill_FlameAffinity>().Any() != true) return "";
                 string s = "技能 火焰亲和: ";
                 switch (statType)
@@ -49,7 +49,7 @@ namespace FamiliaMyth.Abilities
             void Transform(StatRequest req, ref float val)
             {
                 if (req.Thing is not Pawn pawn) return;
-                var pharna = Hediff_Pharna.GetPharna(pawn);
+                var pharna = pawn.GetPharna();
                 if (pharna?.skills?.OfType<Skill_FlameAffinity>().Any() != true) return;
                 switch (statType)
                 {

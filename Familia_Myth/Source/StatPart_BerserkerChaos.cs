@@ -1,4 +1,4 @@
-﻿using FamiliaMyth.Core;
+using FamiliaMyth.Core;
 using FamiliaMyth.Pharna;
 using RimWorld;
 using Verse;
@@ -22,7 +22,7 @@ namespace FamiliaMyth.Abilities
             {
                 if (req.Thing is Pawn pawn)
                 {
-                    var pharna = Hediff_Pharna.GetPharna(pawn);
+                    var pharna = pawn.GetPharna();
                     if (pharna?.skills == null)
                         return "";
                     foreach (var skill in pharna.skills)
@@ -48,7 +48,7 @@ namespace FamiliaMyth.Abilities
             {
                 if (req.Thing is Pawn pawn)
                 {
-                    var pharna = Hediff_Pharna.GetPharna(pawn);
+                    var pharna = pawn.GetPharna();
                     if (pharna?.skills == null)
                         return;
                     foreach (var skill in pharna.skills)
