@@ -9,11 +9,7 @@ namespace FamiliaMyth.Abilities
         public static HashSet<Pawn> downedPawns = new();
 
         //tick方法中不触发效果，由patch监听触发效果
-        public override bool CanCast(out string failReason)
-        {
-            failReason = null;
-            return false;
-        }
+        public override AcceptanceReport CanCast => "";
 
         public override void Tick()
         {

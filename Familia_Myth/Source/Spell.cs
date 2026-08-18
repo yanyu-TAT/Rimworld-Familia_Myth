@@ -19,7 +19,7 @@ namespace FamiliaMyth.Abilities
         private static StatDef SpellPowerDef =>
             spellPowerDef ??= DefDatabase<StatDef>.GetNamed("SpellPower");
 
-        public SpellDef spellDef;
+        protected SpellDef spellDef;
 
         public RewardType RewardType => RewardType.Spell;
 
@@ -45,6 +45,8 @@ namespace FamiliaMyth.Abilities
         protected float actualPsy;
         protected float actualEnt;
 
+        public bool stunning = false;
+
         public virtual void RewardInitialize()
         {
             spellDef = DefDatabase<SpellDef>.GetNamed(GetType().Name, false);
@@ -61,18 +63,21 @@ namespace FamiliaMyth.Abilities
             {
                 AcceptanceReport canCast = base.CanCast;
                 if (!canCast) return canCast;
+
+                var check = pawn?.GetPharna()?.CheckStunning ?? true;
+                if (!check)
+                    return $"{check.Reason}效果结束前不可重复释放";
+
                 var tracker = pawn?.psychicEntropy;
                 if (tracker == null) return true;
 
                 float gain = def.EntropyGain - tracker.RecoveryRate * spellDef.Warmup;
                 if (tracker.WouldOverflowEntropy(gain))
-                    return "CommandPsycastWouldExceedEntropy".Translate(def.label);
+                    return $"{pawn.Name.ToStringShort}的心灵熵将会超出阈值";
 
                 float cost = def.PsyfocusCost;
                 if (cost > float.Epsilon && cost > tracker.CurrentPsyfocus + 0.0005f)
-                    return "CommandPsycastNotEnoughPsyfocus".Translate(
-                        def.PsyfocusCostPercent, tracker.CurrentPsyfocus.ToStringPercent("0.#"),
-                        def.label.Named("PSYCASTNAME"), pawn.Named("CASTERNAME"));
+                    return $"{pawn.Name.ToStringShort}的精神力不足";
 
                 return true;
             }
@@ -94,6 +99,7 @@ namespace FamiliaMyth.Abilities
                 wasWarmingUp = true;
                 WarmUpStart();
                 MagicCircleStart();
+                stunning = true;
                 actualEnt = 0;
                 actualPsy = 0;
             }
@@ -102,6 +108,7 @@ namespace FamiliaMyth.Abilities
                 //结尾
                 wasWarmingUp = false;
                 ThrowIncantation(lineIndex++);
+                stunning = false;
                 WarmUpFinish();
                 MagicCircleEnd();
             }
@@ -186,6 +193,9 @@ namespace FamiliaMyth.Abilities
 
         protected virtual void WarmUpStart() { }
 
+        /// <summary>
+        /// 咏唱结束，如果有后摇则应在其期间禁用其他主动效果
+        /// </summary>
         protected virtual void WarmUpFinish() { }
 
         protected virtual void TickWarmUp() { }

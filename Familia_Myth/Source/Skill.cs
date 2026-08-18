@@ -26,7 +26,12 @@ namespace FamiliaMyth.Abilities
 
         public Hediff_Pharna pharna;
 
-        public Pawn Owner => pharna.pawn;
+        public Pawn Owner => pharna?.pawn;
+
+        /// <summary>
+        /// 对于有延迟效果的主动技能效果，应该在延迟过程中禁用其他主动效果
+        /// </summary>
+        public bool stunning = false;
 
         public void RewardInitialize()
         {
@@ -86,21 +91,27 @@ namespace FamiliaMyth.Abilities
             //非被动效果不处理
             if (def.skillType == SkillType.Active) return;
             if (Find.TickManager.TicksGame % (int)def.checkInterval != 0) return;
-            if (!CanCast(out _)) return;
+            if (!CanCast) return;
 
             if (ApplyEffect(null))
                 lastCastTick = CurrentTick;
         }
 
-        public virtual bool CanCast(out string failReason)
+        public virtual AcceptanceReport CanCast
         {
-            failReason = null;
-            if (IsCooldown)
-            {
-                failReason = $"冷却中，剩余{RemainingCooldown:F1}秒";
-                return false;
+            get{
+                if (IsCooldown)
+                    return $"冷却中，剩余{RemainingCooldown:F1}秒";
+
+                if (def.skillType != SkillType.Active)
+                    return true;
+
+                var check = pharna?.CheckStunning ?? true;
+                if (!check)
+                    return $"{check.Reason}效果结束前不可重复释放";
+
+                return true;
             }
-            return true;
         }
 
         /// <summary>

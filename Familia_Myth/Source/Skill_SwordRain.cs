@@ -21,16 +21,19 @@ namespace FamiliaMyth.Abilities
         private static ThingDef SwordDef =>
             swordDef ??= DefDatabase<ThingDef>.GetNamed("SwordRain_FallingSword");
 
-        public override bool CanCast(out string failReason)
+        public override AcceptanceReport CanCast
         {
-            if(!base.CanCast(out failReason)) return false;
-            if(Owner.equipment == null || !Owner.equipment.AllEquipmentVerbs.Any(
-                v => v.verbProps.meleeDamageDef?.armorCategory == DamageArmorCategoryDefOf.Sharp))
+            get
             {
-                failReason = "未持有剑（锐伤近战武器）";
-                return false;
+                var canCast = base.CanCast;
+                if (!canCast) return canCast;
+
+                if (Owner.equipment == null || !Owner.equipment.AllEquipmentVerbs.Any(
+                    v => v.verbProps.meleeDamageDef?.armorCategory == DamageArmorCategoryDefOf.Sharp))
+                    return "未持有剑（锐伤近战武器）";
+
+                return true;
             }
-            return true;
         }
 
         public override bool ApplyEffect(LocalTargetInfo target)
@@ -52,15 +55,17 @@ namespace FamiliaMyth.Abilities
                 return false;
             }
 
+            stunning = true;
             kill = false;
             swordCount = 0;
             finished = false;
 
-            Hit(verb);
+            SpawnSwords(verb);
             GameComponent_FamiliaMyth.Schedule(HitIntervalTicks, () =>
             {
+                stunning = false;
                 if (Owner.Dead || Owner.Downed || Owner.Map == null) return;
-                Hit(verb);
+                SpawnSwords(verb);
             }, Owner);
 
             return true;
@@ -93,7 +98,7 @@ namespace FamiliaMyth.Abilities
             }
         }
 
-        private void Hit(Verb verb)
+        private void SpawnSwords(Verb verb)
         {
             if (verb == null) return;
             float dmg = verb.verbProps.AdjustedMeleeDamageAmount(verb, Owner);
@@ -132,7 +137,7 @@ namespace FamiliaMyth.Abilities
 
         public override void OnHovering()
         {
-            if (Owner == null || !Owner.Spawned || !CanCast(out _)) return;
+            if (Owner == null || !Owner.Spawned || !CanCast) return;
             GenDraw.DrawRadiusRing(Owner.Position, Radius, new(0.4f, 0.4f, 0.8f, 0.8f));
         }
 

@@ -18,15 +18,18 @@ namespace FamiliaMyth.Abilities
             .GetPartsWithDef(DefDatabase<BodyPartDef>.GetNamed("Finger"))
             .FirstOrDefault(p => p.IsInGroup(DefDatabase<BodyPartGroupDef>.GetNamed("MiddleFingers")));
 
-        public override bool CanCast(out string failReason)
+        public override AcceptanceReport CanCast
         {
-            if (!base.CanCast(out failReason)) return false;
-            if (!Owner.Drafted)
+            get
             {
-                failReason = $"{Owner.Name.ToStringShort}尚未被征召";
-                return false;
+                var canCast = base.CanCast;
+                if (!canCast) return canCast;
+
+                if (!Owner.Drafted)
+                    return $"{Owner.Name.ToStringShort}尚未被征召";
+
+                return true;
             }
-            return true;
         }
 
         public override void Tick()

@@ -55,6 +55,24 @@ namespace FamiliaMyth.Pharna
         public bool IsVirtueCooldown => Find.TickManager.TicksGame - lastVirtueTriggeredTick <= VirtueTriggerInterval;
         public VirtueType? currentVirtue = null;
 
+        public AcceptanceReport CheckStunning
+        {
+            get
+            {
+                if (skills != null)
+                    foreach (var skill in skills)
+                        if (skill.stunning)
+                            return skill.Label;
+
+                if (spells != null)
+                    foreach (var spell in spells)
+                        if (spell.stunning)
+                            return spell.Label;
+
+                return true;
+            }
+        }
+
         static Hediff_Pharna(){
             for (char c = 'I'; c >= 'A'; c--)
             {

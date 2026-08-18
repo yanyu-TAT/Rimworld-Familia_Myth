@@ -38,17 +38,20 @@ namespace FamiliaMyth.Abilities
             validator = t => t.IsValid && t.Cell.InBounds(Owner.Map) && t.Cell.DistanceTo(Owner.Position) <= DashDistance
         };
 
-        public override bool CanCast(out string failReason)
+        public override AcceptanceReport CanCast
         {
-            if (!base.CanCast(out failReason)) return false;
-
-            if (Owner.equipment == null || !Owner.equipment.AllEquipmentVerbs.Any(
-                v => v.verbProps.meleeDamageDef?.armorCategory == DamageArmorCategoryDefOf.Sharp))
+            get
             {
-                failReason = "未持有太刀（锐伤近战武器）";
-                return false;
+                var canCast = base.CanCast;
+                if (!canCast) return canCast;
+
+                if (Owner.equipment == null || !Owner.equipment.AllEquipmentVerbs.Any(
+                    v => v.verbProps.meleeDamageDef?.armorCategory == DamageArmorCategoryDefOf.Sharp))
+                {
+                    return "未持有太刀（锐伤近战武器）";
+                }
+                return true;
             }
-            return true;
         }
 
         public override bool ApplyEffect(LocalTargetInfo target)
@@ -65,6 +68,7 @@ namespace FamiliaMyth.Abilities
 
             //击晕（进入纳刀）
             Owner.stances.stunner.StunFor(SneatheTicks, Owner, false, false, true);
+            stunning = true;
 
             //生成纳刀特效
             moteSneathe = ThingMaker.MakeThing(MoteSneathDef) as Mote_Sneathe;
@@ -90,6 +94,7 @@ namespace FamiliaMyth.Abilities
         {
             //结束纳刀
             isSneathing = false;
+            stunning = false;
 
             if (Owner?.Map == null || !Owner.Spawned || Owner.DeadOrDowned) return;
 

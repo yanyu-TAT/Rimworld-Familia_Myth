@@ -31,12 +31,8 @@ namespace FamiliaMyth.Abilities
             return true;
         }
 
-        public override bool CanCast(out string failReason)
-        {
-            failReason = null;
-            if (Owner == null || !Owner.Spawned) return false;
-            return Owner.IsBurning();
-        }
+        //仅考虑持有者是否正在燃烧
+        public override AcceptanceReport CanCast => Owner.IsBurning() ? true : "";
 
         public static bool HasFlameAffinity(Pawn pawn)
         {

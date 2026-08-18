@@ -155,6 +155,9 @@ namespace FamiliaMyth.Abilities
             lastShootTick = CurrentTick - ShootIntervalTicks;
             isShooting = true;
             SetParamsForNewTarget();
+
+            //延续僵直效果
+            stunning = true;
         }
 
         public override void AbilityTick()
@@ -212,6 +215,7 @@ namespace FamiliaMyth.Abilities
             {
                 //射击结束
                 isShooting = false;
+                stunning = false;
 
                 //删除所有生成的锁定特效
                 foreach(var d in moteTargets) 

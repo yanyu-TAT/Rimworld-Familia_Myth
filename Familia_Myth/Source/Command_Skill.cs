@@ -23,7 +23,9 @@ namespace FamiliaMyth.Abilities
         {
             get
             {
-                disabled = !skill.CanCast(out disabledReason);
+                var report = skill.CanCast;
+                disabled = !report;
+                disabledReason = report.Reason;
                 return disabled;
             }
         }
