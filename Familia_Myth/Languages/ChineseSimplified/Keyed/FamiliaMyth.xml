@@ -37,4 +37,7 @@
 	<!-- 眷族评级 UI：未知文化占位 -->
 	<FamiliaMyth.UnknownCulture>未知文化</FamiliaMyth.UnknownCulture>
 
+	<!-- 远程闪避文字 -->
+	<FamiliaMyth.TextMote_Dodge>闪避</FamiliaMyth.TextMote_Dodge>
+
 </LanguageData>

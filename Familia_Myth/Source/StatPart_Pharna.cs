@@ -70,7 +70,7 @@ namespace FamiliaMyth.Pharna
                 string rank = Hediff_Pharna.GetRank(curStatus);
                 int level = pharna.level;
                 //说明文本，例：Lv.3 敏捷F399: +35.5%
-                string s = "\tLv." + level.ToString() + " " + Hediff_Pharna.GetStatusName(statusType) + rank + curStatus.ToString() + ": ";
+                string s = "  Lv." + level.ToString() + " " + Hediff_Pharna.GetStatusName(statusType) + rank + curStatus.ToString() + ": ";
 
                 //添加符号
                 if (mode == StatPartMode.ExpDecay || mode == StatPartMode.Factor)

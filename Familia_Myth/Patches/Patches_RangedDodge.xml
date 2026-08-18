@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+    <!-- ============================================================ -->
+    <!-- 操作 A：StatPart 注入（条件判断 Ancot 属性是否存在）           -->
+    <!--                                                              -->
+    <!-- MATCH  ：Ancot_RangeDodgeChance 存在（Ancot Library 已加载）  -->
+    <!--         向 Ancot 的远程闪避属性注入 StatPart，由敏捷影响其数值 -->
+    <!-- NOMATCH：Ancot_RangeDodgeChance 不存在，向 Familia 自有的     -->
+    <!--         远程闪避属性注入 StatPart                             -->
+    <!-- ============================================================ -->
+
+    <Operation Class="PatchOperationConditional">
+        <xpath>Defs/StatDef[defName="Ancot_RangeDodgeChance"]</xpath>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="Ancot_RangeDodgeChance"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                    <statusType>Agility</statusType>
+                    <mode>Offset</mode>
+                    <a>0.000075</a>
+                    <displayAsPercent>true</displayAsPercent>
+                </li>
+            </value>
+        </match>
+        <nomatch Class="PatchOperationConditional">
+            <xpath>Defs/StatDef[defName="Familia_RangedDodgeChance"]/parts</xpath>
+            <match Class="PatchOperationAdd">
+                <xpath>Defs/StatDef[defName="Familia_RangedDodgeChance"]/parts</xpath>
+                <value>
+                    <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                        <statusType>Agility</statusType>
+                        <mode>Offset</mode>
+                        <a>0.000075</a>
+                        <displayAsPercent>true</displayAsPercent>
+                    </li>
+                </value>
+            </match>
+            <nomatch Class="PatchOperationAdd">
+                <xpath>Defs/StatDef[defName="Familia_RangedDodgeChance"]</xpath>
+                <value>
+                    <parts>
+                        <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+                            <statusType>Agility</statusType>
+                            <mode>Offset</mode>
+                            <a>0.000075</a>
+                            <displayAsPercent>true</displayAsPercent>
+                        </li>
+                    </parts>
+                </value>
+            </nomatch>
+        </nomatch>
+    </Operation>
+
+
+    <!-- ============================================================ -->
+    <!-- 操作 B：Comp 注入                                            -->
+    <!--                                                              -->
+    <!-- 始终将 Familia 自有的闪避 Comp 添加到 BasePawn               -->
+    <!-- 当 Ancot Library 已加载时，Familia_RangedDodgeChance 为 0，  -->
+    <!-- 本 Comp 不会触发，由 Ancot 的 Comp 处理闪避逻辑              -->
+    <!-- 当 Ancot Library 未加载时，Familia_RangedDodgeChance 由      -->
+    <!-- StatPart 提供数值，本 Comp 正常生效                          -->
+    <!-- ============================================================ -->
+
+    <Operation Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name="BasePawn"]/comps</xpath>
+        <value>
+            <li Class="FamiliaMyth.Pharna.CompProperties_RangeAttackDodge" />
+        </value>
+    </Operation>
+
+</Patch>

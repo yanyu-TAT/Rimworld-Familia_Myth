@@ -96,4 +96,7 @@
 	<FamiliaMyth.VirtueThought.Vigorous.Description>Filled with hope by a companion's vigor.</FamiliaMyth.VirtueThought.Vigorous.Description>
 	<FamiliaMyth.VirtueThought.Vigorous.StageLabel>Inspired by a companion's vigor</FamiliaMyth.VirtueThought.Vigorous.StageLabel>
 
+	<!-- Ranged dodge text -->
+	<FamiliaMyth.TextMote_Dodge>Dodge</FamiliaMyth.TextMote_Dodge>
+
 </LanguageData>
