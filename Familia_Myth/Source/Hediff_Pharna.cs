@@ -50,7 +50,7 @@ namespace FamiliaMyth.Pharna
         public float maxStatus = 999f;
 
         //美德触发间隔（10-0.001x）天
-        protected int VirtueTriggerInterval => (int)((10f - 0.001 * GetFullStatus(PharnaStatusType.Will)) * GenDate.TicksPerDay);
+        protected int VirtueTriggerInterval => (int)((10f - 0.001 * GetFinalStatus(PharnaStatusType.Will)) * GenDate.TicksPerDay);
         protected int lastVirtueTriggeredTick = 99999;
         public bool IsVirtueCooldown => Find.TickManager.TicksGame - lastVirtueTriggeredTick <= VirtueTriggerInterval;
         public VirtueType? currentVirtue = null;
@@ -164,6 +164,44 @@ namespace FamiliaMyth.Pharna
                 PharnaStatusType.Will => will + willPotential,
                 _ => 0f
             };
+        }
+
+        public float GetFinalStatus(PharnaStatusType type) => GetFinalStatus(type, out _);
+
+        public float GetFinalStatus(PharnaStatusType type, out string explanation)
+        {
+            explanation = "";
+            var sb = new StringBuilder();
+            var val = GetCurrentStatus(type);
+
+            if (skills != null)
+                foreach (var s in skills)
+                    if (s is IStatusModifier m)
+                    {
+                        m.ApplyStatusModifier(type, ref val);
+                        sb.AppendLine(m.GetExplanation(type));
+                    }
+
+            if (developableAbilities != null)
+                foreach (var a in developableAbilities)
+                    if (a is IStatusModifier m)
+                    {
+                        m.ApplyStatusModifier(type, ref val);
+                        sb.AppendLine(m.GetExplanation(type));
+                    }
+
+            if (pawn?.health?.hediffSet?.hediffs != null)
+                foreach (var h in pawn.health.hediffSet.hediffs)
+                    if (h is HediffWithComps hc)
+                        foreach (var c in hc.comps)
+                            if (c is IStatusModifier m)
+                            {
+                                m.ApplyStatusModifier(type, ref val);
+                                sb.AppendLine(m.GetExplanation(type));
+                            }
+
+            explanation = sb.ToString().TrimEnd();
+            return val;
         }
 
         public bool CanAscend()
@@ -402,7 +440,7 @@ namespace FamiliaMyth.Pharna
         {
             if (IsVirtueCooldown) return false;
             //0.75 * (1 - e ^ -0.00025 * x)
-            float c = 0.75f * (1 - Mathf.Exp(-0.00025f * GetFullStatus(PharnaStatusType.Will))) * factor;
+            float c = 0.75f * (1 - Mathf.Exp(-0.00025f * GetFinalStatus(PharnaStatusType.Will))) * factor;
             if (!Rand.Chance(c)) return false;
 
             var values = Enum.GetValues(typeof(VirtueType));
@@ -419,6 +457,13 @@ namespace FamiliaMyth.Pharna
             base.Notify_PawnPostApplyDamage(dinfo, totalDamageDealt);
             TryTriggerVirtue(0.1f);
         }
+    }
+
+    public interface IStatusModifier
+    {
+        void ApplyStatusModifier(PharnaStatusType type, ref float val);
+
+        string GetExplanation(PharnaStatusType type);
     }
 
     public static class PharnaUtility

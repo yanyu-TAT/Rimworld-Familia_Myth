@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+	<PharnaStrength.label>力量</PharnaStrength.label>
+	<PharnaStrength.description>提升近战伤害系数和利器/钝器穿甲，提升负重能力。</PharnaStrength.description>
+	<PharnaEndurance.label>耐久</PharnaEndurance.label>
+	<PharnaEndurance.description>提升锐器/钝器/热能护甲，提高愈合系数，降低受伤系数、硬直时间和疼痛阈值，减缓休息值下降。</PharnaEndurance.description>
+	<PharnaDexterity.label>灵巧</PharnaDexterity.label>
+	<PharnaDexterity.description>提升全局工作速度，降低近战冷却和瞄准时间，缩短远程冷却，提升射击精度。</PharnaDexterity.description>
+	<PharnaAgility.label>敏捷</PharnaAgility.label>
+	<PharnaAgility.description>提升移动速度，提升近战闪避和远程闪避。</PharnaAgility.description>
+	<PharnaMana.label>魔力</PharnaMana.label>
+	<PharnaMana.description>提升心灵熵阈值和冥想精神力获取，提升魔法强度。</PharnaMana.description>
+	<PharnaWill.label>意志</PharnaWill.label>
+	<PharnaWill.description>提升美德触发概率，缩短美德冷却间隔。</PharnaWill.description>
+	<PharnaExperience.label>经验值</PharnaExperience.label>
+	<PharnaExperience.description>通过日常练习和学习获取的总经验值，每获得1点能力值同时获得1点经验值。</PharnaExperience.description>
+	<PharnaExploits.label>伟业值</PharnaExploits.label>
+	<PharnaExploits.description>通过完成远征任务和公会委托获取的伟业值，达到999点即可升华恩惠等级。</PharnaExploits.description>
+</LanguageData>

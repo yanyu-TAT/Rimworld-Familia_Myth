@@ -539,7 +539,7 @@
                     <statusType>Mana</statusType>
                     <mode>Offset</mode>
                     <a>0.00010</a>
-                    <displayAsPercent>false</displayAsPercent>
+                    <displayAsPercent>true</displayAsPercent>
                 </li>
             </value>
         </match>
@@ -551,7 +551,7 @@
                         <statusType>Mana</statusType>
                         <mode>Offset</mode>
                         <a>0.00010</a>
-                        <displayAsPercent>false</displayAsPercent>
+                        <displayAsPercent>true</displayAsPercent>
                     </li>
                 </parts>
             </value>
@@ -579,29 +579,6 @@
             </value>
         </nomatch>
     </Operation>
-
-    <!-- [预留] 魔导：额外的精神力存储（PsyfocusMax） -->
-    <!-- 注意：原版不存在 PsyfocusMax StatDef，待后续版本实现 -->
-    <!--
-    <Operation Class="PatchOperationConditional">
-        <xpath>Defs/StatDef[defName="PsyfocusMax"]/parts</xpath>
-        <match Class="PatchOperationAdd">
-            <xpath>Defs/StatDef[defName="PsyfocusMax"]/parts</xpath>
-            <value>
-                <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
-            </value>
-        </match>
-        <nomatch Class="PatchOperationAdd">
-            <xpath>Defs/StatDef[defName="PsyfocusMax"]</xpath>
-            <value>
-                <parts>
-                    <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
-                </parts>
-            </value>
-        </nomatch>
-    </Operation>
-    -->
-
 
     <!-- ==================== 异常抗性 (AbnormalResistance) ====================== -->
 

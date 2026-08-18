@@ -31,7 +31,7 @@ namespace FamiliaMyth.Pharna
                 var pharna = pawn.GetPharna();
                 if (pharna == null) return;
 
-                float status = pharna.GetFullStatus(statusType);
+                float status = pharna.GetFinalStatus(statusType);
                 switch (mode)
                 {
                     case StatPartMode.Offset:
@@ -65,12 +65,12 @@ namespace FamiliaMyth.Pharna
                 var pharna = pawn.GetPharna();
                 if (pharna == null) return "";
 
-                int fullStatus = (int)pharna.GetFullStatus(statusType);
+                int fullStatus = (int)pharna.GetFinalStatus(statusType);
                 int curStatus = (int)pharna.GetCurrentStatus(statusType);
                 string rank = Hediff_Pharna.GetRank(curStatus);
                 int level = pharna.level;
                 //说明文本，例：Lv.3 敏捷F399: +35.5%
-                string s = "Lv." + level.ToString() + " " + Hediff_Pharna.GetStatusName(statusType) + rank + curStatus.ToString() + ": ";
+                string s = "\tLv." + level.ToString() + " " + Hediff_Pharna.GetStatusName(statusType) + rank + curStatus.ToString() + ": ";
 
                 //添加符号
                 if (mode == StatPartMode.ExpDecay || mode == StatPartMode.Factor)

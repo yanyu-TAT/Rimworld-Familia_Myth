@@ -3,6 +3,6 @@
 
 	<!-- 魔法威力（StatDef）的显示名称与说明 -->
 	<SpellPower.label>魔力输出</SpellPower.label>
-	<SpellPower.description>该角色输出魔力的效率，会影响部分魔法的效果。</SpellPower.description>
+	<SpellPower.description>该角色输出魔力的效率，由魔力值和技能/发展能力共同决定，会影响部分魔法的效果。</SpellPower.description>
 
 </LanguageData>

@@ -22,6 +22,12 @@
             <packageId>brrainz.harmony</packageId>
             <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
         </li>
+        <li>
+            <packageId>Ludeon.RimWorld.Royalty</packageId>
+        </li>
+        <li>
+            <packageId>Ludeon.RimWorld.Ideology</packageId>
+        </li>
     </modDependencies>
 
     <loadAfter>

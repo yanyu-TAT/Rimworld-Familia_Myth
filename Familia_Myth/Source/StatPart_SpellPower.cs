@@ -20,7 +20,7 @@ namespace FamiliaMyth.Abilities
                 var pharna = pawn.GetPharna();
                 if (pharna == null) return;
 
-                val += pharna.GetFullStatus(PharnaStatusType.Mana) * ManaFactor;
+                val += pharna.GetFinalStatus(PharnaStatusType.Mana) * ManaFactor;
 
                 ApplyModifiers(pharna, ref val);
             }
@@ -38,10 +38,12 @@ namespace FamiliaMyth.Abilities
                     if (a is ISpellPowerModifier m) 
                         m.ApplySpellPowerModifier(ref power);
 
-            if (pharna.pawn?.health?.hediffSet != null)
+            if (pharna.pawn?.health?.hediffSet?.hediffs != null)
                 foreach (var h in pharna.pawn.health.hediffSet.hediffs)
-                    if (h is ISpellPowerModifier m) 
-                        m.ApplySpellPowerModifier(ref power);
+                    if (h is HediffWithComps hc)
+                        foreach(var c in hc.comps)
+                            if (c is ISpellPowerModifier m)
+                                m.ApplySpellPowerModifier(ref power);
         }
 
         public override string ExplanationPart(StatRequest req)
@@ -57,14 +59,14 @@ namespace FamiliaMyth.Abilities
 
                 var sb = new StringBuilder();
 
-                // 魔力行（风格对齐 StatPart_Pharna：名称+评级+数值: +XX%）
-                float mana = pharna.GetFullStatus(PharnaStatusType.Mana);
+                //名称+评级+数值: +XX%
+                float mana = pharna.GetFinalStatus(PharnaStatusType.Mana);
                 string rank = Hediff_Pharna.GetRank(mana);
                 sb.AppendLine(
                     $"Lv.{pharna.level} {Hediff_Pharna.GetStatusName(PharnaStatusType.Mana)}{rank}{(int)mana}: " +
                     $"+{(mana * ManaFactor).ToStringPercent()}");
 
-                // 其余 ISpellPowerModifier 来源（按前后差值求单项加成）
+                //其余法强来源
                 foreach (var line in GetModifierExplanationLines(pharna))
                     sb.AppendLine(line);
 
@@ -74,7 +76,7 @@ namespace FamiliaMyth.Abilities
 
         private static IEnumerable<string> GetModifierExplanationLines(Hediff_Pharna pharna)
         {
-            float power = 0f;
+            float power = 1f;
             var sources = new List<(string label, ISpellPowerModifier mod)>();
 
             if (pharna.skills != null)
@@ -87,17 +89,19 @@ namespace FamiliaMyth.Abilities
                     if (a is ISpellPowerModifier m) 
                         sources.Add((a.Label, m));
 
-            if (pharna.pawn?.health?.hediffSet != null)
+            if (pharna.pawn?.health?.hediffSet?.hediffs != null)
                 foreach (var h in pharna.pawn.health.hediffSet.hediffs)
-                    if (h is ISpellPowerModifier m) 
-                        sources.Add((h.LabelBase, m));
+                    if (h is HediffWithComps hc)
+                        foreach (var c in hc.comps)
+                            if (c is ISpellPowerModifier m)
+                                sources.Add((h.LabelBase, m));
 
             foreach (var (label, mod) in sources)
             {
                 float before = power;
                 mod.ApplySpellPowerModifier(ref power);
                 float delta = power - before;
-                yield return $"{label}: +{delta.ToStringPercent()}";
+                yield return $"\t{label}: +{delta.ToStringPercent()}";
             }
         }
     }

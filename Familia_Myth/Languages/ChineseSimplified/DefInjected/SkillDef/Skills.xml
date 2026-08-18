@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<Skill_DesperateArmyWin.label>哀兵必胜</Skill_DesperateArmyWin.label>
+	<Skill_DesperateArmyWin.description>心情低于50%时，根据心情低落程度获得大幅能力值补正。\n\n力量/耐久/敏捷：+200 × t + 100\n意志：+300 × t + 150\n（t = 心情低于50%的百分比 / 50%）</Skill_DesperateArmyWin.description>
+
+</LanguageData>

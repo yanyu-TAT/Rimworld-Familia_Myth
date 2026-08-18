@@ -85,4 +85,17 @@
 	<iconPath>Familia_Myth/UI/Icons/Skills/IaiSpiritSlash</iconPath>
   </FamiliaMyth.Abilities.SkillDef>
 
+  <FamiliaMyth.Abilities.SkillDef>
+    <defName>Skill_DesperateArmyWin</defName>
+    <label>哀兵必胜</label>
+    <description>心情低于50%时，根据心情低落程度获得大幅能力值补正。</description>
+    <skillClass>Familia_Myth.Source.Skill_DesperateArmyWin</skillClass>
+    <rarity>Common</rarity>
+    <skillType>Passive</skillType>
+    <cooldown>0</cooldown>
+    <warmup>0</warmup>
+    <duration>0</duration>
+    <checkInterval>60</checkInterval>
+  </FamiliaMyth.Abilities.SkillDef>
+
 </Defs>

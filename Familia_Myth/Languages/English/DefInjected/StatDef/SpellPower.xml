@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<!-- Spell Power (StatDef) label and description -->
+	<SpellPower.label>Spell Power</SpellPower.label>
+	<SpellPower.description>The efficiency of this person's magic output, determined by their Magic status and active skills/abilities. Affects the power of certain spells.</SpellPower.description>
+
+</LanguageData>
