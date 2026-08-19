@@ -107,9 +107,9 @@ namespace FamiliaMyth.Abilities
             {
                 //结尾
                 wasWarmingUp = false;
-                ThrowIncantation(lineIndex++);
+                ThrowIncantation(LineCount - 1);
                 stunning = false;
-                WarmUpFinish();
+                WarmUpFinish(lineIndex >= LineCount - 1);
                 MagicCircleEnd();
             }
 
@@ -196,7 +196,8 @@ namespace FamiliaMyth.Abilities
         /// <summary>
         /// 咏唱结束，如果有后摇则应在其期间禁用其他主动效果
         /// </summary>
-        protected virtual void WarmUpFinish() { }
+        /// <param name="castDone">咏唱是否完整结束</param>
+        protected virtual void WarmUpFinish(bool castDone) { }
 
         protected virtual void TickWarmUp() { }
 

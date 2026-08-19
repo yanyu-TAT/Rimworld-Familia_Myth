@@ -51,9 +51,13 @@ namespace FamiliaMyth.Abilities
             activeProjectiles.Add(missile);
         }
 
-        protected override void WarmUpFinish()
+        protected override void WarmUpFinish(bool castDone)
         {
-            NotifyAll("Shoot");
+            if (!castDone)
+                activeProjectiles.ToList().ForEach(p => p.Destroy());
+            else
+                NotifyAll("Shoot");
+            activeProjectiles.Clear();
         }
 
         protected override void TickWarmUp()
@@ -88,6 +92,7 @@ namespace FamiliaMyth.Abilities
             }
         }
 
+        //用于传给Validator的目标过滤器
         public static bool CanTarget(TargetInfo info)
         {
             if (info.Thing is not Pawn pawn || pawn.Faction == null) return false;

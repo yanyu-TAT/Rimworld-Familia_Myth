@@ -21,7 +21,7 @@ namespace FamiliaMyth.Abilities
             lastSummonTick = CurrentTick;
         }
 
-        protected override void WarmUpFinish()
+        protected override void WarmUpFinish(bool castDone)
         {
             NotifyAll("Activate");
             Projectile_WindMissile.TrackedThings.Clear();

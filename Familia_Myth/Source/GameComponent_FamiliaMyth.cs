@@ -45,11 +45,15 @@ namespace FamiliaMyth.Core
         public override void GameComponentTick()
         {
             if (pendingActions.NullOrEmpty()) return;
-            pendingActions.ForEach(a =>
+            for (int i = 0; i < pendingActions.Count; i++)
             {
+                var a = pendingActions[i];
                 if (Spell_TheWorld.ShouldTick(a.giver))
+                {
                     a.tick--;
-            });
+                    pendingActions[i] = a;
+                }
+            }
 
             var list = pendingActions.Where(a => a.tick <= 0).ToList();
             foreach(var act in list)

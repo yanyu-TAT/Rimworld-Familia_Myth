@@ -175,7 +175,7 @@
 	<FamiliaMyth.Abilities.SpellDef>
 		<defName>Spell_ArcsRay</defName>
 		<label>灵弓光箭</label>
-		<description>咏唱时凝聚一支必中的光箭，结束时发射追踪选定的敌人，贯穿路径上的敌人和建筑直到命中（无视护甲与承伤系数）；咏唱引爆咒可立即引爆光箭，造成范围眩晕和伤害。</description>
+		<description>咏唱时凝聚一支必中的光箭，结束时发射追踪选定的敌人，贯穿路径上的敌人和建筑直到命中（无视护甲与承伤系数）</description>
 
 		<!-- 魔法实现类 -->
 		<spellClass>FamiliaMyth.Abilities.Spell_ArcsRay</spellClass>
@@ -234,7 +234,7 @@
 	<FamiliaMyth.Abilities.SpellDef>
 		<defName>Spell_TheWorld</defName>
 		<label>The World</label>
-		<description>展开时滞领域，范围内除发动者以外的事物的时间将被停止。</description>
+		<description>展开时滞领域，范围内除发动者以外的事物的时间将被停止</description>
 
 		<!-- 魔法实现类 -->
 		<spellClass>FamiliaMyth.Abilities.Spell_TheWorld</spellClass>
@@ -306,4 +306,58 @@
 		<spellKey>「时间开始流动」</spellKey>
 		<spellKeyDescription>立刻结束时停，根据剩余时间回复精神力和降低心灵熵</spellKeyDescription>
 	</FamiliaMyth.Abilities.SpellDef>
+<!-- ==================== 豪雷积雨云 (Thunder Storm) ===================== -->
+	<FamiliaMyth.Abilities.SpellDef>
+		<defName>Spell_ThunderStorm</defName>
+		<label>豪雷积雨云</label>
+		<description>将天气变为暴风雨，向地图上的随机敌人降下数次大范围雷击</description>
+
+		<!-- 魔法实现类 -->
+		<spellClass>FamiliaMyth.Abilities.Spell_ThunderStorm</spellClass>
+
+		<!-- 稀有度 -->
+		<rarity>Rare</rarity>
+
+		<!-- 魔法类型：攻击魔法 -->
+		<spellType>Attack</spellType>
+
+		<!-- 代表色：金黄色/雷光 -->
+		<themeColor>(0.95, 0.85, 0.3, 1)</themeColor>
+
+		<!-- 图标路径 -->
+		<iconPath>Familia_Myth/UI/Icons/Spells/ThunderStorm</iconPath>
+
+		<!-- 显示与施法设置：自身施法 -->
+		<displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
+		<disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>
+
+		<!-- 动词属性：自身施法 -->
+		<verbProperties>
+			<verbClass>RimWorld.Verb_CastAbility</verbClass>
+			<targetable>false</targetable>
+			<nonInterruptingSelfCast>true</nonInterruptingSelfCast>
+			<range>-1</range>
+			<warmupTime>1</warmupTime>
+			<drawAimPie>false</drawAimPie>
+			<targetParams>
+				<canTargetSelf>true</canTargetSelf>
+			</targetParams>
+		</verbProperties>
+
+		<!-- 咏唱文本 -->
+		<incantationLines>
+			<li>雄壮的水之精灵</li>
+			<li>升腾于天的雷帝之子啊</li>
+			<li>实现我的愿望</li>
+			<li>带来凶暴的恩惠</li>
+			<li>向渺小的存在展现力量吧</li>
+			<li>将神之铁锤敲打在铁砧上以示敬畏</li>
+			<li>用大水淹没大地吧</li>
+			<li>啊啊，雨啊</li>
+			<li>冲走一切，驱逐万物吧</li>
+			<li>「豪雷积雨云」</li>
+		</incantationLines>
+		<lineInterval>1.1</lineInterval>
+	</FamiliaMyth.Abilities.SpellDef>
+
 </Defs>

@@ -22,9 +22,9 @@ namespace FamiliaMyth.Abilities
         private static ThingDef ClockMoteDef =>
             clockMoteDef ??= DefDatabase<ThingDef>.GetNamed("Mote_Clock");
 
-        protected override void WarmUpFinish()
+        protected override void WarmUpFinish(bool castDone)
         {
-            if (pawn?.Map == null || !pawn.Spawned || pawn.DeadOrDowned) return;
+            if (!castDone || pawn?.Map == null || !pawn.Spawned || pawn.DeadOrDowned) return;
             totalTicks = (int)(BasicDurationTicks * GetCurrentSpellPower());
             remainingTicks = totalTicks;
             fieldCenter = pawn.Position;

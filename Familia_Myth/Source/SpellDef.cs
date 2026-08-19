@@ -25,7 +25,7 @@ namespace FamiliaMyth.Abilities
         /// <summary>
         /// 咏唱秒数
         /// </summary>
-        public float Warmup => (incantationLines.Count - 1) * lineInterval;
+        public float Warmup => (incantationLines.Count - 2) * lineInterval;
 
         public List<MagicCircleLayer> DefaultMagicCircles
         {

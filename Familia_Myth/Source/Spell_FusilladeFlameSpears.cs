@@ -144,9 +144,8 @@ namespace FamiliaMyth.Abilities
             }
         }
 
-        protected override void WarmUpFinish()
+        protected override void WarmUpFinish(bool castDone)
         {
-            base.WarmUpFinish();
             //咏唱结束时重绘完整指示线，传入更长的留存时间
             DrawWithProgress(1f, 30);
             DrawWithProgress(1f, 30);
