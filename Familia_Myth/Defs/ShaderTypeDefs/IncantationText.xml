@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <!-- 御咏唱词动画着色器：
+       本模组采用自定义着色器，需将 .shader 打包进 asset bundle。
+       打包时 bundle 内路径签约为 Assets/Data/<ModFolderName>/Materials/IncantationText.shader，
+       运行时 ContentFinder<Shader>.TryFindAssetInModBundles("IncantationText") 加载。
+       若未打包(仅放置 .shader 文件)将无法加载，会回退到默认着色器。 -->
+  <ShaderTypeDef>
+    <defName>IncantationText</defName>
+    <shaderPath>IncantationText</shaderPath>
+  </ShaderTypeDef>
+</Defs>

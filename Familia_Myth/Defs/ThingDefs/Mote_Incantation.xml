@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <!-- 咏唱词动画文本：附着施法者头部略偏右上方，聚合-悬浮-爆散。
+       实际渲染由 Mote_Incantation.DrawAt 覆写(共享白色材质 + MaterialPropertyBlock 着彩)，
+       此处 graphicData 仅为占位。 -->
+  <ThingDef ParentName="MoteBase">
+    <defName>Mote_Incantation</defName>
+    <thingClass>FamiliaMyth.Abilities.Mote_Incantation</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <mote>
+      <!-- 生命周期完全由代码控制(duration)，此处取较大稳定值 -->
+      <solidTime>99999</solidTime>
+      <needsMaintenance>false</needsMaintenance>
+      <!-- 相对施法者头部略偏右上方(实际头顶横偏移在 shader 已有横向聚合，这里再给轻量上抬) -->
+      <attachedDrawOffset>(0.35, 0, 1.3)</attachedDrawOffset>
+    </mote>
+    <graphicData>
+      <drawSize>1</drawSize>
+      <texPath>Familia_Myth/Things/Mote/Slash</texPath>
+      <shaderType>MoteGlow</shaderType>
+      <color>(1, 1, 1, 1)</color>
+    </graphicData>
+  </ThingDef>
+</Defs>

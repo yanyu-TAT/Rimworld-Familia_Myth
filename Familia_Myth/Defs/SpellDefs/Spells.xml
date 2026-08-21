@@ -54,6 +54,7 @@
 			<li>降下治愈之慈悲</li>
 			<li>「诺亚治愈」</li>
         </incantationLines>
+		<lineInterval>2.2</lineInterval>
     </FamiliaMyth.Abilities.SpellDef>
 
 	<!-- ==================== 光明之风 (Luminous Wind) ===================== -->
@@ -107,7 +108,7 @@
 			<li>蕴含群星光辉征讨敌人</li>
 			<li>「光明之风」</li>
 		</incantationLines>
-		<lineInterval>1</lineInterval>
+		<lineInterval>2.1</lineInterval>
 
 		<!-- 引爆咒 -->
 		<hasSpellKey>true</hasSpellKey>
@@ -168,7 +169,7 @@
 			<li>如雨骤降，火烧蛮族</li>
 			<li>「齐射火标枪」</li>
 		</incantationLines>
-		<lineInterval>1</lineInterval>
+		<lineInterval>2.0</lineInterval>
 	</FamiliaMyth.Abilities.SpellDef>
 
 	<!-- ==================== 灵弓光箭 (Arcs Ray) ===================== -->
@@ -222,7 +223,7 @@
 			<li>贯穿吧，必中之矢</li>
 			<li>「灵弓光箭」</li>
 		</incantationLines>
-		<lineInterval>1</lineInterval>
+		<lineInterval>1.9</lineInterval>
 
 		<!-- 引爆咒 -->
 		<hasSpellKey>true</hasSpellKey>
@@ -299,7 +300,7 @@
 			<li>完美而潇洒的舞台即将揭晓</li>
 			<li>「The World」</li>
 		</incantationLines>
-		<lineInterval>1.2</lineInterval>
+		<lineInterval>2.4</lineInterval>
 
 		<!-- 引爆咒 -->
 		<hasSpellKey>true</hasSpellKey>
@@ -357,7 +358,7 @@
 			<li>冲走一切，驱逐万物吧</li>
 			<li>「豪雷积雨云」</li>
 		</incantationLines>
-		<lineInterval>1.1</lineInterval>
+		<lineInterval>2.5</lineInterval>
 	</FamiliaMyth.Abilities.SpellDef>
 
 </Defs>

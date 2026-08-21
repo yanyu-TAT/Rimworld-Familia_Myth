@@ -25,7 +25,7 @@ namespace FamiliaMyth.Abilities
         /// <summary>
         /// 咏唱秒数
         /// </summary>
-        public float Warmup => (incantationLines.Count - 2) * lineInterval;
+        public float Warmup => (incantationLines.Count - 1) * lineInterval;
 
         public List<MagicCircleLayer> DefaultMagicCircles
         {
@@ -42,7 +42,7 @@ namespace FamiliaMyth.Abilities
                         scaleFrom = 0.5f,
                         size = new((i + 1) * 5, (i + 1) * 5),
                         altitude = i * 0.01f,
-                        rotate = 20 * Rand.Value * Rand.Sign,
+                        rotate = Rand.Range(-20f, 20f),
                         appearProgress = i * 0.25f,
                         initialRotation = Rand.Range(0f, 360f)
                     };

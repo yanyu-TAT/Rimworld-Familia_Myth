@@ -8,7 +8,6 @@ namespace FamiliaMyth.Abilities
     [StaticConstructorOnStartup]
     public class Spell : Ability, IAscendReward
     {
-        private static readonly Color LineColor = new(0.3f, 0.8f, 0.9f);
         private static readonly Texture2D SpellKeyTexture = ContentFinder<Texture2D>.Get("Familia_Myth/UI/Commands/SpellKey", true);
 
         private static ThingDef magicCircleDef;
@@ -19,11 +18,15 @@ namespace FamiliaMyth.Abilities
         private static StatDef SpellPowerDef =>
             spellPowerDef ??= DefDatabase<StatDef>.GetNamed("SpellPower");
 
+        private static ThingDef incantationTextDef;
+        private static ThingDef IncantationDef =>
+            incantationTextDef ??= DefDatabase<ThingDef>.GetNamed("Mote_Incantation");
+
         protected SpellDef spellDef;
 
         public RewardType RewardType => RewardType.Spell;
 
-        protected int LineCount => spellDef?.incantationLines.Count ?? 1;
+        protected int LineCount => spellDef?.incantationLines.Count - 1 ?? 1;
         protected int IntervalTicks => (int)spellDef.lineInterval * 60;
         protected static int CurrentTick => Find.TickManager.TicksGame;
 
@@ -35,6 +38,8 @@ namespace FamiliaMyth.Abilities
         protected float EntropyGainPerTick => (def?.EntropyGain / (spellDef.Warmup * 60f)) ?? 0f;
 
         public List<Projectile_MagicMissileBase> activeProjectiles = new();
+
+        public Mote_Incantation activeLine;
 
         public List<Mote_MagicCircle> activeMotes = new();
 
@@ -86,7 +91,7 @@ namespace FamiliaMyth.Abilities
         public override void AbilityTick()
         {
             base.AbilityTick();
-            if (spellDef == null || spellDef.incantationLines.NullOrEmpty())
+            if (spellDef == null)
                 return;
 
             if (verb == null || verb.CasterPawn == null)
@@ -107,17 +112,24 @@ namespace FamiliaMyth.Abilities
             {
                 //结尾
                 wasWarmingUp = false;
-                ThrowIncantation(LineCount - 1);
                 stunning = false;
-                WarmUpFinish(lineIndex >= LineCount - 1);
+
+                //保证最后一句生成
+                if (lineIndex < LineCount)
+                    ThrowIncantation(LineCount);
+
+                WarmUpFinish(lineIndex >= LineCount);
                 MagicCircleEnd();
             }
 
             if (wasWarmingUp)
             {
-                //咏唱进行中
+                //生成咏唱词
                 if (CurrentTick - lastLineTick >= IntervalTicks)
-                    ThrowIncantation(lineIndex++);
+                {
+                    ThrowIncantation(lineIndex);
+                    lineIndex++;
+                }
                 TickWarmUp();
                 TickMagicCircle();
 
@@ -173,20 +185,35 @@ namespace FamiliaMyth.Abilities
             foreach (var mote in activeMotes) mote?.Maintain();
         }
 
+        /// <returns>是否成功生成该行咏唱文字</returns>
         private void ThrowIncantation(int a)
         {
-            if (a >= LineCount) return;
-            Vector3 loc = pawn.DrawPos + new Vector3(0f, 0f, 1.5f);
-            MoteMaker.ThrowText(loc, pawn.Map, spellDef.incantationLines[a], LineColor);
+            if (a >= spellDef.incantationLines.Count) return;
+            ThrowIncantation(spellDef.incantationLines[a]);
+        }
+
+        private void ThrowIncantation(string s)
+        {
+            //销毁上一句
+            if (activeLine != null && !activeLine.Destroyed)
+                activeLine.Destroy();
+
+            Vector3 loc = new(0f, 0f, 0.5f);
+            var mote = ThingMaker.MakeThing(IncantationDef) as Mote_Incantation;
+            mote.Init(s, spellDef.themeColor, spellDef.lineInterval);
+            mote.Attach(pawn, loc);
+            GenSpawn.Spawn(mote, (pawn.DrawPos + loc).ToIntVec3(), pawn.Map);
+            activeLine = mote;
+
             lastLineTick = CurrentTick;
+            //Log.Message(s);
         }
 
         protected virtual void OnSpellKeyCasted()
         {
             if (spellDef.hasSpellKey)
             {
-                Vector3 loc = pawn.DrawPos + new Vector3(0f, 0f, 1.5f);
-                MoteMaker.ThrowText(loc, pawn.Map, spellDef.spellKey, LineColor);
+                ThrowIncantation(spellDef.spellKey);
                 NotifyAll("SpellKey");
             }
         }
@@ -236,6 +263,7 @@ namespace FamiliaMyth.Abilities
 
             if (spellDef.hasSpellKey)
             {
+                var a = pawn?.GetPharna()?.CheckStunning ?? true;
                 Command_Action spellKey = new()
                 {
                     defaultLabel = "引爆咒：" + spellDef.label,
@@ -244,7 +272,9 @@ namespace FamiliaMyth.Abilities
                     action = () =>
                     {
                         OnSpellKeyCasted();
-                    }
+                    },
+                    Disabled = !a,
+                    disabledReason = a.Reason
                 };
                 yield return spellKey;
             }
