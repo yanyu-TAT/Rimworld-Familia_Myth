@@ -5,6 +5,9 @@ using Verse;
 
 namespace FamiliaMyth.Abilities
 {
+    /// <summary>
+    /// 齐射火标枪
+    /// </summary>
     public class Spell_FusilladeFlameSpears : Spell
     {
         //扇形角度
@@ -52,7 +55,7 @@ namespace FamiliaMyth.Abilities
         public override void Apply(Hediff_Pharna pharna)
         {
             base.Apply(pharna);
-            if (verb is Verb_CastAbility_FanTarget fanTarget)
+            if (verb is Verb_CastSpell_FanTarget fanTarget)
                 fanTarget.fanAngle = 120;
             else
                 Log.Warning("[FamiliaMyth]Verb For Spell_FusilladeFlameSpears should have been of type Verb_CastAbility_FanTarget but not");
@@ -107,7 +110,7 @@ namespace FamiliaMyth.Abilities
 
             //效果指示框每2帧重绘
             if (CurrentTick % 2 == 0)
-                DrawWithProgress(verb.WarmupProgress, 0.3f);
+                DrawWithProgress(WarmupProgress, 0.3f);
 
             if (CurrentTick -  lastLockOnTick > lockOnIntervalTicks)
             {

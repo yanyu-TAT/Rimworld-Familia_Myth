@@ -11,7 +11,7 @@ namespace FamiliaMyth.Abilities
 
         private int MissileCount => (int)(BasicMissileCount * GetCurrentSpellPower());
 
-        private int MissileSummonTickInterval => (int)(spellDef.Warmup / (MissileCount + 1) * 60);
+        private int MissileSummonTickInterval => (int)(Def.WarmupTime / (MissileCount + 1) * 60);
 
         private int lastSummonTick;
 

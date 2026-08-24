@@ -21,11 +21,13 @@ namespace FamiliaMyth.Abilities
         public List<MagicCircleLayer> magicCircles;
 
         public Color themeColor = Color.white;
-        
+
+        public bool canConcurrentCast = true;
+
         /// <summary>
         /// 咏唱秒数
         /// </summary>
-        public float Warmup => (incantationLines.Count - 1) * lineInterval;
+        public float WarmupTime => (incantationLines.Count - 1) * lineInterval;
 
         public List<MagicCircleLayer> DefaultMagicCircles
         {

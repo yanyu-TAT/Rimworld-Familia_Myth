@@ -4,9 +4,11 @@ using Verse;
 
 namespace FamiliaMyth.Abilities
 {
-    public class Verb_CastAbility_FanTarget : Verb_CastAbility
+    public class Verb_CastSpell_FanTarget : Verb_CastSpell
     {
         public int fanAngle = -1;
+
+        protected override bool CheckLOS => false;
 
         public override bool CanHitTarget(LocalTargetInfo targ)
         {
@@ -24,38 +26,6 @@ namespace FamiliaMyth.Abilities
             {
                 Messages.Message("目标不在有效范围内", MessageTypeDefOf.RejectInput);
                 return false;
-            }
-            return true;
-        }
-
-        //仿照原版覆写以跳过视线检查
-        public override bool TryStartCastOn(LocalTargetInfo castTarg, LocalTargetInfo destTarg, bool surpriseAttack = false, bool canHitNonTargetPawns = true, bool preventFriendlyFire = false, bool nonInterruptingSelfCast = false)
-        {
-            //基础合法性校验（与父类 Verb.TryStartCastOn 一致）
-            if (caster == null || !caster.Spawned) return false;
-            if (state == VerbState.Bursting || !CanHitTarget(castTarg)) return false;
-
-            this.surpriseAttack = surpriseAttack;
-            canHitNonTargetPawnsNow = canHitNonTargetPawns;
-            this.preventFriendlyFire = preventFriendlyFire;
-            this.nonInterruptingSelfCast = nonInterruptingSelfCast;
-            currentTarget = castTarg;
-            currentDestination = destTarg;
-
-            if (CasterIsPawn && WarmupTime > 0f)
-            {
-                //跳过 TryFindShootLineFromTo 视线检查，允许锁定不可视位置。
-                var statValue = CasterPawn.GetStatValue(StatDefOf.AimingDelayFactor);
-                int ticks = (WarmupTime * statValue).SecondsToTicks();
-                CasterPawn.stances.SetStance(new Stance_Warmup(ticks, castTarg, this));
-                if (verbProps.stunTargetOnCastStart && castTarg.Pawn != null)
-                    castTarg.Pawn.stances.stunner.StunFor(ticks, null, addBattleLog: false);
-            }
-            else
-            {
-                if (verbTracker.directOwner is Ability ability)
-                    ability.lastCastTick = Find.TickManager.TicksGame;
-                WarmupComplete();
             }
             return true;
         }

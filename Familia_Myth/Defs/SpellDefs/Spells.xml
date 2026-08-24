@@ -30,7 +30,7 @@
 
         <!-- 动词属性：近战接触，咏唱2秒 -->
         <verbProperties>
-            <verbClass>RimWorld.Verb_CastAbilityTouch</verbClass>
+            <verbClass>FamiliaMyth.Abilities.Verb_CastSpell_Touch</verbClass>
             <range>-1</range>
             <warmupTime>4</warmupTime>
             <drawAimPie>false</drawAimPie>
@@ -40,11 +40,6 @@
                 <canTargetAnimals>false</canTargetAnimals>
             </targetParams>
         </verbProperties>
-
-        <!-- 技能效果组件 -->
-        <comps>
-            <li Class="FamiliaMyth.Abilities.CompProperties_NoahHeal" />
-        </comps>
 
         <!-- 咏唱文本 -->
         <incantationLines>
@@ -84,7 +79,7 @@
 
 		<!-- 动词属性：自身施法（warmupTime由代码根据咏唱行数计算覆盖） -->
 		<verbProperties>
-			<verbClass>RimWorld.Verb_CastAbility</verbClass>
+			<verbClass>FamiliaMyth.Abilities.Verb_CastSpell</verbClass>
 			<targetable>false</targetable>
 			<nonInterruptingSelfCast>true</nonInterruptingSelfCast>
 			<range>-1</range>
@@ -143,7 +138,7 @@
 
 		<!-- 动词属性 -->
 		<verbProperties>
-			<verbClass>FamiliaMyth.Abilities.Verb_CastAbility_FanTarget</verbClass>
+			<verbClass>FamiliaMyth.Abilities.Verb_CastSpell_FanTarget</verbClass>
 			<range>60</range>
 			<warmupTime>3</warmupTime>
 			<drawAimPie>false</drawAimPie>
@@ -199,7 +194,7 @@
 
 		<!-- 动词属性：目标化施法（Warmup 由咏唱行数计算） -->
 		<verbProperties>
-			<verbClass>RimWorld.Verb_CastAbility</verbClass>
+			<verbClass>FamiliaMyth.Abilities.Verb_CastSpell</verbClass>
 			<range>75</range>
 			<warmupTime>3</warmupTime>
 			<drawAimPie>false</drawAimPie>
@@ -280,7 +275,7 @@
 
 		<!-- 动词属性：自身施法 -->
 		<verbProperties>
-			<verbClass>RimWorld.Verb_CastAbility</verbClass>
+			<verbClass>FamiliaMyth.Abilities.Verb_CastSpell</verbClass>
 			<targetable>false</targetable>
 			<nonInterruptingSelfCast>true</nonInterruptingSelfCast>
 			<range>-1</range>
@@ -334,7 +329,7 @@
 
 		<!-- 动词属性：自身施法 -->
 		<verbProperties>
-			<verbClass>RimWorld.Verb_CastAbility</verbClass>
+			<verbClass>FamiliaMyth.Abilities.Verb_CastSpell</verbClass>
 			<targetable>false</targetable>
 			<nonInterruptingSelfCast>true</nonInterruptingSelfCast>
 			<range>-1</range>

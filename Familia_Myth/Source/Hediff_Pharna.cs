@@ -457,6 +457,12 @@ namespace FamiliaMyth.Pharna
             base.Notify_PawnPostApplyDamage(dinfo, totalDamageDealt);
             TryTriggerVirtue(0.1f);
         }
+
+
+        /// <summary>
+        /// 是否能进行并行咏唱（留待后续实现）
+        /// </summary>
+        public bool CanConcurrentCast => false;
     }
 
     public interface IStatusModifier

@@ -9,6 +9,7 @@ namespace FamiliaMyth.Abilities
     public class Spell : Ability, IAscendReward
     {
         private static readonly Texture2D SpellKeyTexture = ContentFinder<Texture2D>.Get("Familia_Myth/UI/Commands/SpellKey", true);
+        private static readonly Texture2D CanceKeyTexture = ContentFinder<Texture2D>.Get("UI/Designators/Cancel");
 
         private static ThingDef magicCircleDef;
         private static ThingDef MagicCircleDef =>
@@ -22,20 +23,24 @@ namespace FamiliaMyth.Abilities
         private static ThingDef IncantationDef =>
             incantationTextDef ??= DefDatabase<ThingDef>.GetNamed("Mote_Incantation");
 
-        protected SpellDef spellDef;
+        public SpellDef Def => def as SpellDef;
 
         public RewardType RewardType => RewardType.Spell;
 
-        protected int LineCount => spellDef?.incantationLines.Count - 1 ?? 1;
-        protected int IntervalTicks => (int)spellDef.lineInterval * 60;
+        protected int LineCount => Def?.incantationLines.Count - 1 ?? 1;
+
+        protected int warmupTicksLeft;
+        protected int WarmupTicks => Def.WarmupTime.SecondsToTicks();
+        protected float WarmupProgress => Mathf.Clamp01(1f - (float)warmupTicksLeft / WarmupTicks);
+
         protected static int CurrentTick => Find.TickManager.TicksGame;
 
-        public RewardRarity Rarity => spellDef.rarity;
-        public string Label => spellDef.label;
-        public string Description => spellDef.description;
+        public RewardRarity Rarity => Def.rarity;
+        public string Label => Def.label;
+        public string Description => Def.description;
 
-        protected float PsyfocusCostPerTick => (def?.PsyfocusCost / (spellDef.Warmup * 60f)) ?? 0f;
-        protected float EntropyGainPerTick => (def?.EntropyGain / (spellDef.Warmup * 60f)) ?? 0f;
+        protected float PsyfocusCostPerTick => (def?.PsyfocusCost / (Def.WarmupTime * 60f)) ?? 0f;
+        protected float EntropyGainPerTick => (def?.EntropyGain / (Def.WarmupTime * 60f)) ?? 0f;
 
         public List<Projectile_MagicMissileBase> activeProjectiles = new();
 
@@ -43,8 +48,9 @@ namespace FamiliaMyth.Abilities
 
         public List<Mote_MagicCircle> activeMotes = new();
 
-        protected int lastLineTick = -9999;
+        protected bool isWarmingUp = false;
         protected bool wasWarmingUp = false;
+        public bool IsWarmingUp => isWarmingUp;
         protected int lineIndex = 0;
 
         protected float actualPsy;
@@ -52,14 +58,15 @@ namespace FamiliaMyth.Abilities
 
         public bool stunning = false;
 
+        public bool CanConcurrentCast => Def.canConcurrentCast;
+
         public virtual void RewardInitialize()
         {
-            spellDef = DefDatabase<SpellDef>.GetNamed(GetType().Name, false);
-            def = spellDef;
+            def = DefDatabase<SpellDef>.GetNamed(GetType().Name, false);
 
             //尝试随机生成魔法阵样式
-            if (spellDef.magicCircles.NullOrEmpty())
-                spellDef.magicCircles = spellDef.DefaultMagicCircles;
+            if (Def.magicCircles.NullOrEmpty())
+                Def.magicCircles = Def.DefaultMagicCircles;
         }
 
         public override AcceptanceReport CanCast
@@ -76,7 +83,7 @@ namespace FamiliaMyth.Abilities
                 var tracker = pawn?.psychicEntropy;
                 if (tracker == null) return true;
 
-                float gain = def.EntropyGain - tracker.RecoveryRate * spellDef.Warmup;
+                float gain = def.EntropyGain - tracker.RecoveryRate * Def.WarmupTime;
                 if (tracker.WouldOverflowEntropy(gain))
                     return $"{pawn.Name.ToStringShort}的心灵熵将会超出阈值";
 
@@ -91,60 +98,98 @@ namespace FamiliaMyth.Abilities
         public override void AbilityTick()
         {
             base.AbilityTick();
-            if (spellDef == null)
+            if (Def == null)
                 return;
 
             if (verb == null || verb.CasterPawn == null)
                 return;
 
-            if (!wasWarmingUp && verb.WarmingUp)
+            if (!isWarmingUp)
             {
                 //开始咏唱
-                lineIndex = 0;
-                wasWarmingUp = true;
-                WarmUpStart();
-                MagicCircleStart();
-                stunning = true;
-                actualEnt = 0;
-                actualPsy = 0;
-            }
-            if (wasWarmingUp && !verb.WarmingUp)
-            {
-                //结尾
-                wasWarmingUp = false;
-                stunning = false;
-
-                //保证最后一句生成
-                if (lineIndex < LineCount)
-                    ThrowIncantation(LineCount);
-
-                WarmUpFinish(lineIndex >= LineCount);
-                MagicCircleEnd();
-            }
-
-            if (wasWarmingUp)
-            {
-                //生成咏唱词
-                if (CurrentTick - lastLineTick >= IntervalTicks)
+                if (verb.WarmingUp && !wasWarmingUp)
                 {
-                    ThrowIncantation(lineIndex);
-                    lineIndex++;
+                    lineIndex = 1;
+                    ThrowIncantation(0);
+                    warmupTicksLeft = WarmupTicks - 1;
+                    isWarmingUp = true;
+                    stunning = true;
+                    actualEnt = 0;
+                    actualPsy = 0;
+                    WarmUpStart();
+                    MagicCircleStart();
                 }
-                TickWarmUp();
-                TickMagicCircle();
-
-                //咏唱时每tick消耗精神力和增加心灵熵
-                var tracker = pawn?.psychicEntropy;
-                if (tracker == null) return;
-                float prePsy = tracker.CurrentPsyfocus;
-                float preEnt = tracker.EntropyValue;
-                tracker.OffsetPsyfocusDirectly(-PsyfocusCostPerTick);
-                tracker.TryAddEntropy(EntropyGainPerTick);
-
-                //记录实际值
-                actualPsy += Mathf.Max(0, prePsy - tracker.CurrentPsyfocus);
-                actualEnt += Mathf.Max(0, tracker.EntropyValue - preEnt);
+                wasWarmingUp = verb.WarmingUp;
+                return;
             }
+
+            wasWarmingUp = verb.WarmingUp;
+
+            //被眩晕暂停咏唱
+            if (pawn.stances.stunner.Stunned)
+            {
+                foreach (var mote in activeMotes)
+                    mote?.Maintain();
+                return;
+            }
+
+            warmupTicksLeft--;
+            //完成咏唱
+            if (warmupTicksLeft <= 0)
+            {
+                CastComplete(true);
+                return;
+            }
+
+            //咏唱中断
+            if (!verb.WarmingUp)
+            {
+                Log.Message($"Left Ticks:{warmupTicksLeft}");
+                CastComplete(false);
+                return;
+            }
+
+            //根据进度生成咏唱词
+            int targetLine = Mathf.Min((int)(WarmupProgress * LineCount + 0.01f), LineCount - 1);
+            while (lineIndex <= targetLine)
+                ThrowIncantation(lineIndex++);
+
+            TickWarmUp();
+            TickMagicCircle();
+
+            //咏唱时每tick消耗精神力和增加心灵熵
+            var tracker = pawn?.psychicEntropy;
+            if (tracker == null) return;
+            float prePsy = tracker.CurrentPsyfocus;
+            float preEnt = tracker.EntropyValue;
+            tracker.OffsetPsyfocusDirectly(-PsyfocusCostPerTick);
+            tracker.TryAddEntropy(EntropyGainPerTick);
+
+            //记录实际值
+            actualPsy += Mathf.Max(0, prePsy - tracker.CurrentPsyfocus);
+            actualEnt += Mathf.Max(0, tracker.EntropyValue - preEnt);
+        }
+
+        private void CastComplete(bool castDone)
+        {
+            //结尾
+            isWarmingUp = false;
+            stunning = false;
+
+            //保证最后一句生成
+            if (lineIndex <= LineCount)
+                ThrowIncantation(LineCount);
+
+            Log.Message($"castDone: {castDone}");
+            WarmUpFinish(castDone);
+            MagicCircleEnd();
+            pawn.stances.SetStance(new Stance_Mobile());
+        }
+
+        private void OnCanceled()
+        {
+            if (pawn.Spawned && pawn.stances.curStance is Stance_Warmup)
+                pawn.stances.SetStance(new Stance_Mobile());
         }
 
         private void MagicCircleEnd()
@@ -154,22 +199,21 @@ namespace FamiliaMyth.Abilities
 
         private void MagicCircleStart()
         {
-            if (spellDef.magicCircles.NullOrEmpty()) return;
+            if (Def.magicCircles.NullOrEmpty()) return;
             activeMotes.Clear();
             TickMagicCircle();
         }
 
         private void TickMagicCircle()
         {
-            if (spellDef.magicCircles.NullOrEmpty() || pawn?.Map == null) return;
+            if (Def.magicCircles.NullOrEmpty() || pawn?.Map == null) return;
 
             //生成
-            var layers = spellDef.magicCircles;
-            float progress = verb.WarmupProgress;
+            var layers = Def.magicCircles;
             for (int i = 0; i < layers.Count; i++)
             {
                 if (i < activeMotes.Count && activeMotes[i]?.Spawned == true) continue;
-                if (progress < layers[i].appearProgress) continue;
+                if (WarmupProgress < layers[i].appearProgress) continue;
                 var mote = (Mote_MagicCircle)ThingMaker.MakeThing(MagicCircleDef);
                 mote.Init(layers[i]);
                 mote.Attach(pawn);
@@ -188,8 +232,8 @@ namespace FamiliaMyth.Abilities
         /// <returns>是否成功生成该行咏唱文字</returns>
         private void ThrowIncantation(int a)
         {
-            if (a >= spellDef.incantationLines.Count) return;
-            ThrowIncantation(spellDef.incantationLines[a]);
+            if (a >= Def.incantationLines.Count) return;
+            ThrowIncantation(Def.incantationLines[a]);
         }
 
         private void ThrowIncantation(string s)
@@ -200,20 +244,18 @@ namespace FamiliaMyth.Abilities
 
             Vector3 loc = new(0f, 0f, 0.5f);
             var mote = ThingMaker.MakeThing(IncantationDef) as Mote_Incantation;
-            mote.Init(s, spellDef.themeColor, spellDef.lineInterval);
+            mote.Init(s, Def.themeColor, Def.lineInterval);
             mote.Attach(pawn, loc);
             GenSpawn.Spawn(mote, (pawn.DrawPos + loc).ToIntVec3(), pawn.Map);
             activeLine = mote;
-
-            lastLineTick = CurrentTick;
             //Log.Message(s);
         }
 
         protected virtual void OnSpellKeyCasted()
         {
-            if (spellDef.hasSpellKey)
+            if (Def.hasSpellKey)
             {
-                ThrowIncantation(spellDef.spellKey);
+                ThrowIncantation(Def.spellKey);
                 NotifyAll("SpellKey");
             }
         }
@@ -246,7 +288,7 @@ namespace FamiliaMyth.Abilities
         {
             pawn = pharna.pawn;
             Initialize();
-            verb.verbProps.warmupTime = spellDef.Warmup;
+            verb.verbProps.warmupTime = Def.WarmupTime;
             pharna.spells.Add(this);
         }
 
@@ -259,20 +301,30 @@ namespace FamiliaMyth.Abilities
         public override IEnumerable<Command> GetGizmos()
         {
             foreach (var command in base.GetGizmos())
-                yield return command;
+                //正在释放时隐藏图标
+                if (command is not Command_Ability || !isWarmingUp)
+                    yield return command;
 
-            if (spellDef.hasSpellKey)
+            if (isWarmingUp)
+            {
+                yield return new Command_Action()
+                {
+                    defaultLabel = $"取消释放{Def.label}",
+                    defaultDesc = $"取消正在释放的{Def.label}",
+                    icon = CanceKeyTexture,
+                    action = OnCanceled
+                };
+            }
+
+            if (Def.hasSpellKey)
             {
                 var a = pawn?.GetPharna()?.CheckStunning ?? true;
                 Command_Action spellKey = new()
                 {
-                    defaultLabel = "引爆咒：" + spellDef.label,
-                    defaultDesc = spellDef.spellKeyDescription,
+                    defaultLabel = "引爆咒：" + Def.label,
+                    defaultDesc = Def.spellKeyDescription,
                     icon = SpellKeyTexture,
-                    action = () =>
-                    {
-                        OnSpellKeyCasted();
-                    },
+                    action = OnSpellKeyCasted,
                     Disabled = !a,
                     disabledReason = a.Reason
                 };
@@ -283,11 +335,12 @@ namespace FamiliaMyth.Abilities
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.Look(ref lastLineTick, "lastLineTick");
+            Scribe_Values.Look(ref warmupTicksLeft, "warmupTicksLeft");
             Scribe_Values.Look(ref lineIndex, "lineIndex");
-            Scribe_Values.Look(ref wasWarmingUp, "wasWarmingUp");
+            Scribe_Values.Look(ref isWarmingUp, "isWarmingUp");
             Scribe_Values.Look(ref actualEnt, "actualEnt");
             Scribe_Values.Look(ref actualPsy, "actualPsy");
+            Scribe_Values.Look(ref wasWarmingUp, "wasWarmingUp");
             Scribe_Collections.Look(ref activeProjectiles, "activeProjectiles", LookMode.Reference);
             Scribe_Collections.Look(ref activeMotes, "activeMotes", LookMode.Reference);
 
