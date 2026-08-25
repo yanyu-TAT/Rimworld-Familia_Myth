@@ -180,7 +180,7 @@ namespace FamiliaMyth.Abilities
             if (lineIndex <= LineCount)
                 ThrowIncantation(LineCount);
 
-            Log.Message($"castDone: {castDone}");
+            //Log.Message($"castDone: {castDone}");
             WarmUpFinish(castDone);
             MagicCircleEnd();
             pawn.stances.SetStance(new Stance_Mobile());

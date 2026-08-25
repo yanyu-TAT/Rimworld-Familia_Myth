@@ -53,4 +53,31 @@
 		</projectile>
 	</ThingDef>
 
+	<!-- ==================== 君王之剑 (Kings Sword) ===================== -->
+	<ThingDef ParentName="BaseBullet">
+		<defName>Projectile_KingsSword</defName>
+		<label>君王之剑</label>
+		<description>君王之剑魔法召唤的环绕悬浮巨剑，自动攻击施法者周围的敌人</description>
+
+		<thingClass>FamiliaMyth.Abilities.Projectile_KingsSword</thingClass>
+
+		<graphicData>
+			<texPath>Familia_Myth/Things/Projectile/KingsSword</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<shaderType>KingsSword</shaderType>
+			<!-- drawSize = 2.5 × (512 / 213) ≈ 6.01：使中心→剑尖(213px)映射到 2.5 世界单位，与基础攻击范围 BasicAttackRange=2.5 对齐 -->
+			<drawSize>(6.01, 6.01)</drawSize>
+		</graphicData>
+
+		<projectile>
+			<damageDef>Cut</damageDef>
+			<damageAmountBase>20</damageAmountBase>
+			<armorPenetrationBase>0.6</armorPenetrationBase>
+			<stoppingPower>10</stoppingPower>
+			<speed>60</speed>
+			<flyOverhead>true</flyOverhead>
+			<alwaysFreeIntercept>false</alwaysFreeIntercept>
+		</projectile>
+	</ThingDef>
+
 </Defs>

@@ -290,7 +290,6 @@
 		<incantationLines>
 			<li>月之时计指向终点</li>
 			<li>万物喧嚣就此落幕</li>
-			<li>屏息凝神，万众瞩目</li>
 			<li>好了，别眨眼——</li>
 			<li>完美而潇洒的舞台即将揭晓</li>
 			<li>「The World」</li>
@@ -354,6 +353,55 @@
 			<li>「豪雷积雨云」</li>
 		</incantationLines>
 		<lineInterval>2.5</lineInterval>
+	</FamiliaMyth.Abilities.SpellDef>
+
+	<!-- ==================== 君王之剑 (Kings Sword) ===================== -->
+	<FamiliaMyth.Abilities.SpellDef>
+		<defName>Spell_KingsSword</defName>
+		<label>君王之剑</label>
+		<description>召唤一把悬浮环绕的巨剑，自动攻击靠近施法者的敌人。在场期间重复施法可叠加持续时间，并将攻击范围与伤害翻倍</description>
+
+		<!-- 魔法实现类 -->
+		<spellClass>FamiliaMyth.Abilities.Spell_KingsSword</spellClass>
+
+		<!-- 稀有度 -->
+		<rarity>Rare</rarity>
+
+		<!-- 魔法类型：特殊魔法 -->
+		<spellType>Special</spellType>
+
+		<!-- 代表色：浅蓝 -->
+		<themeColor>(0.55, 0.8, 1, 1)</themeColor>
+
+		<!-- 图标路径：暂复用剑雨图标，如需要可替换为专有图标 -->
+		<iconPath>Familia_Myth/UI/Icons/Spells/KingsSword</iconPath>
+
+		<!-- 显示与施法设置：自身施法 -->
+		<displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
+		<disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>
+
+		<!-- 动词属性：自身施法（warmupTime由代码根据咏唱行数计算覆盖） -->
+		<verbProperties>
+			<verbClass>FamiliaMyth.Abilities.Verb_CastSpell</verbClass>
+			<targetable>false</targetable>
+			<nonInterruptingSelfCast>true</nonInterruptingSelfCast>
+			<range>-1</range>
+			<warmupTime>1</warmupTime>
+			<drawAimPie>false</drawAimPie>
+			<targetParams>
+				<canTargetSelf>true</canTargetSelf>
+			</targetParams>
+		</verbProperties>
+
+		<!-- 咏唱文本 -->
+		<incantationLines>
+			<li>群星王座之下</li>
+			<li>以战火铸此利刃</li>
+			<li>遵吾敕命，征召上前</li>
+			<li>斩除僭越之人</li>
+			<li>「君王之剑」</li>
+		</incantationLines>
+		<lineInterval>1.9</lineInterval>
 	</FamiliaMyth.Abilities.SpellDef>
 
 </Defs>

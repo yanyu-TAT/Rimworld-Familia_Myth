@@ -20,7 +20,7 @@ namespace FamiliaMyth.Abilities
         public override int DamageAmount => damageAmount ?? base.DamageAmount;
 
         //不可被护盾拦截
-        public override bool CanShieldBlock => false;
+        protected override bool CanShieldBlock => false;
 
         public override Quaternion ExactRotation
         {
@@ -58,7 +58,7 @@ namespace FamiliaMyth.Abilities
         {
             if (hittenThings.Contains(thing)) return;
             //非敌方目标不伤害
-            if (thing is Pawn pawn && pawn.Faction != null && !pawn.Faction.HostileTo(launcher.Faction))
+            if (thing is Pawn pawn && !pawn.HostileTo(launcher))
             {
                 hittenThings.Add(thing);
                 return;

@@ -1,4 +1,3 @@
-using NAudio.Wave;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -11,15 +10,16 @@ namespace FamiliaMyth.Abilities
 
         protected static HashSet<IntVec3> checkCells = new();
 
-        protected int FadeInTicks = -1;
+        private const int FadeInTicks = 60;
+        private const int FadeOutTicks = 60;
+        private int fadeInTimer = -999;
+        private int fadeOutTimer = -999;
 
         protected MaterialPropertyBlock matPropertyBlock;
 
         private int CurrentTick => Find.TickManager.TicksGame;
 
         private int pulseOffset;
-
-        public Spell Spell => spell;
 
         public BaseMagicMissileState currentState;
 
@@ -189,7 +189,7 @@ namespace FamiliaMyth.Abilities
             this.spell = spell;
             launcher = spell.pawn;
             HitFlags = ProjectileHitFlags.All;
-            FadeInTicks = 30; //0.5s
+            fadeInTimer = FadeInTicks;
             pulseOffset = Rand.Int % 60; //随机闪烁
 
             //仅占位
@@ -197,7 +197,7 @@ namespace FamiliaMyth.Abilities
         }
 
         /// <summary>
-        /// 获取对应对应信号的方法委托
+        /// 获取对应信号的方法委托
         /// </summary>
         /// <param name="message"></param>
         public virtual Action NotifyBy(string message)
@@ -226,29 +226,44 @@ namespace FamiliaMyth.Abilities
                 return;
             }
 
-            //沿 prev→cur 移动线段生成流线曳光（等距补点，保证连续）
-            var moveDir = cur - prev;
-            var dist = moveDir.magnitude;
-            if (dist > 1e-5f)
+            if (NeedTrail)
             {
-                var dir = moveDir / dist;
-                const float step = 0.22f;
-                for (float d = 0f; d < dist; d += step)
+                //沿 prev→cur 移动线段生成流线曳光（等距补点，保证连续）
+                var moveDir = cur - prev;
+                var dist = moveDir.magnitude;
+                if (dist > 1e-5f)
                 {
-                    var pos = prev + dir * d;
-                    var data = FleckMaker.GetDataStatic(pos, Map, TrailDef, 1f);
-                    data.velocity = dir * 0.6f; //沿轨迹方向小速度，形成流线
-                    data.instanceColor = EdgeColor.WithAlpha(0.85f);
-                    Map.flecks.CreateFleck(data);
+                    var dir = moveDir / dist;
+                    const float step = 0.22f;
+                    for (float d = 0f; d < dist; d += step)
+                    {
+                        var pos = prev + dir * d;
+                        var data = FleckMaker.GetDataStatic(pos, Map, TrailDef, 1f);
+                        data.velocity = dir * 0.6f; //沿轨迹方向小速度，形成流线
+                        data.instanceColor = EdgeColor.WithAlpha(0.85f);
+                        Map.flecks.CreateFleck(data);
+                    }
                 }
             }
+
             prevPosition = cur;
 
             //淡入计时
-            if (FadeInTicks > 0)
+            if (fadeInTimer > 0)
             {
-                FadeInTicks -= delta;
-                if (FadeInTicks < 0) FadeInTicks = 0;
+                fadeInTimer -= delta;
+                if (fadeInTimer < 0) fadeInTimer = 0;
+            }
+
+            //淡出计时
+            if (fadeOutTimer > 0)
+            {
+                fadeOutTimer -= delta;
+                if (fadeOutTimer <= 0)
+                {
+                    Destroy();
+                    return;
+                }
             }
 
             //位置未改变，返回
@@ -262,6 +277,12 @@ namespace FamiliaMyth.Abilities
             Position = cur.ToIntVec3();
         }
 
+        public void FadeOut()
+        {
+            if (fadeOutTimer < 0)
+                fadeOutTimer = FadeOutTicks;
+        }
+
         public override Color DrawColor
         {
             get
@@ -269,8 +290,11 @@ namespace FamiliaMyth.Abilities
                 var color = base.DrawColor;
 
                 //淡入效果
-                if (FadeInTicks > 0)
-                    color = color.WithAlpha(Mathf.Clamp01(1f - FadeInTicks / 30f));
+                if (fadeInTimer > 0)
+                    color = color.WithAlpha(Mathf.Clamp01(1f - fadeInTimer / FadeInTicks));
+                //淡出效果
+                if (fadeOutTimer > 0)
+                    color = color.WithAlpha(Mathf.Clamp01(fadeOutTimer / FadeOutTicks));
 
                 //闪烁效果
                 var k = 0.9f + 0.1f * Mathf.Sin((CurrentTick + pulseOffset) * 0.05f);
@@ -308,7 +332,9 @@ namespace FamiliaMyth.Abilities
             }
         }
 
-        public virtual bool CanShieldBlock => true;
+        protected virtual bool CanShieldBlock => true;
+
+        protected virtual bool NeedTrail => true;
 
         protected bool CheckHitLine(Vector3 A, Vector3 B)
         {
