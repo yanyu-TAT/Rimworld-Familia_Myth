@@ -28,4 +28,15 @@
 		</modExtensions>
 	</DamageDef>
 
+	<!-- ==================== 大爆炸  ===================== -->
+	<!-- 继承原版 Vaporize（热能蒸发爆炸），覆盖爆炸色调为红→紫，并重写伤害 Worker 移除中心 2.9 格直接伤害限制 -->
+	<DamageDef ParentName="Vaporize">
+		<defName>SpellExplosion</defName>
+		<label>爆裂魔法</label>
+		<workerClass>FamiliaMyth.Abilities.DamageWorker_SpellExplosion</workerClass>
+		<deathMessage>{0} 被爆裂魔法蒸发殆尽。</deathMessage>
+		<explosionColorCenter>(1, 0.35, 0.2)</explosionColorCenter>
+		<explosionColorEdge>(0.62, 0.2, 0.9)</explosionColorEdge>
+	</DamageDef>
+
 </Defs>

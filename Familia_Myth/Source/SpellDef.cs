@@ -80,6 +80,7 @@ namespace FamiliaMyth.Abilities
         Debuff,     //减益魔法
         Enchant,    //赋予魔法
         Field,      //领域魔法
+        Summon,     //召唤魔法
         Special     //其他特殊魔法（分身，速攻等）
     }
 

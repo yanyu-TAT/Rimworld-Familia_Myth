@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<!-- 目标点法阵：多层同心圆环 + 中央贯穿光柱。
+	     实际渲染由 Mote_ExplosionCircle.DrawAt 用 Graphics.DrawMesh 完成（环贴图路径
+	     Familia_Myth/Things/Mote/ExplosionMagicCircle 待补），此处 graphicData 仅为占位。 -->
+	<ThingDef ParentName="MoteBase">
+		<defName>Mote_ExplosionCircle</defName>
+		<thingClass>FamiliaMyth.Abilities.Mote_ExplosionCircle</thingClass>
+		<altitudeLayer>MoteLow</altitudeLayer>
+		<mote>
+			<fadeInTime>0</fadeInTime>
+			<!-- solidTime 取极大值，存活由 Spell 的 Maintain 维持，爆炸后由 FadeOut 主动销毁 -->
+			<solidTime>999999</solidTime>
+			<fadeOutTime>0.5</fadeOutTime>
+			<needsMaintenance>true</needsMaintenance>
+			<fadeOutUnmaintained>true</fadeOutUnmaintained>
+		</mote>
+		<graphicData>
+			<!-- 占位贴图，实际不会被使用 -->
+			<graphicClass>Graphic_Mote</graphicClass>
+			<texPath>Things/Mote/ExplosionFlash</texPath>
+			<shaderType>MoteGlow</shaderType>
+		</graphicData>
+	</ThingDef>
+</Defs>

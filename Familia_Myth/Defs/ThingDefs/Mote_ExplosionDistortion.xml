@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<!-- 大爆炸延迟阶段空间扭曲盘：由外向内收缩，红→紫渐变。
+	     实际渲染由 Mote_ExplosionDistortion.DrawAt 用扭曲 shader 完成，graphicData 仅为占位。 -->
+	<ThingDef ParentName="MoteBase">
+		<defName>Mote_ExplosionDistortion</defName>
+		<thingClass>FamiliaMyth.Abilities.Mote_ExplosionDistortion</thingClass>
+		<altitudeLayer>MoteOverhead</altitudeLayer>
+		<mote>
+			<fadeInTime>0</fadeInTime>
+			<!-- solidTime 取极大值，存活由 Spell 的 Maintain 维持，爆炸后停止维持自动销毁 -->
+			<solidTime>999999</solidTime>
+			<fadeOutTime>0.5</fadeOutTime>
+			<needsMaintenance>true</needsMaintenance>
+			<fadeOutUnmaintained>true</fadeOutUnmaintained>
+		</mote>
+		<graphicData>
+			<!-- 占位贴图，实际不会被使用 -->
+			<graphicClass>Graphic_Mote</graphicClass>
+			<texPath>Things/Mote/ExplosionFlash</texPath>
+			<shaderType>MoteGlow</shaderType>
+		</graphicData>
+	</ThingDef>
+</Defs>

@@ -49,14 +49,6 @@ namespace FamiliaMyth.Abilities
             }
         }
 
-        public string CooldownText
-        {
-            get
-            {
-                if (Skill == null) return null;
-                if (Skill.IsCooldown) return $"冷却剩余: {Skill.RemainingCooldown:F1}秒";
-                else return null;
-            }
-        }
+        public string CooldownText => Skill.CooldownText;
     }
 }

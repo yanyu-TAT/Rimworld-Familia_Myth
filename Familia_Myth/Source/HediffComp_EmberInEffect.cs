@@ -29,7 +29,7 @@ namespace FamiliaMyth.Abilities
                     continue;
 
                 Pawn.health.RestorePart(part, checkStateChange : false);
-                Log.Message($"[FamiliaMyth] {Pawn.Name} restored part {part.Label}");
+                //Log.Message($"[FamiliaMyth] {Pawn.Name} restored part {part.Label}");
                 var injury = (Hediff_Injury)HediffMaker.MakeHediff(HediffDefOf.Cut, Pawn, part);
                 float maxHp = part.def.GetMaxHealth(Pawn);
                 injury.Severity = maxHp * 0.9f;

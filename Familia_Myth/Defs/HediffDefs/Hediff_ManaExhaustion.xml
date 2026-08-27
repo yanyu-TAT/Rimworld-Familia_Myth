@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<!-- ==================== 魔力枯竭瘫痪 ===================== -->
+	<HediffDef>
+		<defName>Hediff_ManaExhaustion</defName>
+		<label>魔力枯竭</label>
+		<description>施放爆裂魔法后魔力严重透支，身体陷入瘫痪，短时间内无法行动。</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<isBad>true</isBad>
+		<initialSeverity>1</initialSeverity>
+		<preventsCrawling>true</preventsCrawling>
+		<comps>
+			<li Class="HediffCompProperties_Disappears">
+				<disappearsAfterTicks>15000</disappearsAfterTicks>
+				<showRemainingTime>true</showRemainingTime>
+			</li>
+		</comps>
+		<stages>
+			<li>
+				<capMods>
+					<li>
+						<capacity>Moving</capacity>
+						<setMax>0.1</setMax>
+					</li>
+				</capMods>
+			</li>
+		</stages>
+	</HediffDef>
+</Defs>

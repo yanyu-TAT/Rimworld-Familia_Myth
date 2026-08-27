@@ -365,10 +365,10 @@
 		<spellClass>FamiliaMyth.Abilities.Spell_KingsSword</spellClass>
 
 		<!-- 稀有度 -->
-		<rarity>Rare</rarity>
+		<rarity>Uncommon</rarity>
 
-		<!-- 魔法类型：特殊魔法 -->
-		<spellType>Special</spellType>
+		<!-- 魔法类型：召唤魔法 -->
+		<spellType>Summon</spellType>
 
 		<!-- 代表色：浅蓝 -->
 		<themeColor>(0.55, 0.8, 1, 1)</themeColor>
@@ -402,6 +402,60 @@
 			<li>「君王之剑」</li>
 		</incantationLines>
 		<lineInterval>1.9</lineInterval>
+	</FamiliaMyth.Abilities.SpellDef>
+
+	<!-- ==================== 爆裂魔法 (Explosion) ===================== -->
+	<FamiliaMyth.Abilities.SpellDef>
+		<defName>Spell_Explosion</defName>
+		<label>爆裂魔法</label>
+		<description>咏唱结束后在目标点引发一场巨大爆炸，伤害与范围随法强提升；施法结束后施法者将因魔力枯竭瘫痪数小时</description>
+
+		<!-- 魔法实现类 -->
+		<spellClass>FamiliaMyth.Abilities.Spell_Explosion</spellClass>
+
+		<!-- 稀有度 -->
+		<rarity>Rare</rarity>
+
+		<!-- 魔法类型：攻击魔法 -->
+		<spellType>Attack</spellType>
+
+		<!-- 代表色：橙红 -->
+		<themeColor>(1, 0.45, 0.3, 1)</themeColor>
+
+		<!-- 图标路径：贴图待补 -->
+		<iconPath>Familia_Myth/UI/Icons/Spells/Explosion</iconPath>
+
+		<!-- 显示与施法设置 -->
+		<displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
+		<disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>
+
+		<!-- 动词属性：目标点施法 -->
+		<verbProperties>
+			<verbClass>FamiliaMyth.Abilities.Verb_CastSpell</verbClass>
+			<range>60</range>
+			<warmupTime>3</warmupTime>
+			<drawAimPie>false</drawAimPie>
+			<targetParams>
+				<canTargetPawns>true</canTargetPawns>
+				<canTargetLocations>true</canTargetLocations>
+				<canTargetSelf>false</canTargetSelf>
+				<canTargetAnimals>true</canTargetAnimals>
+				<canTargetBuildings>true</canTargetBuildings>
+			</targetParams>
+			<requireLineOfSight>false</requireLineOfSight>
+		</verbProperties>
+
+		<incantationLines>
+			<li>比黑色更黑</li>
+			<li>比黑暗更暗的漆黑</li>
+			<li>在此寄托吾真红的金光吧</li>
+			<li>觉醒之时的到来</li>
+			<li>荒谬教会的堕落章理</li>
+			<li>化作无形的扭曲</li>
+			<li>显现吧！——</li>
+			<li>「Explosion！」</li>
+		</incantationLines>
+		<lineInterval>2.2</lineInterval>
 	</FamiliaMyth.Abilities.SpellDef>
 
 </Defs>

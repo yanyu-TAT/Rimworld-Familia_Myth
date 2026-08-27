@@ -13,8 +13,22 @@ namespace FamiliaMyth.Abilities
         public int CooldownTicks => (int)(def.cooldown * 60f);
         protected int CurrentTick => Find.TickManager.TicksGame;
         public bool IsCooldown => CurrentTick - lastCastTick < CooldownTicks;
-        public float RemainingCooldown => Mathf.Max(0, CooldownTicks - (CurrentTick - lastCastTick)) / 60f;
-        public float CooldownProgress => Mathf.Clamp01(RemainingCooldown / def.cooldown);
+        public int RemainingCooldownTicks => Mathf.Max(0, CooldownTicks - (CurrentTick - lastCastTick));
+        public float CooldownProgress => Mathf.Clamp01(RemainingCooldownTicks / CooldownTicks);
+
+        public string CooldownText
+        {
+            get
+            {
+                if (!IsCooldown) return "";
+
+                int remainingTicks = RemainingCooldownTicks;
+                if (remainingTicks < 2500)
+                    return "冷却剩余:" + remainingTicks.ToStringSecondsFromTicks("F0");
+
+                return "冷却剩余:" + remainingTicks.ToStringTicksToPeriod();
+            }
+        }
 
         public RewardType RewardType => RewardType.Skill;
 
@@ -101,7 +115,7 @@ namespace FamiliaMyth.Abilities
         {
             get{
                 if (IsCooldown)
-                    return $"冷却中，剩余{RemainingCooldown:F1}秒";
+                    return CooldownText;
 
                 if (def.skillType != SkillType.Active)
                     return true;
