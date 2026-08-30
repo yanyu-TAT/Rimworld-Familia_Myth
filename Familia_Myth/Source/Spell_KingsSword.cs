@@ -1,8 +1,9 @@
-﻿using Verse;
+using RimWorld;
+using Verse;
 
 namespace FamiliaMyth.Abilities
 {
-    public class Spell_KingsSword : Spell
+    public class Spell_KingsSword : Spell, ISpellWithRemainingTime
     {
         //基础持续时间
         private const int BasicSwordDuration = 3600;
@@ -11,7 +12,7 @@ namespace FamiliaMyth.Abilities
         //基础环绕半径
         private const float BasicOrbitRadius = 4f;
         //环绕角速度
-        public const float OrbitAngularSpeed = 0.01f;
+        public const float OrbitAngularSpeed = 0.5f;
         //悬浮环绕时的移速
         public const float HoveringSpeed = 0.08f;
 
@@ -44,6 +45,22 @@ namespace FamiliaMyth.Abilities
         public float DamageMultiplier => usedTimes;
         public float SwordScale => usedTimes;
 
+        public string RemainingTimeText
+        {
+            get
+            {
+                if (!IsActive) return "";
+                if (remainingTicks < 2500)
+                    return remainingTicks.ToStringSecondsFromTicks("F0");
+                return remainingTicks.ToStringTicksToPeriod();
+            }
+        }
+
+        public string EffectName => "君王之剑";
+
+        private Hediff_SpellState state;
+        public Hediff_SpellState State { get => state; set => state = value; }
+
         protected override void WarmUpFinish(bool castDone)
         {
             if (!castDone || pawn?.Map == null || !pawn.Spawned || pawn.DeadOrDowned)
@@ -75,7 +92,9 @@ namespace FamiliaMyth.Abilities
             Sword.Init(this);
             Sword.currentState = new HoveringState_Orbit(Sword, OrbitAngularSpeed, OrbitRadius);
             Sword.currentState.SetMaxV(HoveringSpeed);
-            Log.Message("Sword Spawned");
+
+            ((ISpellWithRemainingTime)this).NotifyStateStart(pawn);
+            //Log.Message("Sword Spawned");
         }
 
         public override void AbilityTick()
@@ -95,6 +114,8 @@ namespace FamiliaMyth.Abilities
             if (Sword != null && Sword.Spawned)
                 Sword.FadeOut();
             activeProjectiles.Clear();
+
+            ((ISpellWithRemainingTime)this).NotifyStateEnd(pawn);
         }
 
         public override void ExposeData()
@@ -102,6 +123,7 @@ namespace FamiliaMyth.Abilities
             base.ExposeData();
             Scribe_Values.Look(ref remainingTicks, "remainingTicks");
             Scribe_Values.Look(ref usedTimes, "usedTimes");
+            Scribe_References.Look(ref state, "state");
         }
     }
 }

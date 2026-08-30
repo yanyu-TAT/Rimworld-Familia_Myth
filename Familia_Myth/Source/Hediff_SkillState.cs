@@ -10,7 +10,7 @@ namespace FamiliaMyth.Abilities
         public HediffComp_SkillState.SkillState State
         {
             get
-            {;
+            {
                 if (Comp == null) return HediffComp_SkillState.SkillState.ERROR;
                 return Comp.CurrentState;
             }

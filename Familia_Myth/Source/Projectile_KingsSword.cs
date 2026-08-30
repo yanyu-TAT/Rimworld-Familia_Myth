@@ -8,8 +8,8 @@ namespace FamiliaMyth.Abilities
     {
         //索敌间隔
         private const int ScanIntevalTicks = 60;
-        //追击加速度
-        private const float TrackAcceleration = 0.025f;
+        //追击最大速度
+        private const float ChaseSpeed = 0.5f;
         //攻击范围角
         private const float StrikeAngle = 60f;
         //残影层数
@@ -51,7 +51,7 @@ namespace FamiliaMyth.Abilities
 
         //仅作动画显示，不实际碰撞，伤害直接调用范围内Thing.TakeDamage处理
         protected override bool CanHitAt(Thing thing) => false;
-        protected override bool CanShieldBlock => false;
+        public override bool CanShieldBlock => false;
         protected override bool NeedTrail => false;
 
         protected override void TickInterval(int delta)
@@ -105,7 +105,7 @@ namespace FamiliaMyth.Abilities
                 if (!IsValid(curTarget))
                 {
                     //重新选择目标
-                    Log.Message($"Target Lost. Trying To Retarget.");
+                    //Log.Message($"Target Lost. Trying To Retarget.");
                     TryGetTarget();
                     return;
                 }
@@ -118,7 +118,7 @@ namespace FamiliaMyth.Abilities
                 {
                     //攻击
                     TryStrike();
-                    Log.Message("Target In Range. Trying To Attack");
+                    //Log.Message("Target In Range. Trying To Attack");
                     return;
                 }
             }
@@ -126,7 +126,7 @@ namespace FamiliaMyth.Abilities
             //待机中，依据检测间隔尝试获取目标
             if (scanCooldown <= 0)
             {
-                Log.Message("Hovering. Trying To Get Target.");
+                //Log.Message("Hovering. Trying To Get Target.");
                 TryGetTarget();
             }
         }
@@ -194,14 +194,14 @@ namespace FamiliaMyth.Abilities
                     currentState =
                         new HoveringState_Orbit(currentState, Spell_KingsSword.OrbitAngularSpeed, Spell.OrbitRadius);
                     currentState.SetMaxV(HoveringSpeed);
-                    Log.Message("Enemy Not Found. Back To Hovering");
+                    //Log.Message("Enemy Not Found. Back To Hovering");
                 }
             }
             else
             {
                 //找到了目标，开始追踪
-                currentState =
-                    new TrackingState_WithRange(currentState, curTarget, Spell.AttackRange, TrackAcceleration);
+                currentState = new TrackingState_WithRange(currentState, curTarget, Spell.AttackRange * 0.8f);
+                currentState.SetMaxV(ChaseSpeed);
                 //Log.Message($"Enemy Found: {enemy.Name.ToStringShort}");
             }
         }

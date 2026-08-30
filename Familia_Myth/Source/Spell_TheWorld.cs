@@ -4,7 +4,7 @@ using Verse;
 
 namespace FamiliaMyth.Abilities
 {
-    public class Spell_TheWorld : Spell
+    public class Spell_TheWorld : Spell, ISpellWithRemainingTime
     {
         private const int BasicDurationTicks = 1800;
         private const float FieldRadius = 50f;
@@ -21,6 +21,38 @@ namespace FamiliaMyth.Abilities
         private static ThingDef clockMoteDef;
         private static ThingDef ClockMoteDef =>
             clockMoteDef ??= DefDatabase<ThingDef>.GetNamed("Mote_Clock");
+
+        public string RemainingTimeText
+        {
+            get
+            {
+                if (!IsActive) return "";
+                if (remainingTicks < 2500)
+                    return remainingTicks.ToStringSecondsFromTicks("F0");
+                return remainingTicks.ToStringTicksToPeriod();
+            }
+        }
+
+        public string EffectName => "时间停止";
+
+        private Hediff_SpellState state;
+        public Hediff_SpellState State { get => state; set => state = value; }
+
+        public override AcceptanceReport CanCast
+        {
+            get
+            {
+                var canCast = base.CanCast;
+                if (!canCast) return canCast;
+
+                if (!AnyActiveField) 
+                    return true;
+                if (Fields.Keys.Any(p => p == pawn))
+                    return "当前的时停效果尚未结束。";
+
+                return true;
+            }
+        }
 
         protected override void WarmUpFinish(bool castDone)
         {
@@ -40,6 +72,8 @@ namespace FamiliaMyth.Abilities
                 clockMote.Maintain();
                 clockMote.ratio = 1f;
             }
+
+            ((ISpellWithRemainingTime)this).NotifyStateStart(pawn);
         }
 
         public override void AbilityTick()
@@ -85,6 +119,8 @@ namespace FamiliaMyth.Abilities
             remainingTicks = 0;
             fieldCenter = null;
             Fields.Remove(pawn);
+
+            ((ISpellWithRemainingTime)this).NotifyStateEnd(pawn);
         }
 
         public override void OnGizmoUpdate()
@@ -119,6 +155,7 @@ namespace FamiliaMyth.Abilities
             Scribe_Values.Look(ref remainingTicks, "remainingTicks");
             Scribe_Values.Look(ref fieldCenter, "fieldCenter");
             Scribe_References.Look(ref clockMote, "clockMote");
+            Scribe_References.Look(ref state, "state");
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit && fieldCenter.HasValue && pawn != null)
             {

@@ -1,4 +1,4 @@
-﻿using RimWorld;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -6,12 +6,12 @@ namespace FamiliaMyth.Abilities
 {
     public class Projectile_ArcsRay : Projectile_MagicMissileBase
     {
-        private const float TrackingAcceleration = 0.12f;  //追踪加速度（必中锁定）
-        private const float LaunchSpeed = 0.8f;            //无有效目标时的直线速度（格/帧）
+        private const float LaunchSpeed = 0.6f;            //无有效目标时的直线速度（格/帧）
         private const float DetonationRadius = 5f;       //引爆范围
         private const int StunTicks = 120;                 //引爆眩晕时长（2秒）
         private const float ExplosionFactor = 0.25f;    //引爆的伤害系数
         private const float BuildingFactor = 5f;        //穿透建筑的伤害系数
+        private const float MovingSpeed = 0.6f;           //追踪的最大速度
 
         private readonly HashSet<Thing> hittenThings = new();
         private int? damageAmount = null;
@@ -20,7 +20,7 @@ namespace FamiliaMyth.Abilities
         public override int DamageAmount => damageAmount ?? base.DamageAmount;
 
         //不可被护盾拦截
-        protected override bool CanShieldBlock => false;
+        public override bool CanShieldBlock => false;
 
         public override Quaternion ExactRotation
         {
@@ -117,7 +117,11 @@ namespace FamiliaMyth.Abilities
             }
 
             if (curTarget != null)
-                currentState = new TrackingState(currentState, curTarget, TrackingAcceleration);
+            {
+                currentState = new TrackingState(currentState, curTarget,
+                    stiffness: 100f, damping: 10f);
+                currentState.SetMaxV(MovingSpeed);
+            }
             else
             {
                 //无目标则直线飞行

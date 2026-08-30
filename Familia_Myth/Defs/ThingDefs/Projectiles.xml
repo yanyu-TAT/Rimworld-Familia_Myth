@@ -80,4 +80,32 @@
 		</projectile>
 	</ThingDef>
 
+	<!-- ==================== 光灵守护的光球 (Light Orb) ===================== -->
+	<!-- 贴图待补：Textures/Familia_Myth/Things/Projectile/LightOrb.png -->
+	<ThingDef ParentName="BaseBullet">
+		<defName>Projectile_LightOrb</defName>
+		<label>光灵</label>
+		<description>光灵守护召唤的环绕光球，吸收来袭弹射物并灼烧靠近的敌人</description>
+
+		<thingClass>FamiliaMyth.Abilities.Projectile_LightOrb</thingClass>
+
+		<graphicData>
+			<texPath>Familia_Myth/Things/Projectile/LightOrb</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<shaderType>TransparentPostLight</shaderType>
+			<color>(1, 0.95, 0.7, 1)</color>
+			<!-- drawSize = BasicRadius(0.75) × 贴图尺寸(256) / 光球半径(100px) = 1.92：使光球视觉半径与伤害/吸收半径 0.75 对齐 -->
+			<drawSize>1.92</drawSize>
+		</graphicData>
+
+		<projectile>
+			<damageDef>LightArrow</damageDef>
+			<damageAmountBase>15</damageAmountBase>
+			<armorPenetrationBase>0</armorPenetrationBase>
+			<stoppingPower>0</stoppingPower>
+			<speed>60</speed>
+			<flyOverhead>false</flyOverhead>
+		</projectile>
+	</ThingDef>
+
 </Defs>

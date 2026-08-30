@@ -8,14 +8,14 @@ namespace FamiliaMyth.Abilities
     {
         protected Spell spell;
 
-        protected static HashSet<IntVec3> checkCells = new();
+        protected static HashSet<IntVec3> checkedCells = new();
 
         private const int FadeInTicks = 60;
         private const int FadeOutTicks = 60;
         private int fadeInTimer = -999;
         private int fadeOutTimer = -999;
 
-        protected MaterialPropertyBlock matPropertyBlock;
+        protected static MaterialPropertyBlock matPropertyBlock;
 
         private int CurrentTick => Find.TickManager.TicksGame;
 
@@ -291,10 +291,10 @@ namespace FamiliaMyth.Abilities
 
                 //淡入效果
                 if (fadeInTimer > 0)
-                    color = color.WithAlpha(Mathf.Clamp01(1f - fadeInTimer / FadeInTicks));
+                    color = color.WithAlpha(Mathf.Clamp01(1f - (float)fadeInTimer / FadeInTicks));
                 //淡出效果
                 if (fadeOutTimer > 0)
-                    color = color.WithAlpha(Mathf.Clamp01(fadeOutTimer / FadeOutTicks));
+                    color = color.WithAlpha(Mathf.Clamp01((float)fadeOutTimer / FadeOutTicks));
 
                 //闪烁效果
                 var k = 0.9f + 0.1f * Mathf.Sin((CurrentTick + pulseOffset) * 0.05f);
@@ -325,14 +325,14 @@ namespace FamiliaMyth.Abilities
         {
             get
             {
-                var dir = currentState.Acceleration;
-                if (dir.magnitude < 1e-5f) dir = currentState.Velocity;
-                if (dir.magnitude < 1e-5f) return Quaternion.identity;
-                return Quaternion.LookRotation(dir.normalized);
+                var dir = currentState.Velocity;
+                if (dir.magnitude < 1e-5f) dir = currentState.Acceleration;
+                if (dir.magnitude < 1e-5f) dir = Vector3.forward;
+                return Quaternion.LookRotation(dir);
             }
         }
 
-        protected virtual bool CanShieldBlock => true;
+        public virtual bool CanShieldBlock => true;
 
         protected virtual bool NeedTrail => true;
 
@@ -366,16 +366,16 @@ namespace FamiliaMyth.Abilities
             var d = B - A;  //总路程
             var step = d.normalized * 0.2f; //步长
             IntVec3 cell; //当前格
-            checkCells.Clear(); //清空检测表
+            checkedCells.Clear(); //清空检测表
             do 
             { 
                 z += step;  //前进
                 cell = z.ToIntVec3();
-                if (!checkCells.Contains(cell))
+                if (!checkedCells.Contains(cell))
                 {
                     if (CheckHitCell(cell)) return true;
                     //防止重复检测
-                    checkCells.Add(cell);
+                    checkedCells.Add(cell);
                 }
             } while (cell != b);
 
@@ -432,7 +432,7 @@ namespace FamiliaMyth.Abilities
 
         protected virtual bool CanHitAt(Thing thing)
         {
-            return currentState.CanHit && base.CanHit(thing);
+            return currentState.CanHit && CanHit(thing);
         }
 
         public override void ExposeData()

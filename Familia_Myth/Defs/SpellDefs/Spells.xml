@@ -244,28 +244,6 @@
 		<!-- 代表色：偏深蓝的银色 -->
 		<themeColor>(0.6, 0.65, 0.78, 1)</themeColor>
 
-		<magicCircles>
-			<li>
-				<texPath>Familia_Myth/Things/Mote/MagicCircles/TheWorld1</texPath>
-				<size>(24,24)</size>
-				<scaleFrom>0.5</scaleFrom>
-				<drawColor>(1,1,1,0.6)</drawColor>
-			</li>
-			<li>
-				<texPath>Familia_Myth/Things/Mote/MagicCircles/TheWorld2</texPath>
-				<size>(24,24)</size>
-				<rotate>5.0</rotate>
-				<altitude>0.01</altitude>
-				<drawColor>(1,1,1,0.6)</drawColor>
-			</li>
-			<li>
-				<texPath>Familia_Myth/Things/Mote/MagicCircles/TheWorld3</texPath>
-				<size>(24,24)</size>
-				<altitude>0.02</altitude>
-				<drawColor>(1,1,1,0.6)</drawColor>
-			</li>
-		</magicCircles>
-
 		<!-- 图标路径 -->
 		<iconPath>Familia_Myth/UI/Icons/Spells/TheWorld</iconPath>
 
@@ -373,7 +351,6 @@
 		<!-- 代表色：浅蓝 -->
 		<themeColor>(0.55, 0.8, 1, 1)</themeColor>
 
-		<!-- 图标路径：暂复用剑雨图标，如需要可替换为专有图标 -->
 		<iconPath>Familia_Myth/UI/Icons/Spells/KingsSword</iconPath>
 
 		<!-- 显示与施法设置：自身施法 -->
@@ -456,6 +433,59 @@
 			<li>「Explosion！」</li>
 		</incantationLines>
 		<lineInterval>2.2</lineInterval>
+	</FamiliaMyth.Abilities.SpellDef>
+
+	<!-- ==================== 光灵守护 (Light Guard) ===================== -->
+	<FamiliaMyth.Abilities.SpellDef>
+		<defName>Spell_LightGuard</defName>
+		<label>光灵守护</label>
+		<description>咏唱结束后召唤数个环绕施法者的光灵，吸收来袭弹射物并灼烧靠近的敌人；光灵数量与持续时间受法强影响</description>
+
+		<!-- 魔法实现类 -->
+		<spellClass>FamiliaMyth.Abilities.Spell_LightGuard</spellClass>
+
+		<!-- 稀有度 -->
+		<rarity>Common</rarity>
+
+		<!-- 魔法类型：防御魔法 -->
+		<spellType>Defense</spellType>
+
+		<!-- 代表色：浅金色 -->
+		<themeColor>(1, 0.95, 0.7, 1)</themeColor>
+
+		<iconPath>Familia_Myth/UI/Icons/Spells/LightGuard</iconPath>
+
+		<!-- 显示与施法设置：自身施法 -->
+		<displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
+		<disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>
+
+		<!-- 动词属性：自身施法（warmupTime由咏唱行数与lineInterval计算） -->
+		<verbProperties>
+			<verbClass>FamiliaMyth.Abilities.Verb_CastSpell</verbClass>
+			<targetable>false</targetable>
+			<nonInterruptingSelfCast>true</nonInterruptingSelfCast>
+			<range>-1</range>
+			<warmupTime>1</warmupTime>
+			<drawAimPie>false</drawAimPie>
+			<targetParams>
+				<canTargetSelf>true</canTargetSelf>
+			</targetParams>
+		</verbProperties>
+
+		<!-- 咏唱文本 -->
+		<incantationLines>
+			<li>圣洁的光之精灵</li>
+			<li>于此恳求你的恩惠</li>
+			<li>以凝聚的光辉</li>
+			<li>驱逐来犯之敌</li>
+			<li>「光灵守护」</li>
+		</incantationLines>
+		<lineInterval>1.8</lineInterval>
+
+		<!-- 引爆咒 -->
+		<hasSpellKey>true</hasSpellKey>
+		<spellKey>「绽放吧」</spellKey>
+		<spellKeyDescription>引爆所有光灵，根据守护剩余时间对附近敌人造成一半时间的眩晕</spellKeyDescription>
 	</FamiliaMyth.Abilities.SpellDef>
 
 </Defs>

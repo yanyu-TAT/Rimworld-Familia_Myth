@@ -30,8 +30,9 @@ namespace FamiliaMyth.Abilities
             if (target != null)
             {
                 TrackedThings.Add(target);
-                currentState = new TrackingState(currentState, target, 0.025f);
-                currentState.SetV(Rand.UnitVector3 * Rand.Range(0.2f, 0.4f));
+                currentState = new TrackingState(currentState, target, stiffness: 2f, damping: 1.5f);
+                //从施法者附近散开的初始速度
+                currentState.SetV((ExactPosition.WithY(0) - caster.Position.ToVector3Shifted()).normalized * Rand.Range(0.2f, 0.4f));
             } 
             else
             {
