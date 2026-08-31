@@ -1,6 +1,7 @@
 using FamiliaMyth.Pharna;
 using RimWorld;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Verse;
 
 namespace FamiliaMyth.Abilities
@@ -8,7 +9,7 @@ namespace FamiliaMyth.Abilities
     /// <summary>
     /// 齐射火标枪
     /// </summary>
-    public class Spell_FusilladeFlameSpears : Spell
+    public class Spell_FusilladeFlameSpears : Spell, ISpellWithTargetRange
     {
         //扇形角度
         private const int FanAngle = 120;
@@ -42,7 +43,9 @@ namespace FamiliaMyth.Abilities
         private static ThingDef MoteDef => 
             moteDef ??= DefDatabase<ThingDef>.GetNamed("Mote_TargetLock");
 
-        private int Radius => (int)verb.EffectiveRange;
+        private float Radius => verb.EffectiveRange;
+
+        public Color HighlightColor => Color.red;
 
         private List<LocalTargetInfo> lockedTargets = new();
 
@@ -51,15 +54,6 @@ namespace FamiliaMyth.Abilities
         private readonly Dictionary<LocalTargetInfo, Mote_TargetLock> moteTargets = new();
 
         private readonly static Color lockColor = new ColorInt(160, 20, 30).ToColor;
-
-        public override void Apply(Hediff_Pharna pharna)
-        {
-            base.Apply(pharna);
-            if (verb is Verb_CastSpell_FanTarget fanTarget)
-                fanTarget.fanAngle = 120;
-            else
-                Log.Warning("[FamiliaMyth]Verb For Spell_FusilladeFlameSpears should have been of type Verb_CastAbility_FanTarget but not");
-        }
 
         protected override void WarmUpStart()
         {
@@ -291,5 +285,34 @@ namespace FamiliaMyth.Abilities
             base.ExposeData();
             Scribe_Collections.Look(ref lockedTargets, "lockedTargets", LookMode.Reference);
         }
+
+        public IEnumerable<IntVec3> GetCells(LocalTargetInfo localTarget)
+        {
+            if (!localTarget.IsValid) return null;
+            var targetPos = localTarget.Cell;
+            var casterPos = pawn.Position;
+            var results = new List<IntVec3>();
+            var facing = (targetPos - casterPos).AngleFlat;
+            float halfAngle = FanAngle / 2f;
+            int cellCount = GenRadial.NumCellsInRadius(Radius);
+
+            for (int i = 0; i < cellCount; i++)
+            {
+                var cell = casterPos + GenRadial.RadialPattern[i];
+                if (!cell.InBounds(Find.CurrentMap)) continue;
+
+                var dir = cell - casterPos;
+                if (dir.SqrMagnitude > Radius * Radius) continue;
+
+                float cellAngle = dir.AngleFlat;
+                float diff = Mathf.DeltaAngle(facing, cellAngle);
+                if (Mathf.Abs(diff) <= halfAngle)
+                    results.Add(cell);
+            }
+            return results;
+        }
+
+        public bool CanHitTargetFrom(IntVec3 root, LocalTargetInfo localTarget)
+            => localTarget.Cell.DistanceTo(root) <= Radius;
     }
 }

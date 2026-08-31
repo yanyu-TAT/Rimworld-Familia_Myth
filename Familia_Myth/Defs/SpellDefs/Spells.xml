@@ -138,7 +138,7 @@
 
 		<!-- 动词属性 -->
 		<verbProperties>
-			<verbClass>FamiliaMyth.Abilities.Verb_CastSpell_FanTarget</verbClass>
+			<verbClass>FamiliaMyth.Abilities.Verb_CastSpell</verbClass>
 			<range>60</range>
 			<warmupTime>3</warmupTime>
 			<drawAimPie>false</drawAimPie>

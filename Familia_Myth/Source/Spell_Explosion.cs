@@ -4,7 +4,7 @@ using Verse;
 
 namespace FamiliaMyth.Abilities
 {
-    public class Spell_Explosion : Spell
+    public class Spell_Explosion : Spell, ISpellWithTargetRange
     {
         private static DamageDef damageDef;
         private static DamageDef DamageDef =>
@@ -49,6 +49,8 @@ namespace FamiliaMyth.Abilities
         private Mote_ExplosionDistortion distortion;
 
         private bool WaitingForExplosion => delayTicksLeft > 0;
+
+        public Color HighlightColor => Color.red;
 
         protected override void WarmUpStart()
         {
@@ -173,6 +175,24 @@ namespace FamiliaMyth.Abilities
                 circle?.Maintain();
                 distortion?.Maintain();
             }
+        }
+
+        private float radiusForHighlight = -1;
+
+        public IEnumerable<IntVec3> GetCells(LocalTargetInfo localTarget)
+        {
+            if (radiusForHighlight < 0 || Find.TickManager.TicksGame % 30 == 0)
+                radiusForHighlight = GetCurrentSpellPower() * BasicRadius;
+
+            if (!localTarget.IsValid)
+                return null;
+
+            return GenRadial.RadialCellsAround(localTarget.Cell, radiusForHighlight, true);
+        }
+
+        public bool CanHitTargetFrom(IntVec3 root, LocalTargetInfo localTarget)
+        {
+            throw new NotImplementedException();
         }
     }
 }

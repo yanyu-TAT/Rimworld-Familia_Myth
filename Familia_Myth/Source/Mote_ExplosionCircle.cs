@@ -61,7 +61,7 @@ namespace FamiliaMyth.Abilities
             int cnt = Rand.Range(2, 10);
             for (int i = 0; i < cnt; i++)
             {
-                float y = Rand.Range(0f, RingMaxHeight) + def.altitudeLayer.AltitudeFor();
+                float y = Rand.Range(0f, RingMaxHeight / 1.5f) + def.altitudeLayer.AltitudeFor();
                 rings.Add(new(y));
             }
 

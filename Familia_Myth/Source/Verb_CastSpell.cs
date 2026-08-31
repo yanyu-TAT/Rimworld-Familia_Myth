@@ -1,13 +1,75 @@
 ﻿using FamiliaMyth.Pharna;
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace FamiliaMyth.Abilities
 {
     public class Verb_CastSpell : Verb_CastAbility
     {
-        //是否检测视线遮挡
-        protected virtual bool CheckLOS => true;
+        public ISpellWithTargetRange spell;
+
+        protected bool CheckLOS => spell?.CheckLOS ?? false;
+
+        public override void DrawHighlight(LocalTargetInfo target)
+        {
+            base.DrawHighlight(target);
+
+            try 
+            {
+                var cells = spell.GetCells(target).ToList();
+                GenDraw.DrawFieldEdges(cells, spell.HighlightColor);
+            }
+            catch { }
+        }
+
+        public override bool CanHitTarget(LocalTargetInfo targ)
+            => CanHitTargetFrom(caster.Position, targ);
+
+        public override bool CanHitTargetFrom(IntVec3 root, LocalTargetInfo targ)
+        {
+            try
+            {
+                return spell.CanHitTargetFrom(root, targ);
+            }
+            catch
+            {
+                return CanHitTargetFromDefault(root, targ);
+            }
+        }
+
+        public bool CanHitTargetFromDefault(IntVec3 root, LocalTargetInfo targ)
+        {
+            if (targ.Thing != null && targ.Thing == caster)
+            {
+                return targetParams.canTargetSelf;
+            }
+
+            if (targ.Pawn != null && targ.Pawn.IsPsychologicallyInvisible() && caster.HostileTo(targ.Pawn))
+            {
+                return false;
+            }
+
+            if (ApparelPreventsShooting())
+            {
+                return false;
+            }
+
+            if (spell.CheckLOS)
+                return TryFindShootLineFromTo(root, targ, out _);
+
+            return true;
+        }
+
+        public override bool ValidateTarget(LocalTargetInfo target, bool showMessages = true)
+        {
+            if (!CanHitTarget(target))
+            {
+                Messages.Message("目标不在有效范围内", MessageTypeDefOf.RejectInput);
+                return false;
+            }
+            return true;
+        }
 
         public override bool TryStartCastOn(LocalTargetInfo castTarg, LocalTargetInfo destTarg, bool surpriseAttack = false, bool canHitNonTargetPawns = true, bool preventFriendlyFire = false, bool nonInterruptingSelfCast = false)
         {
@@ -42,5 +104,31 @@ namespace FamiliaMyth.Abilities
 
             return true;
         }
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_References.Look(ref spell, "spell");
+        }
+    }
+
+    public interface ISpellWithTargetRange : ILoadReferenceable
+    {
+        /// <summary>
+        /// 获取高亮的格子，出现错误则回退为默认行为
+        /// </summary>
+        IEnumerable<IntVec3> GetCells(LocalTargetInfo localTarget);
+        /// <summary>
+        /// 目标合法性检查，出现错误则回退为默认行为
+        /// </summary>
+        bool CanHitTargetFrom(IntVec3 root, LocalTargetInfo localTarget);
+        /// <summary>
+        /// 是否检查视线遮挡
+        /// </summary>
+        bool CheckLOS { get => false; }
+        /// <summary>
+        /// 高光颜色
+        /// </summary>
+        Color HighlightColor { get => Color.white; }
     }
 }

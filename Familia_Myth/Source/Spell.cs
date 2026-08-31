@@ -289,6 +289,8 @@ namespace FamiliaMyth.Abilities
             pawn = pharna.pawn;
             Initialize();
             verb.verbProps.warmupTime = Def.WarmupTime;
+            if (verb is Verb_CastSpell castSpell && this is ISpellWithTargetRange spellWithTargetRange)
+                castSpell.spell = spellWithTargetRange;
             pharna.spells.Add(this);
         }
 
