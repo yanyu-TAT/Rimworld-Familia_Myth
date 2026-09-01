@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<!-- 重生女神之礼赞·疼痛抑制。
+	     代码在法阵范围内通过 GetOrAddHediff 添加，并用 SetDuration(HediffDuationTicks=150) 刷新
+	     （离开法阵后经 Disappears 回落约 150 ticks）。
+	     疼痛抑制强度纯 XML 配置：stage painFactor=0.4 → 总疼痛×0.4 = 抑制60%
+	     （依据 Hediff.PainFactor => CurStage.painFactor，HediffSet.CalculatePain 累乘）。 -->
+	<HediffDef>
+		<defName>Hediff_ZeoGullveig</defName>
+		<label>重生女神之礼赞</label>
+		<description>重生女神之礼赞附加的痛觉抑制效果</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<isBad>false</isBad>
+		<initialSeverity>1</initialSeverity>
+		<comps>
+			<li Class="HediffCompProperties_Disappears">
+				<disappearsAfterTicks>150</disappearsAfterTicks>
+				<showRemainingTime>true</showRemainingTime>
+			</li>
+		</comps>
+		<stages>
+			<li>
+				<!-- 总疼痛乘数：×0.4 = 抑制60% -->
+				<painFactor>0.4</painFactor>
+			</li>
+		</stages>
+	</HediffDef>
+</Defs>

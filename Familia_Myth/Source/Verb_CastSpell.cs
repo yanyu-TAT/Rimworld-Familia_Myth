@@ -55,7 +55,7 @@ namespace FamiliaMyth.Abilities
                 return false;
             }
 
-            if (spell.CheckLOS)
+            if (CheckLOS)
                 return TryFindShootLineFromTo(root, targ, out _);
 
             return true;

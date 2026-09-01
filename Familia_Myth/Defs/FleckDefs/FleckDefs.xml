@@ -127,4 +127,20 @@
 		<fadeOutTime>0.8</fadeOutTime>
 	</FleckDef>
 
+	<FleckDef>
+		<defName>HealSpark</defName>
+		<fleckSystemClass>Verse.FleckSystemThrown</fleckSystemClass>
+		<altitudeLayer>MoteOverhead</altitudeLayer>
+		<graphicData>
+			<graphicClass>Graphic_Fleck</graphicClass>
+			<texPath>Familia_Myth/Things/Mote/ChargeSpark</texPath>
+			<shaderType>MoteGlow</shaderType>
+			<color>(1, 1, 1, 1)</color>
+			<drawSize>(0.2, 0.2)</drawSize>
+		</graphicData>
+		<fadeInTime>0.5</fadeInTime>
+		<solidTime>0.5</solidTime>
+		<fadeOutTime>0.5</fadeOutTime>
+	</FleckDef>
+
 </Defs>

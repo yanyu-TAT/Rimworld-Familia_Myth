@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<!-- 重生女神之礼赞·目标点治愈法阵。
+	     贴图 Familia_Myth/Things/Mote/ZeoGullveigCircle 待补（圆形金色法阵）。
+	     渲染由 Mote_ZeoGullveig.TimeInterval 通过 linearScale（直径=2×Radius×展开进度）驱动，
+	     故 drawSize 取 1（基准 1x1，linearScale 即实际直径）、shaderType=MoteGlow、颜色由代码 instanceColor 上金色。 -->
+	<ThingDef ParentName="MoteBase">
+		<defName>Mote_ZeoGullveigCircle</defName>
+		<thingClass>FamiliaMyth.Abilities.Mote_ZeoGullveig</thingClass>
+		<altitudeLayer>MoteLow</altitudeLayer>
+		<mote>
+			<fadeInTime>0</fadeInTime>
+			<!-- 存活由 Spell 的 Maintain 维持，circle 结束后由代码 Destroy/FadeOut -->
+			<solidTime>999999</solidTime>
+			<fadeOutTime>0.5</fadeOutTime>
+			<needsMaintenance>true</needsMaintenance>
+			<fadeOutUnmaintained>true</fadeOutUnmaintained>
+		</mote>
+		<graphicData>
+			<graphicClass>Graphic_Mote</graphicClass>
+			<texPath>Familia_Myth/Things/Mote/ZeoGullveigCircle</texPath>
+			<shaderType>MoteGlow</shaderType>
+			<drawSize>1</drawSize>
+		</graphicData>
+	</ThingDef>
+</Defs>

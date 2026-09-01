@@ -39,7 +39,7 @@ namespace FamiliaMyth.Abilities
         public string Label => Def.label;
         public string Description => Def.description;
 
-        protected float PsyfocusCostPerTick => (def?.PsyfocusCost / (Def.WarmupTime * 60f)) ?? 0f;
+        protected float PsyfocusCost => (def?.PsyfocusCost / (Def.WarmupTime * 60f)) ?? 0f;
         protected float EntropyGainPerTick => (def?.EntropyGain / (Def.WarmupTime * 60f)) ?? 0f;
 
         public List<Projectile_MagicMissileBase> activeProjectiles = new();
@@ -162,7 +162,7 @@ namespace FamiliaMyth.Abilities
             if (tracker == null) return;
             float prePsy = tracker.CurrentPsyfocus;
             float preEnt = tracker.EntropyValue;
-            tracker.OffsetPsyfocusDirectly(-PsyfocusCostPerTick);
+            tracker.OffsetPsyfocusDirectly(-PsyfocusCost);
             tracker.TryAddEntropy(EntropyGainPerTick);
 
             //记录实际值

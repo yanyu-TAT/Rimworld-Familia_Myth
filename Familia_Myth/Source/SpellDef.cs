@@ -84,6 +84,9 @@ namespace FamiliaMyth.Abilities
         Special     //其他特殊魔法（分身，速攻等）
     }
 
+    /// <summary>
+    /// 描述施法者咏唱时在其脚下展开的魔法阵
+    /// </summary>
     public class MagicCircleLayer
     {
         public string texPath;

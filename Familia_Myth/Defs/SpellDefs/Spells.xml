@@ -11,7 +11,7 @@
         <spellClass>FamiliaMyth.Abilities.Spell_NoahHeal</spellClass>
 
         <!-- 稀有度 -->
-        <rarity>Uncommon</rarity>
+        <rarity>Common</rarity>
 
         <!-- 魔法类型：治疗魔法 -->
         <spellType>Heal</spellType>
@@ -486,6 +486,64 @@
 		<hasSpellKey>true</hasSpellKey>
 		<spellKey>「绽放吧」</spellKey>
 		<spellKeyDescription>引爆所有光灵，根据守护剩余时间对附近敌人造成一半时间的眩晕</spellKeyDescription>
+	</FamiliaMyth.Abilities.SpellDef>
+
+	<!-- ==================== 重生女神之礼赞 (Zeo Gullveig) ===================== -->
+	<FamiliaMyth.Abilities.SpellDef>
+		<defName>Spell_ZeoGullveig</defName>
+		<label>重生女神之礼赞</label>
+		<description>咏唱结束后在目标点展开治愈法阵，为范围内友方包扎伤口、恢复伤势并附加疼痛抑制</description>
+
+		<!-- 魔法实现类 -->
+		<spellClass>FamiliaMyth.Abilities.Spell_ZeoGullveig</spellClass>
+
+		<!-- 稀有度 -->
+		<rarity>Rare</rarity>
+
+		<!-- 魔法类型：治疗魔法 -->
+		<spellType>Heal</spellType>
+
+		<!-- 代表色：金色 -->
+		<themeColor>(1, 0.83, 0, 1)</themeColor>
+
+		<!-- 图标路径：贴图待补 -->
+		<iconPath>Familia_Myth/UI/Icons/Spells/ZeoGullveig</iconPath>
+
+		<!-- 显示设置：常驻自动治愈开关（Gizmos）可见 -->
+		<displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
+		<disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>
+
+		<!-- 动词属性：目标点施法 -->
+		<verbProperties>
+			<verbClass>FamiliaMyth.Abilities.Verb_CastSpell</verbClass>
+			<range>60</range>
+			<warmupTime>3</warmupTime>
+			<drawAimPie>false</drawAimPie>
+			<targetParams>
+				<canTargetPawns>true</canTargetPawns>
+				<canTargetLocations>true</canTargetLocations>
+				<canTargetSelf>false</canTargetSelf>
+				<canTargetAnimals>false</canTargetAnimals>
+				<canTargetBuildings>false</canTargetBuildings>
+			</targetParams>
+			<requireLineOfSight>true</requireLineOfSight>
+		</verbProperties>
+
+		<!-- 咏唱文本 -->
+		<incantationLines>
+			<li>吾名为黄金</li>
+			<li>乃立下不朽誓言之女神助手</li>
+			<li>三度受烈焰燃烧</li>
+			<li>肉体遭贯穿直至永远</li>
+			<li>身处炎枪炼狱</li>
+			<li>光辉依旧降生</li>
+			<li>消灭死亡</li>
+			<li>祝福，祝福，祝福</li>
+			<li>吾身为黄金</li>
+			<li>以复苏之光将无尽斗争招至此处</li>
+			<li>「重生女神之礼赞」</li>
+		</incantationLines>
+		<lineInterval>2.2</lineInterval>
 	</FamiliaMyth.Abilities.SpellDef>
 
 </Defs>
