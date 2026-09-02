@@ -294,10 +294,25 @@ namespace FamiliaMyth.Abilities
             pharna.spells.Add(this);
         }
 
+        private static readonly Dictionary<SpellType, StatDef> SpellPowerStatDefs = new();
+
+        private static StatDef GetSpellPowerStat(SpellType type)
+        {
+            if (type == SpellType.None || type == SpellType.Special)
+                return SpellPowerDef;
+
+            if (!SpellPowerStatDefs.TryGetValue(type, out var stat))
+            {
+                stat = DefDatabase<StatDef>.GetNamed("SpellPower_" + type.ToString());
+                SpellPowerStatDefs[type] = stat;
+            }
+            return stat;
+        }
+
         public virtual float GetCurrentSpellPower()
         {
             if (pawn == null) return 1f;
-            return pawn.GetStatValue(SpellPowerDef);
+            return pawn.GetStatValue(GetSpellPowerStat(Def.spellType));
         }
 
         public override IEnumerable<Command> GetGizmos()
@@ -356,6 +371,7 @@ namespace FamiliaMyth.Abilities
 
     public interface ISpellPowerModifier
     {
+        bool ShouldApplySpellPower(SpellType type) => true;
         void ApplySpellPowerModifier(ref float power);
     }
 }

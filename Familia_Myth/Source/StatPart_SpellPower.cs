@@ -9,12 +9,14 @@ namespace FamiliaMyth.Abilities
     {
         private const float ManaFactor = 0.001f;
 
+        public SpellType type = SpellType.None;
+
         public override void TransformValue(StatRequest req, ref float val)
         {
             try { Transform(req, ref val); }
             catch { }
 
-            static void Transform(StatRequest req, ref float val)
+            void Transform(StatRequest req, ref float val)
             {
                 if (req.Thing is not Pawn pawn) return;
                 var pharna = pawn.GetPharna();
@@ -26,23 +28,23 @@ namespace FamiliaMyth.Abilities
             }
         }
 
-        private static void ApplyModifiers(Hediff_Pharna pharna, ref float power)
+        private void ApplyModifiers(Hediff_Pharna pharna, ref float power)
         {
             if (pharna.skills != null)
                 foreach (var s in pharna.skills)
-                    if (s is ISpellPowerModifier m) 
+                    if (s is ISpellPowerModifier m && m.ShouldApplySpellPower(type)) 
                         m.ApplySpellPowerModifier(ref power);
 
             if (pharna.developableAbilities != null)
                 foreach (var a in pharna.developableAbilities)
-                    if (a is ISpellPowerModifier m) 
+                    if (a is ISpellPowerModifier m && m.ShouldApplySpellPower(type)) 
                         m.ApplySpellPowerModifier(ref power);
 
             if (pharna.pawn?.health?.hediffSet?.hediffs != null)
                 foreach (var h in pharna.pawn.health.hediffSet.hediffs)
                     if (h is HediffWithComps hc)
                         foreach(var c in hc.comps)
-                            if (c is ISpellPowerModifier m)
+                            if (c is ISpellPowerModifier m && m.ShouldApplySpellPower(type))
                                 m.ApplySpellPowerModifier(ref power);
         }
 
@@ -51,7 +53,7 @@ namespace FamiliaMyth.Abilities
             try { return Explain(req); }
             catch { return ""; }
 
-            static string Explain(StatRequest req)
+            string Explain(StatRequest req)
             {
                 if (req.Thing is not Pawn pawn) return "";
                 var pharna = pawn.GetPharna();
@@ -74,26 +76,26 @@ namespace FamiliaMyth.Abilities
             }
         }
 
-        private static IEnumerable<string> GetModifierExplanationLines(Hediff_Pharna pharna)
+        private IEnumerable<string> GetModifierExplanationLines(Hediff_Pharna pharna)
         {
             float power = 1f;
             var sources = new List<(string label, ISpellPowerModifier mod)>();
 
             if (pharna.skills != null)
                 foreach (var s in pharna.skills)
-                    if (s is ISpellPowerModifier m) 
+                    if (s is ISpellPowerModifier m && m.ShouldApplySpellPower(type)) 
                         sources.Add((s.Label, m));
 
             if (pharna.developableAbilities != null)
                 foreach (var a in pharna.developableAbilities)
-                    if (a is ISpellPowerModifier m) 
+                    if (a is ISpellPowerModifier m && m.ShouldApplySpellPower(type)) 
                         sources.Add((a.Label, m));
 
             if (pharna.pawn?.health?.hediffSet?.hediffs != null)
                 foreach (var h in pharna.pawn.health.hediffSet.hediffs)
                     if (h is HediffWithComps hc)
                         foreach (var c in hc.comps)
-                            if (c is ISpellPowerModifier m)
+                            if (c is ISpellPowerModifier m && m.ShouldApplySpellPower(type))
                                 sources.Add((h.LabelBase, m));
 
             foreach (var (label, mod) in sources)

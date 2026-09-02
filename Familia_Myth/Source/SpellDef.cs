@@ -73,6 +73,7 @@ namespace FamiliaMyth.Abilities
 
     public enum SpellType
     {
+        None,       //无类型，仅用于魔力输出的计算
         Attack,     //攻击魔法
         Heal,       //治疗魔法
         Defense,    //防御魔法

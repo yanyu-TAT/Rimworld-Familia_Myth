@@ -35,4 +35,15 @@
     <traitDefName>Trait_DevelopableAbility_EfficientCirculation</traitDefName>
   </FamiliaMyth.Abilities.DevelopableAbilityDef>
 
+  <!-- 治愈发展能力：提升治疗与手术相关能力 -->
+  <FamiliaMyth.Abilities.DevelopableAbilityDef>
+    <defName>DevelopableAbility_Healing</defName>
+    <label>治愈</label>
+    <description>提升治疗品质、医疗/手术速度以及手术成功率的发展能力。通过治疗伤员、进行手术提升熟练度。</description>
+    <abilityClass>FamiliaMyth.Abilities.DevelopableAbility_Healing</abilityClass>
+    <maxProficiency>999</maxProficiency>
+    <rarity>Common</rarity>
+    <traitDefName>Trait_DevelopableAbility_Healing</traitDefName>
+  </FamiliaMyth.Abilities.DevelopableAbilityDef>
+
 </Defs>

@@ -145,7 +145,7 @@
   <StatDef>
     <defName>SpellPower</defName>
     <label>魔力输出</label>
-    <description>该角色输出魔力的效率，由魔力值和技能/发展能力共同决定，会影响部分魔法的效果。</description>
+    <description>该角色输出魔力的功率，影响释放魔法时的部分效果</description>
     <category>Pharna</category>
     <toStringStyle>PercentZero</toStringStyle>
     <defaultBaseValue>1</defaultBaseValue>
@@ -160,6 +160,190 @@
     <displayPriorityInCategory>80</displayPriorityInCategory>
     <parts>
       <li Class="FamiliaMyth.Abilities.StatPart_SpellPower" />
+    </parts>
+  </StatDef>
+
+  <StatDef>
+    <defName>SpellPower_Attack</defName>
+    <label>魔力输出·攻击</label>
+    <description>释放攻击魔法时的魔力输出。</description>
+    <category>Pharna</category>
+    <toStringStyle>PercentZero</toStringStyle>
+    <defaultBaseValue>1</defaultBaseValue>
+    <hideAtValue>1</hideAtValue>
+    <minValue>0.01</minValue>
+    <showOnPawns>true</showOnPawns>
+    <showOnHumanlikes>true</showOnHumanlikes>
+    <showIfUndefined>true</showIfUndefined>
+    <showIfHediffsPresent>
+      <li>Hediff_Pharna</li>
+    </showIfHediffsPresent>
+    <displayPriorityInCategory>79</displayPriorityInCategory>
+    <parts>
+      <li Class="FamiliaMyth.Abilities.StatPart_SpellPower">
+        <type>Attack</type>
+      </li>
+    </parts>
+  </StatDef>
+
+  <StatDef>
+    <defName>SpellPower_Heal</defName>
+    <label>魔力输出·治疗</label>
+    <description>释放治疗魔法时的魔力输出。</description>
+    <category>Pharna</category>
+    <toStringStyle>PercentZero</toStringStyle>
+    <defaultBaseValue>1</defaultBaseValue>
+    <hideAtValue>1</hideAtValue>
+    <minValue>0.01</minValue>
+    <showOnPawns>true</showOnPawns>
+    <showOnHumanlikes>true</showOnHumanlikes>
+    <showIfUndefined>true</showIfUndefined>
+    <showIfHediffsPresent>
+      <li>Hediff_Pharna</li>
+    </showIfHediffsPresent>
+    <displayPriorityInCategory>78</displayPriorityInCategory>
+    <parts>
+      <li Class="FamiliaMyth.Abilities.StatPart_SpellPower">
+        <type>Heal</type>
+      </li>
+    </parts>
+  </StatDef>
+
+  <StatDef>
+    <defName>SpellPower_Defense</defName>
+    <label>防御魔力输出</label>
+    <description>释放防御魔法时使用的魔力输出。</description>
+    <category>Pharna</category>
+    <toStringStyle>PercentZero</toStringStyle>
+    <defaultBaseValue>1</defaultBaseValue>
+    <hideAtValue>1</hideAtValue>
+    <minValue>0.01</minValue>
+    <showOnPawns>true</showOnPawns>
+    <showOnHumanlikes>true</showOnHumanlikes>
+    <showIfUndefined>true</showIfUndefined>
+    <showIfHediffsPresent>
+      <li>Hediff_Pharna</li>
+    </showIfHediffsPresent>
+    <displayPriorityInCategory>77</displayPriorityInCategory>
+    <parts>
+      <li Class="FamiliaMyth.Abilities.StatPart_SpellPower">
+        <type>Defense</type>
+      </li>
+    </parts>
+  </StatDef>
+
+  <StatDef>
+    <defName>SpellPower_Buff</defName>
+    <label>魔力输出·增益</label>
+    <description>释放增益魔法时的魔力输出。</description>
+    <category>Pharna</category>
+    <toStringStyle>PercentZero</toStringStyle>
+    <defaultBaseValue>1</defaultBaseValue>
+    <hideAtValue>1</hideAtValue>
+    <minValue>0.01</minValue>
+    <showOnPawns>true</showOnPawns>
+    <showOnHumanlikes>true</showOnHumanlikes>
+    <showIfUndefined>true</showIfUndefined>
+    <showIfHediffsPresent>
+      <li>Hediff_Pharna</li>
+    </showIfHediffsPresent>
+    <displayPriorityInCategory>76</displayPriorityInCategory>
+    <parts>
+      <li Class="FamiliaMyth.Abilities.StatPart_SpellPower">
+        <type>Buff</type>
+      </li>
+    </parts>
+  </StatDef>
+
+  <StatDef>
+    <defName>SpellPower_Debuff</defName>
+    <label>减益魔力输出</label>
+    <description>释放减益魔法时使用的魔力输出。</description>
+    <category>Pharna</category>
+    <toStringStyle>PercentZero</toStringStyle>
+    <defaultBaseValue>1</defaultBaseValue>
+    <hideAtValue>1</hideAtValue>
+    <minValue>0.01</minValue>
+    <showOnPawns>true</showOnPawns>
+    <showOnHumanlikes>true</showOnHumanlikes>
+    <showIfUndefined>true</showIfUndefined>
+    <showIfHediffsPresent>
+      <li>Hediff_Pharna</li>
+    </showIfHediffsPresent>
+    <displayPriorityInCategory>75</displayPriorityInCategory>
+    <parts>
+      <li Class="FamiliaMyth.Abilities.StatPart_SpellPower">
+        <type>Debuff</type>
+      </li>
+    </parts>
+  </StatDef>
+
+  <StatDef>
+    <defName>SpellPower_Enchant</defName>
+    <label>魔力输出·赋予</label>
+    <description>释放赋予魔法时的魔力输出。</description>
+    <category>Pharna</category>
+    <toStringStyle>PercentZero</toStringStyle>
+    <defaultBaseValue>1</defaultBaseValue>
+    <hideAtValue>1</hideAtValue>
+    <minValue>0.01</minValue>
+    <showOnPawns>true</showOnPawns>
+    <showOnHumanlikes>true</showOnHumanlikes>
+    <showIfUndefined>true</showIfUndefined>
+    <showIfHediffsPresent>
+      <li>Hediff_Pharna</li>
+    </showIfHediffsPresent>
+    <displayPriorityInCategory>74</displayPriorityInCategory>
+    <parts>
+      <li Class="FamiliaMyth.Abilities.StatPart_SpellPower">
+        <type>Enchant</type>
+      </li>
+    </parts>
+  </StatDef>
+
+  <StatDef>
+    <defName>SpellPower_Field</defName>
+    <label>领域魔力输出</label>
+    <description>释放领域魔法时使用的魔力输出。</description>
+    <category>Pharna</category>
+    <toStringStyle>PercentZero</toStringStyle>
+    <defaultBaseValue>1</defaultBaseValue>
+    <hideAtValue>1</hideAtValue>
+    <minValue>0.01</minValue>
+    <showOnPawns>true</showOnPawns>
+    <showOnHumanlikes>true</showOnHumanlikes>
+    <showIfUndefined>true</showIfUndefined>
+    <showIfHediffsPresent>
+      <li>Hediff_Pharna</li>
+    </showIfHediffsPresent>
+    <displayPriorityInCategory>73</displayPriorityInCategory>
+    <parts>
+      <li Class="FamiliaMyth.Abilities.StatPart_SpellPower">
+        <type>Field</type>
+      </li>
+    </parts>
+  </StatDef>
+
+  <StatDef>
+    <defName>SpellPower_Summon</defName>
+    <label>魔力输出·召唤</label>
+    <description>释放召唤魔法时的魔力输出。</description>
+    <category>Pharna</category>
+    <toStringStyle>PercentZero</toStringStyle>
+    <defaultBaseValue>1</defaultBaseValue>
+    <hideAtValue>1</hideAtValue>
+    <minValue>0.01</minValue>
+    <showOnPawns>true</showOnPawns>
+    <showOnHumanlikes>true</showOnHumanlikes>
+    <showIfUndefined>true</showIfUndefined>
+    <showIfHediffsPresent>
+      <li>Hediff_Pharna</li>
+    </showIfHediffsPresent>
+    <displayPriorityInCategory>72</displayPriorityInCategory>
+    <parts>
+      <li Class="FamiliaMyth.Abilities.StatPart_SpellPower">
+        <type>Summon</type>
+      </li>
     </parts>
   </StatDef>
 

@@ -5,4 +5,21 @@
 	<SpellPower.label>Spell Power</SpellPower.label>
 	<SpellPower.description>The efficiency of this person's magic output, determined by their Magic status and active skills/abilities. Affects the power of certain spells.</SpellPower.description>
 
+	<SpellPower_Attack.label>Spell Power - Attack</SpellPower_Attack.label>
+	<SpellPower_Attack.description>The magic output used when casting attack spells.</SpellPower_Attack.description>
+	<SpellPower_Heal.label>Spell Power - Heal</SpellPower_Heal.label>
+	<SpellPower_Heal.description>The magic output used when casting healing spells.</SpellPower_Heal.description>
+	<SpellPower_Defense.label>Spell Power - Defense</SpellPower_Defense.label>
+	<SpellPower_Defense.description>The magic output used when casting defense spells.</SpellPower_Defense.description>
+	<SpellPower_Buff.label>Spell Power - Buff</SpellPower_Buff.label>
+	<SpellPower_Buff.description>The magic output used when casting buff spells.</SpellPower_Buff.description>
+	<SpellPower_Debuff.label>Spell Power - Debuff</SpellPower_Debuff.label>
+	<SpellPower_Debuff.description>The magic output used when casting debuff spells.</SpellPower_Debuff.description>
+	<SpellPower_Enchant.label>Spell Power - Enchant</SpellPower_Enchant.label>
+	<SpellPower_Enchant.description>The magic output used when casting enchant spells.</SpellPower_Enchant.description>
+	<SpellPower_Field.label>Spell Power - Field</SpellPower_Field.label>
+	<SpellPower_Field.description>The magic output used when casting field spells.</SpellPower_Field.description>
+	<SpellPower_Summon.label>Spell Power - Summon</SpellPower_Summon.label>
+	<SpellPower_Summon.description>The magic output used when casting summon spells.</SpellPower_Summon.description>
+
 </LanguageData>

@@ -639,4 +639,82 @@
         </nomatch>
     </Operation>
 
+    <!-- ==================== 治愈 (Healing) ====================== -->
+
+    <!-- 治愈：医疗品质（MedicalTendQuality） -->
+    <Operation Class="PatchOperationConditional">
+        <xpath>Defs/StatDef[defName="MedicalTendQuality"]/parts</xpath>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="MedicalTendQuality"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="MedicalTendQuality"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
+                </parts>
+            </value>
+        </nomatch>
+    </Operation>
+
+    <!-- 治愈：医疗速度（MedicalTendSpeed） -->
+    <Operation Class="PatchOperationConditional">
+        <xpath>Defs/StatDef[defName="MedicalTendSpeed"]/parts</xpath>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="MedicalTendSpeed"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="MedicalTendSpeed"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
+                </parts>
+            </value>
+        </nomatch>
+    </Operation>
+
+    <!-- 治愈：手术速度（MedicalOperationSpeed） -->
+    <Operation Class="PatchOperationConditional">
+        <xpath>Defs/StatDef[defName="MedicalOperationSpeed"]/parts</xpath>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="MedicalOperationSpeed"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="MedicalOperationSpeed"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
+                </parts>
+            </value>
+        </nomatch>
+    </Operation>
+
+    <!-- 治愈：手术成功率（MedicalSurgerySuccessChance） -->
+    <Operation Class="PatchOperationConditional">
+        <xpath>Defs/StatDef[defName="MedicalSurgerySuccessChance"]/parts</xpath>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="MedicalSurgerySuccessChance"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="MedicalSurgerySuccessChance"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
+                </parts>
+            </value>
+        </nomatch>
+    </Operation>
+
 </Patch>

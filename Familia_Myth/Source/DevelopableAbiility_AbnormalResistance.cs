@@ -34,11 +34,10 @@ namespace FamiliaMyth.Abilities
 
         public override string GetExplanation(StatDef stat)
         {
-
             if (pharna == null || stat == null)
                 return "";
             string label = "FamiliaMyth.DevelopableAbilityAbnormalResistanceLabel".Translate();
-            string str = "Lv." + pharna.level.ToString() + " " + label + Rank + proficiency.ToString() + ": ";
+            string str = "Lv." + pharna.level.ToString() + " " + label + Rank + ": ";
             if (stat == StatDefOf.ImmunityGainSpeed)
             {
                 str += "+" + (proficiency * 0.005f).ToStringPercent();

@@ -36,7 +36,7 @@ namespace FamiliaMyth.Abilities
             if (pharna == null || stat == null) 
                 return "";
             string label = "FamiliaMyth.DevelopableAbilityMagicLabel".Translate();
-            string str = "Lv." + pharna.level.ToString()+ " " + label + Rank + proficiency.ToString() + ": ";
+            string str = "Lv." + pharna.level.ToString()+ " " + label + Rank + ": ";
             if (stat.defName == "PsychicEntropyRecoveryRate"){
                 str += "+" + (proficiency * 0.001f).ToString("F3") + "/s";
                 return str;

@@ -212,4 +212,74 @@
     </degreeDatas>
   </TraitDef>
 
+  <!-- 治愈发展能力特性 -->
+  <TraitDef>
+    <defName>Trait_DevelopableAbility_Healing</defName>
+    <label>治愈</label>
+    <description>由恩惠赋予的治愈发展能力，提升治疗品质、医疗/手术速度与手术成功率。</description>
+    <commonality>0</commonality>
+    <degreeDatas>
+      <li>
+        <label>治愈I</label>
+        <degree>0</degree>
+        <description>[PAWN_nameDef]拥有基础治愈能力。</description>
+      </li>
+      <li>
+        <label>治愈H</label>
+        <degree>1</degree>
+        <description>[PAWN_nameDef]的治愈能力有所提升。</description>
+      </li>
+      <li>
+        <label>治愈G</label>
+        <degree>2</degree>
+        <description>[PAWN_nameDef]的治愈能力稳步提升。</description>
+      </li>
+      <li>
+        <label>治愈F</label>
+        <degree>3</degree>
+        <description>[PAWN_nameDef]的治愈能力显著提升。</description>
+      </li>
+      <li>
+        <label>治愈E</label>
+        <degree>4</degree>
+        <description>[PAWN_nameDef]的治愈能力达到进阶水平。</description>
+      </li>
+      <li>
+        <label>治愈D</label>
+        <degree>5</degree>
+        <description>[PAWN_nameDef]的治愈能力达到精进水平。</description>
+      </li>
+      <li>
+        <label>治愈C</label>
+        <degree>6</degree>
+        <description>[PAWN_nameDef]的治愈能力达到高阶水平。</description>
+      </li>
+      <li>
+        <label>治愈B</label>
+        <degree>7</degree>
+        <description>[PAWN_nameDef]的治愈能力达到卓越水平。</description>
+      </li>
+      <li>
+        <label>治愈A</label>
+        <degree>8</degree>
+        <description>[PAWN_nameDef]的治愈能力达到顶尖水平。</description>
+      </li>
+      <li>
+        <label>治愈S</label>
+        <degree>9</degree>
+        <description>[PAWN_nameDef]的治愈能力超凡脱俗。</description>
+      </li>
+      <li>
+        <label>治愈SS</label>
+        <degree>10</degree>
+        <description>[PAWN_nameDef]的治愈能力达到传说级别。</description>
+      </li>
+      <li>
+        <label>治愈SSS</label>
+        <degree>11</degree>
+        <description>[PAWN_nameDef]的治愈能力已臻化境。</description>
+      </li>
+    </degreeDatas>
+  </TraitDef>
+
 </Defs>

@@ -2,13 +2,14 @@ using HarmonyLib;
 using RimWorld;
 using FamiliaMyth.Pharna;
 using Verse;
+using FamiliaMyth.Abilities;
 
 namespace FamiliaMyth.Patch
 {
     [HarmonyPatch(typeof(Pawn_SkillTracker), nameof(Pawn_SkillTracker.Learn))]
     public static class Patch_Pawn_SkillTracker
     {
-        public static void Postfix(Pawn ___pawn, SkillDef sDef, float xp)
+        public static void Postfix(Pawn ___pawn, RimWorld.SkillDef sDef, float xp)
         {
             if (sDef == null) return;
 
@@ -46,6 +47,9 @@ namespace FamiliaMyth.Patch
             //普通制作工作0.3点/秒
             if (sDef == SkillDefOf.Crafting)
                 pharna.GainStatus(PharnaStatusType.Dexterity, xp / 20f);
+
+            if (sDef == SkillDefOf.Medicine)
+                pharna.developableAbilities.FirstOrDefault(d => d is DevelopableAbility_Healing)?.GainProficiency(xp / 200f);
 
             return;
         }
