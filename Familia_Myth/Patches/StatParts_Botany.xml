@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+  <!-- 植生学：播种/收获速度 -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/StatDef[defName="PlantWorkSpeed"]/parts</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/StatDef[defName="PlantWorkSpeed"]/parts</xpath>
+      <value><li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" /></value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>Defs/StatDef[defName="PlantWorkSpeed"]</xpath>
+      <value><parts><li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" /></parts></value>
+    </nomatch>
+  </Operation>
+
+  <!-- 植生学：收获效率 -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/StatDef[defName="PlantHarvestYield"]/parts</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/StatDef[defName="PlantHarvestYield"]/parts</xpath>
+      <value><li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" /></value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>Defs/StatDef[defName="PlantHarvestYield"]</xpath>
+      <value><parts><li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" /></parts></value>
+    </nomatch>
+  </Operation>
+
+  <!-- 植生学：野外采集（商队觅食营养量） -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/StatDef[defName="ForagedNutritionPerDay"]/parts</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/StatDef[defName="ForagedNutritionPerDay"]/parts</xpath>
+      <value><li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" /></value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>Defs/StatDef[defName="ForagedNutritionPerDay"]</xpath>
+      <value><parts><li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" /></parts></value>
+    </nomatch>
+  </Operation>
+</Patch>

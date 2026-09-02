@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+  <!-- 矿物学：采矿速度 -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/StatDef[defName="MiningSpeed"]/parts</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/StatDef[defName="MiningSpeed"]/parts</xpath>
+      <value><li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" /></value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>Defs/StatDef[defName="MiningSpeed"]</xpath>
+      <value><parts><li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" /></parts></value>
+    </nomatch>
+  </Operation>
+
+  <!-- 矿物学：深钻井操作速度 -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/StatDef[defName="DeepDrillingSpeed"]/parts</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/StatDef[defName="DeepDrillingSpeed"]/parts</xpath>
+      <value><li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" /></value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>Defs/StatDef[defName="DeepDrillingSpeed"]</xpath>
+      <value><parts><li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" /></parts></value>
+    </nomatch>
+  </Operation>
+
+  <!-- 矿物学：采矿效率 -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/StatDef[defName="MiningYield"]/parts</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/StatDef[defName="MiningYield"]/parts</xpath>
+      <value><li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" /></value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>Defs/StatDef[defName="MiningYield"]</xpath>
+      <value><parts><li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" /></parts></value>
+    </nomatch>
+  </Operation>
+</Patch>

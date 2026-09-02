@@ -49,7 +49,13 @@ namespace FamiliaMyth.Patch
                 pharna.GainStatus(PharnaStatusType.Dexterity, xp / 20f);
 
             if (sDef == SkillDefOf.Medicine)
-                pharna.developableAbilities.FirstOrDefault(d => d is DevelopableAbility_Healing)?.GainProficiency(xp / 200f);
+                pharna.developableAbilities.FirstOrDefault(d => d is DevelopableAbility_Healing)?.GainProficiency(xp * DevelopableAbility_Healing.ProfGainPerXp);
+
+            if (sDef == SkillDefOf.Plants)
+                pharna.developableAbilities.FirstOrDefault(d => d is DevelopableAbility_Botany)?.GainProficiency(xp * DevelopableAbility_Botany.ProfGainPerXp);
+
+            if (sDef == SkillDefOf.Mining)
+                pharna.developableAbilities.FirstOrDefault(d => d is DevelopableAbility_Mineralogy)?.GainProficiency(xp * DevelopableAbility_Mineralogy.ProfGainPerXp);
 
             return;
         }

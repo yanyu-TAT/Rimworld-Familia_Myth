@@ -50,7 +50,7 @@ namespace FamiliaMyth.Patch
 
                 var pharna = ___pawn.GetPharna();
                 var abr = pharna?.developableAbilities?.FirstOrDefault(a => a is DevelopableAbiility_AbnormalResistance) as DevelopableAbiility_AbnormalResistance;
-                abr?.GainProficiency(5f); //每次痊愈+5
+                abr?.GainProficiency(DevelopableAbiility_AbnormalResistance.ProfGainPerCure); //每次痊愈
             }
         }
 
@@ -74,7 +74,7 @@ namespace FamiliaMyth.Patch
                     is not DevelopableAbiility_AbnormalResistance abr) return;
 
                 float dissipated = Mathf.Abs(perDay) / 300f;
-                abr.GainProficiency(dissipated * 0.5f); // 每点消散 +0.5
+                abr.GainProficiency(dissipated * DevelopableAbiility_AbnormalResistance.ProfGainPerDissipated); // 每点消散
             }
         }
     }

@@ -20,7 +20,7 @@ namespace FamiliaMyth.Patch
             if (pharna.developableAbilities.FirstOrDefault(d => d is DevelopableAbility_EfficientCirculation)
                 is not DevelopableAbility_EfficientCirculation ability) return;
             //每点摄入的营养值+0.05
-            ability.GainProficiency(__result * 0.05f);
+            ability.GainProficiency(__result * DevelopableAbility_EfficientCirculation.ProfGainPerNutrition);
             //根据系数恢复休息值
             if (ingester.needs?.rest?.CurLevel != null)
                 ingester.needs.rest.CurLevel += __result * ability.RestFactor;

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <!-- ============================================================ -->
+  <!-- Familia Myth - 海之眷顾稀有渔获池                              -->
+  <!-- 自定义入口（代码以 DefName 引用，见 Patch_LuckOfTheSea.cs）      -->
+  <!-- 该池 ParentName 继承原版基类渔获池 RareFishingCatchesBase      -->
+  <!-- （基类 21 项：人类尸体/人肉人皮/器官/重力板/独特武器/地图/       -->
+  <!--  书/药/真空石/黑曜石/种子/感知催化剂/超织物玻璃钢/零件/         -->
+  <!--  超科技医疗/精制品/通用奖励等）。                                 -->
+  <!-- 如需自定义追加，在下方 <root> 的 <options> 内添加 <li> 条目，    -->
+  <!-- 或由外部补丁 PatchOperationAdd 向本定义追加 <li>。               -->
+  <!-- 追加的 <li> 会以叠加方式并入继承得到的基类选项之上。             -->
+  <!-- ============================================================ -->
+  <ThingSetMakerDef ParentName="RareFishingCatchesBase">
+    <defName>LuckOfTheSeaExtraRareCatches</defName>
+    <root Class="ThingSetMaker_RandomOption">
+      <options>
+      </options>
+    </root>
+  </ThingSetMakerDef>
+</Defs>

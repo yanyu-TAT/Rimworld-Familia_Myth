@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+    <!-- ============================================================ -->
+    <!-- Familia Myth - 海之眷顾 StatPart 注入补丁                      -->
+    <!-- 将 StatPart_DevelopableAbility 注入以下原版 StatDef 的 <parts>: -->
+    <!--   FishingSpeed     钓鱼速度（耗时 = 7500/FishingSpeed）        -->
+    <!--   FishingYield     单次渔获数量（数量∝FishingYield）           -->
+    <!-- 持有海之眷顾发展能力时按熟练度放大对应属性                      -->
+    <!-- ============================================================ -->
+
+    <!-- 钓鱼速度 -->
+    <Operation Class="PatchOperationConditional">
+        <xpath>Defs/StatDef[defName="FishingSpeed"]/parts</xpath>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="FishingSpeed"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="FishingSpeed"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
+                </parts>
+            </value>
+        </nomatch>
+    </Operation>
+
+    <!-- 钓鱼产出数量 -->
+    <Operation Class="PatchOperationConditional">
+        <xpath>Defs/StatDef[defName="FishingYield"]/parts</xpath>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="FishingYield"]/parts</xpath>
+            <value>
+                <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/StatDef[defName="FishingYield"]</xpath>
+            <value>
+                <parts>
+                    <li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" />
+                </parts>
+            </value>
+        </nomatch>
+    </Operation>
+
+</Patch>

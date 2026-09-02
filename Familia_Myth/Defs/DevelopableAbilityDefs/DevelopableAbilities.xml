@@ -46,4 +46,37 @@
     <traitDefName>Trait_DevelopableAbility_Healing</traitDefName>
   </FamiliaMyth.Abilities.DevelopableAbilityDef>
 
+  <!-- 海之眷顾发展能力：提升钓鱼速度与产出数量，并有概率额外钓获稀有物品 -->
+  <FamiliaMyth.Abilities.DevelopableAbilityDef>
+    <defName>DevelopableAbility_LuckOfTheSea</defName>
+    <label>海之眷顾</label>
+    <description>提升钓鱼速度与产出数量，并有概率在钓鱼时额外获得稀有渔获的发展能力。通过钓鱼提升熟练度。</description>
+    <abilityClass>FamiliaMyth.Abilities.DevelopableAbility_LuckOfTheSea</abilityClass>
+    <maxProficiency>999</maxProficiency>
+    <rarity>Uncommon</rarity>
+    <traitDefName>Trait_DevelopableAbility_LuckOfTheSea</traitDefName>
+  </FamiliaMyth.Abilities.DevelopableAbilityDef>
+
+  <!-- 植生学发展能力：提升种植相关能力 -->
+  <FamiliaMyth.Abilities.DevelopableAbilityDef>
+    <defName>DevelopableAbility_Botany</defName>
+    <label>植生学</label>
+    <description>提升播种/收获速度、收获效率以及野外采集效率的发展能力。通过植物类工作提升熟练度。</description>
+    <abilityClass>FamiliaMyth.Abilities.DevelopableAbility_Botany</abilityClass>
+    <maxProficiency>999</maxProficiency>
+    <rarity>Common</rarity>
+    <traitDefName>Trait_DevelopableAbility_Botany</traitDefName>
+  </FamiliaMyth.Abilities.DevelopableAbilityDef>
+
+  <!-- 矿物学发展能力：提升采矿相关能力 -->
+  <FamiliaMyth.Abilities.DevelopableAbilityDef>
+    <defName>DevelopableAbility_Mineralogy</defName>
+    <label>矿物学</label>
+    <description>提升采矿/深钻井操作速度以及采矿效率的发展能力。通过采矿类工作提升熟练度。</description>
+    <abilityClass>FamiliaMyth.Abilities.DevelopableAbility_Mineralogy</abilityClass>
+    <maxProficiency>999</maxProficiency>
+    <rarity>Common</rarity>
+    <traitDefName>Trait_DevelopableAbility_Mineralogy</traitDefName>
+  </FamiliaMyth.Abilities.DevelopableAbilityDef>
+
 </Defs>

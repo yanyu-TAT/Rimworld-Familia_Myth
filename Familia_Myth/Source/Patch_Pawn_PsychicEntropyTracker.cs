@@ -29,7 +29,7 @@ namespace FamiliaMyth.Patch
             //魔导
             var magic = pharna.developableAbilities.Where(p => p.def == MagicDef).First();
             //每点心灵熵0.05点
-            magic?.GainProficiency(amount * 0.05f);
+            magic?.GainProficiency(amount * DevelopableAbility_Magic.ProfGainPerEntropy);
         }
 
 
@@ -43,7 +43,7 @@ namespace FamiliaMyth.Patch
                 var pharna = __instance.Pawn.GetPharna();
                 //魔导
                 var magic = pharna?.developableAbilities.FirstOrDefault(a => a is DevelopableAbility_Magic) as DevelopableAbility_Magic;
-                magic?.GainProficiency(Math.Abs(offset) * 5f); //每1%精神力消耗0.05点
+                magic?.GainProficiency(Math.Abs(offset) * DevelopableAbility_Magic.ProfGainPerPsyfocus);
             }
         }
 

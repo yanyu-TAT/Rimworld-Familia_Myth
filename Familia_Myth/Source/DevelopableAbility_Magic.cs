@@ -14,13 +14,19 @@ namespace FamiliaMyth.Abilities
         public bool autoStore = true;
         public static bool IsAutoStoring;
         private const float StoreThreshold = .5f;
-        public float MaxStoredPsyfocus => 0.5f + proficiency * 0.005f;
+        private const float PsyfocusStoredBase = 0.5f;
+        private const float PsyfocusStoredPerProf = 0.005f;
+        private const float EntropyRecoveryPerProf = 0.0005f;
+        private const float SpellPowerPerProf = 0.0025f;
+        public const float ProfGainPerEntropy = 0.05f;
+        public const float ProfGainPerPsyfocus = 5f;
+        public float MaxStoredPsyfocus => PsyfocusStoredBase + proficiency * PsyfocusStoredPerProf;
 
         public override bool ApplyModifiers(StatDef stat, ref float value)
         {
             if (pharna == null || stat == null) return false;
             if (stat.defName == "PsychicEntropyRecoveryRate"){
-                value += proficiency * 0.0005f;
+                value += proficiency * EntropyRecoveryPerProf;
                 return true;
             }
             return false;
@@ -28,7 +34,7 @@ namespace FamiliaMyth.Abilities
 
         public void ApplySpellPowerModifier(ref float power)
         {
-            power += proficiency * 0.0025f;
+            power += proficiency * SpellPowerPerProf;
         }
 
         public override string GetExplanation(StatDef stat)
@@ -38,7 +44,7 @@ namespace FamiliaMyth.Abilities
             string label = "FamiliaMyth.DevelopableAbilityMagicLabel".Translate();
             string str = "Lv." + pharna.level.ToString()+ " " + label + Rank + ": ";
             if (stat.defName == "PsychicEntropyRecoveryRate"){
-                str += "+" + (proficiency * 0.001f).ToString("F3") + "/s";
+                str += "+" + (proficiency * EntropyRecoveryPerProf).ToString("F3") + "/s";
                 return str;
             }
 
