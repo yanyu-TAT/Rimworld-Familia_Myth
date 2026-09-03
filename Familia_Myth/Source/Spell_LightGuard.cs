@@ -4,7 +4,7 @@ using Verse;
 
 namespace FamiliaMyth.Abilities
 {
-    public class Spell_LightGuard : Spell, ISpellWithRemainingTime
+    public class Spell_LightGuard : Spell, ISpellWithState
     {
         //基础光球数量
         private const int BasicOrbCount = 4;
@@ -57,7 +57,7 @@ namespace FamiliaMyth.Abilities
             {
                 remainingTicks = totalTicks;
                 SpawnOrbs(cnt);
-                ((ISpellWithRemainingTime)this).NotifyStateStart(pawn);
+                ((ISpellWithState)this).NotifyStateStart(pawn);
             }
         }
 
@@ -121,7 +121,7 @@ namespace FamiliaMyth.Abilities
                     orb.FadeOut();
             activeProjectiles.Clear();
 
-            ((ISpellWithRemainingTime)this).NotifyStateEnd(pawn);
+            ((ISpellWithState)this).NotifyStateEnd(pawn);
         }
 
         public override void ExposeData()

@@ -59,8 +59,7 @@ namespace FamiliaMyth.Abilities
             if (ApplyEffect(downed))
             {
                 Messages.Message($"由于被击倒，{downed.Name.ToStringShort} 的技能：余烬 已触发", MessageTypeDefOf.PositiveEvent);
-                //进入冷却
-                SetCooldown();
+                Charge--;
                 return true;
             }
             return false;

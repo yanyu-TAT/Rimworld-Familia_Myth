@@ -5,8 +5,7 @@ namespace FamiliaMyth.Abilities
 {
     public class HediffCompProperties_SkillState : HediffCompProperties
     {
-        public string skillDefName;
-        public string inEffectHediff;
+        public SkillDef skillDef;
 
         public HediffCompProperties_SkillState(){
             compClass = typeof(HediffComp_SkillState);
@@ -17,38 +16,11 @@ namespace FamiliaMyth.Abilities
     {
         public HediffCompProperties_SkillState Props => (HediffCompProperties_SkillState)props;
 
-        public SkillDef cachedSkillDef;
-        public SkillDef SkillDeff => cachedSkillDef ??= DefDatabase<SkillDef>.GetNamed(Props.skillDefName);
-
-        public HediffDef cachedHediffDef;
-        public HediffDef HediffDef => cachedHediffDef ??= DefDatabase<HediffDef>.GetNamed(Props.inEffectHediff);
-
         private Hediff_Pharna Pharna => Pawn.GetPharna();
 
-        private Skill cachedSkill;
-        private Skill Skill => cachedSkill ??= Pharna?.skills?.FirstOrDefault(t => t.def.defName == SkillDeff.defName);
+        private Skill skill;
+        private Skill Skill => skill ??= Pharna?.skills?.FirstOrDefault(t => t.def == Props.skillDef);
 
-        public enum SkillState
-        {
-            InEffect,
-            Cooldown,
-            Ready,
-            ERROR
-        }
-
-        public SkillState CurrentState
-        {
-            get
-            {
-                if (Pawn == null) return SkillState.ERROR;
-                if (Skill == null) return SkillState.ERROR;
-                if (HediffDef == null) return SkillState.ERROR;
-
-                bool f = Pawn.health?.hediffSet?.GetFirstHediffOfDef(HediffDef) == null;
-                return f ? (Skill.IsCooldown ? SkillState.Cooldown : SkillState.Ready) : SkillState.InEffect;
-            }
-        }
-
-        public string CooldownText => Skill.CooldownText;
+        public string StateText => Skill.StateText;
     }
 }

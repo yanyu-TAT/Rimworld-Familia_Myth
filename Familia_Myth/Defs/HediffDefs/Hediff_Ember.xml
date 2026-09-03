@@ -14,12 +14,13 @@
       </li>
     </stages>
     <comps>
+      <li Class="FamiliaMyth.Abilities.HediffCompProperties_SkillInEffect">
+        <skillDef>Skill_Ember</skillDef>
+        <compClass>FamiliaMyth.Abilities.HediffComp_EmberInEffect</compClass>
+      </li>
       <li Class="HediffCompProperties_Disappears">
         <disappearsAfterTicks>9000</disappearsAfterTicks>
         <showRemainingTime>true</showRemainingTime>
-      </li>
-      <li>
-        <compClass>FamiliaMyth.Abilities.HediffComp_EmberInEffect</compClass>
       </li>
     </comps>
   </HediffDef>
@@ -33,8 +34,7 @@
     <initialSeverity>1.0</initialSeverity>
     <comps>
       <li Class="FamiliaMyth.Abilities.HediffCompProperties_SkillState">
-        <skillDefName>Skill_Ember</skillDefName>
-        <inEffectHediff>EmberInEffect</inEffectHediff>
+        <skillDef>Skill_Ember</skillDef>
       </li>
     </comps>
   </HediffDef>

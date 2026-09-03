@@ -3,7 +3,7 @@ using Verse;
 
 namespace FamiliaMyth.Abilities
 {
-    public class HediffComp_EmberInEffect : HediffComp
+    public class HediffComp_EmberInEffect : HediffComp_SkillInEffect
     {
         private const float InjuryHealPerTick = 20f;
         public override void CompPostTick(ref float severityAdjustment)

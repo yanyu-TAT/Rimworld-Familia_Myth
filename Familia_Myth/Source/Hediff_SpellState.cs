@@ -8,7 +8,7 @@ namespace FamiliaMyth.Abilities
         public static HediffDef HediffDef =>
             hediffDef ??= DefDatabase<HediffDef>.GetNamed("Hediff_SpellState");
 
-        public ISpellWithRemainingTime spell;
+        public ISpellWithState spell;
 
         public override string LabelBase => spell?.EffectName ?? base.LabelBase;
         public override string LabelInBrackets => "剩余" + spell?.RemainingTimeText ?? base.LabelInBrackets;
@@ -20,7 +20,7 @@ namespace FamiliaMyth.Abilities
         }
     }
 
-    public interface ISpellWithRemainingTime : ILoadReferenceable
+    public interface ISpellWithState : ILoadReferenceable
     {
         void NotifyStateStart(Pawn pawn)
         {

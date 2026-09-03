@@ -11,7 +11,7 @@
   <!-- 或由外部补丁 PatchOperationAdd 向本定义追加 <li>。               -->
   <!-- 追加的 <li> 会以叠加方式并入继承得到的基类选项之上。             -->
   <!-- ============================================================ -->
-  <ThingSetMakerDef ParentName="RareFishingCatchesBase">
+  <ThingSetMakerDef ParentName="RareFishingCatchesBase" MayRequire="Ludeon.RimWorld.Odyssey">
     <defName>LuckOfTheSeaExtraRareCatches</defName>
     <root Class="ThingSetMaker_RandomOption">
       <options>

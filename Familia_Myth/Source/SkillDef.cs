@@ -17,6 +17,7 @@ namespace FamiliaMyth.Abilities
         public float warmup = 0f;
         public float duration = 0f;
         public float checkInterval = 60f;
+        public int maxCharge = 1;
 
         public string iconPath;
 

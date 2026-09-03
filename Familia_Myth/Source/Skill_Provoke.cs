@@ -1,4 +1,5 @@
-﻿using Verse;
+﻿using FamiliaMyth.Pharna;
+using Verse;
 
 namespace FamiliaMyth.Abilities
 {
@@ -32,13 +33,6 @@ namespace FamiliaMyth.Abilities
             }
         }
 
-        public override void Tick()
-        {
-            //效果结束前不进入冷却
-            if (Provokers.Contains(Owner))
-                lastCastTick = CurrentTick;
-        }
-
         public override bool ApplyEffect(LocalTargetInfo target)
         {
             if (Owner?.Map == null) return false;
@@ -50,16 +44,24 @@ namespace FamiliaMyth.Abilities
             else
                 return false;
             Owner.health.AddHediff(hediff);
-
-            Provokers.Add(Owner);
             return true;
+        }
+
+        public override void NotifyEnffectStart()
+        {
+            base.NotifyEnffectStart();
+            Provokers.Add(Owner);
+        }
+
+        public override void NotifyEffectEnd()
+        {
+            base.NotifyEffectEnd();
+            Provokers.Remove(Owner);
         }
 
         public static bool IsProvokeActive(Pawn pawn)
         {
-            return pawn != null &&
-                pawn.Spawned && !pawn.DeadOrDowned &&
-                pawn.health?.hediffSet?.GetFirstHediffOfDef(EffectDef) != null;
+            return pawn?.GetPharna()?.skills?.FirstOrDefault(s => s is Skill_Provoke)?.active ?? false;
         }
 
         public override void OnHovering()
@@ -70,8 +72,16 @@ namespace FamiliaMyth.Abilities
         public override void Update()
         {
             if (Owner == null || !Owner.Spawned) return;
-            if (Provokers.Contains(Owner))
+            if (active)
                 GenDraw.DrawRadiusRing(Owner.Position, Radius, new(1f, 0.2f, 0.2f, 0.6f));
+        }
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+
+            if (Scribe.mode == LoadSaveMode.PostLoadInit && active)
+                Provokers.Add(Owner);
         }
     }
 }

@@ -86,6 +86,7 @@ namespace FamiliaMyth.Abilities
 
         public override void Tick()
         {
+            base.Tick();
             if (isSneathing)
                 moteSneathe?.Maintain();
         }

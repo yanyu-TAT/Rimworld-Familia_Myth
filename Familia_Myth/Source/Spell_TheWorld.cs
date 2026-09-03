@@ -4,7 +4,7 @@ using Verse;
 
 namespace FamiliaMyth.Abilities
 {
-    public class Spell_TheWorld : Spell, ISpellWithRemainingTime
+    public class Spell_TheWorld : Spell, ISpellWithState
     {
         private const int BasicDurationTicks = 1800;
         private const float FieldRadius = 50f;
@@ -73,7 +73,7 @@ namespace FamiliaMyth.Abilities
                 clockMote.ratio = 1f;
             }
 
-            ((ISpellWithRemainingTime)this).NotifyStateStart(pawn);
+            ((ISpellWithState)this).NotifyStateStart(pawn);
         }
 
         public override void AbilityTick()
@@ -120,7 +120,7 @@ namespace FamiliaMyth.Abilities
             fieldCenter = null;
             Fields.Remove(pawn);
 
-            ((ISpellWithRemainingTime)this).NotifyStateEnd(pawn);
+            ((ISpellWithState)this).NotifyStateEnd(pawn);
         }
 
         public override void OnGizmoUpdate()

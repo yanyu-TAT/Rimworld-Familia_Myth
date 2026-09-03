@@ -1,9 +1,10 @@
-﻿using RimWorld;
+﻿using FamiliaMyth.Pharna;
+using RimWorld;
 using Verse;
 
 namespace FamiliaMyth.Abilities
 {
-    public class DevelopableAbility_LuckOfTheSea : DevelopableAbility
+    public class DevelopableAbility_LuckOfTheSea : DevelopableAbility, IAscendReward //显式实现接口以覆盖默认实现
     {
         //钓鱼速度倍率
         private const float SpeedPerProf = 0.008f;
@@ -13,6 +14,9 @@ namespace FamiliaMyth.Abilities
         public const float ProfGainPerCatch = 1f;
 
         public float ExtraRareCatchChance => 0.1f + proficiency * 0.0005f;
+
+        //仅Odyssey启用时可注册
+        public bool Available => ModsConfig.OdysseyActive;
 
         public override bool ApplyModifiers(StatDef stat, ref float value)
         {

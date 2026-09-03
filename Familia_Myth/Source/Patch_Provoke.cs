@@ -26,9 +26,6 @@ namespace FamiliaMyth.Abilities
 
         private static Pawn FindProvokerInRange(Pawn attacker)
         {
-            // 惰性清理失效的施放者
-            Skill_Provoke.Provokers.RemoveWhere(p => !Skill_Provoke.IsProvokeActive(p));
-
             var provokers = Skill_Provoke.Provokers
                 .Where(p =>
                 p.Map == attacker.Map && //同一地图

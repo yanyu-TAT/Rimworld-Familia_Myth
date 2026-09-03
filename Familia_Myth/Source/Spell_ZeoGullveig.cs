@@ -4,7 +4,7 @@ using Verse;
 
 namespace FamiliaMyth.Abilities
 {
-    public class Spell_ZeoGullveig : Spell, ISpellWithRemainingTime, ISpellWithTargetRange
+    public class Spell_ZeoGullveig : Spell, ISpellWithState, ISpellWithTargetRange
     {
         private const int ParticleIntervalTicks = 10; // 上浮粒子生成间隔
 
@@ -96,7 +96,7 @@ namespace FamiliaMyth.Abilities
             GenSpawn.Spawn(circle, targetPos, targetMap);
             circle.Maintain();
 
-            ((ISpellWithRemainingTime)this).NotifyStateStart(pawn);
+            ((ISpellWithState)this).NotifyStateStart(pawn);
         }
 
         public override void AbilityTick()
@@ -116,7 +116,7 @@ namespace FamiliaMyth.Abilities
             if (IsActive)
                 circle?.Maintain();
             else
-                ((ISpellWithRemainingTime)this).NotifyStateEnd(pawn);
+                ((ISpellWithState)this).NotifyStateEnd(pawn);
 
             if (Find.TickManager.TicksGame % ParticleIntervalTicks == 0)
                 SpawnParticles();

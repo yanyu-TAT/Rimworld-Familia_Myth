@@ -89,7 +89,7 @@ namespace FamiliaMyth.Abilities
             {
                 //重置
                 resetCount++;
-                lastCastTick = CurrentTick - CooldownTicks;
+                Charge++;
             }
             else
             {

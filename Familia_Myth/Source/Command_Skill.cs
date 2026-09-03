@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using UnityEngine;
 using Verse;
 
@@ -35,6 +36,8 @@ namespace FamiliaMyth.Abilities
             base.GizmoUpdateOnMouseover();
             skill.OnHovering();
         }
+
+        public override string TopRightLabel => skill.TopRightLabel;
 
         public override GizmoResult GizmoOnGUI(Vector2 topLeft, float maxWidth, GizmoRenderParms parms)
         {

@@ -21,7 +21,7 @@ namespace FamiliaMyth.Pharna
 
     public interface IAscendReward
     {
-
+        bool Available => true;
         RewardType RewardType { get; }
         RewardRarity Rarity { get; }
 
@@ -46,9 +46,7 @@ namespace FamiliaMyth.Pharna
     {
         public static List<(Func<IAscendReward> Factory, int Weight)> rewards = new();
 
-        private static int totalWeight = 0;
-
-        //通过Def为魔法注册
+        //通过Def为奖励注册
         static AscendHelper()
         {
             foreach (var def in DefDatabase<SpellDef>.AllDefs)
@@ -82,6 +80,7 @@ namespace FamiliaMyth.Pharna
         public static void RegisterReward(Type type)
         {
             var t = Activator.CreateInstance(type) as IAscendReward;
+            if (!t.Available) return;
             t.RewardInitialize();
             var rarity = t.Rarity;
 
@@ -94,7 +93,6 @@ namespace FamiliaMyth.Pharna
                 _ => 0
             };
             rewards.Add((() => (IAscendReward)Activator.CreateInstance(type), weight));
-            totalWeight += weight;
         }
 
         /// <summary>

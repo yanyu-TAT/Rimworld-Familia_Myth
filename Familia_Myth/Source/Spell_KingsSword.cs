@@ -3,7 +3,7 @@ using Verse;
 
 namespace FamiliaMyth.Abilities
 {
-    public class Spell_KingsSword : Spell, ISpellWithRemainingTime
+    public class Spell_KingsSword : Spell, ISpellWithState
     {
         //基础持续时间
         private const int BasicSwordDuration = 3600;
@@ -93,7 +93,7 @@ namespace FamiliaMyth.Abilities
             Sword.currentState = new HoveringState_Orbit(Sword, OrbitAngularSpeed, OrbitRadius);
             Sword.currentState.SetMaxV(HoveringSpeed);
 
-            ((ISpellWithRemainingTime)this).NotifyStateStart(pawn);
+            ((ISpellWithState)this).NotifyStateStart(pawn);
             //Log.Message("Sword Spawned");
         }
 
@@ -115,7 +115,7 @@ namespace FamiliaMyth.Abilities
                 Sword.FadeOut();
             activeProjectiles.Clear();
 
-            ((ISpellWithRemainingTime)this).NotifyStateEnd(pawn);
+            ((ISpellWithState)this).NotifyStateEnd(pawn);
         }
 
         public override void ExposeData()
