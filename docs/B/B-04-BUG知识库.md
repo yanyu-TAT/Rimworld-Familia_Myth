@@ -69,3 +69,19 @@
 - 是否规范缺失: 是
 - 规范反哺: AGENTS.md「核心开发原则」补充——需跨存读档的运行时状态须 ExposeData 持久化或 Load 后重建；勿放不参与序列化的 static/非 ExposeData 字段。
 - 关联: 次数 1
+
+## BUG-008 | 回旋踢击退目标下次移动时闪回原点
+- 现象: 被击退的目标在飞行结束后，下一次寻路移动时画面瞬间弹回击退起点。
+- 根因: 击退飞行中直接改 `pawn.Position`，但未同步 pather 内部状态（`nextCell`/`cachedMovePercentage` 仍为击退开始时的旧值）；下次 `PatherTick` 时 `PawnTweener.TweenedPosRoot` 用旧 `nextCell` 计算渲染根位置，画面被拉回原点。仅 `StopDead()` 在 kick 时清一次不够，飞行中每格位移后又产生不一致。
+- 修复方案: 每 tick 位移后调用 `pawn.Notify_Teleported(endCurrentJob:false, resetTweenedPos:false)`（内部 `pather.Notify_Teleported_Int()` = StopDead+ResetToCurrentPosition，把 nextCell 同步到当前位置；`resetTweenedPos:false` 保留平滑动画）。飞行期间可用 `pawn.stances.stunner.StunFor(…)` 使 `FullBodyBusy=true`，让 `PatherTick` 短路、彻底禁用寻路。
+- 是否规范缺失: 是
+- 规范反哺: AGENTS.md「资源与性能规范（RimWorld 特有）」新增"手动改变 Pawn/Thing 位置后必须同步 pather"与"原版无位移击退 API，需自写逐 tick 位移并配合 stun 禁用寻路"两条。
+- 关联: 次数 1
+
+## BUG-009 | 技能冷却时间单位填错（误填现实秒）
+- 现象: 回旋踢 3 小时冷却配成 `cooldown=10800`，实际回充远慢于预期。
+- 根因: 把"3 小时"按现实秒换算填进 XML，未核对基类 `CooldownTicks = def.cooldown * 60f`（单位是秒）与游戏内时间换算（1 游戏内小时=2500 ticks）。
+- 修复方案: `cooldown = 3 游戏内小时 / 60 = 7500/60 = 125`。
+- 是否规范缺失: 是
+- 规范反哺: AGENTS.md「资源与性能规范（RimWorld 特有）」新增"游戏内时长换算先确认基类单位（cooldown 单位秒，1 游戏内小时=2500 ticks）"。
+- 关联: 次数 1

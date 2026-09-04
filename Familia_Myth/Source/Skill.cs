@@ -99,6 +99,7 @@ namespace FamiliaMyth.Abilities
                 return;
             }
 
+            Owner.jobs?.StopAll();
             if (!def.needTarget)
             {
                 if (ApplyEffect(null))

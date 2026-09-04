@@ -98,4 +98,19 @@
     <checkInterval>60</checkInterval>
   </FamiliaMyth.Abilities.SkillDef>
 
+  <FamiliaMyth.Abilities.SkillDef>
+    <defName>Skill_RoundhouseKick</defName>
+    <label>回旋踢</label>
+    <description>选择自身相邻8格内的单个敌人，造成100%徒手伤害并将其击退5格；若击退路径上有阻挡则再造成200%伤害。可存储3次，每次冷却3小时。</description>
+    <skillClass>FamiliaMyth.Abilities.Skill_RoundhouseKick</skillClass>
+    <rarity>Common</rarity>
+    <skillType>Active</skillType>
+    <needTarget>true</needTarget>
+    <cooldown>125</cooldown>
+    <warmup>0</warmup>
+    <duration>0</duration>
+    <checkInterval>60</checkInterval>
+    <maxCharge>3</maxCharge>
+  </FamiliaMyth.Abilities.SkillDef>
+
 </Defs>

@@ -28,8 +28,7 @@ namespace FamiliaMyth.Abilities
                 var canCast = base.CanCast;
                 if (!canCast) return canCast;
 
-                if (Owner.equipment == null || !Owner.equipment.AllEquipmentVerbs.Any(
-                    v => v.verbProps.meleeDamageDef?.armorCategory == DamageArmorCategoryDefOf.Sharp))
+                if (Owner.GetMeleeSharpWeapon() == null)
                     return "未持有剑（锐伤近战武器）";
 
                 return true;
@@ -39,10 +38,7 @@ namespace FamiliaMyth.Abilities
         public override bool ApplyEffect(LocalTargetInfo target)
         {
             if (Owner?.Map == null) return false;
-            var verb = Owner.equipment?.AllEquipmentVerbs?
-                .Where(v => v.verbProps.IsMeleeAttack && v.verbProps.meleeDamageDef?.armorCategory == DamageArmorCategoryDefOf.Sharp)
-                .OrderByDescending(v => v.verbProps.AdjustedMeleeDamageAmount(v, Owner))
-                .FirstOrDefault();
+            var verb = Owner.GetMeleeSharpWeapon();
             if (verb == null)
             {
                 Log.Error($"[FamiliaMyth] Pawn {Owner.Name.ToStringShort} Can't Use Sword Rain With No Sword");

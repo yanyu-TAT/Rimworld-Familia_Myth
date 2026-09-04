@@ -45,8 +45,7 @@ namespace FamiliaMyth.Abilities
                 var canCast = base.CanCast;
                 if (!canCast) return canCast;
 
-                if (Owner.equipment == null || !Owner.equipment.AllEquipmentVerbs.Any(
-                    v => v.verbProps.meleeDamageDef?.armorCategory == DamageArmorCategoryDefOf.Sharp))
+                if (Owner.GetMeleeSharpWeapon() == null)
                 {
                     return "未持有太刀（锐伤近战武器）";
                 }
@@ -105,7 +104,7 @@ namespace FamiliaMyth.Abilities
 
             Owner.Rotation = Rot4.FromAngleFlat((dest - start).ToVector3().AngleFlat());
             Owner.Position = dest;
-            Owner.Notify_Teleported();
+            Owner.Notify_Teleported(true, false);
 
             //剑光特效
             MakeMoteSlash(start, dest, 1f, new Color(0.6f, 0f, 0f, 1f));
@@ -128,10 +127,7 @@ namespace FamiliaMyth.Abilities
 
         private void DealDamage(IntVec3 start, IntVec3 end)
         {
-            var verb = Owner.equipment?.AllEquipmentVerbs?
-                .Where(v => v.verbProps.IsMeleeAttack && v.verbProps.meleeDamageDef?.armorCategory == DamageArmorCategoryDefOf.Sharp)
-                .OrderByDescending(v => v.verbProps.AdjustedMeleeDamageAmount(v, Owner))
-                .FirstOrDefault();
+            var verb = Owner.GetMeleeSharpWeapon();
             if (verb == null) return;
 
             float weaponDmg = verb.verbProps.AdjustedMeleeDamageAmount(verb, Owner);

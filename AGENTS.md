@@ -206,7 +206,7 @@
 | `Projectile_*` + `MagicMissileStates.cs`    | 魔法弹与运动状态机               |
 | `Ritual*`                                   | 仪式（给予/升华恩惠）及结果处理        |
 | `GuildQuest*` / `QuestNode*` / `QuestPart*` | 公会任务生成与奖励               |
-| `GameComponent_*.cs`                        | 存档级追踪（眷族评级、使者）          |
+| `GameComponent_*.cs`                        | 存档级追踪（眷族评级、使者、回旋踢击退动画） |
 | `JobDriver_*`                               | 工作驱动（对话使者等）             |
 | `MentalState_*` / `Hediff_*` / `Verb_*`     | 精神状态、词缀、咏唱 verb         |
 | `UI_*.cs`                                   | 界面（眷族页、升级奖励弹窗、雷达图）      |
