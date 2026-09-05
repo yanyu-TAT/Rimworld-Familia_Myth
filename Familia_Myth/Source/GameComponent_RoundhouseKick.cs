@@ -90,7 +90,6 @@ namespace FamiliaMyth.Abilities
             //碰到障碍物
             if (!next.Walkable(pawn.Map) || next.GetThingList(pawn.Map).Any(t => t != pawn && t.def.passability == Traversability.Impassable))
             {
-                pawn.stances?.stagger?.StaggerFor(30);
                 var verb = knocked.verb;
                 var dinfo = new DamageInfo(
                     verb.GetDamageDef(),

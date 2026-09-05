@@ -30,6 +30,7 @@
 
 | 操作     | 命令                                                               |
 | ------ | ---------------------------------------------------------------- |
+| 并行调用工具 | run_code                                                      |
 | 编译     | `dotnet build Familia_Myth/Familia_Myth.csproj`（输出直写 Assemblies） |
 | 清理构建产物 | 运行 `11.bat`（清除 Assemblies 中非本模组 DLL 与 obj/）                      |
 | 反编译原版  | `ilspycmd <Assembly-CSharp.dll> -o decompiledFiles/`             |
@@ -206,7 +207,7 @@
 | `Projectile_*` + `MagicMissileStates.cs`    | 魔法弹与运动状态机               |
 | `Ritual*`                                   | 仪式（给予/升华恩惠）及结果处理        |
 | `GuildQuest*` / `QuestNode*` / `QuestPart*` | 公会任务生成与奖励               |
-| `GameComponent_*.cs`                        | 存档级追踪（眷族评级、使者、回旋踢击退动画） |
+| `GameComponent_*.cs`                        | 存档级追踪（眷族评级、使者）+ 位移/击退引擎（LanceCharge/RoundhouseKick） |
 | `JobDriver_*`                               | 工作驱动（对话使者等）             |
 | `MentalState_*` / `Hediff_*` / `Verb_*`     | 精神状态、词缀、咏唱 verb         |
 | `UI_*.cs`                                   | 界面（眷族页、升级奖励弹窗、雷达图）      |
@@ -222,6 +223,7 @@
 - **维护范围**：文档维护只涉及 `docs/` 目录下的文件与根目录 `AGENTS.md`；`CLAUDE.md`、`.cursor/rules/project.mdc` 等规则引用文件以及其他根目录文档均不做主动维护。
 - **不加时间戳**：维护上述文档时，不在文件头部添加或更新"更新: 日期"之类的时间戳。
 - **主设定文档仅用户修改**：`Familia Myth rim.txt` 及其配套文档（`能力值效果.txt`、`能力值增长.txt`、`技能.txt`、`发展能力.txt`、`魔法.txt`、`魔法.xlsx`、`pointPreview.xlsx` 等）为权威设定来源，**仅由用户修改**；Agent 只能读取参考，不得改动或代写。
+- **计划文件统一存放 `plans/`**：用户要求生成的开发计划（如技能/特效/补充 XML 计划）一律放入根目录 `plans/`，不散落在 docs/ 或工具目录。**计划仅为阶段性思路参考，其中的代码/数值/接口可能与最终实际实现存在极大差异，落地一律以 Source/Defs 实际代码与用户确认为准，勿把计划当作已实现内容引用。**
 
 ***
 
@@ -249,4 +251,5 @@
 - **反编译工具**：使用 `ilspycmd` 进行反编译，结果统一输出到 `decompiledFiles/` 目录（命令见「二、常用命令」）。
 - **不改代码文件**：除非被直接要求，不修改代码文件（XML 文件除外）。
 - **中文思考链**：始终使用中文输出思考链（reasoning / chain-of-thought），便于与用户协作审阅。
+- **集中工具调用**：将 Shell/命令等工具调用集中在同一批中调用工具run_code执行，减少往返，以节约 token。
 

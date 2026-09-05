@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <!-- 夹枪冲锋 - 贴身攻击架势残影：MoteAttached 挂施法者，朝向由代码 exactRotation 设为冲锋方向。
+       存活依赖 Skill_LanceCharge.Tick 每 tick Maintain（needsMaintenance=true）；
+       冲锋结束 stunning=false 停维持，经 fadeOutUnmaintained 淡出销毁。 -->
+  <ThingDef ParentName="MoteBase">
+    <defName>Mote_LanceAttack</defName>
+    <thingClass>FamiliaMyth.Abilities.Mote_LanceAttack</thingClass>
+    <altitudeLayer>MoteOverheadLow</altitudeLayer>
+    <mote>
+      <fadeInTime>0.05</fadeInTime>
+      <solidTime>10</solidTime>
+      <fadeOutTime>0.3</fadeOutTime>
+      <needsMaintenance>true</needsMaintenance>
+      <fadeOutUnmaintained>true</fadeOutUnmaintained>
+    </mote>
+    <graphicData>
+      <graphicClass>Graphic_Mote</graphicClass>
+      <texPath>Familia_Myth/Things/Mote/LanceAttack</texPath>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>2</drawSize>
+      <color>(1, 1, 1, 1)</color>
+    </graphicData>
+  </ThingDef>
+</Defs>

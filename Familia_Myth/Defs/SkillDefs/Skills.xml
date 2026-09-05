@@ -111,6 +111,23 @@
     <duration>0</duration>
     <checkInterval>60</checkInterval>
     <maxCharge>3</maxCharge>
+	<iconPath>Familia_Myth/UI/Icons/Skills/RoundhouseKick</iconPath>
+  </FamiliaMyth.Abilities.SkillDef>
+
+  <FamiliaMyth.Abilities.SkillDef>
+    <defName>Skill_LanceCharge</defName>
+    <label>夹枪冲锋</label>
+    <description>持有锐伤近战武器时可释放：向 10 格内的目标点冲刺，对路径附近的敌人造成 150% 伤害并将其击退。</description>
+    <skillClass>FamiliaMyth.Abilities.Skill_LanceCharge</skillClass>
+    <rarity>Uncommon</rarity>
+    <skillType>Active</skillType>
+    <needTarget>true</needTarget>
+    <cooldown>83</cooldown>
+    <warmup>0</warmup>
+    <duration>0</duration>
+    <checkInterval>60</checkInterval>
+    <maxCharge>5</maxCharge>
+	<iconPath>Familia_Myth/UI/Icons/Skills/LanceCharge</iconPath>
   </FamiliaMyth.Abilities.SkillDef>
 
 </Defs>

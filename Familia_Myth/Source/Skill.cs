@@ -21,7 +21,7 @@ namespace FamiliaMyth.Abilities
         public bool IsReady => Charge > 0;
         public bool MaxCharged => Charge >= MaxCharge;
         public bool IsCooldown => cooldownTimer > 0;
-        public float CooldownProgress => Mathf.Clamp01(cooldownTimer / CooldownTicks);
+        public float CooldownProgress => Mathf.Clamp01((float)cooldownTimer / CooldownTicks);
 
         public string TopRightLabel => MaxCharge > 1 ? $"{Charge}/{MaxCharge}" : null;
 

@@ -7,7 +7,7 @@ namespace FamiliaMyth.Abilities
     {
         public const float KnockbackDist = 5f;
         public const float BlockBonus = 2f;
-        public const int KnckbackTicks = 60;
+        public const int KnckbackTicks = 30;
 
         public override TargetingParameters TargetingParms => new()
         {
@@ -30,9 +30,9 @@ namespace FamiliaMyth.Abilities
             if (verb == null) return false;
 
             float dmg = verb.verbProps.AdjustedMeleeDamageAmount(verb, Owner);
-            float amp = verb.verbProps.AdjustedArmorPenetration(verb, Owner);
+            float apt = verb.verbProps.AdjustedArmorPenetration(verb, Owner);
             var dir = (enemy.Position - Owner.Position).ToVector3();
-            var dinfo = new DamageInfo(verb.GetDamageDef(), dmg, amp, (-dir).ToAngleFlat(), Owner);
+            var dinfo = new DamageInfo(verb.GetDamageDef(), dmg, apt, (-dir).ToAngleFlat(), Owner);
             dinfo.SetTool(verb.tool);
             enemy.TakeDamage(dinfo);
 

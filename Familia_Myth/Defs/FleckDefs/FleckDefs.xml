@@ -143,4 +143,19 @@
 		<fadeOutTime>0.5</fadeOutTime>
 	</FleckDef>
 
+	<FleckDef>
+		<defName>FamLanceSpeedLine</defName>
+		<fleckSystemClass>Verse.FleckSystemThrown</fleckSystemClass>
+		<altitudeLayer>MoteOverheadLow</altitudeLayer>
+		<graphicData>
+			<graphicClass>Graphic_Fleck</graphicClass>
+			<texPath>Familia_Myth/Things/Mote/LineTrail</texPath>
+			<shaderType>MoteGlow</shaderType>
+			<color>(1, 1, 1, 1)</color>
+			<drawSize>(1, 0.1)</drawSize>
+		</graphicData>
+		<fadeInTime>0</fadeInTime>
+		<solidTime>0.2</solidTime>
+		<fadeOutTime>0.3</fadeOutTime>
+	</FleckDef>
 </Defs>

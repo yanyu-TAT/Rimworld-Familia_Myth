@@ -4,4 +4,7 @@
 	<Skill_DesperateArmyWin.label>Desperate Army's Victory</Skill_DesperateArmyWin.label>
 	<Skill_DesperateArmyWin.description>When mood is below 50%, gain significant stat bonuses based on how low the mood is.\n\nStrength/Endurance/Agility: +200 × t + 100\nWill: +300 × t + 150\n(t = (50% - mood%) / 50%)</Skill_DesperateArmyWin.description>
 
+	<Skill_LanceCharge.label>Lance Charge</Skill_LanceCharge.label>
+	<Skill_LanceCharge.description>Requires a melee weapon (sharp). Dash toward a target point within 10 tiles, dealing 150% damage to enemies along the path and knocking them back.</Skill_LanceCharge.description>
+
 </LanguageData>
