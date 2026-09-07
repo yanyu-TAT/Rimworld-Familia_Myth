@@ -63,6 +63,7 @@
 ✅ 涉及未知原版 API / DLC 特性时先反编译验证，必要时联网核对当前版本用法
 ✅ 需要跨存读档保持的运行时状态，随所属对象 ExposeData 持久化，或在 Load 后从可持久化数据重建（如嘲讽 Provokers 在 PostLoadInit 重建）
 ✅ AcceptanceReport 语义：返回字符串（含空串）即「不接受/禁用」；表示接受用 return true（bool→WasAccepted）
+✅ 根据文档内容使用 RimWorld / Harmony API
 ❌ 凭旧记忆写 RimWorld / Harmony API（版本差异大，易踩坑）
 ❌ 把需跨存读档保持的运行时状态放进不参与 Scribe 序列化的 static / 非 ExposeData 字段（存读档后丢失）
 ❌ 引入可由现有依赖覆盖的新依赖
@@ -201,8 +202,11 @@
 | `Patch_*.cs`                                | Harmony 补丁（成长、意志、触发类效果） |
 | `Spell*.cs` + `SpellDef.cs`                 | 魔法框架与具体魔法（继承原版 Ability） |
 | `Skill*.cs` + `SkillDef.cs`                 | 技能（主动/被动/触发；charge 充能 + active 效果生命周期） |
-| `Hediff_SkillState` / `HediffComp_SkillState` / `HediffComp_SkillInEffect` | 技能状态指示（skillDef 反查 StateText；effect 生命周期间回调） |
+| `HediffComp_SkillState`（override CompLabelInBracketsExtra）/ `HediffComp_SkillInEffect` | 技能状态指示（Def 用 HediffWithComps，comp 反查 skillDef 的 StateText 展示括号标签；effect 生命周期间回调） |
+| `HediffComp_DisappearsWithCounter`           | 效果按剩余次数结束的计数 comp（归零 CompShouldRemove 移除，配合 SkillInEffect 驱动 active；超电磁炮等按次数强化技能用） |
 | `DevelopableAbility*.cs`                    | 发展能力（熟练度 + StatPart 注入） |
+| `WeaponHelper.cs`（扩展 GetMeleeSharpWeapon/GetUnarmedMeleeVerb/GetRangedEquippedVerb + `RangeUtilities` 直线路径索敌/射线工具） | 武器/路径查询工具（直线沿线地格采样、敌对索敌、带 validator 的射线终点 GetDest；居合/夹枪/超电磁炮共用） |
+| `Hediff_Pharna.cs` 内 `PharnaUtility`（`GetPharna` / `GetActiveSkill<T>`） | 恩惠获取；GetActiveSkill 取 pawn 自身 active 的指定技能实例（区别于嘲讽 Provokers 静态集合语义） |
 | `Mote_*.cs`                                 | 地图特效（咏唱词/魔法阵/光环/斩击等）    |
 | `Projectile_*` + `MagicMissileStates.cs`    | 魔法弹与运动状态机               |
 | `Ritual*`                                   | 仪式（给予/升华恩惠）及结果处理        |

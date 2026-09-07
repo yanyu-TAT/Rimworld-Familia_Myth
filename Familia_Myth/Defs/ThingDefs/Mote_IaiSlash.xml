@@ -3,7 +3,7 @@
 
   <!-- 居合拔刀气刃斩 - 纳刀护盾：附着施法者，居合期间吸收伤害。
        存活依赖 Skill_IaiSpiritSlash.Tick 每tick Maintain（needsMaintenance=true）；
-       3秒后拔刀 isSneathing=false 停止维持，经 fadeOutUnmaintained 淡出销毁。
+       3秒后拔刀 active=false 停止维持，经 fadeOutUnmaintained 淡出销毁。
        solidTime 取 10s，保证 EndOfLife(Lifespan) 不早于固定居合时长(3s) -->
   <ThingDef ParentName="MoteBase">
     <defName>Mote_Sneathe</defName>

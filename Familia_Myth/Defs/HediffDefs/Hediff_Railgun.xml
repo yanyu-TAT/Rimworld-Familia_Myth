@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <HediffDef>
+    <defName>RailgunInEffect</defName>
+    <label>超电磁炮·充能</label>
+    <description>武器已注入电磁能量，接下来的射击将贯穿敌人。</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>false</isBad>
+    <initialSeverity>1</initialSeverity>
+    <comps>
+      <li Class="FamiliaMyth.Abilities.HediffCompProperties_SkillInEffect">
+        <skillDef>Skill_Railgun</skillDef>
+        <compClass>FamiliaMyth.Abilities.HediffComp_SkillInEffect</compClass>
+      </li>
+      <li Class="FamiliaMyth.Abilities.HediffCompProperties_DisappearsWithCounter">
+        <maxCount>5</maxCount>
+      </li>
+    </comps>
+  </HediffDef>
+
+</Defs>

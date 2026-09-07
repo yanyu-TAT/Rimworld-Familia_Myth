@@ -130,4 +130,19 @@
 	<iconPath>Familia_Myth/UI/Icons/Skills/LanceCharge</iconPath>
   </FamiliaMyth.Abilities.SkillDef>
 
+  <FamiliaMyth.Abilities.SkillDef>
+    <defName>Skill_Railgun</defName>
+    <label>超电磁炮</label>
+    <description>持有远程枪械时可释放：向武器注入电磁能量，接下来的5次射击贯穿弹道，对路径上所有敌人造成200%伤害并眩晕2秒，遇墙拦截并对墙造成贯穿伤害。</description>
+    <skillClass>FamiliaMyth.Abilities.Skill_Railgun</skillClass>
+    <rarity>Rare</rarity>
+    <skillType>Active</skillType>
+    <needTarget>false</needTarget>
+    <cooldown>500</cooldown>
+    <warmup>0</warmup>
+    <duration>0</duration>
+    <checkInterval>60</checkInterval>
+    <iconPath>Familia_Myth/UI/Icons/Skills/Railgun</iconPath>
+  </FamiliaMyth.Abilities.SkillDef>
+
 </Defs>

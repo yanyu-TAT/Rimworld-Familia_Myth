@@ -16,7 +16,6 @@ namespace FamiliaMyth.Abilities
 
         private Vector3 dashDir;
 
-        private bool isSneathing = false;
         public Mote_Sneathe moteSneathe;
 
         private static ThingDef moteSneatheDef;
@@ -63,7 +62,7 @@ namespace FamiliaMyth.Abilities
             if (dashDir.magnitude < 1e-5f) return false;
 
             absorbedDamage = 0f;
-            isSneathing = true;
+            active = true;      //纳刀期间视为效果生效中（沿用基类 active）
 
             //击晕（进入纳刀）
             Owner.stances.stunner.StunFor(SneatheTicks, Owner, false, false, true);
@@ -86,20 +85,20 @@ namespace FamiliaMyth.Abilities
         public override void Tick()
         {
             base.Tick();
-            if (isSneathing)
+            if (active)
                 moteSneathe?.Maintain();
         }
 
         private void Dash()
         {
             //结束纳刀
-            isSneathing = false;
+            active = false;
             stunning = false;
 
             if (Owner?.Map == null || !Owner.Spawned || Owner.DeadOrDowned) return;
 
             var start = Owner.Position;
-            var dest = GetDest();
+            var dest = RangeUtilities.GetDest(start.ToVector3(), start.ToVector3() + dashDir * DashDistance, Owner.Map, c => c.WalkableBy(Owner.Map, Owner));
             if (dest == start) return;
 
             Owner.Rotation = Rot4.FromAngleFlat((dest - start).ToVector3().AngleFlat());
@@ -142,61 +141,8 @@ namespace FamiliaMyth.Abilities
                 DamageInfo.SourceCategory.ThingOrUnknown, null, guilty);
             dinfo.SetTool(verb.tool);
 
-            foreach (var enemy in GetEnemiesOnPath(start, end).ToList())
+            foreach (var enemy in RangeUtilities.GetEnemiesAroundStraightWay(start, end, PathDamageRadius, Owner).ToList())
                 enemy.TakeDamage(dinfo);
-        }
-
-        private IEnumerable<Pawn> GetEnemiesOnPath(IntVec3 start, IntVec3 end)
-        {
-            var hit = new HashSet<Pawn>();
-            foreach (var cell in GetHitCells(start, end).ToList())
-            {
-                foreach(var thing in cell.GetThingList(Owner.Map).ToList())
-                {
-                    if (thing is Pawn pawn && pawn != Owner && pawn.Spawned && !pawn.DeadOrDowned &&
-                        (pawn.Faction?.HostileTo(Owner.Faction) ?? false))
-                        hit.Add(pawn);
-                }
-            }
-
-            //Log.Message($"Hit Pawn:{hit.Select(p => p.Name.ToStringShort).ToList()}");
-            return hit;
-        }
-
-        private IEnumerable<IntVec3> GetHitCells(IntVec3 start, IntVec3 end)
-        {
-            var cells = new HashSet<IntVec3>();
-            var d = end - start;
-            int steps = Mathf.Max(Mathf.Abs(d.x), Mathf.Abs(d.z));
-            for (int i = 0; i <= steps; i++)
-            {
-                var celll =  start + new IntVec3(d.x * i / steps, 0, d.z * i / steps);
-                foreach (var cell in GenRadial.RadialCellsAround(celll, PathDamageRadius, true))
-                {
-                    if (!cell.InBounds(Owner.Map)) continue;
-                    cells.Add(cell);
-                }
-            }
-            return cells;
-        }
-
-        private IntVec3 GetDest()
-        {
-            HashSet<IntVec3> cells = new();
-            var start = Owner.Position.ToVector3();
-            var end = Owner.Position;
-            for (float i = 0; i <= DashDistance; i += 0.5f)
-            {
-                var cell = (start + i * dashDir).ToIntVec3();
-                if (!cells.Contains(cell))
-                    cells.Add(cell);
-                else
-                    continue;
-                if (!cell.InBounds(Owner.Map) || !cell.Walkable(Owner.Map))
-                    break;
-                end = cell;
-            }
-            return end;
         }
 
         protected override void OnTargeting(LocalTargetInfo targetInfo)
@@ -205,10 +151,9 @@ namespace FamiliaMyth.Abilities
                 return;
             var start = Owner.Position;
             var end = start + ((targetInfo.Cell - start).ToVector3().normalized * DashDistance).ToIntVec3();
-            if (end == start) return;
             //绘制路径范围
             GenDraw.DrawFieldEdges(
-                GetHitCells(start, end)
+                RangeUtilities.GetHitCellsAroundStraightWay(start, end, PathDamageRadius)
                 .Where(c => c.InBounds(Owner.Map))
                 .ToList(),
                 Color.red);
@@ -226,17 +171,7 @@ namespace FamiliaMyth.Abilities
             base.ExposeData();
             Scribe_Values.Look(ref absorbedDamage, "absorbedDamage");
             Scribe_Values.Look(ref dashDir, "dashDir");
-            Scribe_Values.Look(ref isSneathing, "isSneathing");
-        }
-
-        public static Skill_IaiSpiritSlash GetActiveSkill(Pawn pawn)
-        {
-            var pharna = pawn.GetPharna();
-            var skill = pharna?.skills?.FirstOrDefault(s => s is Skill_IaiSpiritSlash);
-            if (skill is Skill_IaiSpiritSlash iai && iai.isSneathing)
-                return iai;
-
-            return null;
+            // active 由基类 Skill.ExposeData 序列化，无需在此重复
         }
     }
 }

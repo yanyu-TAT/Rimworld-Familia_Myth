@@ -7,4 +7,7 @@
 	<Skill_LanceCharge.label>Lance Charge</Skill_LanceCharge.label>
 	<Skill_LanceCharge.description>Requires a melee weapon (sharp). Dash toward a target point within 10 tiles, dealing 150% damage to enemies along the path and knocking them back.</Skill_LanceCharge.description>
 
+	<Skill_Railgun.label>Railgun</Skill_Railgun.label>
+	<Skill_Railgun.description>Requires a ranged weapon. Charges the weapon with electromagnetic energy: the next 5 shots pierce along the bullet path, dealing 200% damage and stunning enemies for 2 seconds. Walls block the shot and take piercing damage.</Skill_Railgun.description>
+
 </LanguageData>

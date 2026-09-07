@@ -4,4 +4,7 @@
 	<Skill_DesperateArmyWin.label>哀兵必胜</Skill_DesperateArmyWin.label>
 	<Skill_DesperateArmyWin.description>心情低于50%时，根据心情低落程度获得大幅能力值补正。\n\n力量/耐久/敏捷：+200 × t + 100\n意志：+300 × t + 150\n（t = 心情低于50%的百分比 / 50%）</Skill_DesperateArmyWin.description>
 
+	<Skill_Railgun.label>超电磁炮</Skill_Railgun.label>
+	<Skill_Railgun.description>持有远程枪械时可释放：向武器注入电磁能量，接下来的5次射击贯穿弹道，对路径上所有敌人造成200%伤害并眩晕2秒，遇墙拦截并对墙造成贯穿伤害。</Skill_Railgun.description>
+
 </LanguageData>

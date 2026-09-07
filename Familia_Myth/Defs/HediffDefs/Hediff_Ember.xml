@@ -29,7 +29,7 @@
     <defName>EmberState</defName>
     <label>技能（余烬）</label>
     <description>用于显示余烬技能当前状态。</description>
-    <hediffClass>FamiliaMyth.Abilities.Hediff_SkillState</hediffClass>
+    <hediffClass>HediffWithComps</hediffClass>
     <isBad>false</isBad>
     <initialSeverity>1.0</initialSeverity>
     <comps>

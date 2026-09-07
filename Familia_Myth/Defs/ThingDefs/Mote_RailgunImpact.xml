@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <!-- 超电磁炮 - 贯穿光带：Patch_Railgun 沿弹道生成的一次性线形光效。
+       thingClass 用默认 Mote；长度/旋转/颜色由代码 linearScale / exactRotation / instanceColor 设置，
+       贴图为水平长条（沿 x 拉伸），绘制方式与 Mote_Slash 一致。 -->
+  <ThingDef ParentName="MoteBase">
+    <defName>Mote_RailgunImpact</defName>
+    <label>超电磁贯穿光带</label>
+    <altitudeLayer>MoteOverheadLow</altitudeLayer>
+    <mote>
+      <fadeInTime>0.05</fadeInTime>
+      <solidTime>0</solidTime>
+      <fadeOutTime>0.4</fadeOutTime>
+    </mote>
+    <graphicData>
+      <graphicClass>Graphic_Mote</graphicClass>
+      <texPath>Familia_Myth/Things/Mote/RailgunImpact</texPath>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>1</drawSize>
+    </graphicData>
+  </ThingDef>
+</Defs>

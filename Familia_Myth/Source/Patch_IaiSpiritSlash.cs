@@ -1,4 +1,5 @@
 ﻿using FamiliaMyth.Abilities;
+using FamiliaMyth.Pharna;
 using HarmonyLib;
 using RimWorld;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace FamiliaMyth.Patch
 
         public static bool Prefix(Pawn ___pawn, DamageInfo dinfo, ref bool absorbed)
         {
-            var skill = Skill_IaiSpiritSlash.GetActiveSkill(___pawn);
+            var skill = ___pawn.GetActiveSkill<Skill_IaiSpiritSlash>();
             if (skill == null) return true; //非居合状态：正常结算伤害
 
             //吸收伤害并记录

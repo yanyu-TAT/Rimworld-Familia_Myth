@@ -484,5 +484,15 @@ namespace FamiliaMyth.Pharna
 
             return null;
         }
+
+        public static T GetActiveSkill<T>(this Pawn pawn) where T : Skill
+        {
+            var pharna = pawn.GetPharna();
+            var skill = pharna?.skills?.FirstOrDefault(s => s is T);
+            if (skill is T t && t.active)
+                return t;
+
+            return null;
+        }
     }
 }

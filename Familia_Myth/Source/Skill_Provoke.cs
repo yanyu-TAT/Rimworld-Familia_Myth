@@ -1,5 +1,4 @@
-﻿using FamiliaMyth.Pharna;
-using Verse;
+﻿using Verse;
 
 namespace FamiliaMyth.Abilities
 {
@@ -57,11 +56,6 @@ namespace FamiliaMyth.Abilities
         {
             base.NotifyEffectEnd();
             Provokers.Remove(Owner);
-        }
-
-        public static bool IsProvokeActive(Pawn pawn)
-        {
-            return pawn?.GetPharna()?.skills?.FirstOrDefault(s => s is Skill_Provoke)?.active ?? false;
         }
 
         public override void OnHovering()

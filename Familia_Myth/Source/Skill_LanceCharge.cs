@@ -76,7 +76,7 @@ namespace FamiliaMyth.Abilities
             GameComponent_FamiliaMyth.Schedule(ChargeTicks, () => stunning = false, Owner);
 
             //对路径附近敌人结算伤害并击退
-            foreach (var enemy in GetEnemiesOnPath(start, dashDest).ToList())
+            foreach (var enemy in RangeUtilities.GetEnemiesAroundStraightWay(start, dashDest, PathDamageRadius, Owner).ToList())
             {
                 float dmg = verb.verbProps.AdjustedMeleeDamageAmount(verb, Owner) * DamageFactor;
                 float apt = verb.verbProps.AdjustedArmorPenetration(verb, Owner);
@@ -140,38 +140,6 @@ namespace FamiliaMyth.Abilities
             Owner.Map.flecks.CreateFleck(data);
         }
 
-        private IEnumerable<Pawn> GetEnemiesOnPath(IntVec3 start, IntVec3 end)
-        {
-            var hit = new HashSet<Pawn>();
-            foreach (var cell in GetHitCells(start, end).ToList())
-            {
-                foreach (var thing in cell.GetThingList(Owner.Map).ToList())
-                {
-                    if (thing is Pawn pawn && pawn != Owner && pawn.Spawned && !pawn.DeadOrDowned
-                        && (pawn.Faction?.HostileTo(Owner.Faction) ?? false))
-                        hit.Add(pawn);
-                }
-            }
-            return hit;
-        }
-
-        private IEnumerable<IntVec3> GetHitCells(IntVec3 start, IntVec3 end)
-        {
-            var cells = new HashSet<IntVec3>();
-            var d = end - start;
-            int steps = Mathf.Max(Mathf.Abs(d.x), Mathf.Abs(d.z));
-            for (int i = 0; i <= steps; i++)
-            {
-                var cell = start + new IntVec3(d.x * i / steps, 0, d.z * i / steps);
-                foreach (var c in GenRadial.RadialCellsAround(cell, PathDamageRadius, true))
-                {
-                    if (!c.InBounds(Owner.Map)) continue;
-                    cells.Add(c);
-                }
-            }
-            return cells;
-        }
-
         protected override void OnTargeting(LocalTargetInfo targetInfo)
         {
             GenDraw.DrawRadiusRing(Owner.Position, MaxRange);
@@ -179,10 +147,8 @@ namespace FamiliaMyth.Abilities
                 return;
             var start = Owner.Position;
             var end = targetInfo.Cell;
-            if (start == end)
-                return;
             GenDraw.DrawFieldEdges(
-                GetHitCells(start, end)
+                RangeUtilities.GetHitCellsAroundStraightWay(start, end, PathDamageRadius)
                 .Where(c => c.InBounds(Owner.Map))
                 .ToList(),
                 Color.yellow);

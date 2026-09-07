@@ -21,6 +21,6 @@ namespace FamiliaMyth.Abilities
         private Skill skill;
         private Skill Skill => skill ??= Pharna?.skills?.FirstOrDefault(t => t.def == Props.skillDef);
 
-        public string StateText => Skill.StateText;
+        public override string CompLabelInBracketsExtra => Skill.StateText;
     }
 }
