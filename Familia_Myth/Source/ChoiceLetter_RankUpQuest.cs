@@ -3,7 +3,6 @@ using FamiliaMyth.Incidents;
 using FamiliaMyth.Quest;
 using RimWorld;
 using Verse;
-using Verse.AI.Group;
 
 namespace Familia_Myth.Source
 {
@@ -36,14 +35,13 @@ namespace Familia_Myth.Source
                     yield break;
                 }
 
-                yield return new("接受强制任务")
+                yield return new("确认")
                 {
                     action = () =>
                     {
                         if (!envoy.Spawned) return;
-                        CreateRankUpQuest();
+                        GameComponent_GuildEnvoyTracker.RemoveEnvoy();
                         Find.LetterStack.RemoveLetter(this);
-                        EnvoyLeave();
                     },
                     resolveTree = true
                 };
@@ -54,7 +52,7 @@ namespace Familia_Myth.Source
                     {
                         var tracker = GameComponent_FamiliaRankTracker.Instance;
                         var text = $"对于在某一方面有所建树的眷族，公会会发布强制任务以检验其实力。\n" +
-                            $"该任务不可拒绝，若超时或失败则会冻结升级点数增长一段时间。\n\n" +
+                            $"该任务不可拒绝，若超时或失败则会在一段时间后重新发布。\n\n" +
                             $"请注意，该任务难度较高，请尽量派出全部战力。\n" +
                             $"完成任务即可提升眷族在「{Category.LabelCap}」方面的评级。\n" +
                             $"当然也能获取大量伟业值，将平均分配给全部眷族成员。";
@@ -74,27 +72,5 @@ namespace Familia_Myth.Source
 
         public Pawn Envoy { get => envoy; set => envoy = value; }
         public GuildQuestDef QuestDef { get => questDef; set => questDef = value; }
-
-        private void EnvoyLeave()
-        {
-            var lord = envoy.GetLord();
-            envoy.Map?.lordManager?.RemoveLord(lord);
-            var job = new LordJob_ExitMapBest();
-            var newLord = LordMaker.MakeNewLord(envoy.Faction, job, envoy.Map);
-            newLord.AddPawn(envoy);
-        }
-
-        private void CreateRankUpQuest()
-        {
-            if (!GameComponent_GuildEnvoyTracker.Envoys.TryGetValue(envoy.thingIDNumber, out var gen)) return;
-
-            var quest = gen.SummonQuest(envoy, null);
-            if (quest != null)
-            {
-                this.quest = quest;
-                GameComponent_FamiliaRankTracker.Instance?.GetState(gen.Category)?.OnRankUpQuestStart(quest.id);
-            }
-            GameComponent_GuildEnvoyTracker.Envoys.Remove(envoy.thingIDNumber);
-        }
     }
 }

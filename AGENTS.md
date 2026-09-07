@@ -210,8 +210,10 @@
 | `Mote_*.cs`                                 | 地图特效（咏唱词/魔法阵/光环/斩击等）    |
 | `Projectile_*` + `MagicMissileStates.cs`    | 魔法弹与运动状态机               |
 | `Ritual*`                                   | 仪式（给予/升华恩惠）及结果处理        |
-| `GuildQuest*` / `QuestNode*` / `QuestPart*` | 公会任务生成与奖励               |
-| `GameComponent_*.cs`                        | 存档级追踪（眷族评级、使者）+ 位移/击退引擎（LanceCharge/RoundhouseKick） |
+| `GuildQuestDef` / `GuildQuestGenerator*`        | 公会任务定义与生成（日常 = 使者对话接取指定接取者；强制 = 使者出场自动接取、不可拒绝；Slate 传参 → GenerateQuestAndMakeAvailable） |
+| `QuestTaskUtility`                              | 任务点数统一计算：原版财富基准 × 全殖民地恩惠成长（总等级/总经验，加成封顶） ×（强制 ×1.5）；产出威胁点数（可直接生成站点/袭击）与伟业值（点数 × 系数，不设上限） |
+| `QuestNode_RankUpComplete/Failed/RankUpExploits/DailyExploits` + `QuestPart_RankUp*` / `QuestPart_DailyExploitsReward` | 任务结算（节点仅生成 QuestPart，动作监听 rewardsReady/失败信号后执行）：完成 → 评级晋升 + 伟业值（强制在场均分/日常接取者50%）；超时失败 → 记录 3~5 天重发冷却；日常另有升级点数 |
+| `GameComponent_*.cs`                            | 存档级追踪（`FamiliaRankTracker`：多分类评级/升级点数/强制任务与重发冷却、统一发布轮询、公会派系补建；`GuildEnvoyTracker`：全局单槽待对话使者）+ 位移/击退引擎（LanceCharge/RoundhouseKick） |
 | `JobDriver_*`                               | 工作驱动（对话使者等）             |
 | `MentalState_*` / `Hediff_*` / `Verb_*`     | 精神状态、词缀、咏唱 verb         |
 | `UI_*.cs`                                   | 界面（眷族页、升级奖励弹窗、雷达图）      |

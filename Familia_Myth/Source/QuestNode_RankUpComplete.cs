@@ -1,5 +1,6 @@
-﻿using FamiliaMyth.Familia;
+using FamiliaMyth.Familia;
 using RimWorld.QuestGen;
+using Verse;
 
 namespace FamiliaMyth.Quest
 {
@@ -13,7 +14,12 @@ namespace FamiliaMyth.Quest
             var cat = categoryDef.GetValue(slate);
             if (cat == null) return;
 
-            GameComponent_FamiliaRankTracker.Instance?.OnRankUpRequestDone(cat);
+            var part = new QuestPart_RankUpComplete
+            {
+                inSignal = QuestGenUtility.HardcodedSignalWithQuestID("rewardsReady") ?? slate.Get<string>("inSignal"),
+                category = cat
+            };
+            QuestGen.quest.AddPart(part);
         }
 
         protected override bool TestRunInt(Slate slate) => true;

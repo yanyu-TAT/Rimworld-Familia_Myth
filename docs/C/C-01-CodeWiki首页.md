@@ -16,7 +16,7 @@
 | 技能框架 | `Skill.cs` + `SkillDef.cs` |
 | 发展能力 | `DevelopableAbility.cs` + `DevelopableAbilityDef.cs` + `StatPart_DevelopableAbility.cs` |
 | 意志/美德 | `MentalState_Virtue.cs` + `Hediff_VirtueBuff_*.cs` |
-| 公会 | `GameComponent_FamiliaRankTracker.cs` + `GuildQuestGenerator.cs` + `QuestNode*.cs` |
+| 公会 | `GameComponent_FamiliaRankTracker.cs` + `GameComponent_GuildEnvoyTracker.cs`（单槽使者）+ `GuildQuestDef/Generator*` + `QuestTaskUtility.cs` + 任务脚本（`Defs/QuestScriptDefs/`） |
 | 眷族 UI | `UI_FamiliaPage.cs` + `UI_RadarChart.cs` |
 | 特效 | `Mote_*.cs` + `Textures/` + `Materials/` |
 

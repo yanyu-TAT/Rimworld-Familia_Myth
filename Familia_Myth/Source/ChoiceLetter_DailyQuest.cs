@@ -51,7 +51,7 @@ namespace FamiliaMyth.Incidents
                                     CreateQuest(pawn);
                                     Find.LetterStack.RemoveLetter(this);
                                     Find.WindowStack.Windows.FirstOrDefault(l => l is Dialog_NodeTreeWithFactionInfo)?.Close();
-                                    EnvoyLeave();
+                                    GameComponent_GuildEnvoyTracker.RemoveEnvoy();
                                 }));
                             }
 
@@ -78,11 +78,9 @@ namespace FamiliaMyth.Incidents
                     {
                         if (envoy.Spawned)
                         {
-                            // 使者直接离开
-                            if (GameComponent_GuildEnvoyTracker.Envoys.ContainsKey(envoy.thingIDNumber))
-                                GameComponent_GuildEnvoyTracker.Envoys.Remove(envoy.thingIDNumber);
+                            //使者直接离开
+                            GameComponent_GuildEnvoyTracker.RemoveEnvoy();
                             Find.LetterStack.RemoveLetter(this);
-                            EnvoyLeave();
                         }
                     },
                     resolveTree = true
@@ -122,34 +120,21 @@ namespace FamiliaMyth.Incidents
 
         public GuildQuestDef QuestDef{ get => questDef; set => questDef = value; }
 
-        private void EnvoyLeave()
-        {
-            var lord = envoy.GetLord();
-            envoy.Map?.lordManager?.RemoveLord(lord);
-
-            //离开地图
-            var exitJob = new LordJob_ExitMapBest();
-            var newLord = LordMaker.MakeNewLord(envoy.Faction, exitJob, envoy.Map);
-            newLord.AddPawn(envoy);
-        }
-
         private void CreateQuest(Pawn acceptor)
         {
             if (acceptor == null || envoy == null) return;
 
-            if (!GameComponent_GuildEnvoyTracker.Envoys.TryGetValue(envoy.thingIDNumber, out var gen))
+            var gen = GameComponent_GuildEnvoyTracker.QuestGenerator;
+            if (gen == null)
             {
                 Log.Error($"[FamiliaMyth] Can't Find Corresponding Generator For {envoy.Name.ToStringShort}");
                 return;
             }
 
             var quest = gen.SummonQuest(envoy, acceptor);
-            if (quest != null)
-            {
-                //移除使者
-                GameComponent_GuildEnvoyTracker.Envoys.Remove(envoy.thingIDNumber);
-                this.quest = quest;
-            }
+            this.quest = quest;
+            //移除使者
+            GameComponent_GuildEnvoyTracker.RemoveEnvoy();
         }
     }
 }

@@ -44,12 +44,10 @@
         <li Class="QuestNode_Sequence">
           <nodes>
 
-            <!-- 计算难度、伟业值奖励与站点威胁 -->
+            <!-- 计算任务点数与伟业值（统一工具：原版财富基准 × 全殖民地恩惠成长） -->
             <li Class="FamiliaMyth.Quest.QuestNode_DailySetDifficulty">
               <storeDifficultyAs>difficulty</storeDifficultyAs>
               <storeExploitsAs>totalExploits</storeExploitsAs>
-              <baseExploits>50</baseExploits>
-              <difficultyMultiplier>1.0</difficultyMultiplier>
             </li>
 
             <!-- 获取目标地点tile -->
@@ -74,7 +72,7 @@
               <node Class="QuestNode_Sequence">
                 <nodes>
                   <!-- 发放伟业值奖励 -->
-                  <li Class="FamiliaMyth.Quest.QuestNode_GainExploits">
+                  <li Class="FamiliaMyth.Quest.QuestNode_DailyExploits">
                     <acceptor>$acceptor</acceptor>
                     <totalExploits>$totalExploits</totalExploits>
                   </li>

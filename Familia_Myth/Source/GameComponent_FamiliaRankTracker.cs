@@ -8,7 +8,8 @@ namespace FamiliaMyth.Familia
 {
     public class GameComponent_FamiliaRankTracker : GameComponent
     {
-        public const int EnvoyTimeoutTicks = 120000;
+        private const int EnvoyTimeoutTicks = 120000;
+        private const int CheckIntervalTicks = 1000;
 
         public Dictionary<FamiliaCategoryDef, FamiliaRankState> rankStates = new();
 
@@ -24,19 +25,9 @@ namespace FamiliaMyth.Familia
         public static IncidentDef IncidentDef =>
             incidentDef ??= DefDatabase<IncidentDef>.GetNamed("GiveQuest_Daily");
 
-        private int incidentInterval = -1;
-        private int IncidentInterval
-        {
-            get
-            {
-                if (incidentInterval <= 0)
-                {
-                    incidentInterval = (Rand.Int % 5 + 1) * GenDate.TicksPerDay;
-                }
-                return incidentInterval;
-            }
-        }
-        private int lastIncidentTick = GenDate.TicksPerDay * 10;
+        private static int CurrentTick => Find.TickManager.TicksGame;
+
+        private int nextIncidentTick = GenDate.TicksPerDay * 10;
 
         public static GameComponent_FamiliaRankTracker Instance => Current.Game?.GetComponent<GameComponent_FamiliaRankTracker>();
 
@@ -47,9 +38,27 @@ namespace FamiliaMyth.Familia
         public override void FinalizeInit()
         {
             base.FinalizeInit();
+            EnsureGuildFaction();
             foreach (var cat in DefDatabase<FamiliaCategoryDef>.AllDefs)
-                GetState(cat).Init(cat);
+                GetOrAddState(cat)?.Init(cat);
         }
+
+        private static void EnsureGuildFaction()
+        {
+            if (Find.FactionManager.FirstFactionOfDef(GuildDef) != null) return;
+
+            var faction = FactionGenerator.NewGeneratedFaction(
+                new FactionGeneratorParms(GuildDef, default, hidden: true));
+            Find.FactionManager.Add(faction);
+
+            //保证与玩家中立，避免使者因派系关系变为敌对
+            if (Faction.OfPlayer != null
+                && faction.RelationKindWith(Faction.OfPlayer) == FactionRelationKind.Hostile)
+                faction.SetRelationDirect(Faction.OfPlayer, FactionRelationKind.Neutral);
+
+            Log.Message("[FamiliaMyth] Guild faction instance ensured for quest envoys.");
+        }
+
         private bool CanFireEnvoy()
         {
             var map = Find.AnyPlayerHomeMap ?? Find.CurrentMap;
@@ -60,18 +69,37 @@ namespace FamiliaMyth.Familia
 
         public override void GameComponentTick()
         {
-            base.GameComponentTick();
-            if (Find.TickManager.TicksGame - lastIncidentTick >= IncidentInterval && CanFireEnvoy())
+            if (CurrentTick % CheckIntervalTicks != 0) return;
+            if (GameComponent_GuildEnvoyTracker.HasEnvoy) return;
+
+            Log.Message("Trying To Issue Quest.");
+
+            //尝试发布升级任务
+            foreach (var kv in rankStates)
+            {
+                var state = kv.Value;
+                if (state.InRetryCooldown) continue;
+                if (TrySpawnRankUpEnvoy(kv.Key))
+                {
+                    state.rankUpQuestRetryTick = -1;
+                    break;
+                }
+            }
+
+            //尝试发布日常任务
+            if (CurrentTick >= nextIncidentTick && CanFireEnvoy())
             {
                 var map = Find.AnyPlayerHomeMap ?? Find.CurrentMap;
                 if (map == null) return;
 
                 var parms = StorytellerUtility.DefaultParmsNow(IncidentDef.category, map);
                 Find.Storyteller?.incidentQueue?.Add(IncidentDef, GenDate.TicksPerDay, parms, GenDate.TicksPerDay * 3);
+
+                nextIncidentTick = CurrentTick + Rand.RangeInclusive(1, 5) * GenDate.TicksPerDay;
             }
         }
 
-        public FamiliaRankState GetState(FamiliaCategoryDef def)
+        public FamiliaRankState GetOrAddState(FamiliaCategoryDef def)
         {
             if (def == null) return null;
             if (!rankStates.TryGetValue(def, out FamiliaRankState state))
@@ -83,7 +111,7 @@ namespace FamiliaMyth.Familia
             return state;
         }
 
-        public FamiliaRankDef GetCurrentRank(FamiliaCategoryDef category) => GetState(category)?.curRankDef;
+        public FamiliaRankDef GetCurrentRank(FamiliaCategoryDef category) => GetOrAddState(category)?.curRankDef;
 
         public FamiliaRankDef GetNextRank(FamiliaCategoryDef category)
         {
@@ -96,13 +124,13 @@ namespace FamiliaMyth.Familia
             return null;
         }
 
-        public int GetUpgradePoints(FamiliaCategoryDef category) => GetState(category)?.curRankDef?.upgradePointsRequired ?? 0;
+        public int GetUpgradePointsRequired(FamiliaCategoryDef category) => GetNextRank(category)?.upgradePointsRequired ?? 0;
 
         public bool CanRankUp(FamiliaCategoryDef category)
         {
-            var next = GetNextRank(category)?.upgradePointsRequired;
-            var cur = GetState(category)?.curRankUpPoints;
-            if (next == null || cur == null) return false;
+            var next = GetUpgradePointsRequired(category);
+            var cur = GetOrAddState(category)?.curRankUpPoints;
+            if (cur == null) return false;
             return cur >= next;
         }
 
@@ -110,62 +138,61 @@ namespace FamiliaMyth.Familia
         {
             if (category == null || amount <= 0) return;
 
-            var state = GetState(category);
+            var state = GetOrAddState(category);
             state.curRankUpPoints += amount;
 
             var letter = LetterMaker.MakeLetter(
                 "眷族成长",
                 $"由于在「{category.LabelCap}」方面的卓越贡献\n" +
                 $"您的眷族获得了 {amount} 点升级点数。\n\n" +
-                $"当前：{state.curRankUpPoints} / {GetUpgradePoints(category)}",
+                $"当前：{state.curRankUpPoints} / {GetUpgradePointsRequired(category)}",
                 LetterDefOf.PositiveEvent);
             Find.LetterStack.ReceiveLetter(letter);
-
-            TrySpawnRankUpEnvoy(category);
         }
 
-        private void TrySpawnRankUpEnvoy(FamiliaCategoryDef category)
+        private bool TrySpawnRankUpEnvoy(FamiliaCategoryDef category)
         {
-            var state = GetState(category);
-            if (!CanRankUp(category)) return;       //未达到升级条件
-            if (state.RankUpEnvoyPending) return;   //已有使者
-            if (state.rankUpQuestID != -1) return;  //已有任务
+            var state = GetOrAddState(category);
+            if (!CanRankUp(category)) return false;       //未达到升级条件
+            if (state.rankUpQuestID != -1) return false;  //已有任务
 
             var map = Find.AnyPlayerHomeMap ?? Find.CurrentMap;
-            if (map == null) return;
+            if (map == null) return false;
 
             Faction guild = Find.FactionManager.FirstFactionOfDef(GuildDef);
-            if (guild == null) return;
+            if (guild == null) return false;   //公会派系缺失（FinalizeInit 已补建，此处仅防御）
 
             var envoy = PawnGenerator.GeneratePawn(new PawnGenerationRequest(EnvoyDef, guild));
+
             //搜索进入点
             if (!CellFinder.TryFindRandomEdgeCellWith(
                 c => map.reachability.CanReachColony(c),
                 map, CellFinder.EdgeRoadChance_Neutral, out var entryCell))
             {
                 Log.Warning("[FamiliaMyth] No Way To Colony For Guild Envoy");
-                return;
+                return false;
             }
 
             //搜索停留点
             if (!RCellFinder.TryFindRandomSpotJustOutsideColony(entryCell, map, out var chillSpot))
                 chillSpot = DropCellFinder.TradeDropSpot(map);
 
+            if (category.rankUpQuests == null || category.rankUpQuests.Count == 0) return false;
+
             GenSpawn.Spawn(envoy, entryCell, map);
             var job = new LordJob_VisitColony(guild, chillSpot, EnvoyTimeoutTicks);
             var lord = LordMaker.MakeNewLord(guild, job, map);
             lord.AddPawn(envoy);
 
-            state.rankUpEnvoyID = envoy.thingIDNumber;
-
             //注册任务
-            if (category.rankUpQuests == null || category.rankUpQuests.Count == 0) return;
             var rankUpQuest = category.rankUpQuests.RandomElement();
             var gen = (GuildQuestGenerator)Activator.CreateInstance(rankUpQuest.generatorClass);
             gen.def = rankUpQuest;
             gen.SetupParams(map);
-            GameComponent_GuildEnvoyTracker.Envoys[envoy.thingIDNumber] = gen;
-            GameComponent_GuildEnvoyTracker.NotSpoken.Add(envoy);
+            GameComponent_GuildEnvoyTracker.Register(envoy, gen);
+            var quest = gen.SummonQuest(envoy, null);
+            if (quest == null) return false;   //任务生成失败（Quest 脚本异常时静默，避免留下无任务使者）
+            state.OnRankUpQuestStart(quest.id);
 
             TaggedString label = "公会使者到访";
             TaggedString text = $"来自冒险者公会的使者 {envoy.Name.ToStringShort} 已到达你的据点。\n\n" +
@@ -173,18 +200,17 @@ namespace FamiliaMyth.Familia
             ChoiceLetter letter = LetterMaker.MakeLetter(
                 label, text, LetterDefOf.NeutralEvent, envoy);
             Find.LetterStack.ReceiveLetter(letter);
+            return true;
         }
 
         public void OnRankUpRequestDone(FamiliaCategoryDef category)
         {
-            var state = GetState(category);
+            var state = GetOrAddState(category);
             var next = GetNextRank(category);
             if (next == null || state ==  null) return;
 
             state.curRankDef = next;
             state.curRankUpPoints -= next.upgradePointsRequired;
-
-            state.rankUpEnvoyID = -1;
             state.rankUpQuestID = -1;
 
             var letter = LetterMaker.MakeLetter(
@@ -194,13 +220,22 @@ namespace FamiliaMyth.Familia
             Find.LetterStack.ReceiveLetter(letter);
         }
 
-        public FamiliaCategoryDef GetCategory(int EnvoyID)
+        public void OnRankUpQuestFailed(FamiliaCategoryDef category)
         {
-            foreach (var kv in rankStates)
-                if (kv.Value.rankUpEnvoyID == EnvoyID)
-                    return kv.Key;
-            return null;
+            var state = GetOrAddState(category);
+            if (state == null) return;
+
+            state.rankUpQuestID = -1;
+            state.rankUpQuestRetryTick = CurrentTick + Rand.RangeInclusive(1, 5) * GenDate.TicksPerDay;
         }
+
+        //public FamiliaCategoryDef GetCategory(int EnvoyID)
+        //{
+        //    foreach (var kv in rankStates)
+        //        if (kv.Value.rankUpEnvoy == EnvoyID)
+        //            return kv.Key;
+        //    return null;
+        //}
 
         public override void ExposeData()
         {
@@ -208,8 +243,7 @@ namespace FamiliaMyth.Familia
             Scribe_Collections.Look(ref rankStates, "rankStates", 
                 keyLookMode: LookMode.Def,
                 valueLookMode: LookMode.Deep);
-            Scribe_Values.Look(ref incidentInterval, "incidentInterval", -1);
-            Scribe_Values.Look(ref lastIncidentTick, "lastIncidentTick", GenDate.TicksPerDay * 10);
+            Scribe_Values.Look(ref nextIncidentTick, "nextIncidentTick", GenDate.TicksPerDay * 10);
         }
     }
 }

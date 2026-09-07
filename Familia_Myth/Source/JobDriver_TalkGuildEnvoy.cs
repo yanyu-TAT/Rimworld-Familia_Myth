@@ -24,22 +24,22 @@ namespace FamiliaMyth.Incidents
                 //发送信号
                 Pawn envoy = TargetPawnA;
                 if (envoy == null || !envoy.Spawned) return;
-                //移除未对话
-                GameComponent_GuildEnvoyTracker.NotSpoken.Remove(envoy);
                 //发送信件
                 SendChoiceLetter(envoy);
             });
         }
+
         private void SendChoiceLetter(Pawn envoy)
         {
-            if (!GameComponent_GuildEnvoyTracker.Envoys.TryGetValue(envoy.thingIDNumber, out var gen))
+            if (!GameComponent_GuildEnvoyTracker.HasEnvoy)
                 return;
 
+            var gen = GameComponent_GuildEnvoyTracker.QuestGenerator;
             var letter = LetterMaker.MakeLetter(
                 label: gen.def?.label ?? "公会使者",
                 text: gen.LetterText ?? "使者向你介绍了委托的详情。",
                 def: DefDatabase<LetterDef>.GetNamed(
-                    gen.Type == Quest.QuestType.Daily 
+                    gen.Type == QuestType.Daily 
                     ? "AcceptDailyQuestFromEnvoy" 
                     : "AcceptRankUpQuestFromEnvoy"),
                 lookTargets: envoy);
@@ -53,6 +53,7 @@ namespace FamiliaMyth.Incidents
             }
         }
     }
+
     public interface IQuestProvider
     {
         Pawn Envoy { get; set; }

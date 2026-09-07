@@ -9,19 +9,11 @@ namespace FamiliaMyth.Familia
 
         public int curRankUpPoints;
 
-        public int rankUpEnvoyID = -1;
         public int rankUpQuestID = -1;
 
-        public bool RankUpEnvoyPending => rankUpEnvoyID != -1;
+        public int rankUpQuestRetryTick = -1;
 
-        public void ExposeData()
-        {
-            Scribe_Defs.Look(ref def, "def");
-            Scribe_Defs.Look(ref curRankDef, "curRankDef");
-            Scribe_Values.Look(ref rankUpQuestID, "rankUpQuestID");
-            Scribe_Values.Look(ref rankUpEnvoyID, "rankUpEnvoyID");
-            Scribe_Values.Look(ref curRankUpPoints, "curRankUpPoints");
-        }
+        public bool InRetryCooldown => rankUpQuestRetryTick > Find.TickManager.TicksGame;
 
         public void Init(FamiliaCategoryDef def)
         {
@@ -32,10 +24,16 @@ namespace FamiliaMyth.Familia
 
         public void OnRankUpQuestStart(int questID)
         {
-            rankUpEnvoyID = -1;
             rankUpQuestID = questID;
         }
 
-
+        public void ExposeData()
+        {
+            Scribe_Defs.Look(ref def, "def");
+            Scribe_Defs.Look(ref curRankDef, "curRankDef");
+            Scribe_Values.Look(ref rankUpQuestRetryTick, "rankUpQuestRetryTick");
+            Scribe_Values.Look(ref rankUpQuestID, "rankUpQuestID");
+            Scribe_Values.Look(ref curRankUpPoints, "curRankUpPoints");
+        }
     }
 }

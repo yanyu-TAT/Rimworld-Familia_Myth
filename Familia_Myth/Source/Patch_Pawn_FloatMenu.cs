@@ -14,7 +14,7 @@ namespace FamiliaMyth.Patch
         {
             if (__instance.kindDef?.defName != "Guild_Envoy") return;
             if (selPawn == null || selPawn.Faction != Faction.OfPlayer) return;
-            if (!GameComponent_GuildEnvoyTracker.NotSpoken.Contains(__instance)) return;
+            if (!GameComponent_GuildEnvoyTracker.HasEnvoy) return;
 
             var list = __result.ToList();
 

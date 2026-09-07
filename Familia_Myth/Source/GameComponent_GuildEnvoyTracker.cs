@@ -1,5 +1,6 @@
 using FamiliaMyth.Quest;
 using Verse;
+using Verse.AI.Group;
 
 namespace FamiliaMyth.Incidents
 {
@@ -7,26 +8,56 @@ namespace FamiliaMyth.Incidents
     {
         public static GameComponent_GuildEnvoyTracker Instance => Current.Game?.GetComponent<GameComponent_GuildEnvoyTracker>();
 
+        //当前尚未对话过的使者及对应的任务生成器
+        private Pawn curEnvoy;
+        private GuildQuestGenerator curQuestGen;
 
-        private Dictionary<int, GuildQuestGenerator> envoys = new();
-        private List<Pawn> notSpoken = new();
-
-        public static Dictionary<int, GuildQuestGenerator> Envoys => Instance?.envoys ?? new();
-        public static List<Pawn> NotSpoken => Instance?.notSpoken ?? new();
+        public static Pawn Envoy => Instance?.curEnvoy;
+        public static GuildQuestGenerator QuestGenerator => Instance?.curQuestGen;
 
         public GameComponent_GuildEnvoyTracker() { }
 
         public GameComponent_GuildEnvoyTracker(Game game) { }
 
+        public static bool HasEnvoy =>  QuestGenerator != null && Envoy != null && Envoy.Spawned && !Envoy.Dead;
+
+        public static void Register(Pawn envoy, GuildQuestGenerator generator)
+        {
+            if (Instance == null) return;
+
+            if (Envoy != null && Envoy.Spawned && !Envoy.Dead)
+                TryLeave(Envoy);
+
+            Instance.curEnvoy = envoy;
+            Instance.curQuestGen = generator;
+        }
+
+
+        public static void RemoveEnvoy()
+        {
+            if (Instance == null) return;
+
+            if (Envoy != null && Envoy.Spawned && !Envoy.Dead)
+                TryLeave(Envoy);
+
+            Instance.curEnvoy = null;
+            Instance.curQuestGen = null;
+        }
+
+        private static void TryLeave(Pawn envoy)
+        {
+            var lord = envoy.GetLord();
+            envoy.Map?.lordManager?.RemoveLord(lord);
+            var job = new LordJob_ExitMapBest();
+            var newLord = LordMaker.MakeNewLord(envoy.Faction, job, envoy.Map);
+            newLord.AddPawn(envoy);
+        }
+
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Collections.Look(ref envoys, "envoys",
-                keyLookMode: LookMode.Value,
-                valueLookMode: LookMode.Deep);
-
-            Scribe_Collections.Look(ref notSpoken, "notSpoken",
-                LookMode.Reference);
+            Scribe_References.Look(ref curEnvoy, "curEnvoy");
+            Scribe_Deep.Look(ref curQuestGen, "curQuestGen");
         }
     }
 }

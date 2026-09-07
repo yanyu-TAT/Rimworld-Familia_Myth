@@ -100,7 +100,7 @@ namespace FamiliaMyth.UI
 
             Rect c = new(r.x + 6f, r.y + M, r.width - 6f - M, r.height - 2f * M);
 
-            var state = tracker?.GetState(cat);
+            var state = tracker?.GetOrAddState(cat);
             var curRank = state?.curRankDef;
             var nxRank = tracker.GetNextRank(cat);
 
@@ -259,7 +259,7 @@ namespace FamiliaMyth.UI
                 Text.Font = GameFont.Tiny;
                 Text.Anchor = TextAnchor.UpperLeft;
                 GUI.color = UI_GroupBox.ColorAccent;
-                Widgets.Label(bioR, $"Lv.{pharna.level}\n伟业：{(int)pharna.exploits}");
+                Widgets.Label(bioR, $"Lv.{pharna.level}\n伟业值：{(int)pharna.exploits}");
                 GUI.color = Color.white;
                 Text.Anchor = TextAnchor.UpperLeft;
 

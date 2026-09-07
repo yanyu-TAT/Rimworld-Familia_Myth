@@ -3,7 +3,8 @@
 
   <!-- 强制升级考核任务脚本 -->
   <!-- 由 GuildQuestGenerator_RankUP_SiteClearance.QuestScriptDefName 引用 -->
-  <!-- 流程：达标 → 考核使者 → 对话 → 接受 → 生成强化站点 → 清剿 → 晋升 -->
+  <!-- 流程：达标 → 使者出场（自动接取）→ 生成强化站点 → 清剿 → 晋升评级 + 伟业值 -->
+  <!-- 失败/超时 → QuestNode_RankUpFailed 通知 tracker → 3~5 天后自动重发 -->
   <QuestScriptDef>
     <defName>Quest_RankUp_SiteClearance</defName>
     <autoAccept>true</autoAccept>
@@ -22,7 +23,7 @@
 
     <questDescriptionRules>
       <rulesStrings>
-        <li>questDescription->公会使者带来了强制任务。敌人已在附近集结，正在威胁着周边地区。请倾全部战力，证明眷族的实力。\n\n完成后即可提升眷族评级。</li>
+        <li>questDescription->公会使者带来了强制任务。敌人已在附近集结，正在威胁着周边地区。请倾全部战力，证明眷族的实力。\n\n完成任务即可提升眷族评级，并获得大量伟业值。</li>
       </rulesStrings>
     </questDescriptionRules>
 
@@ -53,14 +54,27 @@
               <worldObjects>$site</worldObjects>
             </li>
 
-            <!-- 清剿所有敌人后完成考核并晋升 -->
+            <!-- 清剿所有敌人后完成考核：晋升评级 + 发放伟业值（奖励部件均监听 rewardsReady） -->
             <li Class="QuestNode_Signal">
               <inSignal>site.AllEnemiesDefeated</inSignal>
               <node Class="QuestNode_Sequence">
                 <nodes>
+                  <!-- 晋升眷族评级 -->
                   <li Class="FamiliaMyth.Quest.QuestNode_RankUpComplete">
                     <categoryDef>$category</categoryDef>
                   </li>
+                  <!-- 发放伟业值（数值由统一点数计算写入 slate，强制任务自动 ×1.5 后更高） -->
+                  <li Class="FamiliaMyth.Quest.QuestNode_RankUpExploits">
+                    <site>$site</site>
+                    <totalExploits>$totalExploits</totalExploits>
+                  </li>
+                  <!-- 触发奖励结算 -->
+                  <li Class="QuestNode_SendSignals">
+                    <outSignals>
+                      <li>rewardsReady</li>
+                    </outSignals>
+                  </li>
+                  <!-- 任务成功结束 -->
                   <li Class="QuestNode_End">
                     <outcome>Success</outcome>
                   </li>
@@ -77,7 +91,11 @@
                 <nodes>
                   <li Class="QuestNode_Letter">
                     <label>强制任务失败</label>
-                    <text>强制任务[resolvedQuestName]已超时，眷族晋升暂时搁置。</text>
+                    <text>强制任务[resolvedQuestName]已超时，眷族晋升暂时搁置。数日后公会使者将再次前来发布考核任务。</text>
+                  </li>
+                  <!-- 通知 tracker 记录失败，进入 3~5 天冷却后自动重发 -->
+                  <li Class="FamiliaMyth.Quest.QuestNode_RankUpFailed">
+                    <categoryDef>$category</categoryDef>
                   </li>
                   <li Class="QuestNode_End">
                     <outcome>Fail</outcome>

@@ -8,6 +8,9 @@
     <defName>Guild</defName>
     <label>公会</label>
 
+    <!-- 派系显示名（运行时补建派系实例时需要，无 nameMaker 时直接采用） -->
+    <fixedName>公会</fixedName>
+
     <!-- 基础标识 -->
     <isPlayer>false</isPlayer>
     <humanlikeFaction>true</humanlikeFaction>

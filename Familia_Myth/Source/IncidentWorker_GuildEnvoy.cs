@@ -1,8 +1,6 @@
 using FamiliaMyth.Familia;
-using FamiliaMyth.Pharna;
 using FamiliaMyth.Quest;
 using RimWorld;
-using RimWorld.Planet;
 using Verse;
 using Verse.AI.Group;
 
@@ -12,14 +10,17 @@ namespace FamiliaMyth.Incidents
     {
         public const int TimeoutTicks = 120000; //2 days
 
-        private static Dictionary<int, GuildQuestGenerator> Envoys => GameComponent_GuildEnvoyTracker.Envoys ?? new();
-        private static List<Pawn> NotSpoken => GameComponent_GuildEnvoyTracker.NotSpoken ?? new();
+        private List<FamiliaCategoryDef> AvailableCats =>
+            DefDatabase<FamiliaCategoryDef>.AllDefs
+                .Where(c => c.dailyQuests != null && c.dailyQuests.Count > 0)
+                .Where(c => GameComponent_FamiliaRankTracker.Instance?.GetOrAddState(c)?.InRetryCooldown != true)
+                .ToList();
 
         protected override bool CanFireNowSub(IncidentParms parms)
         {
             if (parms.target is not Map map) return false;
-            return !map.mapPawns.AllPawnsSpawned
-                .Any(p => p.kindDef?.defName == "Guild_Envoy");
+            if (GameComponent_GuildEnvoyTracker.HasEnvoy) return false;
+            return AvailableCats.Any();
         }
 
         protected override bool TryExecuteWorker(IncidentParms parms)
@@ -27,11 +28,8 @@ namespace FamiliaMyth.Incidents
             if (parms.target is not Map map) return false;
 
             //从可挑选的种类中随机挑选
-            var cats = DefDatabase<FamiliaCategoryDef>.AllDefs
-                .Where(c => c.dailyQuests != null && c.dailyQuests.Count > 0)
-                .ToList();
-            if (cats.Count == 0) return false;
-            var category = cats.RandomElement();
+            if (AvailableCats.Count == 0) return false;
+            var category = AvailableCats.RandomElement();
             var questDef = category.dailyQuests.RandomElement();
 
             //生成参数
@@ -43,30 +41,13 @@ namespace FamiliaMyth.Incidents
             if (envoy == null) return false;
             
             SendArrivalLetter(envoy);
-            Envoys[envoy.thingIDNumber] = gen;
-            NotSpoken.Add(envoy);
+            GameComponent_GuildEnvoyTracker.Register(envoy, gen);
 
             return true;
         }
 
         private Pawn GenerateEnvoy(Map map)
         {
-            //检查是否有多余使者
-            var pawns = map.mapPawns.AllPawnsSpawned;
-            var toRemove = new List<int>();
-            foreach (var ky in Envoys)
-                if (!pawns.Any(p => p.thingIDNumber == ky.Key)) 
-                    toRemove.Add(ky.Key);
-            foreach (var key in toRemove)
-                Envoys.Remove(key);
-
-            var toRemoveP = new List<Pawn>();
-            foreach (var pawn in NotSpoken)
-                if (!pawns.Any(p => p.thingIDNumber == pawn.thingIDNumber))
-                    toRemoveP.Add(pawn);
-            foreach (var pawn in toRemoveP)
-                NotSpoken.Remove(pawn);
-
             var kindDef = PawnKindDef.Named("Guild_Envoy");
             var faction = Find.FactionManager.FirstFactionOfDef(FactionDef.Named("Guild"));
             var envoy = PawnGenerator.GeneratePawn(new PawnGenerationRequest(kindDef, faction));
