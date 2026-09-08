@@ -33,7 +33,7 @@
 | 并行调用工具 | run_code                                                      |
 | 编译     | `dotnet build Familia_Myth/Familia_Myth.csproj`（输出直写 Assemblies） |
 | 清理构建产物 | 运行 `11.bat`（清除 Assemblies 中非本模组 DLL 与 obj/）                      |
-| 反编译原版  | `ilspycmd <Assembly-CSharp.dll> -o decompiledFiles/`             |
+| 反编译原版  | 通过ilspycmd输出到decompiledFiles\，详见decompiledFiles\ilspy_help.txt             |
 | 查看游戏日志 | 项目根目录 `Player.log`                                               |
 | 检查 XML | PowerShell `[xml](Get-Content <file>)` 解析验证                      |
 
@@ -45,7 +45,8 @@
 
 **Allowed**：`Source/`、`Defs/`、`Patches/`、`Languages/`、`Textures/`、`Materials/`、`docs/`、XML 文件、设计文档。
 **Ask First**：csproj 程序集引用变更、`About.xml` 依赖/版本变更、破坏性重构、改动主设计文档。
-**Never Touch**：`Data/`（原版/DLC XML）、`lib/`、`decompiledFiles/`、`Assemblies/` 中的第三方 DLL（0Harmony/HugsLib 等）、`Player.log`（仅读取分析）。
+**Never Touch**：`Data/`（原版/DLC XML）、`lib/`、`Assemblies/` 中的第三方 DLL（0Harmony/HugsLib 等）、`Player.log`（仅读取分析）。
+**受控整理**：`decompiledFiles/` 仅允许按「十二 · 反编译文件管理规范」查阅，添加以及管理反编译文件，不可修改其中内容。
 
 ***
 
@@ -211,8 +212,11 @@
 | `Projectile_*` + `MagicMissileStates.cs`    | 魔法弹与运动状态机               |
 | `Ritual*`                                   | 仪式（给予/升华恩惠）及结果处理        |
 | `GuildQuestDef` / `GuildQuestGenerator*`        | 公会任务定义与生成（日常 = 使者对话接取指定接取者；强制 = 使者出场自动接取、不可拒绝；Slate 传参 → GenerateQuestAndMakeAvailable） |
-| `QuestTaskUtility`                              | 任务点数统一计算：原版财富基准 × 全殖民地恩惠成长（总等级/总经验，加成封顶） ×（强制 ×1.5）；产出威胁点数（可直接生成站点/袭击）与伟业值（点数 × 系数，不设上限） |
-| `QuestNode_RankUpComplete/Failed/RankUpExploits/DailyExploits` + `QuestPart_RankUp*` / `QuestPart_DailyExploitsReward` | 任务结算（节点仅生成 QuestPart，动作监听 rewardsReady/失败信号后执行）：完成 → 评级晋升 + 伟业值（强制在场均分/日常接取者50%）；超时失败 → 记录 3~5 天重发冷却；日常另有升级点数 |
+| `QuestUtilities` | 任务静态工具（点数统一计算 + 伟业值名单化发放，签名与规则见 C-02） |
+| `QuestNode_ExploitsReward` / `QuestPart_ExploitsReward` + `QuestNode_RankUpComplete/Failed` / `QuestPart_RankUp*` | 统一奖励结算（伟业值/升级点）与评级晋升、失败重发部件（节点只生成 QuestPart、信号触发，机制见 C-02） |
+| `QuestNode_Root_{Daily/RankUp}_{任务名}`（如 `QuestNode_Root_Daily_SiteClearance` / `QuestNode_Root_RankUp_SiteClearance` / `QuestNode_Root_Daily_Rescue`） | 任务三件套之「根节点」：生成期统一点数/参数、准备任务专属对象、装配过程 part（每任务自实现，规格相似，见 C-02） |
+| `QuestNode_RescueSetup` + `QuestPart_Rescue` / `QuestPart_RescueSpawn` + `QuestPart_ExtraFaction` | 「紧急救援」过程 part（QuestPartActivable 状态机）：威胁清除当拍幸存者难民式临时加入玩家派系（`SetFaction` 玩家 + HomeFaction「原派系」标记 → 上头像栏可指挥、lodger 限制自动生效、守点 lord 当拍释放不再发放），结算一律归还原派系（就地接送流程见 C-02） |
+| `QuestNode_Root_Daily_CriminalHunt` / `QuestNode_CriminalHuntSetup` + `QuestPart_CriminalHunt` / `QuestPart_CriminalHuntSpawn` | 「罪犯追捕」过程 part：Outpost 守卫 + 1 名同派系通缉犯同场（守点迎战）；威胁清除分流（击毙 → 普通结算；存活 → 打包带离窝点、离图计时 1~3 天 → 公会押解穿梭机 2 天窗口）；活犯上船起飞 → ×2 结算（囚犯 despawn discard、不改派系）；死亡任意原因 → 普通结算；招募/奴役或活着失踪 → 失败（流程见 C-02） |
 | `GameComponent_*.cs`                            | 存档级追踪（`FamiliaRankTracker`：多分类评级/升级点数/强制任务与重发冷却、统一发布轮询、公会派系补建；`GuildEnvoyTracker`：全局单槽待对话使者）+ 位移/击退引擎（LanceCharge/RoundhouseKick） |
 | `JobDriver_*`                               | 工作驱动（对话使者等）             |
 | `MentalState_*` / `Hediff_*` / `Verb_*`     | 精神状态、词缀、咏唱 verb         |
@@ -255,6 +259,13 @@
 - **结论需证据**：给出任何结论前，基于反编译结果查证；若没有证据，则在给出结论后明确指明"无证据/未经验证"。
 - **XML 命名空间前缀**：编写 XML 文件时，引用类名注意命名空间前缀（详见「五、基础代码规范 · XML 定义」）。
 - **反编译工具**：使用 `ilspycmd` 进行反编译，结果统一输出到 `decompiledFiles/` 目录（命令见「二、常用命令」）。
+- **反编译文件管理规范**（`decompiledFiles/` 布局与维护；重新反编译或补充反编译后按此执行）：
+  - 布局：文件按「完整命名空间目录 + 类型名文件」存放，目录即命名空间（如 `Verse/`、`Verse.AI/`、`RimWorld.Planet/`），无命名空间类型归 `_global/`
+  - 命名：文件以其中主类型（class / struct / interface / enum / delegate）名命名，纯委托文件以委托名命名（文件名 = 类型名）
+  - 去重：内容（哈希）完全相同的文件只保留一份，不留整目录/整批次的重复副本
+  - 同名异内容：同命名空间同类型名但内容不同时，保留 ilspycmd 常规批量版；`.decompiled.cs` 手工版在有同名常规版时删除，仅当其是该类型唯一来源时保留
+  - 清理：0 字节空壳、无类型的 `AssemblyInfo.cs`、`*.csproj` 等非源码杂项一律删除；`ilspy_help.txt` 保留在目录根
+  - 边界：该目录不提交 git、不参与构建、不得当作作品代码改动；整理属受控维护，动作须按本规范执行
 - **不改代码文件**：除非被直接要求，不修改代码文件（XML 文件除外）。
 - **中文思考链**：始终使用中文输出思考链（reasoning / chain-of-thought），便于与用户协作审阅。
 - **集中工具调用**：将 Shell/命令等工具调用集中在同一批中调用工具run_code执行，减少往返，以节约 token。

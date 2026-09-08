@@ -72,7 +72,7 @@ namespace FamiliaMyth.Familia
             if (CurrentTick % CheckIntervalTicks != 0) return;
             if (GameComponent_GuildEnvoyTracker.HasEnvoy) return;
 
-            Log.Message("Trying To Issue Quest.");
+            //Log.Message("Trying To Issue Quest.");
 
             //尝试发布升级任务
             foreach (var kv in rankStates)

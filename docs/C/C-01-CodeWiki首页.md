@@ -16,7 +16,7 @@
 | 技能框架 | `Skill.cs` + `SkillDef.cs` |
 | 发展能力 | `DevelopableAbility.cs` + `DevelopableAbilityDef.cs` + `StatPart_DevelopableAbility.cs` |
 | 意志/美德 | `MentalState_Virtue.cs` + `Hediff_VirtueBuff_*.cs` |
-| 公会 | `GameComponent_FamiliaRankTracker.cs` + `GameComponent_GuildEnvoyTracker.cs`（单槽使者）+ `GuildQuestDef/Generator*` + `QuestTaskUtility.cs` + 任务脚本（`Defs/QuestScriptDefs/`） |
+| 公会 | `GameComponent_FamiliaRankTracker.cs` + `GameComponent_GuildEnvoyTracker.cs`（单槽使者）+ `GuildQuestDef/Generator*` + `QuestUtilities.cs` + 任务三件套（`QuestNode_Root_*` / `QuestPart_*` / `ExploitsReward`，细节见 C-02）+ 任务脚本（`Defs/QuestScriptDefs/`） |
 | 眷族 UI | `UI_FamiliaPage.cs` + `UI_RadarChart.cs` |
 | 特效 | `Mote_*.cs` + `Textures/` + `Materials/` |
 
@@ -25,4 +25,5 @@
 - `C-02-架构详解.md` — 系统设计细节
 - `C-03-项目长期记忆.md` — 长期事实与约定
 - `C-04-已实现内容清单.md` — 已实现魔法/技能/发展能力、版本进度、美术本地化
+- `C-05-原版API简述.md` — 按系统分类收录的原版 API 方法速查（反编译证据，持续扩充）
 - 数值/设计: 主设计文档（`Familia Myth rim.txt` 及配套 txt/xlsx）

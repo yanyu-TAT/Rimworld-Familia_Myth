@@ -32,6 +32,14 @@ namespace FamiliaMyth.Incidents
             var category = AvailableCats.RandomElement();
             var questDef = category.dailyQuests.RandomElement();
 
+            return SpawnEnvoyWithQuest(questDef, map);
+        }
+
+        //让使者携带指定任务出场（日常事件随机选任务与 Debug 指定任务共用入口）
+        public static bool SpawnEnvoyWithQuest(GuildQuestDef questDef, Map map)
+        {
+            if (questDef == null || map == null) return false;
+
             //生成参数
             var gen = (GuildQuestGenerator)Activator.CreateInstance(questDef.generatorClass);
             gen.def = questDef;
@@ -39,14 +47,14 @@ namespace FamiliaMyth.Incidents
 
             var envoy = GenerateEnvoy(map);
             if (envoy == null) return false;
-            
+
             SendArrivalLetter(envoy);
             GameComponent_GuildEnvoyTracker.Register(envoy, gen);
 
             return true;
         }
 
-        private Pawn GenerateEnvoy(Map map)
+        private static Pawn GenerateEnvoy(Map map)
         {
             var kindDef = PawnKindDef.Named("Guild_Envoy");
             var faction = Find.FactionManager.FirstFactionOfDef(FactionDef.Named("Guild"));
@@ -72,7 +80,8 @@ namespace FamiliaMyth.Incidents
 
             return envoy;
         }
-        private void SendArrivalLetter(Pawn envoy)
+
+        private static void SendArrivalLetter(Pawn envoy)
         {
             TaggedString label = "公会使者到访";
             TaggedString text = $"来自冒险者公会的使者 {envoy.Name.ToStringShort} 已到达你的据点。\n\n" +

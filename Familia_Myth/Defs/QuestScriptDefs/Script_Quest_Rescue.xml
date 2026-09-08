@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- 日常任务「紧急救援」脚本 -->
+  <!-- 流程：接取 → 站点（兽群或异象场景 + 遇难者）→ 威胁清除(停2天表/伤员临时加入玩家派系) -->
+  <!--       → 3~6 小时 → 穿梭机就地降落 → 降落信件 → 3 天登机窗口 → 登船起飞信号 → 归还结算 -->
+  <QuestScriptDef>
+    <defName>Quest_Rescue</defName>
+    <autoAccept>true</autoAccept>
+    <defaultHidden>false</defaultHidden>
+    <isRootSpecial>true</isRootSpecial>
+    <rootSelectionWeight>0</rootSelectionWeight>
+    <rootMinPoints>200</rootMinPoints>
+    <affectedByPopulation>false</affectedByPopulation>
+
+    <questNameRules>
+      <rulesStrings>
+        <li>questName->紧急救援</li>
+      </rulesStrings>
+    </questNameRules>
+
+    <questDescriptionRules>
+      <rulesStrings>
+        <li>questDescription->殖民地附近传来遇难信号。一支旅队遭到袭击，急需救援。\n\n前往标记地点清除威胁并营救伤员。清除威胁后伤员将临时加入我方，请护送其登机——其所属派系的穿梭机将就地降落接走伤员（降落后 3 天内登机）。\n\n酬劳按成功登机撤离的伤员比例结算。</li>
+      </rulesStrings>
+    </questDescriptionRules>
+
+    <root Class="QuestNode_Sequence">
+      <nodes>
+
+        <!-- 根节点：计算点数、遇难者与站点参数 -->
+        <li Class="FamiliaMyth.Quest.QuestNode_Root_Daily_Rescue" />
+
+        <li Class="QuestNode_Sequence">
+          <nodes>
+
+            <!-- 目标地点 -->
+            <li Class="QuestNode_GetSiteTile">
+              <storeAs>siteTile</storeAs>
+              <preferCloserTiles>true</preferCloserTiles>
+            </li>
+
+            <!-- 生成遇难站点（威胁 part 已含于 sitePartsParams） -->
+            <li Class="QuestNode_SubScript">
+              <def>Util_GenerateSite</def>
+            </li>
+
+            <!-- 将站点添加到世界地图 -->
+            <li Class="QuestNode_SpawnWorldObjects">
+              <worldObjects>$site</worldObjects>
+            </li>
+
+            <!-- 2 天搜救时限（搜救完成=威胁清除时由过程 part 发 rescueDone 停表） -->
+            <li Class="QuestNode_WorldObjectTimeout">
+              <worldObject>$site</worldObject>
+              <delayTicks>120000</delayTicks>
+              <destroyOnCleanup>true</destroyOnCleanup>
+              <inSignalDisable>rescueDone</inSignalDisable>
+              <node Class="QuestNode_Sequence">
+                <nodes>
+                  <li Class="QuestNode_Letter">
+                    <label>救援失败</label>
+                    <text>救援任务[resolvedQuestName]超时，威胁未能及时清除。任务失败。</text>
+                  </li>
+                  <li Class="QuestNode_End">
+                    <outcome>Fail</outcome>
+                  </li>
+                </nodes>
+              </node>
+            </li>
+
+            <!-- 威胁清除后 3~6 小时(rescueEvacuate)：穿梭机就地降落，登机窗口 3 天（满载即飞） -->
+            <!-- 仅遇难者可登机：required=$victims 无条件放行；acceptColonists=false 关闭"玩家殖民者搭便车"通道 -->
+            <li Class="QuestNode_Signal">
+              <inSignal>rescueEvacuate</inSignal>
+              <node Class="QuestNode_SubScript">
+                <def>Util_TransportShip_Pickup</def>
+                <parms>
+                  <requiredPawns>$victims</requiredPawns>
+                  <owningFaction>$rescueFaction</owningFaction>
+                  <leaveDelayTicks>180000</leaveDelayTicks>
+                  <leaveImmediatelyWhenSatisfied>true</leaveImmediatelyWhenSatisfied>
+                  <acceptColonists>false</acceptColonists>
+                </parms>
+              </node>
+            </li>
+
+            <!-- 穿梭机落地（thing.Spawned：Skyfaller 落地放出穿梭机时由 thing.questTags 广播）→ 通知玩家登机 -->
+            <!-- 注意勿用 pickupShipThing.Arrived：Arrived 由 TransportShip.questTags 广播，util 未给其打 tag，Quest 收不到（见 C-05 第四节） -->
+            <li Class="QuestNode_Signal">
+              <inSignal>pickupShipThing.Spawned</inSignal>
+              <node Class="QuestNode_Letter">
+                <label>救援穿梭机已抵达</label>
+                <text>穿梭机已降落在遇难地点。\n\n请让获救的伤员尽快登机——穿梭机将在 3 天后起飞。</text>
+              </node>
+            </li>
+
+            <!-- 装配部件（在 util 之后，读取 pickupShipThing） -->
+            <li Class="FamiliaMyth.Quest.QuestNode_RescueSetup" />
+
+          </nodes>
+        </li>
+
+      </nodes>
+    </root>
+  </QuestScriptDef>
+
+</Defs>

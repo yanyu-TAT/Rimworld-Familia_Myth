@@ -31,7 +31,7 @@
       <nodes>
 
         <!-- 考核根节点：读取 $category、计算难度、生成站点参数 -->
-        <li Class="Familia_Myth.Source.QuestNode_Root_RankUp">
+        <li Class="FamiliaMyth.Quest.QuestNode_Root_RankUp_SiteClearance">
           <category>$category</category>
         </li>
 
@@ -63,10 +63,11 @@
                   <li Class="FamiliaMyth.Quest.QuestNode_RankUpComplete">
                     <categoryDef>$category</categoryDef>
                   </li>
-                  <!-- 发放伟业值（数值由统一点数计算写入 slate，强制任务自动 ×1.5 后更高） -->
-                  <li Class="FamiliaMyth.Quest.QuestNode_RankUpExploits">
+                  <!-- 发放伟业值（威胁清除时点按站点在场人员快照；无接取者 → 全员均分） -->
+                  <li Class="FamiliaMyth.Quest.QuestNode_ExploitsReward">
                     <site>$site</site>
                     <totalExploits>$totalExploits</totalExploits>
+                    <letterLabel>强制任务完成</letterLabel>
                   </li>
                   <!-- 触发奖励结算 -->
                   <li Class="QuestNode_SendSignals">

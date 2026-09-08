@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- 探索类 · 日常任务（紧急救援） -->
+  <FamiliaMyth.Quest.GuildQuestDef>
+    <defName>GuildQuest_Rescue</defName>
+    <label>紧急救援</label>
+    <generatorClass>FamiliaMyth.Quest.GuildQuestGenerator_Daily_Rescue</generatorClass>
+    <category>Explorer</category>
+    <type>Daily</type>
+    <letterText>使者带来了遇难信号。\n\n一支受困的旅队在殖民地附近遭到狂暴兽群（或异象）袭击，成员倒地被围，急需救援。\n\n前往标记地点，清除威胁并营救伤员，将他们带回据点后，他们所属的派系会派穿梭机接走伤员。\n\n酬劳随成功获救并登船的人数结算。是否接受？</letterText>
+  </FamiliaMyth.Quest.GuildQuestDef>
+
+</Defs>

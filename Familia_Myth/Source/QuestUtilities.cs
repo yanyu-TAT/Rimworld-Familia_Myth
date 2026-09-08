@@ -56,5 +56,46 @@ namespace FamiliaMyth.Quest
                 expSum += pharna.experience;
             }
         }
+
+        //按参与者名单分配伟业值并发送结算信。
+        //规则：acceptor 在名单且多人 → acceptor 得 50%，名单其余均分；否则名单全员均分（acceptor 可为 null）
+        //参与者过滤（存活且有恩惠）在方法内进行；成功发放返回 true。
+        public static bool DistributeExploits(List<Pawn> participants, Pawn acceptor,
+            float totalExploits, string letterLabel, string letterHeader)
+        {
+            if (totalExploits <= 0f || participants == null) return false;
+
+            var list = participants.Where(p => p != null && !p.Dead && p.GetPharna() != null).ToList();
+            if (list.Count == 0) return false;
+
+            bool acceptorPresent = acceptor != null && list.Contains(acceptor);
+            List<(Pawn pawn, float amount)> gains = new();
+            foreach (var p in list)
+            {
+                float share;
+                if (acceptorPresent && list.Count > 1)
+                    share = p == acceptor
+                        ? totalExploits * 0.5f
+                        : totalExploits * 0.5f / (list.Count - 1);
+                else
+                    share = totalExploits / list.Count;
+
+                var pharna = p.GetPharna();
+                var a = pharna?.GainExploits(share);
+                if (a is float f && f > 0)
+                    gains.Add((p, f));
+            }
+            if (gains.Count == 0) return false;
+
+            TaggedString text = letterHeader;
+            foreach (var (pawn, amount) in gains)
+                text += $"{pawn.Name.ToStringShort} 获得了 {amount:F1} 点伟业值\n";
+
+            Letter letter = acceptor != null
+                ? LetterMaker.MakeLetter(letterLabel, text, LetterDefOf.PositiveEvent, acceptor)
+                : LetterMaker.MakeLetter(letterLabel, text, LetterDefOf.PositiveEvent);
+            Find.LetterStack.ReceiveLetter(letter);
+            return true;
+        }
     }
 }

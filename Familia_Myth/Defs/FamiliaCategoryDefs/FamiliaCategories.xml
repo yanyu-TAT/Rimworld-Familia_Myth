@@ -14,6 +14,8 @@
     </rankDefs>
     <dailyQuests>
       <li>GuildQuest_Daily_SiteClearance</li>
+      <li>GuildQuest_Rescue</li>
+      <li>GuildQuest_Daily_CriminalHunt</li>
     </dailyQuests>
     <rankUpQuests>
       <li>GuildQuest_RankUp_SiteClearance</li>

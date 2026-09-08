@@ -85,3 +85,11 @@
 - 是否规范缺失: 是
 - 规范反哺: AGENTS.md「资源与性能规范（RimWorld 特有）」新增"游戏内时长换算先确认基类单位（cooldown 单位秒，1 游戏内小时=2500 ticks）"。
 - 关联: 次数 1
+
+## BUG-010 | 原版 util SlateRef 参数类型误用（sendAwayIfAllDespawned 传布尔）
+- 现象: 罪犯追捕任务接取瞬间生成报错 `Could not convert SlateRef "$sendAwayIfAllDespawned" (String) to List<Thing>`（StackTrace 指向 `QuestNode_AddShipJob_Wait.AddJobVars`），任务无法生成。
+- 根因: 向原版 util `Util_TransportShip_Pickup` 的 parms 传 `<sendAwayIfAllDespawned>true</sendAwayIfAllDespawned>`，按注释"send shuttle away if all things are despawned"误当作布尔开关；反编译确认 `QuestNode_AddShipJob_Wait.sendAwayIfAllDespawned` 实为 `SlateRef<List<Thing>>`——语义是"这些物品全部 despawn 即提前送走"的**物品名单**。字面量/字符串无法转换为 `List<Thing>`。
+- 修复方案: 删除该 parms 项（Rescue 亦未传）；死亡/失踪已由 `quest.End` → util 自带 `SendTransportShipAwayOnCleanup` 即时送船，无需该功能。
+- 是否规范缺失: 是
+- 规范反哺: 属「AI 高频错误 #1」变体——XML/SubScript parms 传参同样须反编译核对字段类型与语义，勿按参数名/注释猜类型（存在 SlateRef<bool> 与 SlateRef<List<Thing>> 的歧义字段）。现有 #1 规则已覆盖，不新增条目。
+- 关联: 次数 1

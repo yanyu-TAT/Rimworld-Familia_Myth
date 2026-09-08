@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- 日常任务「罪犯追捕」脚本 -->
+  <!-- 流程：接取 → 站点（罪犯窝点：守卫 + 1 名通缉犯）→ 威胁清除 -->
+  <!--       → 通缉犯已死 → 普通结算；存活 → 引导带回（玩家将其带上远行队离开窝点图） -->
+  <!--       → 离图后 1~3 天 → 公会押解穿梭机降落玩家据点（2 天登机窗口，上船即飞） -->
+  <!--       → 活犯上船起飞 → 双倍结算；起飞时活犯未登机 → 失败；窗口期死亡 → 普通结算 -->
+  <QuestScriptDef>
+    <defName>Quest_CriminalHunt</defName>
+    <autoAccept>true</autoAccept>
+    <defaultHidden>false</defaultHidden>
+    <isRootSpecial>true</isRootSpecial>
+    <rootSelectionWeight>0</rootSelectionWeight>
+    <rootMinPoints>200</rootMinPoints>
+    <affectedByPopulation>false</affectedByPopulation>
+
+    <questNameRules>
+      <rulesStrings>
+        <li>questName->通缉令</li>
+      </rulesStrings>
+    </questNameRules>
+
+    <questDescriptionRules>
+      <rulesStrings>
+        <li>questDescription->公会发布了一份通缉令：通缉犯 [wanted_nameDef] 正藏身于殖民地附近由匪徒把守的窝点中，悬赏其归案。\n\n前往标记地点肃清窝点。通缉犯可就地击毙，也可将其击倒后带回据点——若将其活着送上公会的押解穿梭机，酬劳将翻倍。\n\n注意：通缉犯若被招募、奴役或在押解前失踪，委托将视为失败。</li>
+      </rulesStrings>
+    </questDescriptionRules>
+
+    <root Class="QuestNode_Sequence">
+      <nodes>
+
+        <!-- 根节点：计算点数、守卫参数并生成 1 名通缉犯 -->
+        <li Class="FamiliaMyth.Quest.QuestNode_Root_Daily_CriminalHunt" />
+
+        <li Class="QuestNode_Sequence">
+          <nodes>
+
+            <!-- 目标地点 -->
+            <li Class="QuestNode_GetSiteTile">
+              <storeAs>siteTile</storeAs>
+              <preferCloserTiles>true</preferCloserTiles>
+            </li>
+
+            <!-- 生成罪犯窝点（守卫敌人由 site part 生成） -->
+            <li Class="QuestNode_SubScript">
+              <def>Util_GenerateSite</def>
+            </li>
+
+            <!-- 将站点添加到世界地图 -->
+            <li Class="QuestNode_SpawnWorldObjects">
+              <worldObjects>$site</worldObjects>
+            </li>
+
+            <!-- 清剿时限（威胁清除时由过程 part 发 huntCleared 停表） -->
+            <li Class="QuestNode_WorldObjectTimeout">
+              <worldObject>$site</worldObject>
+              <delayTicksRange>720000~1680000</delayTicksRange>
+              <destroyOnCleanup>true</destroyOnCleanup>
+              <inSignalDisable>huntCleared</inSignalDisable>
+              <node Class="QuestNode_Sequence">
+                <nodes>
+                  <li Class="QuestNode_Letter">
+                    <label>追捕失败</label>
+                    <text>任务[resolvedQuestName]超时，罪犯窝点已被转移。任务失败。</text>
+                  </li>
+                  <li Class="QuestNode_End">
+                    <outcome>Fail</outcome>
+                  </li>
+                </nodes>
+              </node>
+            </li>
+
+            <!-- 通缉犯已被带回据点后（离图 1~3 天到期）：公会押解穿梭机降落玩家据点 -->
+            <!-- 2 天登机窗口，通缉犯（required）上船即飞；全员消失则直接离开 -->
+            <li Class="QuestNode_Signal">
+              <inSignal>huntExtradite</inSignal>
+              <node Class="QuestNode_SubScript">
+                <def>Util_TransportShip_Pickup</def>
+                <parms>
+                  <requiredPawns>$wantedPawns</requiredPawns>
+                  <owningFaction>$guildFaction</owningFaction>
+                  <leaveDelayTicks>120000</leaveDelayTicks>
+                  <leaveImmediatelyWhenSatisfied>true</leaveImmediatelyWhenSatisfied>
+                </parms>
+              </node>
+            </li>
+
+            <!-- 穿梭机降落 → 通知玩家登机 -->
+            <li Class="QuestNode_Signal">
+              <inSignal>pickupShipThing.Arrived</inSignal>
+              <node Class="QuestNode_Letter">
+                <label>押解穿梭机已抵达</label>
+                <text>公会的押解穿梭机已降落在据点。\n\n请指派殖民者，将仍然存活的通缉犯（囚犯）送上穿梭机——可让其倒地或躺在囚犯床上后由殖民者抬上船。\n\n穿梭机将在 2 天后起飞：届时通缉犯未登机则委托失败；若通缉犯死亡，穿梭机将直接离开，委托按完成结算。</text>
+              </node>
+            </li>
+
+            <!-- 装配部件（在 util 之后，读取 pickupShipThing） -->
+            <li Class="FamiliaMyth.Quest.QuestNode_CriminalHuntSetup" />
+
+          </nodes>
+        </li>
+
+      </nodes>
+    </root>
+  </QuestScriptDef>
+
+</Defs>

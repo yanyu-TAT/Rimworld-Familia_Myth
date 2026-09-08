@@ -1,14 +1,13 @@
-using System.Collections.Generic;
 using FamiliaMyth.Familia;
-using FamiliaMyth.Quest;
 using RimWorld;
 using RimWorld.Planet;
 using RimWorld.QuestGen;
 using Verse;
 
-namespace Familia_Myth.Source
+namespace FamiliaMyth.Quest
 {
-    public class QuestNode_Root_RankUp : QuestNode
+    //强制任务「据点清剿」根节点：读取分类、统一计算点数（内部自动 ×1.5）并生成站点参数
+    public class QuestNode_Root_RankUp_SiteClearance : QuestNode
     {
         public SlateRef<FamiliaCategoryDef> category;
 
