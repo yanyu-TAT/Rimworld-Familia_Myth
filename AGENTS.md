@@ -69,6 +69,7 @@
 ❌ 把需跨存读档保持的运行时状态放进不参与 Scribe 序列化的 static / 非 ExposeData 字段（存读档后丢失）
 ❌ 引入可由现有依赖覆盖的新依赖
 ❌ 只走 happy path、吞掉异常、硬编码不再问
+✅ Bug 溯源/修复/调试中勿臆测实际现象——先确认对象与机制身份、原版交互路径，收集现场状态（版本/位置/日志/报错原文）；有疑问直接向用户提出，再动手
 ```
 
 ### Harmony 补丁规范（mod 稳定性关键）
@@ -217,6 +218,7 @@
 | `QuestNode_Root_{Daily/RankUp}_{任务名}`（如 `QuestNode_Root_Daily_SiteClearance` / `QuestNode_Root_RankUp_SiteClearance` / `QuestNode_Root_Daily_Rescue`） | 任务三件套之「根节点」：生成期统一点数/参数、准备任务专属对象、装配过程 part（每任务自实现，规格相似，见 C-02） |
 | `QuestNode_RescueSetup` + `QuestPart_Rescue` / `QuestPart_RescueSpawn` + `QuestPart_ExtraFaction` | 「紧急救援」过程 part（QuestPartActivable 状态机）：威胁清除当拍幸存者难民式临时加入玩家派系（`SetFaction` 玩家 + HomeFaction「原派系」标记 → 上头像栏可指挥、lodger 限制自动生效、守点 lord 当拍释放不再发放），结算一律归还原派系（就地接送流程见 C-02） |
 | `QuestNode_Root_Daily_CriminalHunt` / `QuestNode_CriminalHuntSetup` + `QuestPart_CriminalHunt` / `QuestPart_CriminalHuntSpawn` | 「罪犯追捕」过程 part：Outpost 守卫 + 1 名同派系通缉犯同场（守点迎战）；威胁清除分流（击毙 → 普通结算；存活 → 打包带离窝点、离图计时 1~3 天 → 公会押解穿梭机 2 天窗口）；活犯上船起飞 → ×2 结算（囚犯 despawn discard、不改派系）；死亡任意原因 → 普通结算；招募/奴役或活着失踪 → 失败（流程见 C-02） |
+| `QuestNode_Root_Daily_AncientRelic` / `QuestNode_AncientRelicSetup` + `QuestPart_AncientRelic`（圣物匣 `Thing_AncientRelic` + 命名 `AncientRelicNamer`） | 「遗迹探索」过程 part：生成原版 AncientComplex 遗迹（2~10 格、12 天时限）；图内唯一任务机关箱（HermeticCrate）室内落位装圣物匣（随机异教文化现造名）→ 开箱 = 发现（唤醒房内沉睡守卫 + 双计时：1~3 天 0.5× 袭击打据点 / 3~5 天公会穿梭机 2 天窗口）；圣物装船起飞 → 结算；窗口未装 / 圣物被毁或失踪 → 失败（详见 `plans/遗迹探索任务开发计划.md`） |
 | `GameComponent_*.cs`                            | 存档级追踪（`FamiliaRankTracker`：多分类评级/升级点数/强制任务与重发冷却、统一发布轮询、公会派系补建；`GuildEnvoyTracker`：全局单槽待对话使者）+ 位移/击退引擎（LanceCharge/RoundhouseKick） |
 | `JobDriver_*`                               | 工作驱动（对话使者等）             |
 | `MentalState_*` / `Hediff_*` / `Verb_*`     | 精神状态、词缀、咏唱 verb         |

@@ -14,3 +14,4 @@ ExampleMods/
 plans/
 lora-prep/
 .dsh-pyenv/
+.dsh-dotnet/

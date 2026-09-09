@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- 任务物品：远古圣物匣（占位物：供玩家从遗迹寻回并交付；禁卖）
+       关键字段对齐原版 ResourceBase（selectable/alwaysHaulable/drawGUIOverlay 缺失会导致
+       「能看见但鼠标点不中、无法 haul/携带」——原版物品基类均为 true，ThingDef 默认 false）
+       thingCategories 非空（挂原版 Artifacts）→ EverStorable=true（可被存储区接受、可入库搬运） -->
+  <ThingDef>
+    <defName>FM_AncientRelicArtifact</defName>
+    <label>古代圣物匣</label>
+    <description>一枚封存的圣物匣。据信曾为某个失落文明所敬奉，历经岁月仍保存完好。</description>
+    <thingClass>FamiliaMyth.Quest.Thing_AncientRelic</thingClass>
+    <category>Item</category>
+    <techLevel>Archotech</techLevel>
+    <thingCategories>
+      <li>Artifacts</li>
+    </thingCategories>
+    <drawerType>MapMeshOnly</drawerType>
+    <selectable>true</selectable>
+    <alwaysHaulable>true</alwaysHaulable>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <stackLimit>1</stackLimit>
+    <tradeability>None</tradeability>
+    <useHitPoints>true</useHitPoints>
+    <rotatable>false</rotatable>
+    <pathCost>14</pathCost>
+    <graphicData>
+      <texPath>Things/Item/Relic/RelicInertBox</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>800</MarketValue>
+      <Mass>1.5</Mass>
+      <MaxHitPoints>200</MaxHitPoints>
+      <Beauty>1</Beauty>
+    </statBases>
+    <altitudeLayer>Item</altitudeLayer>
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <comps>
+      <li Class="CompProperties_Forbiddable"/>
+    </comps>
+  </ThingDef>
+
+</Defs>

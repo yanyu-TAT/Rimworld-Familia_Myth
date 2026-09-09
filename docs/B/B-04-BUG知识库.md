@@ -93,3 +93,54 @@
 - 是否规范缺失: 是
 - 规范反哺: 属「AI 高频错误 #1」变体——XML/SubScript parms 传参同样须反编译核对字段类型与语义，勿按参数名/注释猜类型（存在 SlateRef<bool> 与 SlateRef<List<Thing>> 的歧义字段）。现有 #1 规则已覆盖，不新增条目。
 - 关联: 次数 1
+
+## BUG-011 | 罪犯追捕：通缉犯被扛起/装入运输容器被误判「失踪」
+- 现象: 玩家把倒地通缉犯抱起搬运、装入空投仓或（Odyssey）自家穿梭机时，任务数拍内误判「通缉犯失踪」失败。
+- 根因: 押送合法性判定以 `Spawned` 为主代理：pawn 被扛起（`ParentHolder` 变为搬运者 `Pawn_CarryTracker`）或装入任意运输容器（空投仓/穿梭机 CompTransporter、gravship 等）时会 `DeSpawn` 且不世界化，落入「未 spawn 且非玩家远行队 → 失踪」的错误分支；被扛着时还误判为"已离窝点"提前启动押解计时。
+- 修复方案: 押送合法性改为四档判定——显式位置（窝点图/家图+玩家囚犯/玩家远行队）+ 被玩家成员扛起（`Pawn.CarriedBy`，搬运者须在场且玩家派系）+ **任意运输容器 = 押送待定（不判死，落定后按地图归属判定：落玩家据点继续、落他派系/无人地失败）** + 无主世界 pawn（失踪）；离图/计时判定改用「pawn 或搬运者所在地图」(`WantedLocationMap`)。
+- 是否规范缺失: 是（建议）
+- 规范反哺: 建议 AGENTS.md「核心开发原则」新增"pawn 存在性/位置判定勿以 `Spawned` 单断言，须组合 `Spawned/IsWorldPawn/CarriedBy/ParentHolder`；容器/搬运/载具态需单列"——是否纳入规则由用户确认，暂未写入。
+- 关联: 次数 1
+
+## BUG-012 | 自建 ThingDef 物品「能看见但无法选中/无法搬运」
+- 现象: 遗迹探索任务物品（自定义 `FM_AncientRelicArtifact`，直接手写 `ThingDef`）从机关箱弹出后照常渲染、名字正常，但鼠标完全点不中（无信息卡）；右键无"搬到储存区"、小人也无法 haul；穿梭机也无法装载该物。
+- 根因: 自建 `ThingDef` 没继承物品基类 `ResourceBase`（Core `Items_Resource_Base.xml`），漏了物品可交互的必要字段——`ThingDef.selectable` **默认 false**（未开 → 无法鼠标点选）、`EverHaulable = alwaysHaulable || designateHaulable` **默认 false**（未开 → 无法 haul/入储存/装仓）；且漏 `drawGUIOverlay/alwaysHaulable/Mass 等`。原版资源都经基类显式 `<selectable>true</selectable>`、`<alwaysHaulable>true</alwaysHaulable>`、`<drawGUIOverlay>true</drawGUIOverlay>`、`<Mass>` 开启。
+- 修复方案: 自建物品 def 补齐与 `ResourceBase` 等价的字段：`<category>Item</category>` + `<selectable>true>` + `<alwaysHaulable>true>` + `<drawGUIOverlay>true>` + `<Mass>`(+`MaxHitPoints`)+ `CompProperties_Forbiddable`；**且必须给一个 `thingCategories`（`ThingDef.EverStorable` 要求 `thingCategories` 非空才返回 true，否则任何存储区 filter 的 `disallowNotEverStorable` 都不接受 → 即便"全部允许"也"无可用存储点"、无法搬运入库）**；或直接 `ParentName="ResourceBase"` 继承后覆盖。
+- 是否规范缺失: 是
+- 规范反哺: AGENTS.md「八、AI 高频错误」新增防犯——"自建 ThingDef 若非直接继承原版物品基类（`ResourceBase`），须显式补 `selectable/alwaysHaulable/drawGUIOverlay/Mass` 等字段，否则物品'可见却不可点选/不可搬运'；枚举与默认值(如 `Tradeability.None`、`ThingDef.selectable`、`EverHaulable`)须反编译核对默认值，勿臆想（此前还把 Tradeability 误写不存在的 `Never`）。"
+- 关联: 次数 1
+
+## BUG-013 | 任务穿梭机（util）装载: `requiredItems` 只判起飞、不触发装载
+- 现象: 任务把目标物品放入 `requiredItems`、配 `leaveImmediatelyWhenSatisfied=true`，但穿梭机降落玩家据点后目标物**不会自动被搬上船**，玩家也"无法指定小人搬运至穿梭机"。
+- 根因: 原版任务穿梭机（`Util_TransportShip_Pickup` 生成、`hideControls=true`）**选中时没有装载 gizmo**；`CompShuttle.requiredItems` 仅用于两件事——`IsRequired` 放行校验 + 起飞时判 `satisfied`（`innerContainer.TotalStackCountOfDef < required.Count`）。真正把物品加入待装清单、让殖民者自动搬运的是 **`CompShuttle.autoload`（`CheckAutoload` 每 120 tick → `AddToTheToLoadList`），该字段默认 `false`、无公开 setter，toggle gizmo 又被隐藏** → 无人触发装载，物品悬空等 2 天窗口结束失败。
+- 修复方案: 在任务部件内「照抄」原版 `CheckAutoload` 的物品装载段（不改原版）：穿梭机落地后每节拍——若舱内目标物计数已满足则跳过；否则用 `TransporterUtility.AllSendableItems(group, map)` 找船所在图可送达的目标物，`清空 leftToLoad` 后 `comp.AddToTheToLoadList(new TransferableOneWay{things=匹配物}, count)` → 殖民者自动 haul 入舱 → 装齐 → `leaveImmediatelyWhenSatisfied` 起飞。
+- 是否规范缺失: 是
+- 规范反哺: AGENTS.md「核心开发原则」新增"复用原版 util/穿梭机交付时，`requiredItems` 只作装载校验与起飞判定，**不驱动装载**；任务船无 gizmo、`autoload` 默认关且无 setter——需在部件内自行把 required 物加入待装清单（`AddToTheToLoadList`）实现自动装载"。另提示协作：**原版任务穿梭机 ≠ 玩家自有穿梭机（Odyssey `Ship_PassengerShuttle`）**，交互能力不同，勿混用（载人走"选中 pawn 右击穿梭机 floatmenu 登机"）。
+- 关联: 次数 1
+
+## BUG-014 | 协作经验：勿臆测机制/现象，先以原版事实与现场证据对齐
+- 背景: 遗迹探索任务联调中，本 agent 曾：① 凭印象把任务穿梭机当"有装载 gizmo 的载具"设计装载交互；② 对"物品点不中/无法 haul""穿梭机不装货"等现场现象靠猜根因而非求证，反复返工。用户提示「原版的 thing 并不是直接就是物品」「任务穿梭机与玩家穿梭机是两个东西」「对测试中的实际现象有疑问直接提出，不要臆测」。
+- 经验/纠正:
+  - 原版中"一个能交互的物品"需具备成套 def 字段（category/selectable/alwaysHaulable/EverHaulable/drawGUIOverlay/mass…），"能看到"≠"可选中/haul"；任务用特殊工具与 DLC 载具是不同对象，能力面不同。
+  - 交付/装载类任务先确认玩家可用的原版交互路径（gizmo? floatmenu? 自动?），再定设计；不确定就先读源码/问用户，不自作假设。
+  - 现场 Bug（点不中/装不上/存储区报错）先向用户收集：def 版本是否最新、物品所在状态（地面/背包/容器）、报错原文，再定位；不臆测单一根因。
+- 是否规范缺失: 是
+- 规范反哺: 已纳入 `AGENTS.md`「四、强制规范 · 核心开发原则」——"Bug 溯源/修复/调试中勿臆测实际现象：先确认对象与机制身份、原版交互路径，收集现场状态（版本/位置/日志/报错原文）；有疑问直接向用户提出，再动手"。
+- 关联: 次数 1
+
+## BUG-015 | 任务 util 穿梭机装物品：把物塞进 toLoad 但不 InitiateLoading → HaulToContainer 秒败死循环
+- 现象: 遗迹探索交付阶段给穿梭机 `AddToTheToLoadList` 塞 required 物后，出现连续刷屏 `Yang started 10 jobs in one tick ... HaulToTransporter`（小人反复 StartJob→立即 EndJob(Fail)→再派，无限循环）。
+- 根因（经源码深挖 + 用户提问校准）: 穿梭机是**双层 comp**——`CompShuttle : ThingComp`（逻辑/起飞/autoload/playerShuttle），货舱与装载在另一独立 comp `CompTransporter`（`CompShuttle.Transporter => parent.GetComp<CompTransporter>()`）。`JobDriver_HaulToContainer`（HaulToTransporter 的基类）有 `FailOn(TransporterUtility.WasLoadingCanceled(Container))`，而 `WasLoadingCanceled = comp != null && !comp.LoadingInProgressOrReadyToLaunch`；`LoadingInProgressOrReadyToLaunch` 在 `groupID < 0` 时仅 `parent.IsInCaravan()`——**只有 `TransporterUtility.InitiateLoading` 分配 groupID 后船才处于可装载态**。util 任务船（hideControls、非 playerShuttle、autoload 关、无 gizmo）默认从不 InitiateLoading → 任何物品 `HaulToTransporter`（自动或手动 WorkGiver 强制）首帧即被该 FailOn 判失败 → job 失败后 toLoad 仍有货 → 无限重派。
+- 关键参照: 「抱囚犯上船」`FloatMenuOptionProvider_CarryToShuttle` 也用同一 `HaulToTransporter`（A=囚犯,B=船），但其在派 job 前**先 `TransporterUtility.InitiateLoading`**（L48-50），故不失败——**物品与被抬的囚犯装载是同一驱动 API，前置同为"船须先 InitiateLoading"**；区别只是装物品的 `WorkGiver_LoadTransporters.JobOnTransporter` 不负责 InitiateLoading。
+- 修复方案: 部件内穿梭机落地后（幂等）——若 `!Transporter.LoadingInProgressOrReadyToLaunch` → `TransporterUtility.InitiateLoading(单船)`；再把 required 物**幂等**加入 toLoad（已在则跳过、绝不清空重建）→ WorkGiver 自动/玩家强制 `HaulToTransporter` 均能完成（有搬运演出）→ 装齐起飞。
+- 是否规范缺失: 是
+- 规范反哺: AGENTS.md「AI 高频错误」防犯补一条——"给 transporter/shuttle 手动排待装(toLoad)前，必须先确认 `LoadingInProgressOrReadyToLaunch`（必要时 `InitiateLoading`），否则 `JobDriver_HaulToContainer` 被 `WasLoadingCanceled` 秒判失败并死循环；装载 job 与载人(CarryToShuttle)同机制，勿自造驱动"。
+- 关联: 次数 1
+
+## BUG-016 | 机关箱落位校验误用 Fogged → 进图当拍生成失败、延迟到玩家揭示
+- 现象: `TrySpawnCrateAndRelic` 在进图时落位失败（日志可见生成尝试自动失败），仅当玩家深入遗迹揭示迷雾后才轮询成功 → 机关箱"延迟出现"。
+- 根因: `CanPlaceAt` 落位校验要求 `!Fogged`；地图刚生成（MapGenerated/首个节拍）时复杂体整体处于迷雾 → 全部候选格被 Fogged 判否 → 当拍生成失败。
+- 修复方案: 落位校验去掉 `Fogged` 检查（root 与占格）；雾中生成本身安全（原版 genstep 全部在雾中落物，玩家靠近自然揭示）。
+- 是否规范缺失: 是
+- 规范反哺: AGENTS.md「资源与性能规范（RimWorld 特有）」补一条——"地图生成期/首节拍的自建落位校验不要用 `Fogged` 当排除条件（生成时全图在迷雾，会误杀所有候选）；迷雾对 spawn 无副作用"。
+- 关联: 次数 1

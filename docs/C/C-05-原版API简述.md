@@ -118,6 +118,20 @@ GenerateShuttle(Faction owningFaction = null, IEnumerable<Pawn> requiredPawns = 
 - 默认 `acceptColonists=false`；SubScript util（如 `Util_TransportShip_Pickup`）经 parms → slate → 节点字段传入。
 - 出处：`decompiledFiles/RimWorld.QuestGen/QuestGen_Shuttle.cs`、`RimWorld.QuestGen/QuestNode_GenerateShuttle.cs`。
 
+### 装载机制（物品/被抬者共用；任务 util 船需自行 InitiateLoading）——B-04 BUG-013/015
+- **双层 comp**：穿梭机 thing = `CompShuttle : ThingComp`（登机/起飞/autoload/playerShuttle 判定）+ 独立 `CompTransporter`（货舱 innerContainer/leftToLoad/装载状态）；`CompShuttle.Transporter => parent.GetComp<CompTransporter>()`（CompShuttle.cs ≈L115）。
+- **requiredItems/requiredPawns 只用于两件事**：`IsRequired/IsAllowed` 放行校验 + 起飞 `satisfied` 判定（innerContainer 计数）；**不驱动装载**。
+- **装载前置 = `TransporterUtility.InitiateLoading`**：`LoadingInProgressOrReadyToLaunch` 在 `groupID<0` 时仅 `parent.IsInCaravan()`；InitiateLoading 分配 groupID 后才可装载。谁触发：`playerShuttle` 且舱内有殖民者（CompShuttle.CompTick ≈L495）、autoload 开关（≈L390）、玩家 gizmo/载人浮标（≈L418）。**util 任务船（hideControls、非 playerShuttle、autoload 关）三者皆不触发 → 默认不可装载**。
+- **`JobDriver_HaulToContainer`（物品 haul 与「抱囚犯」`FloatMenuOptionProvider_CarryToShuttle` 共用）**：目标 A=货/被抬者、B=穿梭机；全局 `FailOn(TransporterUtility.WasLoadingCanceled(Container))`（= 船未可装载）→ 未 InitiateLoading 时任何 HaulToTransporter 首帧秒败 → 若 toLoad 恒有货则死循环刷 "started N jobs in one tick"。样板 `CarryToShuttle` 派 job 前先 `InitiateLoading`。
+- 项目落地：部件内穿梭机落地后幂等 `InitiateLoading` + 幂等把 required 物加入 toLoad（不清空），即与抱囚犯同机制。
+- 出处：`decompiledFiles/RimWorld/CompShuttle.cs`、`RimWorld/CompTransporter.cs`、`RimWorld/TransporterUtility.cs`（WasLoadingCanceled ≈L43）、`RimWorld/FloatMenuOptionProvider_CarryToShuttle.cs`（L48-55）、`decompiledFiles/Verse.AI/JobDriver_HaulToContainer.cs`（FailOn ≈L134）。
+
+### 自建物品 def 可交互/可搬运/可入库的前置字段（B-04 BUG-012）
+- `selectable` **默认 false**（不开则可见但鼠标点不中）；`EverHaulable = alwaysHaulable || designateHaulable` 默认 false（不开则不可 haul）；`drawGUIOverlay`、`Mass`（haulable 需 mass）。
+- **`ThingDef.EverStorable` 要求 `thingCategories` 非空**（category=Item 不够）→ 否则存储区 filter 的 `disallowNotEverStorable` 恒拒 → 即便"全部允许"也提示无存储点、无法入库（EverStorable 也影响装仓 haul）。
+- 原版物品基类 `ResourceBase`（Core Items_Resource_Base.xml）显式开上述字段；自建 def 不继承时须逐项补齐（或挂既有 thingCategory，如 Artifacts）。
+- 出处：`decompiledFiles/Verse/ThingDef.cs`（EverStorable ≈L1394）、`RimWorld/StorageSettings.cs`（AllowedToAccept ≈L97）、`RimWorld/Tradeability` 枚举（无 Never，禁卖用 None）。
+
 ## 五、Lord 与离图安排
 
 - **lord 释放路径**：`Pawn.SetFaction` 内部即 `GetLord()?.Notify_PawnLost(pawn, PawnLostCondition.ChangedFaction)`；也可手动 `pawn.Map.lordManager.RemoveLord(pawn.GetLord())`（单成员 defend lord）。

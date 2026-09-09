@@ -99,4 +99,7 @@
 	<!-- Ranged dodge text -->
 	<FamiliaMyth.TextMote_Dodge>Dodge</FamiliaMyth.TextMote_Dodge>
 
+	<!-- Ancient relic quest - relic box description template ({0} = generated foreign-culture relic name) -->
+	<FM_AncientRelic_Description>{0} - a sealed relic box once venerated by a long-vanished civilization. Its inscriptions and ornaments belong to no culture known today, and only its ageless craftsmanship hints at its origin. The Guild will pay handsomely for it.</FM_AncientRelic_Description>
+
 </LanguageData>
