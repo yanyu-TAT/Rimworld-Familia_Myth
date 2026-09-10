@@ -9,8 +9,15 @@ namespace FamiliaMyth.Patch
     {
         public static void Postfix(Hediff_Injury __instance, float amount)
         {
-            //每10点回复的伤势1点
-            __instance.pawn.GetPharna()?.GainStatus(PharnaStatusType.Endurance, amount * 0.1f);
+            try
+            {
+                //每10点回复的伤势1点
+                __instance.pawn.GetPharna()?.GainStatus(PharnaStatusType.Endurance, amount * 0.1f);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"[FamiliaMyth] {nameof(Patch_Hediff_Injury)} error: {ex}");
+            }
         }
     }
 }

@@ -9,8 +9,15 @@ namespace FamiliaMyth.Patch
     {
         public static void Postfix(Pawn __instance, DamageInfo dinfo, float totalDamageDealt)
         {
-            //每点承受伤害0.5点
-            __instance.GetPharna()?.GainStatus(PharnaStatusType.Endurance, totalDamageDealt / 2f);
+            try
+            {
+                //每点承受伤害0.5点
+                __instance.GetPharna()?.GainStatus(PharnaStatusType.Endurance, totalDamageDealt / 2f);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"[FamiliaMyth] {nameof(Patch_Pawn)} error: {ex}");
+            }
         }
     }
 }

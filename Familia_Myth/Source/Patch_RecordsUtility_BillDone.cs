@@ -11,26 +11,33 @@ namespace FamiliaMyth.Patch
         [HarmonyPostfix]
         public static void Postfix(Pawn billDoer, List<Thing> products)
         {
-            var pharna = billDoer.GetPharna();
-            var amount = 0f;
-            if (pharna == null) return;
-            foreach (var item in products)
+            try
             {
-                if (item.TryGetQuality(out QualityCategory quality))
-                    amount += quality switch {
-                        QualityCategory.Awful => 0.5f,
-                        QualityCategory.Poor => 1f,
-                        QualityCategory.Normal => 2f,
-                        QualityCategory.Good => 5f,
-                        QualityCategory.Excellent => 10f,
-                        QualityCategory.Masterwork => 20f,
-                        QualityCategory.Legendary => 50f,
-                        _ => 0f
-                    };
-            }
+                var pharna = billDoer.GetPharna();
+                var amount = 0f;
+                if (pharna == null) return;
+                foreach (var item in products)
+                {
+                    if (item.TryGetQuality(out QualityCategory quality))
+                        amount += quality switch {
+                            QualityCategory.Awful => 0.5f,
+                            QualityCategory.Poor => 1f,
+                            QualityCategory.Normal => 2f,
+                            QualityCategory.Good => 5f,
+                            QualityCategory.Excellent => 10f,
+                            QualityCategory.Masterwork => 20f,
+                            QualityCategory.Legendary => 50f,
+                            _ => 0f
+                        };
+                }
 
-            //按照完成的品质获得
-            pharna.GainStatus(PharnaStatusType.Dexterity, amount);
+                //按照完成的品质获得
+                pharna.GainStatus(PharnaStatusType.Dexterity, amount);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"[FamiliaMyth] {nameof(Patch_RecordsUtility_BillDone)} error: {ex}");
+            }
         }
     }
 }

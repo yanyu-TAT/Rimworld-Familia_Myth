@@ -1,4 +1,4 @@
-﻿using FamiliaMyth.Abilities;
+using FamiliaMyth.Abilities;
 using FamiliaMyth.Pharna;
 using HarmonyLib;
 using RimWorld;
@@ -16,29 +16,38 @@ namespace FamiliaMyth.Patch
 
         public static bool Prefix(Pawn ___pawn, DamageInfo dinfo, ref bool absorbed)
         {
-            var skill = ___pawn.GetActiveSkill<Skill_IaiSpiritSlash>();
-            if (skill == null) return true; //非居合状态：正常结算伤害
-
-            //吸收伤害并记录
-            skill.absorbedDamage += dinfo.Amount;
-            absorbed = true;
-
-            //格挡特效
-            skill.moteSneathe?.Hit(dinfo.Amount);
-            var loc = ___pawn.DrawPos + Rand.InsideUnitCircleVec3;
-            var cnt = Rand.Range(1, 10);
-            for (int i = 0; i < cnt; i++)
+            try
             {
-                var data = FleckMaker.GetDataStatic(loc, ___pawn.Map, BlockFleckDef);
-                data.velocity = Rand.InsideUnitCircleVec3 * Rand.Range(1f, 1.2f);
-                data.scale = Rand.Range(1f, 1.2f);
-                data.rotation = Rand.Range(0f, 360f);
-                data.instanceColor = Color.red.WithAlpha(0.5f);
-                ___pawn.Map.flecks.CreateFleck(data);
-            }
+                if (___pawn?.Map == null) return true;
+                var skill = ___pawn.GetActiveSkill<Skill_IaiSpiritSlash>();
+                if (skill == null) return true; //非居合状态：正常结算伤害
 
-            //跳过原逻辑
-            return false; 
+                //吸收伤害并记录
+                skill.absorbedDamage += dinfo.Amount;
+                absorbed = true;
+
+                //格挡特效
+                skill.moteSneathe?.Hit(dinfo.Amount);
+                var loc = ___pawn.DrawPos + Rand.InsideUnitCircleVec3;
+                var cnt = Rand.Range(1, 10);
+                for (int i = 0; i < cnt; i++)
+                {
+                    var data = FleckMaker.GetDataStatic(loc, ___pawn.Map, BlockFleckDef);
+                    data.velocity = Rand.InsideUnitCircleVec3 * Rand.Range(1f, 1.2f);
+                    data.scale = Rand.Range(1f, 1.2f);
+                    data.rotation = Rand.Range(0f, 360f);
+                    data.instanceColor = Color.red.WithAlpha(0.5f);
+                    ___pawn.Map.flecks.CreateFleck(data);
+                }
+
+                //跳过原逻辑
+                return false; 
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"[FamiliaMyth] {nameof(Patch_IaiSpiritSlash)} error: {ex}");
+                return true; //出错则放行原版伤害结算
+            }
         }
     }
 }

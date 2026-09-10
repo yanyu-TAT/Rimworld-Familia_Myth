@@ -10,26 +10,34 @@ namespace FamiliaMyth.Patch
     {
         public static bool Prefix(MentalBreaker __instance, ref bool __result)
         {
-            var pawnField = AccessTools.FieldRefAccess<MentalBreaker, Pawn>("pawn");
-            var pawn = pawnField(__instance);
-
-            if (pawn == null) return true;
-
-            var pharna = pawn.GetPharna();
-            if (pharna == null) return true;
-
-            //处于美德状态时拦截其他将触发的精神状态
-            if (pharna.currentVirtue.HasValue)
+            try
             {
-                __result = false;
-                return false;
+                var pawnField = AccessTools.FieldRefAccess<MentalBreaker, Pawn>("pawn");
+                var pawn = pawnField(__instance);
+
+                if (pawn == null) return true;
+
+                var pharna = pawn.GetPharna();
+                if (pharna == null) return true;
+
+                //处于美德状态时拦截其他将触发的精神状态
+                if (pharna.currentVirtue.HasValue)
+                {
+                    __result = false;
+                    return false;
+                }
+                if (pharna.TryTriggerVirtue())
+                {
+                    __result = true;
+                    return false;
+                }
+                return true;
             }
-            if (pharna.TryTriggerVirtue())
+            catch (Exception ex)
             {
-                __result = true;
-                return false;
+                Log.Error($"[FamiliaMyth] {nameof(Patch_MentalBreaker)} error: {ex}");
+                return true; //出错则放行原版崩溃逻辑
             }
-            return true;
         }
     }
 }

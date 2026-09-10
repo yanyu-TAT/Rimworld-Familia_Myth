@@ -11,12 +11,20 @@ namespace FamiliaMyth.Patch
     {
         public static bool Prefix(MentalStateHandler __instance, ref bool __result)
         {
-            if (__instance.CurStateDef != null && __instance.CurStateDef.stateClass == typeof(MentalState_Virtue))
+            try
             {
-                __result = false;
-                return false;
+                if (__instance.CurStateDef != null && __instance.CurStateDef.stateClass == typeof(MentalState_Virtue))
+                {
+                    __result = false;
+                    return false;
+                }
+                return true;
             }
-            return true;
+            catch (Exception ex)
+            {
+                Log.Error($"[FamiliaMyth] {nameof(Patch_MentalState_Controllable_InMentalState)} error: {ex}");
+                return true; //出错则放行原版精神状态判定
+            }
         }
     }
 
@@ -26,12 +34,20 @@ namespace FamiliaMyth.Patch
     {
         public static bool Prefix(Pawn __instance, ref MentalStateDef __result)
         {
-            if (__instance.mindState?.mentalStateHandler?.CurStateDef?.stateClass == typeof(MentalState_Virtue))
+            try
             {
-                __result = null;
-                return false;
+                if (__instance.mindState?.mentalStateHandler?.CurStateDef?.stateClass == typeof(MentalState_Virtue))
+                {
+                    __result = null;
+                    return false;
+                }
+                return true;
             }
-            return true;
+            catch (Exception ex)
+            {
+                Log.Error($"[FamiliaMyth] {nameof(Patch_MentalState_Controllable_MentalStateDef)} error: {ex}");
+                return true; //出错则放行原版
+            }
         }
     }
 
@@ -41,22 +57,38 @@ namespace FamiliaMyth.Patch
     {
         public static void Prefix(MentalStateHandler __instance, MentalStateDef stateDef, ref (Pawn pawn, bool wasDrafted)? __state)
         {
-            if (stateDef != null && stateDef.stateClass == typeof(MentalState_Virtue))
+            try
             {
-                var pawn = AccessTools.FieldRefAccess<MentalStateHandler, Pawn>("pawn")(__instance);
-                __state = (pawn, pawn != null && pawn.Drafted);
+                if (stateDef != null && stateDef.stateClass == typeof(MentalState_Virtue))
+                {
+                    var pawn = AccessTools.FieldRefAccess<MentalStateHandler, Pawn>("pawn")(__instance);
+                    __state = (pawn, pawn != null && pawn.Drafted);
+                }
+                else
+                {
+                    __state = null;
+                }
             }
-            else
+            catch (Exception ex)
             {
+                //置空，令 Postfix 直接跳过
                 __state = null;
+                Log.Error($"[FamiliaMyth] {nameof(Patch_MentalState_Controllable_TryStart)} prefix error: {ex}");
             }
         }
 
         public static void Postfix(MentalStateHandler __instance, (Pawn pawn, bool wasDrafted)? __state)
         {
-            if (__state.HasValue && __state.Value.pawn != null && !__state.Value.pawn.Dead && __state.Value.wasDrafted)
+            try
             {
-                __state.Value.pawn.drafter.Drafted = true;
+                if (__state.HasValue && __state.Value.pawn != null && !__state.Value.pawn.Dead && __state.Value.wasDrafted)
+                {
+                    __state.Value.pawn.drafter.Drafted = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"[FamiliaMyth] {nameof(Patch_MentalState_Controllable_TryStart)} postfix error: {ex}");
             }
         }
     }

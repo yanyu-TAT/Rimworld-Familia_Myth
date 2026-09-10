@@ -1,27 +1,34 @@
-﻿using HarmonyLib;
+using FamiliaMyth.Abilities;
+using HarmonyLib;
 using RimWorld;
 using Verse;
 
-namespace FamiliaMyth.Abilities
+namespace FamiliaMyth.Patch
 {
     [HarmonyPatch(typeof(JobGiver_AIFightEnemy), "UpdateEnemyTarget")]
-    public class Patch_Provoke
+    public static class Patch_Provoke
     {
         private static float Radius => Skill_Provoke.Radius;
 
         public static void Postfix(Pawn pawn)
         {
-            // 只处理地图上存活的敌对单位
-            if (pawn == null || !pawn.Spawned || pawn.Dead || pawn.Downed) return;
-            if (pawn.Faction == null || pawn.Faction == Faction.OfPlayer) return;
+            try
+            {
+                // 只处理地图上存活的敌对单位
+                if (pawn == null || !pawn.Spawned || pawn.Dead || pawn.Downed) return;
+                if (pawn.Faction == null || pawn.Faction == Faction.OfPlayer) return;
 
-            if (Skill_Provoke.Provokers.Count == 0) return;
+                if (Skill_Provoke.Provokers.Count == 0) return;
 
-            var taunter = FindProvokerInRange(pawn);
-            if (taunter == null) return;
+                var taunter = FindProvokerInRange(pawn);
+                if (taunter == null) return;
 
-            Log.Message($"Enemy {pawn.Name.ToStringShort} Provoked By {taunter.Name.ToStringShort}");
-            pawn.mindState.enemyTarget = taunter;
+                pawn.mindState.enemyTarget = taunter;
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"[FamiliaMyth] {nameof(Patch_Provoke)} error: {ex}");
+            }
         }
 
         private static Pawn FindProvokerInRange(Pawn attacker)

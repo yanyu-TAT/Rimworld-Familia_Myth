@@ -11,13 +11,20 @@ namespace FamiliaMyth.Patch
         [HarmonyPostfix]
         public static void Postfix(Pawn killed, Pawn killer)
         {
-            //非友方单位
-            if (killed == null || killer == null || killed.Faction == killer.Faction) return;
+            try
+            {
+                //非友方单位
+                if (killed == null || killer == null || killed.Faction == killer.Faction) return;
 
-            var pharna = killer.GetPharna();
+                var pharna = killer.GetPharna();
 
-            //每次击杀8点
-            pharna?.GainStatus(PharnaStatusType.Strength, 8f);
+                //每次击杀8点
+                pharna?.GainStatus(PharnaStatusType.Strength, 8f);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"[FamiliaMyth] {nameof(Patch_RecordsUtility_PawnKilled)} error: {ex}");
+            }
         }
     }
 }
