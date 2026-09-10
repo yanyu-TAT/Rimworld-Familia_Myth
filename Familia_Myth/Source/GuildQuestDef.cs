@@ -1,4 +1,4 @@
-﻿using FamiliaMyth.Familia;
+using FamiliaMyth.Familia;
 using RimWorld;
 using Verse;
 
@@ -7,8 +7,10 @@ namespace FamiliaMyth.Quest
     public class GuildQuestDef : Def
     {
         public GuildQuestGenerator generator;
-        public GuildQuestGenerator Generator =>
-            generator ??= (GuildQuestGenerator)Activator.CreateInstance(generatorClass);
+
+        //仅供读取 def 级元数据（Script 等）：本实例是缓存单例且带 map 运行时状态，
+        //**不可当作任务生成器复用**（多任务共享会互相覆盖 map）；生成任务请用 GuildQuestGenerator.Create(this)
+        public GuildQuestGenerator Generator => generator ??= GuildQuestGenerator.Create(this);
 
         public FamiliaCategoryDef category;
         public QuestScriptDef Script => Generator.QuestScriptDef;

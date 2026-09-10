@@ -69,7 +69,12 @@
 ❌ 把需跨存读档保持的运行时状态放进不参与 Scribe 序列化的 static / 非 ExposeData 字段（存读档后丢失）
 ❌ 引入可由现有依赖覆盖的新依赖
 ❌ 只走 happy path、吞掉异常、硬编码不再问
+❌ 绕过统一工厂自行构造「Def 派生型生成器 / 工厂」（漏赋 def → 派生属性静默为 null、轻则丢奖励重则 NRE）
+✅ 对外入口（Debug 指令 / 事件回调 / 跨系统调用）先校验关键依赖（null → Log.Error + return），且校验必须排在**任何副作用之前**（如 B-04 BUG-017）
 ✅ Bug 溯源/修复/调试中勿臆测实际现象——先确认对象与机制身份、原版交互路径，收集现场状态（版本/位置/日志/报错原文）；有疑问直接向用户提出，再动手
+✅ 复用原版部件/工具前先反编译核对其**隐式前置条件**——缺数据不会在部件入口报错，往往在更晚的文本解析/结算期才炸；必要时自建预检或兜底（如 B-04 BUG-018 延迟回报部件缺 rewardGiver）
+✅ 跨系统「归位/移交」步骤必须与**信号窗口**对齐：`SentSatisfied/SentUnsatisfied` 当拍成员仍在穿梭机容器内，归位须在此当拍完成（如 B-04 BUG-018）
+❌ 从公共名单派生「待处理子集」时漏列应排除类别（离场名单漏排「已登机/已转正」者 → 把该留下的人赶走，见 B-04 BUG-019）
 ```
 
 ### Harmony 补丁规范（mod 稳定性关键）
@@ -194,6 +199,9 @@
 | 8  | XML 类名缺命名空间前缀 / defName 冲突         | 带前缀、全局唯一                                                      |
 | 9  | 魔法数字无出处                            | 抽 const 并对应设计文档数值                                             |
 | 10 | 在 Patch 中访问未初始化 Find 单例            | 判空 + 阶段判断                                                     |
+| 11 | 复用原版部件未核对其隐式前置（缺数据在解析/结算期才炸）      | 先反编译确认前置；必要时自建预检/兜底                                         |
+| 12 | 归位/移交与信号窗口错位（`Sent*` 当拍成员仍在容器内）     | 在信号当拍完成归位                                                    |
+| 13 | 派生名单漏列应排除类别（把该留下的对象赶走）            | 逐项列出排除集合并核对成功/失败两线口径                                       |
 
 ***
 
@@ -212,13 +220,15 @@
 | `Mote_*.cs`                                 | 地图特效（咏唱词/魔法阵/光环/斩击等）    |
 | `Projectile_*` + `MagicMissileStates.cs`    | 魔法弹与运动状态机               |
 | `Ritual*`                                   | 仪式（给予/升华恩惠）及结果处理        |
-| `GuildQuestDef` / `GuildQuestGenerator*`        | 公会任务定义与生成（日常 = 使者对话接取指定接取者；强制 = 使者出场自动接取、不可拒绝；Slate 传参 → GenerateQuestAndMakeAvailable） |
+| `GuildQuestDef` / `GuildQuestGenerator*`        | 公会任务定义与生成（日常 = 使者对话接取指定接取者；强制 = 使者出场自动接取、不可拒绝；Slate 传参 → GenerateQuestAndMakeAvailable）。**实例一律经静态工厂 `GuildQuestGenerator.Create(def)` 构造**（绑定 def；漏绑会导致 Category/Type 静默为 null，见 B-04 BUG-017），发布前由 `Available()` 预筛 |
 | `QuestUtilities` | 任务静态工具（点数统一计算 + 伟业值名单化发放，签名与规则见 C-02） |
 | `QuestNode_ExploitsReward` / `QuestPart_ExploitsReward` + `QuestNode_RankUpComplete/Failed` / `QuestPart_RankUp*` | 统一奖励结算（伟业值/升级点）与评级晋升、失败重发部件（节点只生成 QuestPart、信号触发，机制见 C-02） |
 | `QuestNode_Root_{Daily/RankUp}_{任务名}`（如 `QuestNode_Root_Daily_SiteClearance` / `QuestNode_Root_RankUp_SiteClearance` / `QuestNode_Root_Daily_Rescue`） | 任务三件套之「根节点」：生成期统一点数/参数、准备任务专属对象、装配过程 part（每任务自实现，规格相似，见 C-02） |
 | `QuestNode_RescueSetup` + `QuestPart_Rescue` / `QuestPart_RescueSpawn` + `QuestPart_ExtraFaction` | 「紧急救援」过程 part（QuestPartActivable 状态机）：威胁清除当拍幸存者难民式临时加入玩家派系（`SetFaction` 玩家 + HomeFaction「原派系」标记 → 上头像栏可指挥、lodger 限制自动生效、守点 lord 当拍释放不再发放），结算一律归还原派系（就地接送流程见 C-02） |
 | `QuestNode_Root_Daily_CriminalHunt` / `QuestNode_CriminalHuntSetup` + `QuestPart_CriminalHunt` / `QuestPart_CriminalHuntSpawn` | 「罪犯追捕」过程 part：Outpost 守卫 + 1 名同派系通缉犯同场（守点迎战）；威胁清除分流（击毙 → 普通结算；存活 → 打包带离窝点、离图计时 1~3 天 → 公会押解穿梭机 2 天窗口）；活犯上船起飞 → ×2 结算（囚犯 despawn discard、不改派系）；死亡任意原因 → 普通结算；招募/奴役或活着失踪 → 失败（流程见 C-02） |
 | `QuestNode_Root_Daily_AncientRelic` / `QuestNode_AncientRelicSetup` + `QuestPart_AncientRelic`（圣物匣 `Thing_AncientRelic` + 命名 `AncientRelicNamer`） | 「遗迹探索」过程 part：生成原版 AncientComplex 遗迹（2~10 格、12 天时限）；图内唯一任务机关箱（HermeticCrate）室内落位装圣物匣（随机异教文化现造名）→ 开箱 = 发现（唤醒房内沉睡守卫 + 双计时：1~3 天 0.5× 袭击打据点 / 3~5 天公会穿梭机 2 天窗口）；圣物装船起飞 → 结算；窗口未装 / 圣物被毁或失踪 → 失败（详见 `plans/遗迹探索任务开发计划.md`） |
+| `QuestNode_Root_RankUp_SupplyEscort` / `QuestNode_SupplyEscortSetup` + `QuestPart_SupplyEscort` / `QuestPart_SupplyEscortAmbush` + `WorldObjectComp_SupplyEscort`（props 经 Patch 注入 `SettlementDef.comps`） | 「物资押运」过程 part：世界中既有定居点选 A/B（中立/友好 + 与据点三边 ≤8 格，`GuildQuestGenerator.Available()` 预筛、根节点兜底红字）→ 远行队停在 A/B 格经 comp 按钮领取/交付（清单由 A 的 `TraderKind` 现生成：单价 ≤100、不腐烂、无需材质且无品质，总重 300~600kg 随机）→ 12 天限时 → 途中以 A/B 为圆心、AB 距离为半径的双圆内伏击（≤2 次，原版 `IncidentDef Ambush`，`forced` 下须自行校验 tile 可生成伏击图）→ 交付按**领取清单逐项相等**（def + 数量）核验，**支持分批交付**（每次只收现有部分、未交齐发信提示缺口），只扣清单内物品、不追踪实例来源（详见 `plans/物资押运任务开发计划.md`） |
+| `QuestNode_Root_RankUp_RefugeeResettle` / `QuestNode_RefugeeResettleSetup` + `QuestPart_RefugeeResettle` + `QuestPart_AddQuestRefugeeDelayedRewardSafe` | 「难民安置」过程 part：强制任务；难民**地图边缘到访并临时加入玩家派系**（`quest.PawnsArrive(joinPlayer:true)` 边缘走入 + `MiniFaction` 标记 = lodger，临时隐藏难民派系由 `FactionGenerator` 现生成、与原版难民事件一致）→ 到场当拍随机受伤（部分倒地）→ 停留 15 天：**点数×1.2 的袭击 2 次**（首发 3~5 天、间隔 3~5 天，关「大威胁」难度则本次作废）+ 心情驱动劝加入（`PawnJoinOffer`，加入即转正并从 `CompShuttle.requiredPawns` 移除、全员加入则直接结算不召船）→ 第 15 天公会穿梭机（`Util_TransportShip_Pickup`，2 天窗口，仅落地发信）；失败线 = 囚禁/奴役、二次有害手术（`victims.SurgeryViolation`）、全灭、无人生还 → 存活难民转中立后自行离图（被囚禁/奴役的受害者本人留下）；伟业值按存活率（登机 + 加入）结算（见 C-02） |
 | `GameComponent_*.cs`                            | 存档级追踪（`FamiliaRankTracker`：多分类评级/升级点数/强制任务与重发冷却、统一发布轮询、公会派系补建；`GuildEnvoyTracker`：全局单槽待对话使者）+ 位移/击退引擎（LanceCharge/RoundhouseKick） |
 | `JobDriver_*`                               | 工作驱动（对话使者等）             |
 | `MentalState_*` / `Hediff_*` / `Verb_*`     | 精神状态、词缀、咏唱 verb         |

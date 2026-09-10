@@ -15,7 +15,7 @@
 
   <!-- 异常抗性发展能力：提升免疫速度与毒素抗性 -->
   <FamiliaMyth.Abilities.DevelopableAbilityDef>
-    <defName>DevelopableAbiility_AbnormalResistance</defName>
+    <defName>DevelopableAbility_AbnormalResistance</defName>
     <label>异常抗性</label>
     <description>提升免疫获得速度，毒素抗性以及抵抗疾病概率的发展能力。在恶劣环境中生存或抵抗疾病时提升熟练度。</description>
     <abilityClass>FamiliaMyth.Abilities.DevelopableAbiility_AbnormalResistance</abilityClass>

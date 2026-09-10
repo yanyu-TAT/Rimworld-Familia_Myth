@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+    <!-- ============================================================ -->
+    <!-- Familia Myth - 物资押运：定居点交互 comp 注入                  -->
+    <!-- 给原版 SettlementDef 追加 WorldObjectCompProperties_SupplyEscort -->
+    <!-- 说明：WorldObject 无实例级 AddComp API，交互 comp 只能声明在    -->
+    <!--      def 级 comps 中（与原版 TradeRequestComp 同款做法）；    -->
+    <!--      comp 内部按 role 激活状态决定是否提供按钮。                -->
+    <!-- ============================================================ -->
+
+    <Operation Class="PatchOperationConditional">
+        <xpath>Defs/WorldObjectDef[defName="Settlement"]/comps</xpath>
+        <match Class="PatchOperationAdd">
+            <xpath>Defs/WorldObjectDef[defName="Settlement"]/comps</xpath>
+            <value>
+                <li Class="FamiliaMyth.Quest.WorldObjectCompProperties_SupplyEscort" />
+            </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>Defs/WorldObjectDef[defName="Settlement"]</xpath>
+            <value>
+                <comps>
+                    <li Class="FamiliaMyth.Quest.WorldObjectCompProperties_SupplyEscort" />
+                </comps>
+            </value>
+        </nomatch>
+    </Operation>
+
+</Patch>

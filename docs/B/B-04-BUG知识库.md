@@ -144,3 +144,38 @@
 - 是否规范缺失: 是
 - 规范反哺: AGENTS.md「资源与性能规范（RimWorld 特有）」补一条——"地图生成期/首节拍的自建落位校验不要用 `Fogged` 当排除条件（生成时全图在迷雾，会误杀所有候选）；迷雾对 spawn 无副作用"。
 - 关联: 次数 1
+
+## BUG-017 | 外部构造 GuildQuestGenerator 漏绑 def → 强制任务调试指令必现 NRE / 日常任务静默丢奖励
+- 现象: 新增调试指令 `DebugAction_Quest.TriggerGuildEnvoyRankUp` 一触发就抛 `NullReferenceException`（控制台红字）；同期的日常调试指令不崩，但任务完成后**升级点静默不发放**。
+- 根因: 调试菜单自行 `Activator.CreateInstance(questDef.generatorClass)` 构造生成器，**漏了 `gen.def = questDef`**（重构前入口是 `SpawnEnvoyWithQuest(GuildQuestDef, Map)`，由其内部赋值；改成传 generator 后这一步丢失）。而 `GuildQuestGenerator` 的 `Category / Type / LetterText` 全部由 `def` 派生：`Category => def?.category`（null → `slate.Set("category", null)`）、`Type => def?.type ?? QuestType.Daily`（null → 恒判为日常）。
+  - 强制侧：`GameComponent_FamiliaRankTracker.StartRankUpQuest` 内 `GetOrAddState(gen.def.category)` 直接 NRE；且该行位于**使者已 GenSpawn、lord 已建、`GuildEnvoyTracker.Register` 已注册、`SummonQuest` 已生成任务之后** → 产生一个 tracker 不认识的**孤儿强制任务**（未记 `rankUpQuestID`），下轮 1000 tick 轮询会再发一个，可叠加。
+  - 日常侧：`def?.label / LetterText` 有兜底所以不崩，但 `slate.Set("category", null)` → `QuestNode_GainUpgradePoints` 的 `if (cat == null || amt <= 0) return;` → **升级点静默丢失**。
+- 修复方案:
+  1. `GuildQuestGenerator.Create(GuildQuestDef def)` 统一静态工厂（实例化 + 绑定 def + `generatorClass` 缺失时 `Log.Error`），全部创建点改走它：`FamiliaCategoryDef.GetAvailable{Daily,RankUp}Quests`、`DebugAction_Quest` 两处、`GuildQuestDef.Generator` 缓存属性。
+  2. `StartRankUpQuest` / `SpawnEnvoyWithQuest` 增加入口校验（`gen?.def == null || map == null` → `Log.Error` + false），且**校验提到任何副作用之前**；`StartRankUpQuest` 内 `GetOrAddState(...)` 返回值判空（category 无效时报错而非 NRE）；`gen.SetupParams(map)` 收进这两个入口，调用方不再需要各自记忆。
+  3. 调试菜单的 `Available()` 预筛改为「标注【不可用】但仍允许强制触发」（调试期正需要跨过预筛验证）。
+  4. 顺带清掉 `GameComponent_FamiliaRankTracker` 里 IDE 自动加入的无用 `using System.Drawing;` / `using Verse.Noise;`。
+- 是否规范缺失: 是
+- 规范反哺: B-01「RimWorld 对象模型」补两条（Def 派生型生成器必须绑 def + 统一工厂；对外入口的依赖校验须前置于副作用）；AGENTS.md「四、强制规范 · 核心开发原则」新增对应 ❌/✅。
+- 关联: 次数 1
+
+## BUG-018 | 难民安置：复用原版延迟回报部件时缺 rewardGiver → 满载结算必现 `Grammar unresolvable`
+- 现象: 强制任务「难民安置」在**满载起飞线**（`CompShuttle.SendLaunchedSignals` 发 `SentSatisfied`）结算时控制台红字 `Grammar unresolvable. Root 'root'`，解析轨迹中 `rewardGiver_nameDef / rewardGiver_objective / rewardGiver_pronoun / rewardGiver_possessive → UNRESOLVABLE`，随后附带 `Failed to resolve text. Trying again with English.`；栈为 `QuestPart_RefugeeResettle.Settle` → 发 `rewardsReady` → `QuestPart_AddQuestRefugeeDelayedReward.AddQuest` → `QuestGen.Generate` → `QuestNode_ResolveTextRequests.Resolve` → `GrammarResolver`。
+- 根因（两层）:
+  1. **结算当拍漏了给登机者归还原派系**（项目「紧急救援」在 `SentSatisfied` 当拍有 `RestoreOriginalFactions()`，抄漏）。`SentSatisfied` 发出时登机者**仍在穿梭机内容器里且 Faction 仍是玩家**（见 C-05 第四节窗口），加上被劝加入者也在玩家派系 → 原版 `QuestPart_AddQuestRefugeeDelayedReward.GetSlate()` 的候选条件（`!Dead && Faction != Faction.OfPlayer && !IsPrisoner`，`QuestPart_AddQuestRefugeeDelayedReward.cs:24-31`）**一个都不满足** → 子任务 slate 里没有 `rewardGiver` → 其文本变量无法解析。旁证：原版难民任务在同一部件上无此问题，因为它的难民在绑定信号（`outSignalLast_LeftMapAllHealthy`）之前已被 `LeaveQuestPartUtility.MakePawnLeave` 归还原派系。
+  2. **原版部件不校验隐式前置**：候选缺失时它照样生成子任务（`QuestPart_AddQuest.AddQuest` → `QuestUtility.GenerateQuestAndMakeAvailable`），直到文本解析期才炸——错误位置离根因很远，排查成本高。
+- 修复方案:
+  1. `QuestPart_RefugeeResettle` 增加 `RestoreBoardedFaction()`：结算当拍对仍在机舱内的登机者 `SetFaction(refugeeFaction)`，**成功线与失败线都调用**（失败线若已有人登机同样需要归位，否则会带着玩家派系飞走）；
+  2. 新建 `QuestPart_AddQuestRefugeeDelayedRewardSafe : QuestPart_AddQuestRefugeeDelayedReward`，覆写 `CanAdd` 做与原版 `GetSlate` **完全一致**的候选预检，无候选时静默跳过（`QuestPart_AddQuest.Notify_QuestSignalReceived` 的 `&& CanAdd` 会拦住生成）；
+  3. `QuestNode_RefugeeResettleSetup` 改用 Safe 版。
+- 是否规范缺失: 是
+- 规范反哺: 已补 —— AGENTS.md「四、强制规范 · 核心开发原则」新增两条 ✅（复用原版部件前先反编译核对隐式前置条件；跨系统归位/移交与信号窗口对齐）+「八、AI 高频错误防犯清单」第 11/12 条；`docs/B/B-01-开发规范.md`「七 · RimWorld 对象模型」补两条 ✅ + 「八」第 11/12 行；`docs/C/C-05-原版API简述.md` 收录该部件的隐式前置与规避方式（§一）。
+- 关联: 次数 1
+
+## BUG-019 | 难民安置：成功线离场名单未排除「已转正者」→ 加入殖民地的难民在结算当拍被赶走
+- 现象: 满载/部分登机结算时，已被玩家劝加入（已转正）的难民会被一并转出玩家派系、并安排走向地图边缘离场——与「加入视为存活、留在殖民地」的设计直接矛盾（真跑起来就会看到刚加入的人立刻走人）。
+- 根因: `QuestPart_RefugeeResettle.Settle()` 成功线调用 `Dismiss(OnMapAlive().Where(p => !IsBoarded(p)))`，过滤条件**只排除了「已在穿梭机机舱内的登机者」**；而 `OnMapAlive()` 返回的是 victims 中「全部存活且在图上者」，天然包含 `adopted`（已转正者）→ 他们被当成「未登机滞留者」处理。
+- 修复方案: 成功线离场名单补 `&& !adopted.Contains(p)`；失败线**保持包含 adopted**（用户确认：失败时含已转正者一并转中立离场，唯一例外是被囚禁/奴役的受害者本人）。该修正同时是「全员被劝加入 → 直接结算完成」路径的前置（否则全员加入 = 全员被赶走）。
+- 是否规范缺失: 是（从公共名单派生「待处理子集」时，应排除的对象类别必须逐项显式列出并与设计口径对齐）
+- 规范反哺: 已补 —— AGENTS.md「四、强制规范」新增 ❌（从公共名单派生「待处理子集」时漏列应排除类别）+「八」第 13 条；`docs/B/B-01-开发规范.md`「RimWorld 对象模型」补一条 ✅ + 「八」第 13 行。
+- 关联: 次数 1

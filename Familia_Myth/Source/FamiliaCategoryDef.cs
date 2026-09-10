@@ -1,4 +1,4 @@
-﻿using FamiliaMyth.Quest;
+using FamiliaMyth.Quest;
 using Verse;
 
 namespace FamiliaMyth.Familia
@@ -11,6 +11,24 @@ namespace FamiliaMyth.Familia
 
         public List<GuildQuestDef> dailyQuests;
         public List<GuildQuestDef> rankUpQuests;
+
+        public List<GuildQuestGenerator> GetAvailableDailyQuests()
+        {
+            if (dailyQuests.NullOrEmpty()) return new List<GuildQuestGenerator>();
+
+            return dailyQuests.Select(GuildQuestGenerator.Create)
+                .Where(g => g != null && g.Available())
+                .ToList();
+        }
+
+        public List<GuildQuestGenerator> GetAvailableRankUpQuests()
+        {
+            if (rankUpQuests.NullOrEmpty()) return new List<GuildQuestGenerator>();
+
+            return rankUpQuests.Select(GuildQuestGenerator.Create)
+                .Where(g => g != null && g.Available())
+                .ToList();
+        }
 
         public override IEnumerable<string> ConfigErrors()
         {

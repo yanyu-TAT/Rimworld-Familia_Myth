@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- 强制任务「物资押运」脚本 -->
+  <!-- 流程：接取（12 天限时）→ 远行队停在 A 领取 600kg 物资 → 押运途中伏击（最多 2 次） -->
+  <!--       → 远行队停在 B 交付 → 扣除 600kg → 伟业值 + 晋升评级 -->
+  <!-- 失败：12 天未交付 → QuestNode_RankUpFailed 记录冷却，数日后自动重发 -->
+  <!-- A/B 为世界中既有的中立/友好定居点，选取失败在根节点打红字且不发布任务 -->
+  <QuestScriptDef>
+    <defName>Quest_RankUp_SupplyEscort</defName>
+    <autoAccept>true</autoAccept>
+    <defaultHidden>false</defaultHidden>
+    <isRootSpecial>true</isRootSpecial>
+    <rootSelectionWeight>0</rootSelectionWeight>
+    <rootMinPoints>200</rootMinPoints>
+    <affectedByPopulation>false</affectedByPopulation>
+
+    <questNameRules>
+      <rulesStrings>
+        <li>questName->强制任务</li>
+        <li>missionTitle->物资押运</li>
+      </rulesStrings>
+    </questNameRules>
+
+    <questDescriptionRules>
+      <rulesStrings>
+        <li>questDescription->公会使者带来了强制任务：一批物资需要从 [settlementA_label] 押运到 [settlementB_label]。\n\n请派出远行队前往领取点，将物资装车后送达交付点。物资总重约 600kg，限 12 天内完成交付——超时即告失败。\n\n沿途可能有劫匪盯上这批货物，务必做好护送。\n\n完成任务即可提升眷族评级，并获得大量伟业值。</li>
+      </rulesStrings>
+    </questDescriptionRules>
+
+    <root Class="QuestNode_Sequence">
+      <nodes>
+
+        <!-- 根节点：计算点数、选取 A/B 定居点并写入 slate -->
+        <li Class="FamiliaMyth.Quest.QuestNode_Root_RankUp_SupplyEscort">
+          <category>$category</category>
+        </li>
+
+        <li Class="QuestNode_Sequence">
+          <nodes>
+
+            <!-- 装配主状态机（领取/交付/超时/结算）与伏击部件 -->
+            <li Class="FamiliaMyth.Quest.QuestNode_SupplyEscortSetup" />
+
+            <!-- 交付完成：伟业值由部件发放，这里负责晋升评级并结束任务 -->
+            <li Class="QuestNode_Signal">
+              <inSignal>rewardsReady</inSignal>
+              <node Class="QuestNode_Sequence">
+                <nodes>
+                  <li Class="FamiliaMyth.Quest.QuestNode_RankUpComplete">
+                    <categoryDef>$category</categoryDef>
+                  </li>
+                  <li Class="QuestNode_End">
+                    <outcome>Success</outcome>
+                  </li>
+                </nodes>
+              </node>
+            </li>
+
+            <!-- 失败线：12 天超时（部件发 escortTimeout） -->
+            <li Class="QuestNode_Signal">
+              <inSignal>escortTimeout</inSignal>
+              <node Class="QuestNode_Sequence">
+                <nodes>
+                  <li Class="QuestNode_Letter">
+                    <label>强制任务失败</label>
+                    <text>押运超时，物资未能如期送达。眷族晋升暂时搁置，数日后公会使者将再次前来发布考核任务。</text>
+                  </li>
+                  <li Class="FamiliaMyth.Quest.QuestNode_RankUpFailed">
+                    <categoryDef>$category</categoryDef>
+                  </li>
+                  <li Class="QuestNode_End">
+                    <outcome>Fail</outcome>
+                  </li>
+                </nodes>
+              </node>
+            </li>
+
+          </nodes>
+        </li>
+
+      </nodes>
+    </root>
+  </QuestScriptDef>
+
+</Defs>

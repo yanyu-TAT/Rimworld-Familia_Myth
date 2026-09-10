@@ -28,21 +28,34 @@ namespace FamiliaMyth.Incidents
             if (parms.target is not Map map) return false;
 
             //从可挑选的种类中随机挑选
-            if (AvailableCats.Count == 0) return false;
+            if (AvailableCats.NullOrEmpty())
+            {
+                Log.Warning("No Available Familia Category");
+                return false;
+            }
             var category = AvailableCats.RandomElement();
-            var questDef = category.dailyQuests.RandomElement();
+            var gens = category.GetAvailableDailyQuests();
+            if (gens.NullOrEmpty())
+            {
+                Log.Warning($"No Available Daily Quest For Category {category.label}");
+                return false;
+            }
+            var gen = gens.RandomElement();
 
-            return SpawnEnvoyWithQuest(questDef, map);
+            return SpawnEnvoyWithQuest(gen, map);
         }
 
         //让使者携带指定任务出场（日常事件随机选任务与 Debug 指定任务共用入口）
-        public static bool SpawnEnvoyWithQuest(GuildQuestDef questDef, Map map)
+        public static bool SpawnEnvoyWithQuest(GuildQuestGenerator gen, Map map)
         {
-            if (questDef == null || map == null) return false;
+            //入口校验（在任何副作用之前）：gen 必须已绑定 GuildQuestDef
+            if (gen?.def == null || map == null)
+            {
+                Log.Error($"[FamiliaMyth] SpawnEnvoyWithQuest 参数无效：gen={gen != null}, def={gen?.def != null}, map={map != null}");
+                return false;
+            }
 
             //生成参数
-            var gen = (GuildQuestGenerator)Activator.CreateInstance(questDef.generatorClass);
-            gen.def = questDef;
             gen.SetupParams(map);
 
             var envoy = GenerateEnvoy(map);

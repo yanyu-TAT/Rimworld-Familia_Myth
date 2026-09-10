@@ -26,8 +26,8 @@ namespace FamiliaMyth.Patch
                     return;
 
                 var pharna = pawn.GetPharna();
-                if (pharna?.developableAbilities?.FirstOrDefault(a => a is DevelopableAbiility_AbnormalResistance) 
-                    is not DevelopableAbiility_AbnormalResistance abr) return;
+                if (pharna?.developableAbilities?.FirstOrDefault(a => a is DevelopableAbility_AbnormalResistance) 
+                    is not DevelopableAbility_AbnormalResistance abr) return;
 
                 //20% + 0.0075% * x
                 float resistChance = abr.DiseaseResistChance;
@@ -49,8 +49,8 @@ namespace FamiliaMyth.Patch
                 if (!hediff.def.PossibleToDevelopImmunityNaturally()) return;
 
                 var pharna = ___pawn.GetPharna();
-                var abr = pharna?.developableAbilities?.FirstOrDefault(a => a is DevelopableAbiility_AbnormalResistance) as DevelopableAbiility_AbnormalResistance;
-                abr?.GainProficiency(DevelopableAbiility_AbnormalResistance.ProfGainPerCure); //每次痊愈
+                var abr = pharna?.developableAbilities?.FirstOrDefault(a => a is DevelopableAbility_AbnormalResistance) as DevelopableAbility_AbnormalResistance;
+                abr?.GainProficiency(DevelopableAbility_AbnormalResistance.ProfGainPerCure); //每次痊愈
             }
         }
 
@@ -70,11 +70,11 @@ namespace FamiliaMyth.Patch
                 if (pawn == null) return;
 
                 var pharna = pawn.GetPharna();
-                if (pharna?.developableAbilities?.FirstOrDefault(a => a is DevelopableAbiility_AbnormalResistance)
-                    is not DevelopableAbiility_AbnormalResistance abr) return;
+                if (pharna?.developableAbilities?.FirstOrDefault(a => a is DevelopableAbility_AbnormalResistance)
+                    is not DevelopableAbility_AbnormalResistance abr) return;
 
                 float dissipated = Mathf.Abs(perDay) / 300f;
-                abr.GainProficiency(dissipated * DevelopableAbiility_AbnormalResistance.ProfGainPerDissipated); // 每点消散
+                abr.GainProficiency(dissipated * DevelopableAbility_AbnormalResistance.ProfGainPerDissipated); // 每点消散
             }
         }
     }

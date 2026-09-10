@@ -6,7 +6,7 @@ namespace FamiliaMyth.Abilities
     /// <summary>
     /// 发展能力 异常抗性
     /// </summary>
-    public class DevelopableAbiility_AbnormalResistance : DevelopableAbility
+    public class DevelopableAbility_AbnormalResistance : DevelopableAbility
     {
         private const float ImmunityGainPerProf = 0.005f;
         private const float ToxicEnvironmentPerProf = 0.0025f;

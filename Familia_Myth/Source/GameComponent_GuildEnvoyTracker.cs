@@ -23,7 +23,7 @@ namespace FamiliaMyth.Incidents
 
         public static void Register(Pawn envoy, GuildQuestGenerator generator)
         {
-            if (Instance == null) return;
+            if (Instance == null || envoy == null || generator == null) return;
 
             if (Envoy != null && Envoy.Spawned && !Envoy.Dead)
                 TryLeave(Envoy);

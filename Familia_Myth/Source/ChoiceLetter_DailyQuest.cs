@@ -130,6 +130,11 @@ namespace FamiliaMyth.Incidents
                 Log.Error($"[FamiliaMyth] Can't Find Corresponding Generator For {envoy.Name.ToStringShort}");
                 return;
             }
+            if (gen.def == null)
+            {
+                Log.Error($"[FamiliaMyth] Generator {gen.GetType().Name} 未绑定 GuildQuestDef，无法生成委托。");
+                return;
+            }
 
             var quest = gen.SummonQuest(envoy, acceptor);
             this.quest = quest;

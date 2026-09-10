@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- 强制任务「难民安置」脚本 -->
+  <!-- 流程：接取（难民边缘到访、临时加入玩家派系、随机受伤）→ 停留 15 天（2 次袭击，点数×1.2） -->
+  <!--       → 公会穿梭机接走（停留 2 天）→ 伟业值按存活率结算 → 晋升评级 -->
+  <!-- 成功：穿梭机满载起飞 / 窗口满；未登机者视为失踪，转中立后自行离图 -->
+  <!-- 失败：囚禁或奴役、二次有害手术、全灭、无人生还 → QuestNode_RankUpFailed 记录冷却，数日后自动重发 -->
+  <QuestScriptDef>
+    <defName>Quest_RankUp_RefugeeResettle</defName>
+    <autoAccept>true</autoAccept>
+    <defaultHidden>false</defaultHidden>
+    <isRootSpecial>true</isRootSpecial>
+    <rootSelectionWeight>0</rootSelectionWeight>
+    <rootMinPoints>200</rootMinPoints>
+    <affectedByPopulation>false</affectedByPopulation>
+
+    <questNameRules>
+      <rulesStrings>
+        <li>questName->强制任务</li>
+        <li>missionTitle->难民安置</li>
+      </rulesStrings>
+    </questNameRules>
+
+    <questDescriptionRules>
+      <rulesStrings>
+        <li>questDescription->公会送来了 [refugeeCount] 名避难者，他们将在殖民地停留 15 天。\n\n这批难民身上带着伤，请安排治疗与安置；追杀他们的武装分子会在此期间发动两次袭击。\n\n15 天后公会的穿梭机将抵达据点，停留 2 天接走难民——超时未登机者视为失踪，将自行离开。\n\n停留期间若有人愿意留下，可以被接纳为正式成员（视为存活）。\n\n留意：囚禁或奴役难民、对他们施行有害手术，都会导致委托立即撤销。\n\n酬劳按存活人数（登机 + 加入）占总人数的比例结算。</li>
+      </rulesStrings>
+    </questDescriptionRules>
+
+    <root Class="QuestNode_Sequence">
+      <nodes>
+
+        <!-- 根节点：计算点数、生成临时难民派系与袭击派系、生成难民 -->
+        <li Class="FamiliaMyth.Quest.QuestNode_Root_RankUp_RefugeeResettle">
+          <category>$category</category>
+        </li>
+
+        <li Class="QuestNode_Sequence">
+          <nodes>
+
+            <!-- 15 天期满后由状态机发 refugeeEvacuate：公会穿梭机就在据点降落（登机窗口 2 天） -->
+            <!-- 仅难民可登机：required=$victims 无条件放行；acceptColonists=false 关闭"殖民者搭便车"通道 -->
+            <!-- 已被劝加入者会在运行时从 requiredPawns 移除，不再计入起飞达标判定 -->
+            <li Class="QuestNode_Signal">
+              <inSignal>refugeeEvacuate</inSignal>
+              <node Class="QuestNode_SubScript">
+                <def>Util_TransportShip_Pickup</def>
+                <parms>
+                  <requiredPawns>$victims</requiredPawns>
+                  <owningFaction>$refugeeFaction</owningFaction>
+                  <leaveDelayTicks>120000</leaveDelayTicks>
+                  <leaveImmediatelyWhenSatisfied>true</leaveImmediatelyWhenSatisfied>
+                  <acceptColonists>false</acceptColonists>
+                </parms>
+              </node>
+            </li>
+
+            <!-- 穿梭机落地（thing.Spawned：Skyfaller 落地放出穿梭机时由 thing.questTags 广播）→ 通知玩家登机 -->
+            <!-- 注意勿用 pickupShipThing.Arrived：Arrived 由 TransportShip.questTags 广播，util 未给其打 tag（见 C-05 第四节） -->
+            <li Class="QuestNode_Signal">
+              <inSignal>pickupShipThing.Spawned</inSignal>
+              <node Class="QuestNode_Letter">
+                <label>公会穿梭机已抵达</label>
+                <text>公会的穿梭机已降落在据点。\n\n请让难民尽快登机——穿梭机将在 2 天后起飞，届时仍未登机者将视为失踪并自行离开。</text>
+              </node>
+            </li>
+
+            <!-- 装配部件（在 util 之后，读取 pickupShipThing） -->
+            <li Class="FamiliaMyth.Quest.QuestNode_RefugeeResettleSetup" />
+
+            <!-- 结算成功：伟业值由状态机按存活率发放，这里负责晋升评级并结束任务 -->
+            <li Class="QuestNode_Signal">
+              <inSignal>rewardsReady</inSignal>
+              <node Class="QuestNode_Sequence">
+                <nodes>
+                  <li Class="FamiliaMyth.Quest.QuestNode_RankUpComplete">
+                    <categoryDef>$category</categoryDef>
+                  </li>
+                  <li Class="QuestNode_End">
+                    <outcome>Success</outcome>
+                  </li>
+                </nodes>
+              </node>
+            </li>
+
+            <!-- 失败线：囚禁/奴役、二次有害手术、全灭、无人生还 -->
+            <li Class="QuestNode_Signal">
+              <inSignal>refugeeFailed</inSignal>
+              <node Class="QuestNode_Sequence">
+                <nodes>
+                  <li Class="QuestNode_Letter">
+                    <label>强制任务失败</label>
+                    <text>难民安置委托已被撤销，其余难民将自行离开殖民地。眷族晋升暂时搁置，数日后公会使者将再次前来发布考核任务。</text>
+                  </li>
+                  <li Class="FamiliaMyth.Quest.QuestNode_RankUpFailed">
+                    <categoryDef>$category</categoryDef>
+                  </li>
+                  <li Class="QuestNode_End">
+                    <outcome>Fail</outcome>
+                  </li>
+                </nodes>
+              </node>
+            </li>
+
+          </nodes>
+        </li>
+
+      </nodes>
+    </root>
+  </QuestScriptDef>
+
+</Defs>

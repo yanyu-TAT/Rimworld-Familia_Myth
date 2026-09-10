@@ -20,6 +20,8 @@
     </dailyQuests>
     <rankUpQuests>
       <li>GuildQuest_RankUp_SiteClearance</li>
+      <li>GuildQuest_RankUp_SupplyEscort</li>
+      <li>GuildQuest_RankUp_RefugeeResettle</li>
     </rankUpQuests>
   </FamiliaMyth.Familia.FamiliaCategoryDef>
 

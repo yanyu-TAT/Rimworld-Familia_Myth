@@ -35,6 +35,35 @@
 - `MakePawnsLeave(IEnumerable<Pawn>, bool sendLetter, Quest quest, bool wakeUp=false)`：批量——发「离开」信 → 逐人 MakePawnLeave → 对存活站立者统一发 `LordJob_ExitMapBest` 走出地图。
 - 出处：`decompiledFiles/RimWorld/LeaveQuestPartUtility.cs`、`RimWorld/QuestPart_Leave.cs`。
 
+### QuestPart_ExtraFaction 的移除信号实为死代码（必须显式 Enable）
+- `QuestPart_ExtraFaction : QuestPartActivable`，而 `QuestPartActivable.Notify_QuestSignalReceived` **只在 `state == Enabled` 时才调 `ProcessQuestSignal`**（`QuestPartActivable.cs:219-236`）。
+- 原版**所有**调用点（`QuestGen_Factions.ExtraFaction` L22-33、`QuestNode_ExtraFaction` L40-47、原版 XML 共 7 处）**均未设 `inSignalEnable`** → 部件恒为 `NeverEnabled` → `inSignalRemovePawn / inSignalsRemovePawn` **永不生效**。
+- 旁证：`QuestUtility.GetExtraFactionsFromQuestParts` 对 `Hospitality_Refugee` 有硬编码特判（任务已结束但 `!pawn.IsColonist` 时仍保留标记，L715）。
+- **用法结论**：要让「成员脱离 lodger 标记」真的生效，必须显式设 `inSignalEnable`（本项目用任务接取信号 `quest.InitiateSignal`）。
+- 出处：`decompiledFiles/RimWorld/QuestPartActivable.cs`、`RimWorld/QuestPart_ExtraFaction.cs`、`RimWorld.QuestGen/QuestGen_Factions.cs`、`RimWorld.QuestGen/QuestNode_ExtraFaction.cs`、`RimWorld/QuestUtility.cs`（L706-732）。
+
+### 劝加入（PawnJoinOffer + ChoiceLetter_AcceptVisitors）
+- `quest.PawnJoinOffer(pawn, letterLabel, letterTitle, letterText, accepted, rejected, inSignal, outSignalPawnAccepted, outSignalPawnRejected, charity, sendLetterOnEnable)`（`QuestGen_Misc.cs:335`）→ `QuestPart_PawnJoinOffer`：Enable 后每 2500 tick 判「心情 ≥0.5」且 `Rand.MTBEventOccurs(曲线(0.5→60天, 1.0→15天), 60000, 2500)` → 发 `LetterDefOf.AcceptVisitors` 抉择信，并置 `pawn.guest.Recruitable`。
+- `outSignalPawnAccepted` 缺省自动生成，可从返回的部件读取后作为自己的入信号使用。
+- `ChoiceLetter_AcceptVisitors`：点接受时对每个仍可接受者发 `SendQuestTargetSignals(pawn.questTags, "Recruited")`，再广播 `acceptedSignal`（`SUBJECT` = 单个 pawn 或 List）；`CanStillAccept` 排除已销毁/未生成/正在离图/敌对/处于 ExitMap toil 者。
+- 出处：`decompiledFiles/RimWorld.QuestGen/QuestGen_Misc.cs`（≈L335）、`RimWorld/QuestPart_PawnJoinOffer.cs`、`RimWorld/ChoiceLetter_AcceptVisitors.cs`。
+
+### QuestPart_AddQuestRefugeeDelayedReward 的隐式前置（缺 rewardGiver 会炸文本解析）
+- `GetSlate()` 从 `lodgers` 里挑第一名「`!Dead && Faction != Faction.OfPlayer && !IsPrisoner`」者作 `rewardGiver`；**一个都没有时它照样生成子任务**，随后在 `QuestGen.Generate → QuestNode_ResolveTextRequests.Resolve` 抛 `Grammar unresolvable`（轨迹中 `rewardGiver_nameDef/objective/pronoun/possessive` 全 UNRESOLVABLE，之后附带「Failed to resolve text. Trying again with English.」）。
+- 易触发场景：结算当拍所有候选仍在**玩家派系**（例：登机者未归还原派系、或全员被玩家收留）。
+- 规避：结算当拍先完成归位；或自建子类覆写 `CanAdd` 做同条件预检（`QuestPart_AddQuest.Notify_QuestSignalReceived` 的 `&& CanAdd` 会拦住生成）。详见 B-04 BUG-018。
+- 出处：`decompiledFiles/RimWorld/QuestPart_AddQuestRefugeeDelayedReward.cs`（L19-33）、`RimWorld/QuestPart_AddQuest.cs`（L21-40）。
+
+### 生成期 inSignal 缺省取 `slate["inSignal"]`（根层为空 → 部件永不触发）
+- QuestGen 扩展（`PawnsArrive` / `SetAllApparelLocked` / `Letter` / `AddMemoryThought` / `PawnJoinOffer` …）普遍写法为 `inSignal = HardcodedSignalWithQuestID(inSignal) ?? QuestGen.slate.Get<string>("inSignal")`；而**根层 slate 没有 `inSignal` 变量**（`Slate.Get` 找不到 key 时静默返回 default，不报错）→ 在根节点/装配节点里未显式传信号时，部件将**永不触发**。
+- **用法结论**：一律显式传 `QuestGen.quest.InitiateSignal`（形如 `Quest{id}.Initiate`，`HardcodedSignalWithQuestID` 对该形式原样返回）。
+- 出处：`decompiledFiles/RimWorld.QuestGen/Slate.cs`（L36-61）、`RimWorld.QuestGen/QuestGen_Misc.cs`、`RimWorld/Quest.cs`（L123）。
+
+### QuestNode_Signal + RunInnerNode（util「生成期就绪、信号到达才生效」的原理）
+- `QuestNode_Signal.RunInt`：建 `QuestPart_Pass{ inSignal = 外层信号, outSignal = OuterNodeCompleted }`，并 `QuestGenUtility.RunInnerNode(node, outSignal)` → **内层节点在生成期执行**，但其创建的 part 全部挂在 `OuterNodeCompleted`（内层信号）上，外层信号到达时才真正生效。
+- 由此可解释两件事：① `Util_TransportShip_Pickup` 之后的节点能在生成期读到 `slate["pickupShipThing"]`；② 该 util 的船设置/降落 job 均由内层信号驱动 → **不发外层信号，穿梭机永不降落**。
+- 出处：`decompiledFiles/RimWorld.QuestGen/QuestNode_Signal.cs`（L34-75）、`RimWorld.QuestGen/QuestNode_GenerateTransportShip.cs`、`RimWorld.QuestGen/QuestGenUtility.cs`。
+
 ## 二、Pawn 与派系成员
 
 ### Pawn.SetFaction（加入/离开玩家的核心入口）
@@ -63,6 +92,21 @@
 ### 殖民者栏成员口径
 - 头像栏 `ColonistBar` 只列 `mapPawns.FreeColonists`（玩家派系自由成员）+ 可控 subhuman + 殖民者尸体。**非玩家派系临时成员永远不上栏、不可命令**——「像殖民者一样出现」必须真实加入玩家派系。
 - 出处：`decompiledFiles/RimWorld/ColonistBar.cs`、`RimWorld/MapPawns.cs`。
+
+### 囚禁 / 奴役判定与「逮捕自己的 lodger」
+- `Pawn.IsPrisoner`（= `guest.IsPrisoner`）、`IsPrisonerOfColony`（+ `guest.HostFaction.IsPlayer`）、`IsSlave`、`IsSlaveOfColony`（+ `Faction.IsPlayer`）（`Verse/Pawn.cs:612-658`）。
+- 玩家**可以**逮捕自己派系的 lodger：`FloatMenuOptionProvider_Arrest.cs:55` 特意为 `IsQuestLodger()` 放行 → 「临时加入玩家派系」的成员仍可被逮捕/奴役（任务可据此做失败判据）。
+- 出处：`decompiledFiles/Verse/Pawn.cs`、`RimWorld/FloatMenuOptionProvider_Arrest.cs`。
+
+### 临时派系（难民）生成
+- `FactionGenerator.NewGeneratedFactionWithRelations(new FactionGeneratorParms(FactionDefOf.OutlanderRefugee, ideoParms, hidden: true), relations)`；`FactionGeneratorParms` 是主构造函数 struct（`factionDef / ideoGenerationParms / hidden`）。随后 `faction.temporary = true` + `Find.FactionManager.Add(faction)` + `quest.SetFactionHidden(faction)`（→ `QuestPart_SetFactionHidden`）＝ 原版难民事件的全套做法。
+- `hidden: true` 时不建定居点、不生成领袖以外内容；`FactionDefOf.OutlanderRefugee` 属 Royalty，未激活时为 null，需兜底（`Beggars` / `OutlanderCivil`）。
+- 出处：`decompiledFiles/RimWorld/FactionGenerator.cs`（L125-216）、`RimWorld/FactionGeneratorParms.cs`、`RimWorld/Faction.cs`（L56）、`RimWorld.QuestGen/QuestGen_Factions.cs`（L70）。
+
+### Pawn.HomeFaction 与「随机受伤」
+- `Pawn.HomeFaction => GetExtraHomeFaction() ?? Faction`（`Verse/Pawn.cs:1064-1078`）→ 只带 `MiniFaction` 的 lodger，其 `HomeFaction` 即**当前派系**（恒非 null；`RecipeWorker.ReportViolation` 的 `factionToInform != null` 因此成立，手术侵害信号才会发）。
+- 随机受伤：`HealthUtility.RandomViolenceDamageType()` 取伤害类型 → `new DamageInfo(def, amount)`（不传 `hitPart` 时由引擎随机选部位，`Verse/DamageInfo.cs:144`）→ `Thing.TakeDamage(dinfo)`（`Verse/Thing.cs:1477`）；致倒地用 `HealthUtility.DamageUntilDowned(pawn, allowBleedingWounds: false)`（`Verse/HealthUtility.cs:245`）。
+- 出处：`decompiledFiles/Verse/Pawn.cs`、`Verse/HealthUtility.cs`、`Verse/DamageInfo.cs`、`Verse/Thing.cs`。
 
 ## 三、远行队与运输装载的候选过滤
 
@@ -132,6 +176,18 @@ GenerateShuttle(Faction owningFaction = null, IEnumerable<Pawn> requiredPawns = 
 - 原版物品基类 `ResourceBase`（Core Items_Resource_Base.xml）显式开上述字段；自建 def 不继承时须逐项补齐（或挂既有 thingCategory，如 Artifacts）。
 - 出处：`decompiledFiles/Verse/ThingDef.cs`（EverStorable ≈L1394）、`RimWorld/StorageSettings.cs`（AllowedToAccept ≈L97）、`RimWorld/Tradeability` 枚举（无 Never，禁卖用 None）。
 
+### requiredPawns 可运行时增删（动态登机名单）
+- `CompShuttle.requiredPawns` 是 **public `List<Pawn>`**（`CompShuttle.cs:17`）→ 任务部件可在运行时 `Remove`。
+- 起飞达标判定 `AllRequiredThingsLoaded`（L179）：逐个 `RequiredPawns` 检查是否在 `innerContainer`；而 `RequiredPawns`（L245）会剔除「已死」与「倒地且不在本图且在 `pawnsToIgnoreIfDownedOfNotOnTheMap` 名单」者（**单纯倒地不会自动放行**）。
+- `SendLaunchedSignals`（L543）：`AllRequiredThingsLoaded ? "SentSatisfied" : "SentUnsatisfied"`，另对「非 required 的殖民者」广播 `SentWithExtraColonists`。
+- **用法结论**：把「已被玩家收留 / 不再需要登机」的对象从 `requiredPawns` 移除，即可不再计入起飞达标；名单为空时落地即满足 → 若配 `leaveImmediatelyWhenSatisfied` 会立刻起飞（因此「全员已被收留」应直接结算、不再召船）。
+- 出处：`decompiledFiles/RimWorld/CompShuttle.cs`、`RimWorld/ShipJob_FlyAway.cs`。
+
+### Util_TransportShip_Pickup 的内部结构（无 Letter、全部挂内层信号）
+- 节点序列：`QuestNode_GenerateShuttle(storeAs=pickupShipThing)` → `QuestNode_GenerateTransportShip(storeAs=pickUpShip)` → `AddShipJob_Arrive` → `AddShipJob_Wait(ticks=$leaveDelayTicks, leaveImmediatelyWhenSatisfied, sendAwayIfAllDespawned)` → `AddShipJob_FlyAway` → `SendTransportShipAwayOnCleanup`。
+- **整个 util 不含任何 Letter 节点** → "穿梭机已抵达"一类信件必须由使用方自己监听 `pickupShipThing.Spawned` 发出。
+- 出处：`Data/Royalty/Defs/QuestScriptDefs/Scripts_Utility_TransportShip.xml`（L59-110）。
+
 ## 五、Lord 与离图安排
 
 - **lord 释放路径**：`Pawn.SetFaction` 内部即 `GetLord()?.Notify_PawnLost(pawn, PawnLostCondition.ChangedFaction)`；也可手动 `pawn.Map.lordManager.RemoveLord(pawn.GetLord())`（单成员 defend lord）。
@@ -144,3 +200,53 @@ GenerateShuttle(Faction owningFaction = null, IEnumerable<Pawn> requiredPawns = 
 - `AggressiveAnimalIncidentUtility.TryFindAggressiveAnimalKind(float points, PlanetTile tile, out PawnKindDef animalKind)`：给定威胁点能否选出狂暴动物（含 `PlanetTile.Invalid` 全局兜底预检）。
 - **点数下限**：威胁点低于最弱候选 `combatPower × 2` 时返回空 → 站点 `SitePartWorker_Manhunters` 生成拿不到 animalKind（`GetAnimalsCount`）会 NRE。本项目以 `MinManhunterThreat` 抬升点数兜底（不用 Outpost 备选）。
 - 出处：`decompiledFiles/RimWorld/AggressiveAnimalIncidentUtility.cs`、`RimWorld/SitePartWorker_Manhunters.cs`、`RimWorld/ManhunterPackGenStepUtility.cs`。
+
+## 七、世界对象交互 / 远行队伏击 / 任务信号
+
+### WorldObjectComp：世界对象的交互能力容器
+- `WorldObject.comps` 在 `PostMake()` 与 `ExposeData` 的 `LoadingVars` 分支经 `InitializeComps()` **从 `def.comps` 逐个 `Activator.CreateInstance(compClass)` 重建**（读档不反序列化列表本身）→ 后期往 `WorldObjectDef.comps` 注入的自定义 comp **对已有存档同样出现**；各自状态由 `PostExposeData()` 存取。
+- 交互入口：`GetGizmos()`（选中世界对象）、`GetCaravanGizmos(Caravan)`（**选中远行队**：`Caravan.GetGizmos` 遍历 `Find.WorldObjects.ObjectsAt(caravan.Tile)` 逐个调用）、`GetFloatMenuOptions(Caravan)`、`CompInspectStringExtra()`。
+- 无实例级 AddComp API → 自定义 comp 必须声明在 def 级 `comps`；样板 = `TradeRequestComp` + `WorldObjectCompProperties_TradeRequest`（props 构造函数里 `compClass = typeof(...)`）。
+- 出处：`decompiledFiles/RimWorld.Planet/WorldObject.cs`（L263-306、L448-451、L627-636）、`RimWorld.Planet/WorldObjectComp.cs`、`RimWorld.Planet/Caravan.cs` L793-799、`RimWorld/WorldObjectCompProperties_TradeRequest.cs`。
+
+### 远行队伏击（原版 Ambush）
+- `IncidentDef "Ambush"`（targetTags = `Caravan` + `Map_TempIncident`），worker `IncidentWorker_Ambush_EnemyFaction`；`parms.target = Caravan` 时经 `CaravanIncidentUtility.SetupCaravanAttackMap` 现场生成临时地图（`WorldObjectDefOf.Ambush`，`blockExitGridUntilBattleIsWon=true` → 打赢才能离图）。
+- **`parms.forced = true` 会让 `IncidentWorker.CanFireNow` 跳过全部检查**（`IncidentWorker.cs` L37 起）→ 想要"打之前确认可行"必须自己调 `CaravanIncidentUtility.CanFireIncidentWhichWantsToGenerateMapAt(tile)`：该 tile 已有地图 / 生物群系未实现 / 被未开 `allowCaravanIncidentsWhichGenerateMap` 的世界对象占用时返回 false（原版仅 `Caravan` / `TravellingTransporters` / `RoutePlannerWaypoint` / `Ambush` 四个 def 开了该字段）。
+- `WorldObjectsHolder.AllWorldObjects => worldObjects`（**不含 caravans**）→ 远行队不会挡住自己；已进图的队伍不在世界层，天然不是目标。
+- 袭击者派系不可指定：`IncidentWorker_Ambush_EnemyFaction.GeneratePawns` 内 `TryGetRandomFactionForCombatPawnGroup(parms.points, out parms.faction)` 会覆盖外部值。
+- 出处：`Data/Core/Defs/Storyteller/Incidents_Caravan_All.xml`、`decompiledFiles/RimWorld/IncidentWorker_Ambush.cs`、`IncidentWorker_Ambush_EnemyFaction.cs`、`RimWorld.Planet/CaravanIncidentUtility.cs`、`RimWorld/IncidentWorker.cs`、`RimWorld.Planet/WorldObjectsHolder.cs`。
+
+### 任务 part 启用与信号固化
+- `QuestPartActivable`：`Quest.QuestTick` **只 tick `State == Enabled` 的 part**（`Quest.cs` L272-289）；`inSignalEnable` 缺省则永不启用 → "任务一开始就要跑"的 part 填 `QuestGen.quest.InitiateSignal`（`QuestManager.Add` 中 part 全部添加完才 `PostAdded()` → `if (initiallyAccepted) quest.Initiate()`）。
+- `QuestGenUtility.HardcodedSignalWithQuestID(signal)` **幂等**：已形如 `Quest*.xxx` 的串原样返回（L26-39）；`QuestNode_Signal` 用它转换 `<inSignal>`（L44），内层节点再由 `RunInnerNode` 把 `slate["inSignal"]` 设为 `OuterNodeCompleted` 串。
+- `Dialog_MessageBox.CreateConfirmation(text, confirmedAct[, cancelAct])` → 按钮为「Confirm」/「GoBack」（`Verse/Dialog_MessageBox.cs` L50-60）；`Gizmo.Disabled` 是 **public 虚属性**（`disabled` 字段为 protected，不可直接赋值）。
+- 出处：`decompiledFiles/RimWorld/Quest.cs`、`RimWorld/QuestManager.cs`、`RimWorld.QuestGen/QuestGenUtility.cs`、`RimWorld.QuestGen/QuestNode_Signal.cs`、`Verse/Dialog_MessageBox.cs`、`Verse/Gizmo.cs`。
+
+### 定居点交易清单与清单载体
+- `Settlement` 构造函数即 `trader = new Settlement_TraderTracker(this)`（`trader` 恒非 null）→ `Settlement.TraderKind` 可直接取 `TraderKindDef`；`traderKind.stockGenerators[i].GenerateThings(PlanetTile, Faction)` 为公开方法，可自由生成"该派系此地会卖的商品"（`ThingSetMaker_TraderStock` 即其官方封装，含 `TraderCanSell` 校验）。
+- `ThingDefCountClass`（`Verse/`：`thingDef + count + stuff + quality`，`IExposable`）适合做任务清单载体（`Scribe_Collections.Look(..., LookMode.Deep)`）。
+- `ThingDef.tradeability` 默认 `Tradeability.All`（`ThingDef.cs` L324），过滤入口 `TradeabilityUtility.TraderCanSell()`；块堆为 `None` 且 `category=Item` 无 `building` → 只靠可卖性即可排除。
+- 出处：`decompiledFiles/RimWorld.Planet/Settlement.cs` L96/L141-144、`RimWorld/StockGenerator.cs` L36、`RimWorld/ThingSetMaker_TraderStock.cs`、`Verse/ThingDefCountClass.cs`、`Verse/ThingDef.cs` L324、`RimWorld/TradeabilityUtility.cs`。
+
+## 八、地图内事件触发与交互信号
+
+### 任务内发动地图袭击（IncidentDefOf.RaidEnemy）
+- 调用：`IncidentDefOf.RaidEnemy.Worker.TryExecute(new IncidentParms { target = Map, points, faction, forced = true, quest, customLetterLabel/Text })`（`IncidentDefOf.cs:6`；def 见 `Data/Core/Defs/Storyteller/Incidents_Map_Threats.xml`，`targetTags = Map_PlayerHome`、`category = ThreatBig`）。
+- `IncidentWorker_Raid.TryExecuteWorker`（`IncidentWorker_Raid.cs:133`）→ `TryGenerateRaidInfo`（L70）四步：
+  1. `ResolveRaidPoints` **要求 `points > 0`**，否则 `Log.Error` 并回退默认点数（`IncidentWorker_RaidEnemy.cs:83-90`）；
+  2. `TryResolveRaidFaction`：`parms.faction` 已设且**敌对**（且未 deactivated 或在 forced 下）→ 直接采用，否则随机重选（L58-73）；
+  3. `ResolveRaidStrategy` 为空则按权重随机（全失败兜底 `ImmediateAttack`），`ResolveRaidArriveMode` 同理；
+  4. `AdjustedRaidPoints`（L191-211）会在传入点数上**再乘** `raidArrivalMode / raidStrategy.pointsFactorCurve` 与图层系数并设策略下限 → **实机强度 ≠ 传入值**。
+- **`TryExecute` 不经过 `CanFireNow`**（后者只在 Storyteller 触发路径被调用，`IncidentWorker.cs:35-154`）→ 「允许大威胁」等难度开关**必须自行判断**（`Find.Storyteller.difficulty.allowBigThreats`）；`parms.forced` 只作用于 `CanFireNow`，与本路径无关。
+- 出处：`decompiledFiles/RimWorld/IncidentWorker.cs`、`IncidentWorker_Raid.cs`、`IncidentWorker_RaidEnemy.cs`、`RimWorld/IncidentParms.cs`。
+
+### 手术侵害信号（SurgeryViolation）
+- 发出点 `RecipeWorker.ReportViolation`（`Verse/RecipeWorker.cs:67-74`）：条件 = `billDoer.Faction == Faction.OfPlayer` 且 `factionToInform != null`（= 被手术者的 `HomeFaction`，对 lodger 恒非 null）→ 发 `SendQuestTargetSignals(pawn.questTags, "SurgeryViolation", SUBJECT)`，并记 `HistoryEventDefOf.PerformedHarmfulSurgery`。
+- 是否算违规：`IsViolationOnPawn` 基类在 `pawn.Faction == billDoerFaction && !pawn.IsQuestLodger()` 时返回 false，否则看 `recipe.isViolation`（`RecipeWorker.cs:30-37`）→ **对 lodger 一律进入违规判定**；摘除类覆写只把 `BodyPartRemovalIntent.Harvest`（摘器官）算违规，**截肢不算**（`Recipe_RemoveBodyPart.cs:35-46`）。调用点覆盖摘器官 / 拆植入物 / 装假肢 / 植异种胚 / 抽血原 / 灌药 / 终止妊娠 / 斩首处决等 12 处。
+- 前置：被手术者的 `questTags` 上要有本任务 tag —— 生成期调用一次 `HardcodedSignalWithQuestID("victims.SurgeryViolation")` 就会自动登记名单 tag（`QuestGen.cs:329-374`）。
+- 出处：`decompiledFiles/Verse/RecipeWorker.cs`、`RimWorld/Recipe_RemoveBodyPart.cs`、`RimWorld/RecipeWorker.cs`、`RimWorld/ThoughtDefOf.cs`（`OtherTravelerSurgicallyViolated`）。
+
+### 灵能仪式目标信号（PsychicRitualTarget）对 lodger 恒不可达
+- 发出点 `PsychicRitualToil_TargetCleanup.Start`（L50，无条件广播；另在目标有非玩家 HomeFaction 时对该派系 goodwill -25 并记 `WasPsychicRitualTarget`）；来源仪式为 Anomaly 的 `Psychophagy / Philophagy / Chronophagy / Brainwipe / ImbueDeathRefusal`。
+- 但 5 个 Target 角色的 `allowedConditions` 均为 `Default, Downed, Prisoner, Sleeping, IdeoUnwilling`（`Data/Anomaly/Defs/PsychicRitualDefs/PsychicRitualRoles.xml:41/50/59/68/77`），**无一声明 `TemporaryFactionMember`**；而 `PsychicRitualRoleDef.PawnCanDo` 规定 `!ConditionAllowed(Condition.TemporaryFactionMember) && pawn.IsQuestLodger()` → 拒绝（`ConditionAllowed` 是位掩码「豁免清单」，L209-212 / L439）→ **lodger 不可能被选为这些仪式的目标**（即便已被逮捕，lodger 标记仍在）。
+- 出处：`decompiledFiles/Verse.AI.Group/PsychicRitualToil_TargetCleanup.cs`、`RimWorld/PsychicRitualRoleDef.cs`、`Data/Anomaly/Defs/PsychicRitualDefs/PsychicRitualRoles.xml`。

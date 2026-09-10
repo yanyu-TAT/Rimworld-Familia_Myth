@@ -159,8 +159,39 @@ namespace FamiliaMyth.Familia
             var map = Find.AnyPlayerHomeMap ?? Find.CurrentMap;
             if (map == null) return false;
 
+            //从该类别的可用强制任务中随机挑选
+            var gens = category.GetAvailableRankUpQuests();
+            if (gens.NullOrEmpty())
+            {
+                Log.Warning($"No Available Rank Up Quest For Category {category.label}");
+                return false;
+            }
+
+            return StartRankUpQuest(gens.RandomElement(), map);
+        }
+
+        //让使者携带指定强制任务出场（轮询自动发布与 Debug 指定任务共用入口）
+        //入口校验放在任何副作用之前，避免"使者已出场才发现参数不对"的残留
+        public bool StartRankUpQuest(GuildQuestGenerator gen, Map map)
+        {
+            if (gen?.def == null || map == null)
+            {
+                Log.Error($"[FamiliaMyth] StartRankUpQuest 参数无效：gen={gen != null}, def={gen?.def != null}, map={map != null}");
+                return false;
+            }
+
+            var state = GetOrAddState(gen.def.category);
+            if (state == null)
+            {
+                Log.Error($"[FamiliaMyth] 强制任务 {gen.def.defName} 未指定有效分类（category），无法发布。");
+                return false;
+            }
+
             Faction guild = Find.FactionManager.FirstFactionOfDef(GuildDef);
             if (guild == null) return false;   //公会派系缺失（FinalizeInit 已补建，此处仅防御）
+
+            //生成参数（统一在此调用，调用方无需重复）
+            gen.SetupParams(map);
 
             var envoy = PawnGenerator.GeneratePawn(new PawnGenerationRequest(EnvoyDef, guild));
 
@@ -177,18 +208,12 @@ namespace FamiliaMyth.Familia
             if (!RCellFinder.TryFindRandomSpotJustOutsideColony(entryCell, map, out var chillSpot))
                 chillSpot = DropCellFinder.TradeDropSpot(map);
 
-            if (category.rankUpQuests == null || category.rankUpQuests.Count == 0) return false;
-
+            //生成使者
             GenSpawn.Spawn(envoy, entryCell, map);
             var job = new LordJob_VisitColony(guild, chillSpot, EnvoyTimeoutTicks);
             var lord = LordMaker.MakeNewLord(guild, job, map);
             lord.AddPawn(envoy);
 
-            //注册任务
-            var rankUpQuest = category.rankUpQuests.RandomElement();
-            var gen = (GuildQuestGenerator)Activator.CreateInstance(rankUpQuest.generatorClass);
-            gen.def = rankUpQuest;
-            gen.SetupParams(map);
             GameComponent_GuildEnvoyTracker.Register(envoy, gen);
             var quest = gen.SummonQuest(envoy, null);
             if (quest == null) return false;   //任务生成失败（Quest 脚本异常时静默，避免留下无任务使者）
@@ -200,9 +225,10 @@ namespace FamiliaMyth.Familia
             ChoiceLetter letter = LetterMaker.MakeLetter(
                 label, text, LetterDefOf.NeutralEvent, envoy);
             Find.LetterStack.ReceiveLetter(letter);
+
             return true;
         }
-
+             
         public void OnRankUpRequestDone(FamiliaCategoryDef category)
         {
             var state = GetOrAddState(category);
@@ -228,14 +254,6 @@ namespace FamiliaMyth.Familia
             state.rankUpQuestID = -1;
             state.rankUpQuestRetryTick = CurrentTick + Rand.RangeInclusive(1, 5) * GenDate.TicksPerDay;
         }
-
-        //public FamiliaCategoryDef GetCategory(int EnvoyID)
-        //{
-        //    foreach (var kv in rankStates)
-        //        if (kv.Value.rankUpEnvoy == EnvoyID)
-        //            return kv.Key;
-        //    return null;
-        //}
 
         public override void ExposeData()
         {
