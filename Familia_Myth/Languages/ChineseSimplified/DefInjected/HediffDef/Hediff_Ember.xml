@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Hediff_Ember 玩家可见文本（自 Defs 迁移；Def 内文本保留为默认/兜底） -->
+
+  <EmberAftereffect.description>余烬结束后的后遗症，会陷入短暂昏迷。</EmberAftereffect.description>
+  <EmberAftereffect.label>余烬反噬</EmberAftereffect.label>
+  <EmberInEffect.description>被击倒时触发的求生本能。持续期间快速修复伤势。</EmberInEffect.description>
+  <EmberInEffect.label>余烬</EmberInEffect.label>
+  <EmberState.description>用于显示余烬技能当前状态。</EmberState.description>
+  <EmberState.label>技能（余烬）</EmberState.label>
+
+</LanguageData>

@@ -78,18 +78,18 @@ namespace FamiliaMyth.Abilities
 
                 var check = pawn?.GetPharna()?.CheckStunning ?? true;
                 if (!check)
-                    return $"{check.Reason}效果结束前不可重复释放";
+                    return "FamiliaMyth.Ability.StunnedCannotCast".Translate(check.Reason);
 
                 var tracker = pawn?.psychicEntropy;
                 if (tracker == null) return true;
 
                 float gain = def.EntropyGain - tracker.RecoveryRate * Def.WarmupTime;
                 if (tracker.WouldOverflowEntropy(gain))
-                    return $"{pawn.Name.ToStringShort}的心灵熵将会超出阈值";
+                    return "FamiliaMyth.Ability.EntropyOverflow".Translate(pawn.Name.ToStringShort);
 
                 float cost = def.PsyfocusCost;
                 if (cost > float.Epsilon && cost > tracker.CurrentPsyfocus + 0.0005f)
-                    return $"{pawn.Name.ToStringShort}的精神力不足";
+                    return "FamiliaMyth.Ability.NotEnoughPsyfocus".Translate(pawn.Name.ToStringShort);
 
                 return true;
             }
@@ -326,8 +326,8 @@ namespace FamiliaMyth.Abilities
             {
                 yield return new Command_Action()
                 {
-                    defaultLabel = $"取消释放{Def.label}",
-                    defaultDesc = $"取消正在释放的{Def.label}",
+                    defaultLabel = "FamiliaMyth.Ability.CancelCastLabel".Translate(Def.label),
+                    defaultDesc = "FamiliaMyth.Ability.CancelCastDesc".Translate(Def.label),
                     icon = CanceKeyTexture,
                     action = OnCanceled
                 };
@@ -338,7 +338,7 @@ namespace FamiliaMyth.Abilities
                 var a = pawn?.GetPharna()?.CheckStunning ?? true;
                 Command_Action spellKey = new()
                 {
-                    defaultLabel = "引爆咒：" + Def.label,
+                    defaultLabel = "FamiliaMyth.Ability.SpellKeyLabel".Translate(Def.label),
                     defaultDesc = Def.spellKeyDescription,
                     icon = SpellKeyTexture,
                     action = OnSpellKeyCasted,

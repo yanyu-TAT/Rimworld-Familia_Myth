@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- ==================== Virtue mental states ==================== -->
+  <!-- Key naming follows the RimWorld Def translation convention: DefName.fieldName -->
+  <!-- {0} is replaced with the colonist's name; [PAWN_pronoun] is a pronoun -->
+
+  <!-- Stalwart -->
+  <MentalState_Virtue_Stalwart.label>Stalwart</MentalState_Virtue_Stalwart.label>
+  <MentalState_Virtue_Stalwart.beginLetterLabel>Virtue: Stalwart</MentalState_Virtue_Stalwart.beginLetterLabel>
+  <MentalState_Virtue_Stalwart.beginLetter>{0}'s will is put to the test: [PAWN_pronoun] becomes utterly unshakable</MentalState_Virtue_Stalwart.beginLetter>
+  <MentalState_Virtue_Stalwart.recoveryMessage>{0} has recovered</MentalState_Virtue_Stalwart.recoveryMessage>
+  <MentalState_Virtue_Stalwart.baseInspectLine>Virtue: Stalwart</MentalState_Virtue_Stalwart.baseInspectLine>
+
+  <!-- Courageous -->
+  <MentalState_Virtue_Courageous.label>Courageous</MentalState_Virtue_Courageous.label>
+  <MentalState_Virtue_Courageous.beginLetterLabel>Virtue: Courageous</MentalState_Virtue_Courageous.beginLetterLabel>
+  <MentalState_Virtue_Courageous.beginLetter>{0}'s fear is driven away: [PAWN_pronoun] becomes utterly fearless</MentalState_Virtue_Courageous.beginLetter>
+  <MentalState_Virtue_Courageous.recoveryMessage>{0} has recovered</MentalState_Virtue_Courageous.recoveryMessage>
+  <MentalState_Virtue_Courageous.baseInspectLine>Virtue: Courageous</MentalState_Virtue_Courageous.baseInspectLine>
+
+  <!-- Focused -->
+  <MentalState_Virtue_Focused.label>Focused</MentalState_Virtue_Focused.label>
+  <MentalState_Virtue_Focused.beginLetterLabel>Virtue: Focused</MentalState_Virtue_Focused.beginLetterLabel>
+  <MentalState_Virtue_Focused.beginLetter>{0}'s thoughts are no longer clouded: [PAWN_pronoun] is now utterly focused</MentalState_Virtue_Focused.beginLetter>
+  <MentalState_Virtue_Focused.recoveryMessage>{0} has recovered</MentalState_Virtue_Focused.recoveryMessage>
+  <MentalState_Virtue_Focused.baseInspectLine>Virtue: Focused</MentalState_Virtue_Focused.baseInspectLine>
+
+  <!-- Powerful -->
+  <MentalState_Virtue_Powerful.label>Powerful</MentalState_Virtue_Powerful.label>
+  <MentalState_Virtue_Powerful.beginLetterLabel>Virtue: Powerful</MentalState_Virtue_Powerful.beginLetterLabel>
+  <MentalState_Virtue_Powerful.beginLetter>{0}'s battle spirit is kindled: [PAWN_pronoun] has become unstoppable</MentalState_Virtue_Powerful.beginLetter>
+  <MentalState_Virtue_Powerful.recoveryMessage>{0} has recovered</MentalState_Virtue_Powerful.recoveryMessage>
+  <MentalState_Virtue_Powerful.baseInspectLine>Virtue: Powerful</MentalState_Virtue_Powerful.baseInspectLine>
+
+  <!-- Vigorous -->
+  <MentalState_Virtue_Vigorous.label>Vigorous</MentalState_Virtue_Vigorous.label>
+  <MentalState_Virtue_Vigorous.beginLetterLabel>Virtue: Vigorous</MentalState_Virtue_Vigorous.beginLetterLabel>
+  <MentalState_Virtue_Vigorous.beginLetter>{0}'s spirits lift: [PAWN_pronoun] is now brimming with vigor</MentalState_Virtue_Vigorous.beginLetter>
+  <MentalState_Virtue_Vigorous.recoveryMessage>{0} has recovered</MentalState_Virtue_Vigorous.recoveryMessage>
+  <MentalState_Virtue_Vigorous.baseInspectLine>Virtue: Vigorous</MentalState_Virtue_Vigorous.baseInspectLine>
+
+</LanguageData>

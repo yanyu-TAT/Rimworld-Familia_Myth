@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Mote_RailgunImpact player-visible text (migrated from Defs; Def text kept as default fallback) -->
+
+  <Mote_RailgunImpact.label>Railgun</Mote_RailgunImpact.label>
+
+</LanguageData>

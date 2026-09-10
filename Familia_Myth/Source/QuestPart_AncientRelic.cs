@@ -94,7 +94,8 @@ namespace FamiliaMyth.Quest
             {
                 if (targetItem == null || targetItem.Destroyed)
                 {
-                    SettleFail("目标物品被毁", "任务机关箱连同目标物品被摧毁，委托失败。");
+                    SettleFail("FamiliaMyth.QuestPart.AncientRelicDestroyed".Translate(),
+                        "FamiliaMyth.QuestPart.AncientRelicDestroyedText".Translate());
                     return;
                 }
                 StartGuarding();
@@ -147,8 +148,8 @@ namespace FamiliaMyth.Quest
             if (signal.tag == inSignalSatisfied) { SettleSuccess(); return; }
             if (signal.tag == inSignalUnsatisfied)
             {
-                SettleFail("交付失败",
-                    "目标物品未及时交付，穿梭机已离开，委托失败。");
+                SettleFail("FamiliaMyth.QuestPart.RelicDeliveryFailed".Translate(),
+                    "FamiliaMyth.QuestPart.RelicDeliveryFailedText".Translate());
                 return;
             }
             base.Notify_QuestSignalReceived(signal);
@@ -167,7 +168,9 @@ namespace FamiliaMyth.Quest
             SnapshotParticipants();
             WakeUpRoomGuards();
 
-            string itemLabel = targetItem != null && !targetItem.Destroyed ? targetItem.LabelCap : "？？？";
+            string itemLabel = targetItem != null && !targetItem.Destroyed
+                ? targetItem.LabelCap
+                : "FamiliaMyth.QuestPart.AncientRelicUnknownItem".Translate();
 
             GlobalTargetInfo focusTarget;
             if (targetItem != null && !targetItem.Destroyed)
@@ -178,10 +181,8 @@ namespace FamiliaMyth.Quest
                 focusTarget = site;
 
             Find.LetterStack.ReceiveLetter(LetterMaker.MakeLetter(
-                "发现目标物品",
-                "找到了公会要求的目标物品：" + itemLabel + "。\n\n" +
-                "将其带回据点并送上公会的穿梭机即可完成委托。\n\n" +
-                "目标物品若被摧毁或被夺走，任务将会失败。",
+                "FamiliaMyth.QuestPart.AncientRelicFound".Translate(),
+                "FamiliaMyth.QuestPart.AncientRelicFoundText".Translate(itemLabel),
                 LetterDefOf.NeutralEvent, focusTarget));
         }
 
@@ -190,13 +191,14 @@ namespace FamiliaMyth.Quest
         {
             if (targetItem == null || targetItem.Destroyed)
             {
-                SettleFail("目标物品失踪", "目标物品已被摧毁或失踪，委托失败。");
+                SettleFail("FamiliaMyth.QuestPart.AncientRelicMissing".Translate(),
+                    "FamiliaMyth.QuestPart.AncientRelicMissingText".Translate());
                 return false;
             }
             if (!InPlayerControl())
             {
-                SettleFail("目标物品失踪",
-                    "目标物品已失踪（已被夺取或遗失），委托失败。");
+                SettleFail("FamiliaMyth.QuestPart.AncientRelicMissing".Translate(),
+                    "FamiliaMyth.QuestPart.AncientRelicLostText".Translate());
                 return false;
             }
             return true;
@@ -429,11 +431,12 @@ namespace FamiliaMyth.Quest
                 return;
             stage = Stage.Done;
             Find.LetterStack.ReceiveLetter(LetterMaker.MakeLetter(
-                "委托完成",
-                "公会的穿梭机已携带目标物品离开。",
+                "FamiliaMyth.QuestPart.QuestComplete".Translate(),
+                "FamiliaMyth.QuestPart.AncientRelicShuttleLeft".Translate(),
                 LetterDefOf.NeutralEvent));
             QuestUtilities.DistributeExploits(participants, acceptor, baseExploits,
-                "委托完成", "由于遗迹探索中的出色表现：\n\n");
+                "FamiliaMyth.QuestPart.QuestComplete".Translate(),
+                "FamiliaMyth.QuestPart.RewardReasonAncientRelic".Translate());
             GameComponent_FamiliaRankTracker.Instance?.GainPoints(category, 10);
             quest.End(QuestEndOutcome.Success);
         }

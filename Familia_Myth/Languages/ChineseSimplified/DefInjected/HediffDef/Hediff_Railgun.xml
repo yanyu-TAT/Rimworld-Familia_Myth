@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Hediff_Railgun 玩家可见文本（自 Defs 迁移；Def 内文本保留为默认/兜底） -->
+
+  <RailgunInEffect.description>武器已注入电磁能量，接下来的射击将贯穿敌人。</RailgunInEffect.description>
+  <RailgunInEffect.label>超电磁炮·充能</RailgunInEffect.label>
+
+</LanguageData>

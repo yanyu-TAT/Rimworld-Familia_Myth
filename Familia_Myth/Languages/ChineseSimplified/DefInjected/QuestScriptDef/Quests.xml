@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- ============================================================
+       公会任务脚本（QuestScriptDef）文本
+       两类键：
+         1) <DefName>.questNameRules.rulesStrings / questDescriptionRules.rulesStrings
+            —— 整体替换规则列表（须与原 Def 的 <li> 结构一致）
+         2) <DefName>.TKey值.slateRef
+            —— 对应 Def 中带 TKey 属性的节点文本（label / text / letterLabel）
+       注意：\n 为 RimWorld 换行转义，请勿改写成真实换行
+       ============================================================ -->
+
+  <!-- ==================== 据点清剿（日常） ==================== -->
+  <Quest_Daily_SiteClearance.questNameRules.rulesStrings>
+    <li>questName->据点清剿</li>
+  </Quest_Daily_SiteClearance.questNameRules.rulesStrings>
+  <Quest_Daily_SiteClearance.questDescriptionRules.rulesStrings>
+    <li>questDescription->公会使者带来了一份委托。[enemyDesc]正在[label]附近聚集，威胁着周边地区的安全。请指派受恩惠的冒险者前去消除威胁。</li>
+    <li>enemyDesc->[enemiesCount]个[enemiesLabel]</li>
+  </Quest_Daily_SiteClearance.questDescriptionRules.rulesStrings>
+  <Quest_Daily_SiteClearance.LetterLabelQuestCompleted.slateRef>委托完成</Quest_Daily_SiteClearance.LetterLabelQuestCompleted.slateRef>
+  <Quest_Daily_SiteClearance.LetterLabelQuestExpired.slateRef>任务过期</Quest_Daily_SiteClearance.LetterLabelQuestExpired.slateRef>
+  <Quest_Daily_SiteClearance.LetterTextQuestExpired.slateRef>敌人已经撤退，任务[resolvedQuestName]已过期。</Quest_Daily_SiteClearance.LetterTextQuestExpired.slateRef>
+
+  <!-- ==================== 据点清剿（强制考核） ==================== -->
+  <Quest_RankUp_SiteClearance.questNameRules.rulesStrings>
+    <li>questName->据点清剿</li>
+  </Quest_RankUp_SiteClearance.questNameRules.rulesStrings>
+  <Quest_RankUp_SiteClearance.questDescriptionRules.rulesStrings>
+    <li>questDescription->公会使者带来了强制任务。[enemyDesc]正在[label]已在附近集结，正在威胁着周边地区。请倾全部战力，前去消除威胁。</li>
+	  <li>enemyDesc->[enemiesCount]个[enemiesLabel]</li>
+  </Quest_RankUp_SiteClearance.questDescriptionRules.rulesStrings>
+  <Quest_RankUp_SiteClearance.LetterLabelRankUpCompleted.slateRef>强制任务完成</Quest_RankUp_SiteClearance.LetterLabelRankUpCompleted.slateRef>
+  <Quest_RankUp_SiteClearance.LetterLabelRankUpFailed.slateRef>强制任务失败</Quest_RankUp_SiteClearance.LetterLabelRankUpFailed.slateRef>
+  <Quest_RankUp_SiteClearance.LetterTextRankUpFailed.slateRef>强制任务[resolvedQuestName]已超时，眷族晋升暂时搁置。数日后公会使者将再次发布强制任务。</Quest_RankUp_SiteClearance.LetterTextRankUpFailed.slateRef>
+
+  <!-- ==================== 遗迹探索 ==================== -->
+  <Quest_AncientRelic.questNameRules.rulesStrings>
+    <li>questName->遗迹探索</li>
+  </Quest_AncientRelic.questNameRules.rulesStrings>
+  <Quest_AncientRelic.questDescriptionRules.rulesStrings>
+    <li>questDescription->公会收到消息：殖民地附近新发现的远古遗迹中沉睡着古代仙精留下的宝物。\n\n前往标记的遗迹，找到并开启其中的机关箱，取回宝物并带回据点。\n\n注意：圣物匣若失踪/被毁或落入他人之手，委托将会失败。</li>
+  </Quest_AncientRelic.questDescriptionRules.rulesStrings>
+  <Quest_AncientRelic.LetterLabelRelicFailed.slateRef>委托失败</Quest_AncientRelic.LetterLabelRelicFailed.slateRef>
+  <Quest_AncientRelic.LetterTextRelicTimeout.slateRef>任务[resolvedQuestName]超时：目标物品已经被黑暗派阀的人找到。任务失败。</Quest_AncientRelic.LetterTextRelicTimeout.slateRef>
+  <Quest_AncientRelic.LetterLabelShuttleArrived.slateRef>公会穿梭机已抵达</Quest_AncientRelic.LetterLabelShuttleArrived.slateRef>
+  <Quest_AncientRelic.LetterTextShuttleArrived.slateRef>公会的穿梭机已降落在据点，前来接收目标物品。\n将其装进穿梭机即可完成任务。\n\n穿梭机将在2天后离开。</Quest_AncientRelic.LetterTextShuttleArrived.slateRef>
+
+  <!-- ==================== 罪犯追捕 ==================== -->
+  <Quest_CriminalHunt.questNameRules.rulesStrings>
+    <li>questName->通缉令</li>
+  </Quest_CriminalHunt.questNameRules.rulesStrings>
+  <Quest_CriminalHunt.questDescriptionRules.rulesStrings>
+    <li>questDescription->公会发布了一份通缉令：通缉犯 [wanted_nameDef] 正藏身于殖民地附近由匪徒把守的窝点中，悬赏其归案。\n前往标记地点肃清窝点。\n击毙通缉犯或将其俘虏后带回据点转交给公会的押解穿梭机，即可获得双倍酬劳。\n\n注意：通缉犯若被招募、奴役或在押解前失踪，委托将视为失败。</li>
+  </Quest_CriminalHunt.questDescriptionRules.rulesStrings>
+  <Quest_CriminalHunt.LetterLabelHuntFailed.slateRef>追捕失败</Quest_CriminalHunt.LetterLabelHuntFailed.slateRef>
+  <Quest_CriminalHunt.LetterTextHuntTimeout.slateRef>任务[resolvedQuestName]超时，通缉犯 [wanted_nameDef] 已转移。任务失败。</Quest_CriminalHunt.LetterTextHuntTimeout.slateRef>
+  <Quest_CriminalHunt.LetterLabelEscortShuttleArrived.slateRef>押解穿梭机已抵达</Quest_CriminalHunt.LetterLabelEscortShuttleArrived.slateRef>
+  <Quest_CriminalHunt.LetterTextEscortShuttleArrived.slateRef>公会的押解穿梭机已降落在据点。\n\n请指派殖民者，将通缉犯送上穿梭机。\n\n穿梭机将在 2 天后离开：届时通缉犯未登机则委托失败</Quest_CriminalHunt.LetterTextEscortShuttleArrived.slateRef>
+
+  <!-- ==================== 紧急救援 ==================== -->
+  <Quest_Rescue.questNameRules.rulesStrings>
+    <li>questName->紧急救援</li>
+  </Quest_Rescue.questNameRules.rulesStrings>
+  <Quest_Rescue.questDescriptionRules.rulesStrings>
+    <li>questDescription->殖民地附近传来遇难信号。一支商队队遭到袭击，急需救援。\n\n前往标记地点清除威胁并营救伤员。清除威胁后伤员将临时加入我方，请护送其登机——其所属派系的穿梭机将就地降落接走伤员（降落后 3 天内登机）。\n\n酬劳将按成功登机撤离的伤员比例结算。</li>
+  </Quest_Rescue.questDescriptionRules.rulesStrings>
+  <Quest_Rescue.LetterLabelRescueFailed.slateRef>救援失败</Quest_Rescue.LetterLabelRescueFailed.slateRef>
+  <Quest_Rescue.LetterTextRescueTimeout.slateRef>救援任务[resolvedQuestName]超时，威胁未能及时清除。任务失败。</Quest_Rescue.LetterTextRescueTimeout.slateRef>
+  <Quest_Rescue.LetterLabelShuttleArrived.slateRef>救援穿梭机已抵达</Quest_Rescue.LetterLabelShuttleArrived.slateRef>
+  <Quest_Rescue.LetterTextShuttleArrived.slateRef>穿梭机已降落在遇难地点。\n\n请让获救的伤员尽快登机——穿梭机将在3天后离开。</Quest_Rescue.LetterTextShuttleArrived.slateRef>
+
+  <!-- ==================== 物资押运（强制考核） ==================== -->
+  <Quest_RankUp_SupplyEscort.questNameRules.rulesStrings>
+    <li>questName->物资押运</li>
+  </Quest_RankUp_SupplyEscort.questNameRules.rulesStrings>
+  <Quest_RankUp_SupplyEscort.questDescriptionRules.rulesStrings>
+    <li>questDescription->公会使者带来了强制任务：一批物资需要从 [settlementA_label] 押运到 [settlementB_label]。\n\n请派出远行队前往领取点，在12天内接收物资并送达交付点。\n\n可能有黑暗派阀已经盯上了这批货物，做好准备。</li>
+  </Quest_RankUp_SupplyEscort.questDescriptionRules.rulesStrings>
+  <Quest_RankUp_SupplyEscort.LetterLabelRankUpFailed.slateRef>强制任务失败</Quest_RankUp_SupplyEscort.LetterLabelRankUpFailed.slateRef>
+  <Quest_RankUp_SupplyEscort.LetterTextEscortTimeout.slateRef>押运超时，物资未能如期送达。\n\n眷族晋升暂时搁置，数日后公会使者将再次前来发布考核任务。</Quest_RankUp_SupplyEscort.LetterTextEscortTimeout.slateRef>
+
+  <!-- ==================== 难民安置（强制考核） ==================== -->
+  <Quest_RankUp_RefugeeResettle.questNameRules.rulesStrings>
+    <li>questName->难民安置</li>
+  </Quest_RankUp_RefugeeResettle.questNameRules.rulesStrings>
+  <Quest_RankUp_RefugeeResettle.questDescriptionRules.rulesStrings>
+    <li>questDescription->公会送来了[refugeeCount]名避难者，他们将在殖民地停留15天左右。\n追杀他们的黑暗派阀可能会在此期间发动袭击，做好准备。\n15天后公会的穿梭机将前来接走难民。\n\n停留期间若有人愿意留下，可以被接纳为正式成员（视为存活）。\n\n注意：囚禁或奴役难民、对他们施行有害手术，都会导致委托立即撤销。\n\n酬劳将按存活人数占总人数的比例结算。</li>
+  </Quest_RankUp_RefugeeResettle.questDescriptionRules.rulesStrings>
+  <Quest_RankUp_RefugeeResettle.LetterLabelShuttleArrived.slateRef>公会穿梭机已抵达</Quest_RankUp_RefugeeResettle.LetterLabelShuttleArrived.slateRef>
+  <Quest_RankUp_RefugeeResettle.LetterTextShuttleArrived.slateRef>公会的穿梭机已降落在据点。\n\n请让难民尽快登机——穿梭机将在2天后起飞，届时仍未登机者将视为失踪并自行离开。</Quest_RankUp_RefugeeResettle.LetterTextShuttleArrived.slateRef>
+  <Quest_RankUp_RefugeeResettle.LetterLabelRankUpFailed.slateRef>强制任务失败</Quest_RankUp_RefugeeResettle.LetterLabelRankUpFailed.slateRef>
+  <Quest_RankUp_RefugeeResettle.LetterTextRankUpFailed.slateRef>难民安置委托已被撤销，其余难民将自行离开殖民地。\n\n眷族晋升暂时搁置，数日后公会使者将再次前来发布考核任务。</Quest_RankUp_RefugeeResettle.LetterTextRankUpFailed.slateRef>
+
+</LanguageData>

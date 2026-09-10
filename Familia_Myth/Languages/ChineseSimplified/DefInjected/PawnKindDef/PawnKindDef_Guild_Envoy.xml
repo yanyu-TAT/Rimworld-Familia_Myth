@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- PawnKindDef_Guild_Envoy 玩家可见文本（自 Defs 迁移；Def 内文本保留为默认/兜底） -->
+
+  <Guild_Envoy.label>公会使者</Guild_Envoy.label>
+  <Guild_Envoy.labelPlural>公会使者</Guild_Envoy.labelPlural>
+
+</LanguageData>

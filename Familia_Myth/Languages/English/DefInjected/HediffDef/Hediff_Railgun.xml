@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Hediff_Railgun player-visible text (migrated from Defs; Def text kept as default/fallback) -->
+
+  <RailgunInEffect.description>The weapon is charged with electromagnetic energy. The next shots will pierce through enemies.</RailgunInEffect.description>
+  <RailgunInEffect.label>Railgun: Charged</RailgunInEffect.label>
+
+</LanguageData>

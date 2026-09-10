@@ -26,7 +26,7 @@ namespace FamiliaMyth.Abilities
                 if (!canCast) return canCast;
 
                 if (!Owner.Drafted)
-                    return $"{Owner.Name.ToStringShort}尚未被征召";
+                    return "FamiliaMyth.Ability.ProvokeNotDrafted".Translate(Owner.Name.ToStringShort);
 
                 return true;
             }

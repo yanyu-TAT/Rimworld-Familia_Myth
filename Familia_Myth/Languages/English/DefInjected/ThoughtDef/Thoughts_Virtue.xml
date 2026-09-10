@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- ==================== Virtue mood Thought =============== -->
+  <!-- Key names follow the RimWorld Def translation convention: DefName.fieldName -->
+  <!-- {0} is replaced with the colonist's name -->
+  <!-- stages.0 is the first stage of the ThoughtDef -->
+
+  <Thought_Virtue_Vigorous_Morale.label>Virtue: Vigorous</Thought_Virtue_Vigorous_Morale.label>
+  <Thought_Virtue_Vigorous_Morale.stages.0.label>Vigorous</Thought_Virtue_Vigorous_Morale.stages.0.label>
+  <Thought_Virtue_Vigorous_Morale.stages.0.description>A companion's vigor lifts my spirits too</Thought_Virtue_Vigorous_Morale.stages.0.description>
+
+</LanguageData>

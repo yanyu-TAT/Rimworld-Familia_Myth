@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- SwordRain 玩家可见文本（自 Defs 迁移；Def 内文本保留为默认/兜底） -->
+
+  <SwordRain_FallingSword.description>剑雨滂沱生成的剑</SwordRain_FallingSword.description>
+  <SwordRain_FallingSword.label>落剑</SwordRain_FallingSword.label>
+
+</LanguageData>

@@ -96,9 +96,8 @@ namespace FamiliaMyth.Incidents
 
         private static void SendArrivalLetter(Pawn envoy)
         {
-            TaggedString label = "公会使者到访";
-            TaggedString text = $"来自冒险者公会的使者 {envoy.Name.ToStringShort} 已到达你的据点。\n\n" +
-                "请派遣殖民者前往与使者对话，了解委托的详情。";
+            TaggedString label = "FamiliaMyth.QuestMisc.EnvoyArrivalLetterLabel".Translate();
+            TaggedString text = "FamiliaMyth.QuestMisc.EnvoyArrivalLetterText".Translate(envoy.Name.ToStringShort);
             ChoiceLetter letter = LetterMaker.MakeLetter(
                 label, text, LetterDefOf.NeutralEvent, envoy);
             Find.LetterStack.ReceiveLetter(letter);

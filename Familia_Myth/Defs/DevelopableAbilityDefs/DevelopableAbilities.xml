@@ -18,7 +18,7 @@
     <defName>DevelopableAbility_AbnormalResistance</defName>
     <label>异常抗性</label>
     <description>提升免疫获得速度，毒素抗性以及抵抗疾病概率的发展能力。在恶劣环境中生存或抵抗疾病时提升熟练度。</description>
-    <abilityClass>FamiliaMyth.Abilities.DevelopableAbiility_AbnormalResistance</abilityClass>
+    <abilityClass>FamiliaMyth.Abilities.DevelopableAbility_AbnormalResistance</abilityClass>
     <maxProficiency>999</maxProficiency>
     <rarity>Common</rarity>
     <traitDefName>Trait_DevelopableAbility_AbnormalResistance</traitDefName>

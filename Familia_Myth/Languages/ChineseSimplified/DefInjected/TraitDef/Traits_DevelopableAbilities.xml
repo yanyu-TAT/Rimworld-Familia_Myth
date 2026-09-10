@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- 发展能力特性（TraitDef）文本：由 Defs/TraitDefs/Traits_DevelopableAbilities.xml 迁移 -->
+  <!-- 键名：DefName 路径（列表用索引，如 degreeDatas.0.label） -->
+
+  <!-- Trait_DevelopableAbility_Magic -->
+  <Trait_DevelopableAbility_Magic.degreeDatas.0.description>[PAWN_nameDef]拥有基础魔导能力。</Trait_DevelopableAbility_Magic.degreeDatas.0.description>
+  <Trait_DevelopableAbility_Magic.degreeDatas.0.label>魔导I</Trait_DevelopableAbility_Magic.degreeDatas.0.label>
+  <Trait_DevelopableAbility_Magic.degreeDatas.1.description>[PAWN_nameDef]的魔导能力有所提升。</Trait_DevelopableAbility_Magic.degreeDatas.1.description>
+  <Trait_DevelopableAbility_Magic.degreeDatas.1.label>魔导H</Trait_DevelopableAbility_Magic.degreeDatas.1.label>
+  <Trait_DevelopableAbility_Magic.degreeDatas.10.description>[PAWN_nameDef]的魔导能力达到传说级别。</Trait_DevelopableAbility_Magic.degreeDatas.10.description>
+  <Trait_DevelopableAbility_Magic.degreeDatas.10.label>魔导SS</Trait_DevelopableAbility_Magic.degreeDatas.10.label>
+  <Trait_DevelopableAbility_Magic.degreeDatas.11.description>[PAWN_nameDef]的魔导能力已臻化境。</Trait_DevelopableAbility_Magic.degreeDatas.11.description>
+  <Trait_DevelopableAbility_Magic.degreeDatas.11.label>魔导SSS</Trait_DevelopableAbility_Magic.degreeDatas.11.label>
+  <Trait_DevelopableAbility_Magic.degreeDatas.2.description>[PAWN_nameDef]的魔导能力稳步提升。</Trait_DevelopableAbility_Magic.degreeDatas.2.description>
+  <Trait_DevelopableAbility_Magic.degreeDatas.2.label>魔导G</Trait_DevelopableAbility_Magic.degreeDatas.2.label>
+  <Trait_DevelopableAbility_Magic.degreeDatas.3.description>[PAWN_nameDef]的魔导能力显著提升。</Trait_DevelopableAbility_Magic.degreeDatas.3.description>
+  <Trait_DevelopableAbility_Magic.degreeDatas.3.label>魔导F</Trait_DevelopableAbility_Magic.degreeDatas.3.label>
+  <Trait_DevelopableAbility_Magic.degreeDatas.4.description>[PAWN_nameDef]的魔导能力达到进阶水平。</Trait_DevelopableAbility_Magic.degreeDatas.4.description>
+  <Trait_DevelopableAbility_Magic.degreeDatas.4.label>魔导E</Trait_DevelopableAbility_Magic.degreeDatas.4.label>
+  <Trait_DevelopableAbility_Magic.degreeDatas.5.description>[PAWN_nameDef]的魔导能力达到精进水平。</Trait_DevelopableAbility_Magic.degreeDatas.5.description>
+  <Trait_DevelopableAbility_Magic.degreeDatas.5.label>魔导D</Trait_DevelopableAbility_Magic.degreeDatas.5.label>
+  <Trait_DevelopableAbility_Magic.degreeDatas.6.description>[PAWN_nameDef]的魔导能力达到高阶水平。</Trait_DevelopableAbility_Magic.degreeDatas.6.description>
+  <Trait_DevelopableAbility_Magic.degreeDatas.6.label>魔导C</Trait_DevelopableAbility_Magic.degreeDatas.6.label>
+  <Trait_DevelopableAbility_Magic.degreeDatas.7.description>[PAWN_nameDef]的魔导能力达到卓越水平。</Trait_DevelopableAbility_Magic.degreeDatas.7.description>
+  <Trait_DevelopableAbility_Magic.degreeDatas.7.label>魔导B</Trait_DevelopableAbility_Magic.degreeDatas.7.label>
+  <Trait_DevelopableAbility_Magic.degreeDatas.8.description>[PAWN_nameDef]的魔导能力达到顶尖水平。</Trait_DevelopableAbility_Magic.degreeDatas.8.description>
+  <Trait_DevelopableAbility_Magic.degreeDatas.8.label>魔导A</Trait_DevelopableAbility_Magic.degreeDatas.8.label>
+  <Trait_DevelopableAbility_Magic.degreeDatas.9.description>[PAWN_nameDef]的魔导能力超凡脱俗。</Trait_DevelopableAbility_Magic.degreeDatas.9.description>
+  <Trait_DevelopableAbility_Magic.degreeDatas.9.label>魔导S</Trait_DevelopableAbility_Magic.degreeDatas.9.label>
+  <Trait_DevelopableAbility_Magic.description>由恩惠赋予的魔导发展能力，提升心灵熵消散速度。</Trait_DevelopableAbility_Magic.description>
+  <Trait_DevelopableAbility_Magic.label>魔导</Trait_DevelopableAbility_Magic.label>
+
+  <!-- Trait_DevelopableAbility_AbnormalResistance -->
+  <Trait_DevelopableAbility_AbnormalResistance.degreeDatas.0.description>[PAWN_nameDef]拥有基础异常抗性能力。</Trait_DevelopableAbility_AbnormalResistance.degreeDatas.0.description>
+  <Trait_DevelopableAbility_AbnormalResistance.degreeDatas.0.label>异常抗性I</Trait_DevelopableAbility_AbnormalResistance.degreeDatas.0.label>
+  <Trait_DevelopableAbility_AbnormalResistance.degreeDatas.1.description>[PAWN_nameDef]的异常抗性能力有所提升。</Trait_DevelopableAbility_AbnormalResistance.degreeDatas.1.description>
+  <Trait_DevelopableAbility_AbnormalResistance.degreeDatas.1.label>异常抗性H</Trait_DevelopableAbility_AbnormalResistance.degreeDatas.1.label>
+  <Trait_DevelopableAbility_AbnormalResistance.degreeDatas.10.description>[PAWN_nameDef]的异常抗性能力达到传说级别。</Trait_DevelopableAbility_AbnormalResistance.degreeDatas.10.description>
+  <Trait_DevelopableAbility_AbnormalResistance.degreeDatas.10.label>异常抗性SS</Trait_DevelopableAbility_AbnormalResistance.degreeDatas.10.label>
+  <Trait_DevelopableAbility_AbnormalResistance.degreeDatas.11.description>[PAWN_nameDef]的异常抗性能力已臻化境。</Trait_DevelopableAbility_AbnormalResistance.degreeDatas.11.description>
+  <Trait_DevelopableAbility_AbnormalResistance.degreeDatas.11.label>异常抗性SSS</Trait_DevelopableAbility_AbnormalResistance.degreeDatas.11.label>
+  <Trait_DevelopableAbility_AbnormalResistance.degreeDatas.2.description>[PAWN_nameDef]的异常抗性能力稳步提升。</Trait_DevelopableAbility_AbnormalResistance.degreeDatas.2.description>
+  <Trait_DevelopableAbility_AbnormalResistance.degreeDatas.2.label>异常抗性G</Trait_DevelopableAbility_AbnormalResistance.degreeDatas.2.label>
+  <Trait_DevelopableAbility_AbnormalResistance.degreeDatas.3.description>[PAWN_nameDef]的异常抗性能力显著提升。</Trait_DevelopableAbility_AbnormalResistance.degreeDatas.3.description>
+  <Trait_DevelopableAbility_AbnormalResistance.degreeDatas.3.label>异常抗性F</Trait_DevelopableAbility_AbnormalResistance.degreeDatas.3.label>
+  <Trait_DevelopableAbility_AbnormalResistance.degreeDatas.4.description>[PAWN_nameDef]的异常抗性能力达到进阶水平。</Trait_DevelopableAbility_AbnormalResistance.degreeDatas.4.description>
+  <Trait_DevelopableAbility_AbnormalResistance.degreeDatas.4.label>异常抗性E</Trait_DevelopableAbility_AbnormalResistance.degreeDatas.4.label>
+  <Trait_DevelopableAbility_AbnormalResistance.degreeDatas.5.description>[PAWN_nameDef]的异常抗性能力达到精进水平。</Trait_DevelopableAbility_AbnormalResistance.degreeDatas.5.description>
+  <Trait_DevelopableAbility_AbnormalResistance.degreeDatas.5.label>异常抗性D</Trait_DevelopableAbility_AbnormalResistance.degreeDatas.5.label>
+  <Trait_DevelopableAbility_AbnormalResistance.degreeDatas.6.description>[PAWN_nameDef]的异常抗性能力达到高阶水平。</Trait_DevelopableAbility_AbnormalResistance.degreeDatas.6.description>
+  <Trait_DevelopableAbility_AbnormalResistance.degreeDatas.6.label>异常抗性C</Trait_DevelopableAbility_AbnormalResistance.degreeDatas.6.label>
+  <Trait_DevelopableAbility_AbnormalResistance.degreeDatas.7.description>[PAWN_nameDef]的异常抗性能力达到卓越水平。</Trait_DevelopableAbility_AbnormalResistance.degreeDatas.7.description>
+  <Trait_DevelopableAbility_AbnormalResistance.degreeDatas.7.label>异常抗性B</Trait_DevelopableAbility_AbnormalResistance.degreeDatas.7.label>
+  <Trait_DevelopableAbility_AbnormalResistance.degreeDatas.8.description>[PAWN_nameDef]的异常抗性能力达到顶尖水平。</Trait_DevelopableAbility_AbnormalResistance.degreeDatas.8.description>
+  <Trait_DevelopableAbility_AbnormalResistance.degreeDatas.8.label>异常抗性A</Trait_DevelopableAbility_AbnormalResistance.degreeDatas.8.label>
+  <Trait_DevelopableAbility_AbnormalResistance.degreeDatas.9.description>[PAWN_nameDef]的异常抗性能力超凡脱俗。</Trait_DevelopableAbility_AbnormalResistance.degreeDatas.9.description>
+  <Trait_DevelopableAbility_AbnormalResistance.degreeDatas.9.label>异常抗性S</Trait_DevelopableAbility_AbnormalResistance.degreeDatas.9.label>
+  <Trait_DevelopableAbility_AbnormalResistance.description>由恩惠赋予的异常抗性发展能力，提升免疫速度与毒素抗性。</Trait_DevelopableAbility_AbnormalResistance.description>
+  <Trait_DevelopableAbility_AbnormalResistance.label>异常抗性</Trait_DevelopableAbility_AbnormalResistance.label>
+
+  <!-- Trait_DevelopableAbility_EfficientCirculation -->
+  <Trait_DevelopableAbility_EfficientCirculation.degreeDatas.0.description>[PAWN_nameDef]拥有基础高效循环能力。</Trait_DevelopableAbility_EfficientCirculation.degreeDatas.0.description>
+  <Trait_DevelopableAbility_EfficientCirculation.degreeDatas.0.label>高效循环I</Trait_DevelopableAbility_EfficientCirculation.degreeDatas.0.label>
+  <Trait_DevelopableAbility_EfficientCirculation.degreeDatas.1.description>[PAWN_nameDef]的高效循环能力有所提升。</Trait_DevelopableAbility_EfficientCirculation.degreeDatas.1.description>
+  <Trait_DevelopableAbility_EfficientCirculation.degreeDatas.1.label>高效循环H</Trait_DevelopableAbility_EfficientCirculation.degreeDatas.1.label>
+  <Trait_DevelopableAbility_EfficientCirculation.degreeDatas.10.description>[PAWN_nameDef]的高效循环能力达到传说级别。</Trait_DevelopableAbility_EfficientCirculation.degreeDatas.10.description>
+  <Trait_DevelopableAbility_EfficientCirculation.degreeDatas.10.label>高效循环SS</Trait_DevelopableAbility_EfficientCirculation.degreeDatas.10.label>
+  <Trait_DevelopableAbility_EfficientCirculation.degreeDatas.11.description>[PAWN_nameDef]的高效循环能力已臻化境。</Trait_DevelopableAbility_EfficientCirculation.degreeDatas.11.description>
+  <Trait_DevelopableAbility_EfficientCirculation.degreeDatas.11.label>高效循环SSS</Trait_DevelopableAbility_EfficientCirculation.degreeDatas.11.label>
+  <Trait_DevelopableAbility_EfficientCirculation.degreeDatas.2.description>[PAWN_nameDef]的高效循环能力稳步提升。</Trait_DevelopableAbility_EfficientCirculation.degreeDatas.2.description>
+  <Trait_DevelopableAbility_EfficientCirculation.degreeDatas.2.label>高效循环G</Trait_DevelopableAbility_EfficientCirculation.degreeDatas.2.label>
+  <Trait_DevelopableAbility_EfficientCirculation.degreeDatas.3.description>[PAWN_nameDef]的高效循环能力显著提升。</Trait_DevelopableAbility_EfficientCirculation.degreeDatas.3.description>
+  <Trait_DevelopableAbility_EfficientCirculation.degreeDatas.3.label>高效循环F</Trait_DevelopableAbility_EfficientCirculation.degreeDatas.3.label>
+  <Trait_DevelopableAbility_EfficientCirculation.degreeDatas.4.description>[PAWN_nameDef]的高效循环能力达到进阶水平。</Trait_DevelopableAbility_EfficientCirculation.degreeDatas.4.description>
+  <Trait_DevelopableAbility_EfficientCirculation.degreeDatas.4.label>高效循环E</Trait_DevelopableAbility_EfficientCirculation.degreeDatas.4.label>
+  <Trait_DevelopableAbility_EfficientCirculation.degreeDatas.5.description>[PAWN_nameDef]的高效循环能力达到精进水平。</Trait_DevelopableAbility_EfficientCirculation.degreeDatas.5.description>
+  <Trait_DevelopableAbility_EfficientCirculation.degreeDatas.5.label>高效循环D</Trait_DevelopableAbility_EfficientCirculation.degreeDatas.5.label>
+  <Trait_DevelopableAbility_EfficientCirculation.degreeDatas.6.description>[PAWN_nameDef]的高效循环能力达到高阶水平。</Trait_DevelopableAbility_EfficientCirculation.degreeDatas.6.description>
+  <Trait_DevelopableAbility_EfficientCirculation.degreeDatas.6.label>高效循环C</Trait_DevelopableAbility_EfficientCirculation.degreeDatas.6.label>
+  <Trait_DevelopableAbility_EfficientCirculation.degreeDatas.7.description>[PAWN_nameDef]的高效循环能力达到卓越水平。</Trait_DevelopableAbility_EfficientCirculation.degreeDatas.7.description>
+  <Trait_DevelopableAbility_EfficientCirculation.degreeDatas.7.label>高效循环B</Trait_DevelopableAbility_EfficientCirculation.degreeDatas.7.label>
+  <Trait_DevelopableAbility_EfficientCirculation.degreeDatas.8.description>[PAWN_nameDef]的高效循环能力达到顶尖水平。</Trait_DevelopableAbility_EfficientCirculation.degreeDatas.8.description>
+  <Trait_DevelopableAbility_EfficientCirculation.degreeDatas.8.label>高效循环A</Trait_DevelopableAbility_EfficientCirculation.degreeDatas.8.label>
+  <Trait_DevelopableAbility_EfficientCirculation.degreeDatas.9.description>[PAWN_nameDef]的高效循环能力超凡脱俗。</Trait_DevelopableAbility_EfficientCirculation.degreeDatas.9.description>
+  <Trait_DevelopableAbility_EfficientCirculation.degreeDatas.9.label>高效循环S</Trait_DevelopableAbility_EfficientCirculation.degreeDatas.9.label>
+  <Trait_DevelopableAbility_EfficientCirculation.description>由恩惠赋予的高效循环发展能力，降低营养消耗并提升进食回复休息值。</Trait_DevelopableAbility_EfficientCirculation.description>
+  <Trait_DevelopableAbility_EfficientCirculation.label>高效循环</Trait_DevelopableAbility_EfficientCirculation.label>
+
+  <!-- Trait_DevelopableAbility_Healing -->
+  <Trait_DevelopableAbility_Healing.degreeDatas.0.description>[PAWN_nameDef]拥有基础治愈能力。</Trait_DevelopableAbility_Healing.degreeDatas.0.description>
+  <Trait_DevelopableAbility_Healing.degreeDatas.0.label>治愈I</Trait_DevelopableAbility_Healing.degreeDatas.0.label>
+  <Trait_DevelopableAbility_Healing.degreeDatas.1.description>[PAWN_nameDef]的治愈能力有所提升。</Trait_DevelopableAbility_Healing.degreeDatas.1.description>
+  <Trait_DevelopableAbility_Healing.degreeDatas.1.label>治愈H</Trait_DevelopableAbility_Healing.degreeDatas.1.label>
+  <Trait_DevelopableAbility_Healing.degreeDatas.10.description>[PAWN_nameDef]的治愈能力达到传说级别。</Trait_DevelopableAbility_Healing.degreeDatas.10.description>
+  <Trait_DevelopableAbility_Healing.degreeDatas.10.label>治愈SS</Trait_DevelopableAbility_Healing.degreeDatas.10.label>
+  <Trait_DevelopableAbility_Healing.degreeDatas.11.description>[PAWN_nameDef]的治愈能力已臻化境。</Trait_DevelopableAbility_Healing.degreeDatas.11.description>
+  <Trait_DevelopableAbility_Healing.degreeDatas.11.label>治愈SSS</Trait_DevelopableAbility_Healing.degreeDatas.11.label>
+  <Trait_DevelopableAbility_Healing.degreeDatas.2.description>[PAWN_nameDef]的治愈能力稳步提升。</Trait_DevelopableAbility_Healing.degreeDatas.2.description>
+  <Trait_DevelopableAbility_Healing.degreeDatas.2.label>治愈G</Trait_DevelopableAbility_Healing.degreeDatas.2.label>
+  <Trait_DevelopableAbility_Healing.degreeDatas.3.description>[PAWN_nameDef]的治愈能力显著提升。</Trait_DevelopableAbility_Healing.degreeDatas.3.description>
+  <Trait_DevelopableAbility_Healing.degreeDatas.3.label>治愈F</Trait_DevelopableAbility_Healing.degreeDatas.3.label>
+  <Trait_DevelopableAbility_Healing.degreeDatas.4.description>[PAWN_nameDef]的治愈能力达到进阶水平。</Trait_DevelopableAbility_Healing.degreeDatas.4.description>
+  <Trait_DevelopableAbility_Healing.degreeDatas.4.label>治愈E</Trait_DevelopableAbility_Healing.degreeDatas.4.label>
+  <Trait_DevelopableAbility_Healing.degreeDatas.5.description>[PAWN_nameDef]的治愈能力达到精进水平。</Trait_DevelopableAbility_Healing.degreeDatas.5.description>
+  <Trait_DevelopableAbility_Healing.degreeDatas.5.label>治愈D</Trait_DevelopableAbility_Healing.degreeDatas.5.label>
+  <Trait_DevelopableAbility_Healing.degreeDatas.6.description>[PAWN_nameDef]的治愈能力达到高阶水平。</Trait_DevelopableAbility_Healing.degreeDatas.6.description>
+  <Trait_DevelopableAbility_Healing.degreeDatas.6.label>治愈C</Trait_DevelopableAbility_Healing.degreeDatas.6.label>
+  <Trait_DevelopableAbility_Healing.degreeDatas.7.description>[PAWN_nameDef]的治愈能力达到卓越水平。</Trait_DevelopableAbility_Healing.degreeDatas.7.description>
+  <Trait_DevelopableAbility_Healing.degreeDatas.7.label>治愈B</Trait_DevelopableAbility_Healing.degreeDatas.7.label>
+  <Trait_DevelopableAbility_Healing.degreeDatas.8.description>[PAWN_nameDef]的治愈能力达到顶尖水平。</Trait_DevelopableAbility_Healing.degreeDatas.8.description>
+  <Trait_DevelopableAbility_Healing.degreeDatas.8.label>治愈A</Trait_DevelopableAbility_Healing.degreeDatas.8.label>
+  <Trait_DevelopableAbility_Healing.degreeDatas.9.description>[PAWN_nameDef]的治愈能力超凡脱俗。</Trait_DevelopableAbility_Healing.degreeDatas.9.description>
+  <Trait_DevelopableAbility_Healing.degreeDatas.9.label>治愈S</Trait_DevelopableAbility_Healing.degreeDatas.9.label>
+  <Trait_DevelopableAbility_Healing.description>由恩惠赋予的治愈发展能力，提升治疗品质、医疗/手术速度与手术成功率。</Trait_DevelopableAbility_Healing.description>
+  <Trait_DevelopableAbility_Healing.label>治愈</Trait_DevelopableAbility_Healing.label>
+
+  <!-- Trait_DevelopableAbility_LuckOfTheSea -->
+  <Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.0.description>[PAWN_nameDef]获得海之眷顾的恩宠。</Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.0.description>
+  <Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.0.label>海之眷顾I</Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.0.label>
+  <Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.1.description>[PAWN_nameDef]的海之眷顾有所提升。</Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.1.description>
+  <Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.1.label>海之眷顾H</Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.1.label>
+  <Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.10.description>[PAWN_nameDef]的海之眷顾达到传说级别。</Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.10.description>
+  <Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.10.label>海之眷顾SS</Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.10.label>
+  <Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.11.description>[PAWN_nameDef]的海之眷顾已臻化境。</Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.11.description>
+  <Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.11.label>海之眷顾SSS</Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.11.label>
+  <Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.2.description>[PAWN_nameDef]的海之眷顾稳步提升。</Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.2.description>
+  <Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.2.label>海之眷顾G</Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.2.label>
+  <Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.3.description>[PAWN_nameDef]的海之眷顾显著提升。</Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.3.description>
+  <Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.3.label>海之眷顾F</Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.3.label>
+  <Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.4.description>[PAWN_nameDef]的海之眷顾达到进阶水平。</Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.4.description>
+  <Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.4.label>海之眷顾E</Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.4.label>
+  <Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.5.description>[PAWN_nameDef]的海之眷顾达到精进水平。</Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.5.description>
+  <Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.5.label>海之眷顾D</Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.5.label>
+  <Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.6.description>[PAWN_nameDef]的海之眷顾达到高阶水平。</Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.6.description>
+  <Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.6.label>海之眷顾C</Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.6.label>
+  <Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.7.description>[PAWN_nameDef]的海之眷顾达到卓越水平。</Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.7.description>
+  <Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.7.label>海之眷顾B</Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.7.label>
+  <Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.8.description>[PAWN_nameDef]的海之眷顾达到顶尖水平。</Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.8.description>
+  <Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.8.label>海之眷顾A</Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.8.label>
+  <Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.9.description>[PAWN_nameDef]的海之眷顾超凡脱俗。</Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.9.description>
+  <Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.9.label>海之眷顾S</Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.9.label>
+  <Trait_DevelopableAbility_LuckOfTheSea.description>由恩惠赋予的海之眷顾发展能力，提升钓鱼速度与产出数量，并有概率在钓鱼时额外获得稀有渔获。</Trait_DevelopableAbility_LuckOfTheSea.description>
+  <Trait_DevelopableAbility_LuckOfTheSea.label>海之眷顾</Trait_DevelopableAbility_LuckOfTheSea.label>
+
+  <!-- Trait_DevelopableAbility_Botany -->
+  <Trait_DevelopableAbility_Botany.degreeDatas.0.description>[PAWN_nameDef]拥有基础植生学能力。</Trait_DevelopableAbility_Botany.degreeDatas.0.description>
+  <Trait_DevelopableAbility_Botany.degreeDatas.0.label>植生学I</Trait_DevelopableAbility_Botany.degreeDatas.0.label>
+  <Trait_DevelopableAbility_Botany.degreeDatas.1.description>[PAWN_nameDef]的植生学能力有所提升。</Trait_DevelopableAbility_Botany.degreeDatas.1.description>
+  <Trait_DevelopableAbility_Botany.degreeDatas.1.label>植生学H</Trait_DevelopableAbility_Botany.degreeDatas.1.label>
+  <Trait_DevelopableAbility_Botany.degreeDatas.10.description>[PAWN_nameDef]的植生学能力达到传说级别。</Trait_DevelopableAbility_Botany.degreeDatas.10.description>
+  <Trait_DevelopableAbility_Botany.degreeDatas.10.label>植生学SS</Trait_DevelopableAbility_Botany.degreeDatas.10.label>
+  <Trait_DevelopableAbility_Botany.degreeDatas.11.description>[PAWN_nameDef]的植生学能力已臻化境。</Trait_DevelopableAbility_Botany.degreeDatas.11.description>
+  <Trait_DevelopableAbility_Botany.degreeDatas.11.label>植生学SSS</Trait_DevelopableAbility_Botany.degreeDatas.11.label>
+  <Trait_DevelopableAbility_Botany.degreeDatas.2.description>[PAWN_nameDef]的植生学能力稳步提升。</Trait_DevelopableAbility_Botany.degreeDatas.2.description>
+  <Trait_DevelopableAbility_Botany.degreeDatas.2.label>植生学G</Trait_DevelopableAbility_Botany.degreeDatas.2.label>
+  <Trait_DevelopableAbility_Botany.degreeDatas.3.description>[PAWN_nameDef]的植生学能力显著提升。</Trait_DevelopableAbility_Botany.degreeDatas.3.description>
+  <Trait_DevelopableAbility_Botany.degreeDatas.3.label>植生学F</Trait_DevelopableAbility_Botany.degreeDatas.3.label>
+  <Trait_DevelopableAbility_Botany.degreeDatas.4.description>[PAWN_nameDef]的植生学能力达到进阶水平。</Trait_DevelopableAbility_Botany.degreeDatas.4.description>
+  <Trait_DevelopableAbility_Botany.degreeDatas.4.label>植生学E</Trait_DevelopableAbility_Botany.degreeDatas.4.label>
+  <Trait_DevelopableAbility_Botany.degreeDatas.5.description>[PAWN_nameDef]的植生学能力达到精进水平。</Trait_DevelopableAbility_Botany.degreeDatas.5.description>
+  <Trait_DevelopableAbility_Botany.degreeDatas.5.label>植生学D</Trait_DevelopableAbility_Botany.degreeDatas.5.label>
+  <Trait_DevelopableAbility_Botany.degreeDatas.6.description>[PAWN_nameDef]的植生学能力达到高阶水平。</Trait_DevelopableAbility_Botany.degreeDatas.6.description>
+  <Trait_DevelopableAbility_Botany.degreeDatas.6.label>植生学C</Trait_DevelopableAbility_Botany.degreeDatas.6.label>
+  <Trait_DevelopableAbility_Botany.degreeDatas.7.description>[PAWN_nameDef]的植生学能力达到卓越水平。</Trait_DevelopableAbility_Botany.degreeDatas.7.description>
+  <Trait_DevelopableAbility_Botany.degreeDatas.7.label>植生学B</Trait_DevelopableAbility_Botany.degreeDatas.7.label>
+  <Trait_DevelopableAbility_Botany.degreeDatas.8.description>[PAWN_nameDef]的植生学能力达到顶尖水平。</Trait_DevelopableAbility_Botany.degreeDatas.8.description>
+  <Trait_DevelopableAbility_Botany.degreeDatas.8.label>植生学A</Trait_DevelopableAbility_Botany.degreeDatas.8.label>
+  <Trait_DevelopableAbility_Botany.degreeDatas.9.description>[PAWN_nameDef]的植生学能力超凡脱俗。</Trait_DevelopableAbility_Botany.degreeDatas.9.description>
+  <Trait_DevelopableAbility_Botany.degreeDatas.9.label>植生学S</Trait_DevelopableAbility_Botany.degreeDatas.9.label>
+  <Trait_DevelopableAbility_Botany.description>由恩惠赋予的植生学发展能力，提升播种/收获速度、收获效率与野外采集效率。</Trait_DevelopableAbility_Botany.description>
+  <Trait_DevelopableAbility_Botany.label>植生学</Trait_DevelopableAbility_Botany.label>
+
+  <!-- Trait_DevelopableAbility_Mineralogy -->
+  <Trait_DevelopableAbility_Mineralogy.degreeDatas.0.description>[PAWN_nameDef]拥有基础矿物学能力。</Trait_DevelopableAbility_Mineralogy.degreeDatas.0.description>
+  <Trait_DevelopableAbility_Mineralogy.degreeDatas.0.label>矿物学I</Trait_DevelopableAbility_Mineralogy.degreeDatas.0.label>
+  <Trait_DevelopableAbility_Mineralogy.degreeDatas.1.description>[PAWN_nameDef]的矿物学能力有所提升。</Trait_DevelopableAbility_Mineralogy.degreeDatas.1.description>
+  <Trait_DevelopableAbility_Mineralogy.degreeDatas.1.label>矿物学H</Trait_DevelopableAbility_Mineralogy.degreeDatas.1.label>
+  <Trait_DevelopableAbility_Mineralogy.degreeDatas.10.description>[PAWN_nameDef]的矿物学能力达到传说级别。</Trait_DevelopableAbility_Mineralogy.degreeDatas.10.description>
+  <Trait_DevelopableAbility_Mineralogy.degreeDatas.10.label>矿物学SS</Trait_DevelopableAbility_Mineralogy.degreeDatas.10.label>
+  <Trait_DevelopableAbility_Mineralogy.degreeDatas.11.description>[PAWN_nameDef]的矿物学能力已臻化境。</Trait_DevelopableAbility_Mineralogy.degreeDatas.11.description>
+  <Trait_DevelopableAbility_Mineralogy.degreeDatas.11.label>矿物学SSS</Trait_DevelopableAbility_Mineralogy.degreeDatas.11.label>
+  <Trait_DevelopableAbility_Mineralogy.degreeDatas.2.description>[PAWN_nameDef]的矿物学能力稳步提升。</Trait_DevelopableAbility_Mineralogy.degreeDatas.2.description>
+  <Trait_DevelopableAbility_Mineralogy.degreeDatas.2.label>矿物学G</Trait_DevelopableAbility_Mineralogy.degreeDatas.2.label>
+  <Trait_DevelopableAbility_Mineralogy.degreeDatas.3.description>[PAWN_nameDef]的矿物学能力显著提升。</Trait_DevelopableAbility_Mineralogy.degreeDatas.3.description>
+  <Trait_DevelopableAbility_Mineralogy.degreeDatas.3.label>矿物学F</Trait_DevelopableAbility_Mineralogy.degreeDatas.3.label>
+  <Trait_DevelopableAbility_Mineralogy.degreeDatas.4.description>[PAWN_nameDef]的矿物学能力达到进阶水平。</Trait_DevelopableAbility_Mineralogy.degreeDatas.4.description>
+  <Trait_DevelopableAbility_Mineralogy.degreeDatas.4.label>矿物学E</Trait_DevelopableAbility_Mineralogy.degreeDatas.4.label>
+  <Trait_DevelopableAbility_Mineralogy.degreeDatas.5.description>[PAWN_nameDef]的矿物学能力达到精进水平。</Trait_DevelopableAbility_Mineralogy.degreeDatas.5.description>
+  <Trait_DevelopableAbility_Mineralogy.degreeDatas.5.label>矿物学D</Trait_DevelopableAbility_Mineralogy.degreeDatas.5.label>
+  <Trait_DevelopableAbility_Mineralogy.degreeDatas.6.description>[PAWN_nameDef]的矿物学能力达到高阶水平。</Trait_DevelopableAbility_Mineralogy.degreeDatas.6.description>
+  <Trait_DevelopableAbility_Mineralogy.degreeDatas.6.label>矿物学C</Trait_DevelopableAbility_Mineralogy.degreeDatas.6.label>
+  <Trait_DevelopableAbility_Mineralogy.degreeDatas.7.description>[PAWN_nameDef]的矿物学能力达到卓越水平。</Trait_DevelopableAbility_Mineralogy.degreeDatas.7.description>
+  <Trait_DevelopableAbility_Mineralogy.degreeDatas.7.label>矿物学B</Trait_DevelopableAbility_Mineralogy.degreeDatas.7.label>
+  <Trait_DevelopableAbility_Mineralogy.degreeDatas.8.description>[PAWN_nameDef]的矿物学能力达到顶尖水平。</Trait_DevelopableAbility_Mineralogy.degreeDatas.8.description>
+  <Trait_DevelopableAbility_Mineralogy.degreeDatas.8.label>矿物学A</Trait_DevelopableAbility_Mineralogy.degreeDatas.8.label>
+  <Trait_DevelopableAbility_Mineralogy.degreeDatas.9.description>[PAWN_nameDef]的矿物学能力超凡脱俗。</Trait_DevelopableAbility_Mineralogy.degreeDatas.9.description>
+  <Trait_DevelopableAbility_Mineralogy.degreeDatas.9.label>矿物学S</Trait_DevelopableAbility_Mineralogy.degreeDatas.9.label>
+  <Trait_DevelopableAbility_Mineralogy.description>由恩惠赋予的矿物学发展能力，提升采矿/深钻井操作速度与采矿效率。</Trait_DevelopableAbility_Mineralogy.description>
+  <Trait_DevelopableAbility_Mineralogy.label>矿物学</Trait_DevelopableAbility_Mineralogy.label>
+
+</LanguageData>

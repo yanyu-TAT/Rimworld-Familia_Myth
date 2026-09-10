@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- FamiliaCategories 玩家可见文本（自 Defs 迁移；Def 内文本保留为默认/兜底） -->
+
+  <Explorer.description>专注于探索和战斗的眷族。</Explorer.description>
+  <Explorer.label>探索类</Explorer.label>
+
+</LanguageData>

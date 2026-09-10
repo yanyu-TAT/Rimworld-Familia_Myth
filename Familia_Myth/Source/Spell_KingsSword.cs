@@ -56,7 +56,7 @@ namespace FamiliaMyth.Abilities
             }
         }
 
-        public string EffectName => "君王之剑";
+        public string EffectName => "FamiliaMyth.Ability.KingsSword".Translate();
 
         private Hediff_SpellState state;
         public Hediff_SpellState State { get => state; set => state = value; }

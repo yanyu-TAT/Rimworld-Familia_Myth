@@ -140,7 +140,8 @@ namespace FamiliaMyth.Quest
 
             refugees.Remove(pawn);
             if (victims.All(p => p == null || p.Destroyed || p.Dead))
-                SettleFail("难民安置失败", "全部难民都已丧生。强制任务失败，眷族晋升暂时搁置。");
+                SettleFail("FamiliaMyth.QuestPart.RefugeeResettleFailed".Translate(),
+                    "FamiliaMyth.QuestPart.RefugeeResettleFailedAllDead".Translate());
         }
 
         //到场当拍：随机部位/随机强度的伤害，部分难民倒地（需玩家救治）
@@ -178,8 +179,8 @@ namespace FamiliaMyth.Quest
                 if (pawn == null || pawn.Destroyed || pawn.Dead) continue;
                 if (pawn.IsPrisonerOfColony || pawn.IsSlaveOfColony)
                 {
-                    SettleFail("委托撤销",
-                        "公会发现安置对象遭到囚禁或奴役。委托立即撤销，其余难民将自行离开殖民地。");
+                    SettleFail("FamiliaMyth.QuestPart.CommissionRevoked".Translate(),
+                        "FamiliaMyth.QuestPart.CommissionRevokedCaptivity".Translate());
                     return false;
                 }
             }
@@ -226,8 +227,8 @@ namespace FamiliaMyth.Quest
                 faction = faction,
                 forced = true,
                 quest = quest,
-                customLetterLabel = "追杀者来袭",
-                customLetterText = "追杀难民的武装分子找到了殖民地，他们不会善罢甘休。\n\n{BASETEXT}"
+                customLetterLabel = "FamiliaMyth.QuestPart.RefugeeRaidLetterLabel".Translate(),
+                customLetterText = "FamiliaMyth.QuestPart.RefugeeRaidLetterText".Translate()
             };
 
             if (!def.Worker.TryExecute(parms))
@@ -281,7 +282,8 @@ namespace FamiliaMyth.Quest
             //CompShuttle.requiredPawns 是公开列表：移除后起飞达标判定不再等待该难民
             shipThing?.TryGetComp<CompShuttle>()?.requiredPawns.Remove(pawn);
 
-            SendLetter("难民加入", $"{pawn.Name.ToStringShort} 决定留在殖民地，已加入眷族。");
+            SendLetter("FamiliaMyth.QuestPart.RefugeeJoinedLabel".Translate(),
+                "FamiliaMyth.QuestPart.RefugeeJoined".Translate(pawn.Name.ToStringShort));
 
             //全员加入：所有未死者都已转正 → 直接结算完成，不再召唤穿梭机
             if (refugees.Count == 0)
@@ -294,14 +296,13 @@ namespace FamiliaMyth.Quest
             surgeryViolations++;
             if (surgeryViolations > SurgeryViolationLimit)
             {
-                SettleFail("委托撤销",
-                    "公会发现安置对象再次遭到有害手术。委托立即撤销，难民将自行离开殖民地。");
+                SettleFail("FamiliaMyth.QuestPart.CommissionRevoked".Translate(),
+                    "FamiliaMyth.QuestPart.CommissionRevokedSurgery".Translate());
                 return;
             }
 
-            SendLetter("公会警告",
-                $"公会发现 {victim.Name.ToStringShort} 遭到有害手术。\n\n"
-                + "这是最后一次警告——再次发生，委托将立即撤销。");
+            SendLetter("FamiliaMyth.QuestPart.GuildWarning".Translate(),
+                "FamiliaMyth.QuestPart.RefugeeSurgeryWarning".Translate(victim.Name.ToStringShort));
         }
 
         //穿梭机起飞信号（满载 SentSatisfied / 窗口满 SentUnsatisfied）
@@ -315,7 +316,8 @@ namespace FamiliaMyth.Quest
 
             if (survived <= 0)
             {
-                SettleFail("难民安置失败", "没有任何难民登上穿梭机或加入殖民地。强制任务失败。");
+                SettleFail("FamiliaMyth.QuestPart.RefugeeResettleFailed".Translate(),
+                    "FamiliaMyth.QuestPart.RefugeeResettleFailedNoSurvivor".Translate());
                 return;
             }
 
@@ -328,13 +330,19 @@ namespace FamiliaMyth.Quest
             RestoreBoardedFaction();
 
             SnapshotParticipants();
-            SendLetter("难民安置完成",
-                $"存活 {survived}/{totalCount}（{ratio.ToStringPercent()}）："
-                + (boarded > 0 ? $"登机 {boarded} 名" : "无人登机")
-                + (adoptedCount > 0 ? $"，加入殖民地 {adoptedCount} 名。" : "。"));
+            string boardedText = boarded > 0
+                ? "FamiliaMyth.QuestPart.RefugeeBoardedCount".Translate(boarded)
+                : "FamiliaMyth.QuestPart.RefugeeNoneBoarded".Translate();
+            string adoptedText = adoptedCount > 0
+                ? "FamiliaMyth.QuestPart.RefugeeAdoptedCount".Translate(adoptedCount)
+                : "FamiliaMyth.QuestPart.RefugeeAdoptedNone".Translate();
+            SendLetter("FamiliaMyth.QuestPart.RefugeeResettleComplete".Translate(),
+                "FamiliaMyth.QuestPart.RefugeeResettleCompleteText".Translate(
+                    survived, totalCount, ratio.ToStringPercent(), boardedText, adoptedText));
 
             QuestUtilities.DistributeExploits(participants, acceptor, baseExploits * ratio,
-                "委托完成", "由于妥善安置了难民：\n\n");
+                "FamiliaMyth.QuestPart.QuestComplete".Translate(),
+                "FamiliaMyth.QuestPart.RewardReasonRefugeeResettle".Translate());
             GameComponent_FamiliaRankTracker.Instance?.GainPoints(category, 10);
 
             if (!outSignalRewardsReady.NullOrEmpty())

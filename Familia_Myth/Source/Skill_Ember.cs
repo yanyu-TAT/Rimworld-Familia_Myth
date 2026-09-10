@@ -58,7 +58,7 @@ namespace FamiliaMyth.Abilities
 
             if (ApplyEffect(downed))
             {
-                Messages.Message($"由于被击倒，{downed.Name.ToStringShort} 的技能：余烬 已触发", MessageTypeDefOf.PositiveEvent);
+                Messages.Message("FamiliaMyth.Ability.EmberTriggered".Translate(downed.Name.ToStringShort), MessageTypeDefOf.PositiveEvent);
                 Charge--;
                 return true;
             }

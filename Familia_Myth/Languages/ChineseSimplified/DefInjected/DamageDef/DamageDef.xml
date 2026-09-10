@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- DamageDef 玩家可见文本（自 Defs 迁移；Def 内文本保留为默认/兜底） -->
+
+  <LightArrow.label>光箭</LightArrow.label>
+  <LightArrow.deathMessage>{0} 被光箭贯穿而死。</LightArrow.deathMessage>
+  <SpellExplosion.deathMessage>{0} 被爆裂魔法蒸发殆尽。</SpellExplosion.deathMessage>
+  <SpellExplosion.label>爆裂魔法</SpellExplosion.label>
+
+</LanguageData>

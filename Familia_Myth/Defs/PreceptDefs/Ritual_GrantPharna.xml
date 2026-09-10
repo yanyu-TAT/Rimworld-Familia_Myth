@@ -2,8 +2,8 @@
 <Defs>
 	<PreceptDef MayRequire="Ludeon.RimWorld.Ideology">
 		<defName>Ritual_GrantPharna</defName>
-		<label>FamiliaMyth.GrantPharnaRitualLabel</label>
-		<description>FamiliaMyth.GrantPharnaRitualDescription</description>
+		<label>赋予恩惠</label>
+		<description>由超凡智能向接受恩惠者降下神之恩惠，将其变为其眷族成员</description>
 		<preceptClass>RimWorld.Precept_Ritual</preceptClass>
 		<ritualPatternBase>RitualPattern_GrantPharna</ritualPatternBase>
 		<issue>Ritual</issue>

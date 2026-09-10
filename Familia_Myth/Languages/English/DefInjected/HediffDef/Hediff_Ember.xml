@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Hediff_Ember player-visible text (migrated from Defs; Def text kept as default/fallback) -->
+
+  <EmberAftereffect.description>The aftereffect that follows the end of Ember, leaving the body briefly unconscious.</EmberAftereffect.description>
+  <EmberAftereffect.label>Ember Backlash</EmberAftereffect.label>
+  <EmberInEffect.description>A survival instinct that triggers when downed. Rapidly repairs injuries for its duration.</EmberInEffect.description>
+  <EmberInEffect.label>Ember</EmberInEffect.label>
+  <EmberState.description>Displays the current state of the Ember skill.</EmberState.description>
+  <EmberState.label>Skill (Ember)</EmberState.label>
+
+</LanguageData>

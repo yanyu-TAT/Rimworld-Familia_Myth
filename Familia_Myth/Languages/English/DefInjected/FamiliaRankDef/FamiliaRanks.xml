@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- FamiliaRanks player-visible text (migrated from Defs; Def text kept as default fallback) -->
+
+  <ExplorerRank_I.description>An explorer Familia newly admitted to the Guild.</ExplorerRank_I.description>
+  <ExplorerRank_I.label>Explorer · Rank I</ExplorerRank_I.label>
+  <ExplorerRank_II.description>An explorer Familia now able to handle commissions on its own.</ExplorerRank_II.description>
+  <ExplorerRank_II.label>Explorer · Rank II</ExplorerRank_II.label>
+  <ExplorerRank_III.description>A highly trusted senior explorer Familia of the Guild.</ExplorerRank_III.description>
+  <ExplorerRank_III.label>Explorer · Rank III</ExplorerRank_III.label>
+
+</LanguageData>

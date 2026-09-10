@@ -44,7 +44,7 @@ namespace FamiliaMyth.Abilities
         {
             if (pharna == null || stat == null)
                 return "";
-            string label = "FamiliaMyth.DevelopableAbilityAbnormalResistanceLabel".Translate();
+            string label = "FamiliaMyth.DevelopableAbility.AbnormalResistanceLabel".Translate();
             string str = "Lv." + pharna.level.ToString() + " " + label + Rank + ": ";
             if (stat == StatDefOf.ImmunityGainSpeed)
             {

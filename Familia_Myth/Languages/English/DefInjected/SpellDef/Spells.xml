@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Spells player-visible text (migrated from Defs; Def text kept as default fallback) -->
+
+  <Spell_ArcsRay.description>While chanting, gathers an unerring arrow of light. When the cast ends, it is loosed at the chosen enemy, piercing enemies and buildings along its path until it strikes home (ignoring armor and damage multipliers)</Spell_ArcsRay.description>
+  <Spell_ArcsRay.label>Arcs Ray</Spell_ArcsRay.label>
+  <Spell_Explosion.description>Once the incantation ends, sets off a huge explosion at the target point whose damage and radius scale with spell power. Afterwards the caster is left paralyzed for hours by mana exhaustion</Spell_Explosion.description>
+  <Spell_Explosion.label>Explosion</Spell_Explosion.label>
+  <Spell_FusilladeFlameSpears.description>Locks onto enemies within a cone while chanting, then looses flame spears that bombard the area around them when the cast ends</Spell_FusilladeFlameSpears.description>
+  <Spell_FusilladeFlameSpears.label>Fusillade Flame Spears</Spell_FusilladeFlameSpears.label>
+  <Spell_KingsSword.description>Summons a greatsword that hovers and circles around the caster, attacking nearby enemies on its own. Casting it again while it is active extends its duration and doubles its attack range and damage</Spell_KingsSword.description>
+  <Spell_KingsSword.label>King's Sword</Spell_KingsSword.label>
+  <Spell_LightGuard.description>Once the incantation ends, summons several light spirits to circle the caster, absorbing incoming projectiles and burning nearby enemies. The number of spirits and the duration are affected by spell power</Spell_LightGuard.description>
+  <Spell_LightGuard.label>Guardian Light Spirits</Spell_LightGuard.label>
+  <Spell_LuminousWind.description>Summons several wind bolts while chanting that automatically seek out nearby enemies when the cast ends</Spell_LuminousWind.description>
+  <Spell_LuminousWind.label>Luminous Wind</Spell_LuminousWind.label>
+  <Spell_NoahHeal.description>Bandages all wounds, which then heal faster for a time</Spell_NoahHeal.description>
+  <Spell_NoahHeal.label>Noah Heal</Spell_NoahHeal.label>
+  <Spell_TheWorld.description>Unfolds a field of stalled time, in which the time of everything but its caster comes to a stop</Spell_TheWorld.description>
+  <Spell_ThunderStorm.description>Turns the weather into a violent storm, calling down several large lightning strikes on random enemies across the map</Spell_ThunderStorm.description>
+  <Spell_ThunderStorm.label>Thunder Storm</Spell_ThunderStorm.label>
+  <Spell_ZeoGullveig.description>Once the incantation ends, unfolds a healing circle at the target point that bandages wounds, heals injuries and suppresses pain for allies within it</Spell_ZeoGullveig.description>
+  <Spell_ZeoGullveig.label>Blessing of the Goddess of Rebirth</Spell_ZeoGullveig.label>
+
+</LanguageData>

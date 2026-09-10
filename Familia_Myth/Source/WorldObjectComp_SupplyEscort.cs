@@ -68,8 +68,8 @@ namespace FamiliaMyth.Quest
         {
             if (role == Role.None) return null;
             return role == Role.Pickup
-                ? $"押运领取点（{questName}）"
-                : $"押运交付点（{questName}）";
+                ? "FamiliaMyth.QuestMisc.SupplyEscortPickupPoint".Translate(questName)
+                : "FamiliaMyth.QuestMisc.SupplyEscortDeliveryPoint".Translate(questName);
         }
 
         //A 点：接收押运物资（超重确认由任务部件按清单实际重量处理）
@@ -77,11 +77,11 @@ namespace FamiliaMyth.Quest
         {
             return new Command_Action
             {
-                defaultLabel = "接收押运物资",
-                defaultDesc = $"从 {parent.Label} 接收公会的押运物资"
-                    + $"（总重 {SupplyEscortUtility.CargoMassMin:F0}~{SupplyEscortUtility.CargoMassMax:F0}kg，"
-                    + "清单由对方现场配货）。\n\n"
-                    + "领取后请按清单原样送达任务指定的交付点。",
+                defaultLabel = "FamiliaMyth.QuestMisc.SupplyEscortPickupLabel".Translate(),
+                defaultDesc = "FamiliaMyth.QuestMisc.SupplyEscortPickupDesc".Translate(
+                    parent.Label,
+                    SupplyEscortUtility.CargoMassMin.ToString("F0"),
+                    SupplyEscortUtility.CargoMassMax.ToString("F0")),
                 icon = ContentFinder<Texture2D>.Get(PickupIconPath),
                 action = () => SendSignal(signalPickup, caravan)
             };
@@ -90,12 +90,11 @@ namespace FamiliaMyth.Quest
         //B 点：交付押运物资（清单未就绪则禁用；逐项核对由任务部件受理）
         private Gizmo DeliveryGizmo(Caravan caravan)
         {
+            string pending = manifestSummary ?? "FamiliaMyth.QuestMisc.SupplyEscortNotPickedUp".Translate();
             var gizmo = new Command_Action
             {
-                defaultLabel = "交付押运物资",
-                defaultDesc = $"向 {parent.Label} 交付押运清单上的物资（可分批交付）。\n\n"
-                    + $"尚需交付：{manifestSummary ?? "（尚未领取）"}\n\n"
-                    + "按种类与数量逐项核对，清单外的物品不会被收取。",
+                defaultLabel = "FamiliaMyth.QuestMisc.SupplyEscortDeliverLabel".Translate(),
+                defaultDesc = "FamiliaMyth.QuestMisc.SupplyEscortDeliverDesc".Translate(parent.Label, pending),
                 icon = ContentFinder<Texture2D>.Get(DeliverIconPath),
                 action = () => SendSignal(signalDeliver, caravan)
             };
@@ -103,7 +102,7 @@ namespace FamiliaMyth.Quest
             if (!manifestReady)
             {
                 gizmo.Disabled = true;
-                gizmo.disabledReason = "尚未从领取点接收押运物资";
+                gizmo.disabledReason = "FamiliaMyth.QuestMisc.SupplyEscortNotReadyReason".Translate();
             }
 
             return gizmo;

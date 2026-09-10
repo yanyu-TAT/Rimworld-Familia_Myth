@@ -6,7 +6,7 @@
 		<roles>
 			<li Class="FamiliaMyth.Ritual.RitualRoleColonist_NoPharna">
 				<id>recipient</id>
-				<label>FamiliaMyth.RitualGrantPharnaRecipientLabel</label>
+				<label>眷族候选者</label>
 				<required>true</required>
 				<maxCount>1</maxCount>
 				<allowOtherIdeos>true</allowOtherIdeos>

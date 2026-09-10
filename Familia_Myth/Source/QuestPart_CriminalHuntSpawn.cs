@@ -28,9 +28,8 @@ namespace FamiliaMyth.Quest
 
             //提示玩家本次目标：信件可点击跳转到通缉犯位置
             Find.LetterStack.ReceiveLetter(LetterMaker.MakeLetter(
-                "发现通缉犯",
-                $"{wanted.Name.ToStringShort} 正是本次追捕的通缉犯，混在窝点守卫之中。\n\n" +
-                "将其击毙即可完成委托；将其击倒并带回据点、送上公会的押解穿梭机，可获得双倍酬劳。",
+                "FamiliaMyth.QuestPart.CriminalSpotted".Translate(),
+                "FamiliaMyth.QuestPart.CriminalSpottedText".Translate(wanted.Name.ToStringShort),
                 LetterDefOf.NeutralEvent, new GlobalTargetInfo(wanted)));
 
             //守点：窝点内迎战玩家；addFleeToil=false 防止逃跑离图

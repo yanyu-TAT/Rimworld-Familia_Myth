@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Hediff_NoahHeal player-visible text (migrated from Defs; Def text kept as default/fallback) -->
+
+  <Hediff_NoahHeal.description>Speeds up wound healing</Hediff_NoahHeal.description>
+  <Hediff_NoahHeal.label>Noah Heal</Hediff_NoahHeal.label>
+
+</LanguageData>

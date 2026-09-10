@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- ==================== Virtue buffs ====================== -->
+  <!-- Key naming follows the RimWorld Def translation convention: DefName.fieldName -->
+  <!-- Note: Hediff descriptions do not support {0} substitution, so only static text is used -->
+
+  <!-- Stalwart: +50% to all three armor ratings, 80% damage reduction, x50% bleed rate -->
+  <Hediff_VirtueBuff_Stalwart.label>Virtue: Stalwart</Hediff_VirtueBuff_Stalwart.label>
+  <Hediff_VirtueBuff_Stalwart.description>Of unbending will, body and mind unbreakable</Hediff_VirtueBuff_Stalwart.description>
+
+  <!-- Courageous: +1 movement speed, -50% stagger, +100% pain threshold -->
+  <Hediff_VirtueBuff_Courageous.label>Virtue: Courageous</Hediff_VirtueBuff_Courageous.label>
+  <Hediff_VirtueBuff_Courageous.description>Filled with courage, I fear nothing at all</Hediff_VirtueBuff_Courageous.description>
+
+  <!-- Focused: +8 shooting accuracy for self and allies, -50% aiming time -->
+  <Hediff_VirtueBuff_Focused.label>Virtue: Focused</Hediff_VirtueBuff_Focused.label>
+  <Hediff_VirtueBuff_Focused.description>Mind concentrated, thoughts clear and sharp</Hediff_VirtueBuff_Focused.description>
+
+  <!-- Powerful: x150% melee damage, x80% melee cooldown, +0.5 movement speed for self and allies -->
+  <Hediff_VirtueBuff_Powerful.label>Virtue: Powerful</Hediff_VirtueBuff_Powerful.label>
+  <Hediff_VirtueBuff_Powerful.description>Might surging, battle spirit blazing high</Hediff_VirtueBuff_Powerful.description>
+
+  <!-- Vigorous: +15 mood and +1 movement speed for self and allies -->
+  <Hediff_VirtueBuff_Vigorous.label>Virtue: Vigorous</Hediff_VirtueBuff_Vigorous.label>
+  <Hediff_VirtueBuff_Vigorous.description>Vigor renewed, the whole body full of drive</Hediff_VirtueBuff_Vigorous.description>
+
+  <!-- ==================== Virtue auras ================== -->
+  <!-- Aura bonuses granted to allies within range -->
+
+  <Hediff_VirtueAura_Focused.label>Virtue: Focused</Hediff_VirtueAura_Focused.label>
+  <Hediff_VirtueAura_Focused.description>Caught up in a nearby companion's focus, utterly attentive</Hediff_VirtueAura_Focused.description>
+
+  <Hediff_VirtueAura_Powerful.label>Virtue: Powerful</Hediff_VirtueAura_Powerful.label>
+  <Hediff_VirtueAura_Powerful.description>Heartened by a nearby companion's bearing, swift of foot</Hediff_VirtueAura_Powerful.description>
+
+  <Hediff_VirtueAura_Vigorous.label>Virtue: Vigorous</Hediff_VirtueAura_Vigorous.label>
+  <Hediff_VirtueAura_Vigorous.description>Infected by a nearby companion's vitality, spirits soaring</Hediff_VirtueAura_Vigorous.description>
+
+</LanguageData>

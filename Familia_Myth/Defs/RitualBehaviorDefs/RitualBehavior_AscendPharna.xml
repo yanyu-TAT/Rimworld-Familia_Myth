@@ -6,7 +6,7 @@
 		<roles>
 			<li Class="FamiliaMyth.Ritual.RitualRoleColonist_CanAscend">
 				<id>recipient</id>
-				<label>FamiliaMyth.RitualAscendPharnaRecipientLabel</label>
+				<label>待升华的眷族成员</label>
 				<required>true</required>
 				<maxCount>1</maxCount>
 				<allowOtherIdeos>true</allowOtherIdeos>

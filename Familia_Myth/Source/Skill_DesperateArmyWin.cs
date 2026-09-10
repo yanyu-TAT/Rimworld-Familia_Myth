@@ -41,12 +41,15 @@ namespace Familia_Myth.Source
         public string GetExplanation(PharnaStatusType type)
         {
             if (!CanCast) return "";
-            return type switch
+            string s = type switch
             {
-                PharnaStatusType.Endurance or PharnaStatusType.Strength or PharnaStatusType.Agility => $"  哀兵必胜: +{(int)(200f * Ratio + 100f)}",
-                PharnaStatusType.Will => $"  哀兵必胜: +{(int)(300f * Ratio + 150f)}",
+                PharnaStatusType.Endurance or PharnaStatusType.Strength or PharnaStatusType.Agility
+                    => "FamiliaMyth.Ability.DesperateArmyWinStatus".Translate((int)(200f * Ratio + 100f)),
+                PharnaStatusType.Will
+                    => "FamiliaMyth.Ability.DesperateArmyWinWill".Translate((int)(300f * Ratio + 150f)),
                 _ => ""
             };
+            return s;
         }
     }
 }

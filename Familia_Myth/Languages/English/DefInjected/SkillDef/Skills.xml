@@ -10,4 +10,26 @@
 	<Skill_Railgun.label>Railgun</Skill_Railgun.label>
 	<Skill_Railgun.description>Requires a ranged weapon. Charges the weapon with electromagnetic energy: the next 5 shots pierce along the bullet path, dealing 200% damage and stunning enemies for 2 seconds. Walls block the shot and take piercing damage.</Skill_Railgun.description>
 
+  <!-- Additional entries migrated from Defs -->
+  <Skill_BerserkerChaos.description>Always active: the more badly wounded this person is, the higher their melee damage.</Skill_BerserkerChaos.description>
+  <Skill_BerserkerChaos.label>Berserker Chaos</Skill_BerserkerChaos.label>
+
+  <Skill_Ember.description>Triggers when knocked down: forces this person to stay alive for a short time and rapidly repair their injuries, then forces them into a coma.</Skill_Ember.description>
+  <Skill_Ember.label>Ember</Skill_Ember.label>
+
+  <Skill_FlameAffinity.description>Always active: greatly increases heat armor and maximum comfortable temperature, increases flammability, removes any fear of fire, and continuously heals injuries while burning.</Skill_FlameAffinity.description>
+  <Skill_FlameAffinity.label>Flame Affinity</Skill_FlameAffinity.label>
+
+  <Skill_IaiSpiritSlash.description>Requires a melee weapon (sharp). Enters an iai stance, absorbing all damage taken. After 3 seconds, draws the blade and flashes a short distance in the chosen direction, dealing 100% damage plus 50% of the absorbed damage to enemies near the path.</Skill_IaiSpiritSlash.description>
+  <Skill_IaiSpiritSlash.label>Iai Spirit Slash</Skill_IaiSpiritSlash.label>
+
+  <Skill_Provoke.description>Can be used while drafted: makes enemies within 20 tiles target this person for 3 hours.</Skill_Provoke.description>
+  <Skill_Provoke.label>Provoke</Skill_Provoke.label>
+
+  <Skill_RoundhouseKick.description>Choose a single enemy within the 8 tiles adjacent to this person, dealing 100% unarmed damage and knocking them back 5 tiles. If the knockback path is blocked, deals a further 200% damage. Stores 3 charges, each with a 3 hour cooldown.</Skill_RoundhouseKick.description>
+  <Skill_RoundhouseKick.label>Roundhouse Kick</Skill_RoundhouseKick.label>
+
+  <Skill_SwordRain.description>Requires a melee weapon (sharp). Deals two hits of 100% damage to enemies within 4 tiles. A kill or a downed enemy immediately resets the cooldown (up to two times).</Skill_SwordRain.description>
+  <Skill_SwordRain.label>Sword Rain</Skill_SwordRain.label>
+
 </LanguageData>

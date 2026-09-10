@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Hediff_Provoke 玩家可见文本（自 Defs 迁移；Def 内文本保留为默认/兜底） -->
+
+  <ProvokeInEffect.description>正在吸引周围敌人的仇恨，使其攻击目标变为自己。</ProvokeInEffect.description>
+  <ProvokeInEffect.label>吸引仇恨</ProvokeInEffect.label>
+
+</LanguageData>

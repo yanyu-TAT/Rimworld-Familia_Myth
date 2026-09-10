@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- ==================== Spell / Skill shared ==================== -->
+  <FamiliaMyth.Ability.StunnedCannotCast>Cannot cast again until {0} wears off</FamiliaMyth.Ability.StunnedCannotCast>
+  <FamiliaMyth.Ability.SkillActive>Active</FamiliaMyth.Ability.SkillActive>
+  <FamiliaMyth.Ability.SkillCharge>Charges: {0}</FamiliaMyth.Ability.SkillCharge>
+  <FamiliaMyth.Ability.SkillReady>Ready</FamiliaMyth.Ability.SkillReady>
+  <FamiliaMyth.Ability.SkillCooldown>Cooldown: {0}</FamiliaMyth.Ability.SkillCooldown>
+
+  <!-- ==================== Spell ==================== -->
+  <FamiliaMyth.Ability.EntropyOverflow>{0}'s neural heat would exceed the limit</FamiliaMyth.Ability.EntropyOverflow>
+  <FamiliaMyth.Ability.NotEnoughPsyfocus>{0} does not have enough psyfocus</FamiliaMyth.Ability.NotEnoughPsyfocus>
+  <FamiliaMyth.Ability.CancelCastLabel>Cancel {0}</FamiliaMyth.Ability.CancelCastLabel>
+  <FamiliaMyth.Ability.CancelCastDesc>Cancel the {0} currently being cast</FamiliaMyth.Ability.CancelCastDesc>
+  <FamiliaMyth.Ability.SpellKeyLabel>Detonate spell key: {0}</FamiliaMyth.Ability.SpellKeyLabel>
+
+  <!-- ==================== Zeo Gullveig ==================== -->
+  <FamiliaMyth.Ability.ZeoGullveig>Blessing of the Goddess of Rebirth</FamiliaMyth.Ability.ZeoGullveig>
+  <FamiliaMyth.Ability.ZeoGullveigAutoLabel>Blessing of the Goddess of Rebirth: Auto-heal</FamiliaMyth.Ability.ZeoGullveigAutoLabel>
+  <FamiliaMyth.Ability.ZeoGullveigAutoDesc>Continuously drains psyfocus to heal the caster, and turns off automatically when psyfocus runs low.</FamiliaMyth.Ability.ZeoGullveigAutoDesc>
+  <FamiliaMyth.Ability.ZeoGullveigNoPsy>{0} has too little psyfocus; auto-heal disabled.</FamiliaMyth.Ability.ZeoGullveigNoPsy>
+  <FamiliaMyth.Ability.PawnDead>{0} is dead</FamiliaMyth.Ability.PawnDead>
+
+  <!-- ==================== Time Stop ==================== -->
+  <FamiliaMyth.Ability.TimeStop>Time Stop</FamiliaMyth.Ability.TimeStop>
+  <FamiliaMyth.Ability.TimeStopActive>The current Time Stop effect has not ended yet.</FamiliaMyth.Ability.TimeStopActive>
+
+  <!-- ==================== Light Guard ==================== -->
+  <FamiliaMyth.Ability.LightGuard>Guardian Light Spirits</FamiliaMyth.Ability.LightGuard>
+
+  <!-- ==================== King's Sword ==================== -->
+  <FamiliaMyth.Ability.KingsSword>King's Sword</FamiliaMyth.Ability.KingsSword>
+
+  <!-- ==================== Skills: weapon requirements ==================== -->
+  <FamiliaMyth.Ability.NoSharpWeapon>No sword (sharp melee weapon) equipped</FamiliaMyth.Ability.NoSharpWeapon>
+  <FamiliaMyth.Ability.NoSpear>No spear (sharp melee weapon) equipped</FamiliaMyth.Ability.NoSpear>
+  <FamiliaMyth.Ability.NoKatana>No katana (sharp melee weapon) equipped</FamiliaMyth.Ability.NoKatana>
+  <FamiliaMyth.Ability.NoRangedWeapon>No ranged gun equipped</FamiliaMyth.Ability.NoRangedWeapon>
+
+  <!-- ==================== Sword Rain ==================== -->
+  <FamiliaMyth.Ability.NoEnemyInRange>No enemies in range</FamiliaMyth.Ability.NoEnemyInRange>
+
+  <!-- ==================== Desperate Army Win ==================== -->
+  <FamiliaMyth.Ability.DesperateArmyWinStatus>  Desperate Army Win: +{0}</FamiliaMyth.Ability.DesperateArmyWinStatus>
+  <FamiliaMyth.Ability.DesperateArmyWinWill>  Desperate Army Win: +{0}</FamiliaMyth.Ability.DesperateArmyWinWill>
+
+  <!-- ==================== Ember ==================== -->
+  <FamiliaMyth.Ability.EmberTriggered>Knocked down, so {0}'s skill Ember has triggered</FamiliaMyth.Ability.EmberTriggered>
+
+  <!-- ==================== Provoke ==================== -->
+  <FamiliaMyth.Ability.ProvokeNotDrafted>{0} has not been drafted</FamiliaMyth.Ability.ProvokeNotDrafted>
+
+  <!-- ==================== Cast verb ==================== -->
+  <FamiliaMyth.Ability.TargetOutOfRange>Target is out of valid range</FamiliaMyth.Ability.TargetOutOfRange>
+
+  <!-- ==================== Hediff_SpellState ==================== -->
+  <FamiliaMyth.Ability.SpellStateRemaining>Remaining </FamiliaMyth.Ability.SpellStateRemaining>
+
+  <!-- ==================== Counter-based effect (HediffComp_DisappearsWithCounter) ==================== -->
+  <!-- {0}=remaining count -->
+  <FamiliaMyth.Ability.RemainingCount>{0} left</FamiliaMyth.Ability.RemainingCount>
+
+  <!-- ==================== Developmental Abilities ==================== -->
+  <FamiliaMyth.DevelopableAbility.HealingLabel>Healing</FamiliaMyth.DevelopableAbility.HealingLabel>
+  <FamiliaMyth.DevelopableAbility.MineralogyLabel>Mineralogy</FamiliaMyth.DevelopableAbility.MineralogyLabel>
+  <FamiliaMyth.DevelopableAbility.BotanyLabel>Botany</FamiliaMyth.DevelopableAbility.BotanyLabel>
+  <FamiliaMyth.DevelopableAbility.LuckOfTheSeaLabel>Luck of the Sea</FamiliaMyth.DevelopableAbility.LuckOfTheSeaLabel>
+  <FamiliaMyth.DevelopableAbility.MagicLabel>Magic</FamiliaMyth.DevelopableAbility.MagicLabel>
+  <FamiliaMyth.DevelopableAbility.AbnormalResistanceLabel>Abnormal Resistance</FamiliaMyth.DevelopableAbility.AbnormalResistanceLabel>
+  <FamiliaMyth.DevelopableAbility.MagicAutoStoreOffMessage>Stored psyfocus was used. Auto-store disabled.</FamiliaMyth.DevelopableAbility.MagicAutoStoreOffMessage>
+  <FamiliaMyth.DevelopableAbility.MagicRestorePsyfocus>Restore psyfocus</FamiliaMyth.DevelopableAbility.MagicRestorePsyfocus>
+  <FamiliaMyth.DevelopableAbility.MagicRestorePsyfocusDesc>Spend stored psyfocus to replenish psyfocus</FamiliaMyth.DevelopableAbility.MagicRestorePsyfocusDesc>
+  <FamiliaMyth.DevelopableAbility.MagicRestorePsyfocusDisabled>Not enough stored psyfocus</FamiliaMyth.DevelopableAbility.MagicRestorePsyfocusDisabled>
+  <FamiliaMyth.DevelopableAbility.MagicAutoStoreLabel>Auto-store psyfocus</FamiliaMyth.DevelopableAbility.MagicAutoStoreLabel>
+  <FamiliaMyth.DevelopableAbility.MagicAutoStoreDesc>Automatically stores psyfocus above 50%, and turns off when Restore psyfocus is used</FamiliaMyth.DevelopableAbility.MagicAutoStoreDesc>
+  <FamiliaMyth.DevelopableAbility.MagicStoreBarTitle>Psyfocus storage</FamiliaMyth.DevelopableAbility.MagicStoreBarTitle>
+  <FamiliaMyth.DevelopableAbility.MagicStoreTooltip>Stored {0} / {1}</FamiliaMyth.DevelopableAbility.MagicStoreTooltip>
+
+</LanguageData>

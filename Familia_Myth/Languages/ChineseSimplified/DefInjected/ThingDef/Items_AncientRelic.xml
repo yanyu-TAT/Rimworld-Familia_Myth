@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Items_AncientRelic 玩家可见文本（自 Defs 迁移；Def 内文本保留为默认/兜底） -->
+
+  <FM_AncientRelicArtifact.description>古代仙精留下的宝物，蕴含着难以置信的力量，但目前似乎还无法打开。</FM_AncientRelicArtifact.description>
+  <FM_AncientRelicArtifact.label>仙精宝物</FM_AncientRelicArtifact.label>
+
+</LanguageData>

@@ -29,72 +29,13 @@
 
 	<!-- Exploits -->
 	<FamiliaMyth.Exploits>Exploits</FamiliaMyth.Exploits>
+	<!-- Experience -->
+	<FamiliaMyth.Experience>Experience</FamiliaMyth.Experience>
 
 	<!-- Familia rank page: culture icon card title -->
 	<FamiliaMyth.FamiliaCulture>Familia Culture</FamiliaMyth.FamiliaCulture>
 	<!-- Familia rank page: unknown culture placeholder -->
 	<FamiliaMyth.UnknownCulture>Unknown Culture</FamiliaMyth.UnknownCulture>
-
-	<!-- Flame Affinity: stat panel modifier explanation -->
-	<FamiliaMyth.FlameAffinityLabel>Flame Affinity: Heat Armor +2, Max Comfy Temperature +1000°C, Flammability +1</FamiliaMyth.FlameAffinityLabel>
-
-	<!-- ================ Virtue System ================ -->
-
-	<!-- Virtue mental states -->
-	<FamiliaMyth.Virtue.Stalwart.Label>Stalwart</FamiliaMyth.Virtue.Stalwart.Label>
-	<FamiliaMyth.Virtue.Stalwart.BeginLetterLabel>Virtue: Stalwart</FamiliaMyth.Virtue.Stalwart.BeginLetterLabel>
-	<FamiliaMyth.Virtue.Stalwart.BeginLetter>{0} has manifested an unshakable will at the brink of breaking, facing all odds without fear.</FamiliaMyth.Virtue.Stalwart.BeginLetter>
-	<FamiliaMyth.Virtue.Stalwart.RecoveryMessage>{0}'s stalwart will has faded.</FamiliaMyth.Virtue.Stalwart.RecoveryMessage>
-	<FamiliaMyth.Virtue.Stalwart.InspectLine>Mental state: Stalwart</FamiliaMyth.Virtue.Stalwart.InspectLine>
-
-	<FamiliaMyth.Virtue.Courageous.Label>Courageous</FamiliaMyth.Virtue.Courageous.Label>
-	<FamiliaMyth.Virtue.Courageous.BeginLetterLabel>Virtue: Courageous</FamiliaMyth.Virtue.Courageous.BeginLetterLabel>
-	<FamiliaMyth.Virtue.Courageous.BeginLetter>{0} has mustered fearless courage at the brink of breaking, undaunted by anything.</FamiliaMyth.Virtue.Courageous.BeginLetter>
-	<FamiliaMyth.Virtue.Courageous.RecoveryMessage>{0}'s fearless courage has faded.</FamiliaMyth.Virtue.Courageous.RecoveryMessage>
-	<FamiliaMyth.Virtue.Courageous.InspectLine>Mental state: Courageous</FamiliaMyth.Virtue.Courageous.InspectLine>
-
-	<FamiliaMyth.Virtue.Focused.Label>Focused</FamiliaMyth.Virtue.Focused.Label>
-	<FamiliaMyth.Virtue.Focused.BeginLetterLabel>Virtue: Focused</FamiliaMyth.Virtue.Focused.BeginLetterLabel>
-	<FamiliaMyth.Virtue.Focused.BeginLetter>{0} has entered a state of extreme focus at the brink of breaking, with an unprecedentedly clear mind.</FamiliaMyth.Virtue.Focused.BeginLetter>
-	<FamiliaMyth.Virtue.Focused.RecoveryMessage>{0}'s focus has dissipated.</FamiliaMyth.Virtue.Focused.RecoveryMessage>
-	<FamiliaMyth.Virtue.Focused.InspectLine>Mental state: Focused</FamiliaMyth.Virtue.Focused.InspectLine>
-
-	<FamiliaMyth.Virtue.Powerful.Label>Powerful</FamiliaMyth.Virtue.Powerful.Label>
-	<FamiliaMyth.Virtue.Powerful.BeginLetterLabel>Virtue: Powerful</FamiliaMyth.Virtue.Powerful.BeginLetterLabel>
-	<FamiliaMyth.Virtue.Powerful.BeginLetter>{0} has unleashed all of their might at the brink of breaking, burning with battlelust.</FamiliaMyth.Virtue.Powerful.BeginLetter>
-	<FamiliaMyth.Virtue.Powerful.RecoveryMessage>{0}'s battle fervor has faded.</FamiliaMyth.Virtue.Powerful.RecoveryMessage>
-	<FamiliaMyth.Virtue.Powerful.InspectLine>Mental state: Powerful</FamiliaMyth.Virtue.Powerful.InspectLine>
-
-	<FamiliaMyth.Virtue.Vigorous.Label>Vigorous</FamiliaMyth.Virtue.Vigorous.Label>
-	<FamiliaMyth.Virtue.Vigorous.BeginLetterLabel>Virtue: Vigorous</FamiliaMyth.Virtue.Vigorous.BeginLetterLabel>
-	<FamiliaMyth.Virtue.Vigorous.BeginLetter>Instead of breaking, {0} has become brimming with vigor, inspiring those around them.</FamiliaMyth.Virtue.Vigorous.BeginLetter>
-	<FamiliaMyth.Virtue.Vigorous.RecoveryMessage>{0}'s vigor has faded.</FamiliaMyth.Virtue.Vigorous.RecoveryMessage>
-	<FamiliaMyth.Virtue.Vigorous.InspectLine>Mental state: Vigorous</FamiliaMyth.Virtue.Vigorous.InspectLine>
-
-	<!-- Virtue buffs -->
-	<FamiliaMyth.VirtueBuff.Stalwart.Label>Stalwart</FamiliaMyth.VirtueBuff.Stalwart.Label>
-	<FamiliaMyth.VirtueBuff.Stalwart.Description>Body and mind turn unbreakable: +50% to all three armor ratings, -80% incoming damage, -50% bleed rate.</FamiliaMyth.VirtueBuff.Stalwart.Description>
-	<FamiliaMyth.VirtueBuff.Courageous.Label>Courageous</FamiliaMyth.VirtueBuff.Courageous.Label>
-	<FamiliaMyth.VirtueBuff.Courageous.Description>+1 movement speed, -50% stagger duration, +100% pain shock threshold.</FamiliaMyth.VirtueBuff.Courageous.Description>
-	<FamiliaMyth.VirtueBuff.Focused.Label>Focused</FamiliaMyth.VirtueBuff.Focused.Label>
-	<FamiliaMyth.VirtueBuff.Focused.Description>+8 shooting accuracy and -50% aiming time for self and nearby allies.</FamiliaMyth.VirtueBuff.Focused.Description>
-	<FamiliaMyth.VirtueBuff.Powerful.Label>Powerful</FamiliaMyth.VirtueBuff.Powerful.Label>
-	<FamiliaMyth.VirtueBuff.Powerful.Description>+50% melee damage, -20% melee cooldown, and +0.5 movement speed for self and nearby allies.</FamiliaMyth.VirtueBuff.Powerful.Description>
-	<FamiliaMyth.VirtueBuff.Vigorous.Label>Vigorous</FamiliaMyth.VirtueBuff.Vigorous.Label>
-	<FamiliaMyth.VirtueBuff.Vigorous.Description>+15 mood and +1 movement speed for self and nearby allies.</FamiliaMyth.VirtueBuff.Vigorous.Description>
-
-	<!-- Virtue auras -->
-	<FamiliaMyth.VirtueAura.Focused.Label>Focused Aura</FamiliaMyth.VirtueAura.Focused.Label>
-	<FamiliaMyth.VirtueAura.Focused.Description>Affected by a nearby ally's focus: +8 shooting accuracy, -50% aiming time.</FamiliaMyth.VirtueAura.Focused.Description>
-	<FamiliaMyth.VirtueAura.Powerful.Label>Powerful Aura</FamiliaMyth.VirtueAura.Powerful.Label>
-	<FamiliaMyth.VirtueAura.Powerful.Description>Inspired by a nearby ally's might: +0.5 movement speed.</FamiliaMyth.VirtueAura.Powerful.Description>
-	<FamiliaMyth.VirtueAura.Vigorous.Label>Vigorous Aura</FamiliaMyth.VirtueAura.Vigorous.Label>
-	<FamiliaMyth.VirtueAura.Vigorous.Description>Infected by a nearby ally's vigor: +15 mood, +1 movement speed.</FamiliaMyth.VirtueAura.Vigorous.Description>
-
-	<!-- Virtue thought -->
-	<FamiliaMyth.VirtueThought.Vigorous.Label>Vigor</FamiliaMyth.VirtueThought.Vigorous.Label>
-	<FamiliaMyth.VirtueThought.Vigorous.Description>Filled with hope by a companion's vigor.</FamiliaMyth.VirtueThought.Vigorous.Description>
-	<FamiliaMyth.VirtueThought.Vigorous.StageLabel>Inspired by a companion's vigor</FamiliaMyth.VirtueThought.Vigorous.StageLabel>
 
 	<!-- Ranged dodge text -->
 	<FamiliaMyth.TextMote_Dodge>Dodge</FamiliaMyth.TextMote_Dodge>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Spells 玩家可见文本（自 Defs 迁移；Def 内文本保留为默认/兜底） -->
+
+  <Spell_ArcsRay.description>咏唱时凝聚一支必中的光箭，结束时发射追踪选定的敌人，贯穿路径上的敌人和建筑直到命中（无视护甲与承伤系数）</Spell_ArcsRay.description>
+  <Spell_ArcsRay.label>灵弓光箭</Spell_ArcsRay.label>
+  <Spell_Explosion.description>咏唱结束后在目标点引发一场巨大爆炸，伤害与范围随法强提升；施法结束后施法者将因魔力枯竭瘫痪数小时</Spell_Explosion.description>
+  <Spell_Explosion.label>爆裂魔法</Spell_Explosion.label>
+  <Spell_FusilladeFlameSpears.description>咏唱过程中锁定扇形范围内敌人，结束时发射火标枪轰炸目标附近区域</Spell_FusilladeFlameSpears.description>
+  <Spell_FusilladeFlameSpears.label>齐射火标枪</Spell_FusilladeFlameSpears.label>
+  <Spell_KingsSword.description>召唤一把悬浮环绕的巨剑，自动攻击靠近施法者的敌人。在场期间重复施法可叠加持续时间，并将攻击范围与伤害翻倍</Spell_KingsSword.description>
+  <Spell_KingsSword.label>君王之剑</Spell_KingsSword.label>
+  <Spell_LightGuard.description>咏唱结束后召唤数个环绕施法者的光灵，吸收来袭弹射物并灼烧靠近的敌人；光灵数量与持续时间受法强影响</Spell_LightGuard.description>
+  <Spell_LightGuard.label>光灵守护</Spell_LightGuard.label>
+  <Spell_LuminousWind.description>咏唱过程中召唤数个风弹，结束时自动追踪附近敌人</Spell_LuminousWind.description>
+  <Spell_LuminousWind.label>光明之风</Spell_LuminousWind.label>
+  <Spell_NoahHeal.description>包扎所有伤口在一段时间内加速愈合</Spell_NoahHeal.description>
+  <Spell_NoahHeal.label>诺亚治愈</Spell_NoahHeal.label>
+  <Spell_TheWorld.description>展开时滞领域，范围内除发动者以外的事物的时间将被停止</Spell_TheWorld.description>
+  <Spell_ThunderStorm.description>将天气变为暴风雨，向地图上的随机敌人降下数次大范围雷击</Spell_ThunderStorm.description>
+  <Spell_ThunderStorm.label>豪雷积雨云</Spell_ThunderStorm.label>
+  <Spell_ZeoGullveig.description>咏唱结束后在目标点展开治愈法阵，为范围内友方包扎伤口、恢复伤势并附加疼痛抑制</Spell_ZeoGullveig.description>
+  <Spell_ZeoGullveig.label>重生女神之礼赞</Spell_ZeoGullveig.label>
+
+</LanguageData>

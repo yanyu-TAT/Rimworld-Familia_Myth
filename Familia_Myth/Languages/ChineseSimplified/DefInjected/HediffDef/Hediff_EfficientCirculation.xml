@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Hediff_EfficientCirculation 玩家可见文本（自 Defs 迁移；Def 内文本保留为默认/兜底） -->
+
+  <Hediff_EfficientCirculation.description>发展能力「高效循环」隐藏组件</Hediff_EfficientCirculation.description>
+  <Hediff_EfficientCirculation.label>高效循环</Hediff_EfficientCirculation.label>
+
+</LanguageData>

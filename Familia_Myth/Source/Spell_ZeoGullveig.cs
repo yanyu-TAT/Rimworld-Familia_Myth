@@ -57,7 +57,7 @@ namespace FamiliaMyth.Abilities
             }
         }
 
-        public string EffectName => "重生女神之礼赞";
+        public string EffectName => "FamiliaMyth.Ability.ZeoGullveig".Translate();
 
         private Hediff_SpellState state;
         public Hediff_SpellState State { get => state; set => state = value; }
@@ -196,7 +196,7 @@ namespace FamiliaMyth.Abilities
             if (tracker.CurrentPsyfocus <= AutoHealPsyCost)
             {
                 isAutoHealing = false;
-                Messages.Message($"{pawn.Name.ToStringShort}精神力不足，自动治愈已关闭。", MessageTypeDefOf.NeutralEvent);
+                Messages.Message("FamiliaMyth.Ability.ZeoGullveigNoPsy".Translate(pawn.Name.ToStringShort), MessageTypeDefOf.NeutralEvent);
                 return;
             }
 
@@ -233,9 +233,9 @@ namespace FamiliaMyth.Abilities
                 icon = ToggleIcon,
                 isActive = () => isAutoHealing,
                 toggleAction = () => isAutoHealing = !isAutoHealing,
-                defaultLabel = "重生女神之礼赞：自动治愈",
-                defaultDesc = "持续消耗精神力自动进行自我治愈，精神力不足时自动关闭",
-                disabledReason = $"{pawn.Name.ToStringShort}已死亡"
+                defaultLabel = "FamiliaMyth.Ability.ZeoGullveigAutoLabel".Translate(),
+                defaultDesc = "FamiliaMyth.Ability.ZeoGullveigAutoDesc".Translate(),
+                disabledReason = "FamiliaMyth.Ability.PawnDead".Translate(pawn.Name.ToStringShort)
             };
 
         public override IEnumerable<Command> GetGizmos()

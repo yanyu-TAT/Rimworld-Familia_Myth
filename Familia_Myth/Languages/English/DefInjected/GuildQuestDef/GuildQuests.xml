@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- ==================== Guild quest definitions (GuildQuestDef) ==================== -->
+  <!-- Key format: DefName.fieldName -->
+  <!-- Note: \n is the RimWorld line-break escape, do not rewrite it as a real newline -->
+
+  <!-- Explorer type, Daily (Site Clearance) -->
+  <GuildQuest_Daily_SiteClearance.label>Site Clearance</GuildQuest_Daily_SiteClearance.label>
+  <GuildQuest_Daily_SiteClearance.letterText>The envoy explains the details of the extermination commission.\n\nThe Guild has found an evil faction outpost nearby,\nand leaving it alone would badly endanger the surrounding area. They ask that adventurers be sent to wipe it out.\n\nDo you accept?</GuildQuest_Daily_SiteClearance.letterText>
+
+  <!-- Explorer type, Rank-Up (Site Clearance) -->
+  <GuildQuest_RankUp_SiteClearance.label>Site Clearance</GuildQuest_RankUp_SiteClearance.label>
+  <GuildQuest_RankUp_SiteClearance.letterText>The envoy explains the details of the Rank-Up Quest and reminds you to prepare.\n\nThe Guild has found an evil faction outpost nearby,\nand leaving it alone would badly endanger the surrounding area. They ask that adventurers be sent to wipe it out.</GuildQuest_RankUp_SiteClearance.letterText>
+
+  <!-- Explorer type, Daily (Ancient Relic) -->
+  <GuildQuest_AncientRelic.label>Ancient Relic</GuildQuest_AncientRelic.label>
+  <GuildQuest_AncientRelic.letterText>The envoy brings word of a newly discovered ruin.\n\nIt is said that the ruin recently found near the colony holds an important treasure left behind by the spirits of old.\n\nTravel to the ruin, retrieve the relic box, and bring it back to your settlement. A Guild shuttle will arrive in a few days; hand the box over to the shuttle to complete the commission.\nOnce the treasure is taken, the Dark Faction that covets its power may come to claim it. Stay alert.\n\nDo you accept?</GuildQuest_AncientRelic.letterText>
+
+  <!-- Explorer type, Daily (Criminal Hunt) -->
+  <GuildQuest_Daily_CriminalHunt.label>Criminal Hunt</GuildQuest_Daily_CriminalHunt.label>
+  <GuildQuest_Daily_CriminalHunt.letterText>The envoy brings a wanted notice issued by the Guild.\n\nA wanted criminal is hiding in a criminal outpost near the colony,\nguarded by armed bandits. The Guild asks you to send adventurers to bring them to justice.\n\nKill the criminal on the spot, or take them prisoner and bring them back to the colony to hand over to the Guild's extradition shuttle.\nIf you deliver the prisoner alive, the reward is doubled.\n\nDo you accept?</GuildQuest_Daily_CriminalHunt.letterText>
+
+  <!-- Explorer type, Rank-Up (Refugee Resettlement) -->
+  <GuildQuest_RankUp_RefugeeResettle.label>Refugee Resettlement</GuildQuest_RankUp_RefugeeResettle.label>
+  <GuildQuest_RankUp_RefugeeResettle.letterText>The envoy explains the details of the Rank-Up Quest and reminds you to prepare.\n\nA group of refugees hunted by the Dark Faction hopes to be sheltered at your colony for a time.\nThey will stay at the colony for 15 days, after which a Guild shuttle will take them to be resettled elsewhere.\nProtect them from the Dark Faction's pursuit, and see as many of them off alive as you can.</GuildQuest_RankUp_RefugeeResettle.letterText>
+
+  <!-- Explorer type, Daily (Rescue) -->
+  <GuildQuest_Rescue.label>Rescue</GuildQuest_Rescue.label>
+  <GuildQuest_Rescue.letterText>The envoy brings a distress signal.\n\nA trade caravan was attacked by monsters near the colony, its members are unaccounted for, and help is urgently needed.\n\nTravel to the marked location, clear the threat, and rescue the wounded. After a time, their faction will send a shuttle to pick them up.\nProtect them while you wait, and see as many of them off alive as you can.\n\nDo you accept?</GuildQuest_Rescue.letterText>
+
+  <!-- Explorer type, Rank-Up (Supply Escort) -->
+  <GuildQuest_RankUp_SupplyEscort.label>Supply Escort</GuildQuest_RankUp_SupplyEscort.label>
+  <GuildQuest_RankUp_SupplyEscort.letterText>The envoy explains the details of the Rank-Up Quest and reminds you to prepare.\n\nThe Guild has a shipment of supplies that must be moved urgently.\nReach the pickup point and take charge of the supplies within 12 days, then complete the delivery to finish the quest.\nMembers of the Dark Faction may try to seize the supplies along the way. Be prepared.</GuildQuest_RankUp_SupplyEscort.letterText>
+
+</LanguageData>

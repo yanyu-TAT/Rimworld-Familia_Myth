@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Hediff_ManaExhaustion 玩家可见文本（自 Defs 迁移；Def 内文本保留为默认/兜底） -->
+
+  <Hediff_ManaExhaustion.description>施放爆裂魔法后魔力严重透支，身体陷入瘫痪，短时间内无法行动。</Hediff_ManaExhaustion.description>
+  <Hediff_ManaExhaustion.label>魔力枯竭</Hediff_ManaExhaustion.label>
+
+</LanguageData>

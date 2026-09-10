@@ -35,7 +35,7 @@ namespace FamiliaMyth.Abilities
             }
         }
 
-        public string EffectName => "守护光灵";
+        public string EffectName => "FamiliaMyth.Ability.LightGuard".Translate();
 
         private Hediff_SpellState state;
         public Hediff_SpellState State { get => state; set => state = value; }

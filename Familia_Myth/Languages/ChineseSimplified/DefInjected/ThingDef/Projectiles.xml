@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Projectiles 玩家可见文本（自 Defs 迁移；Def 内文本保留为默认/兜底） -->
+
+  <Projectile_ArcsRay.description>光箭魔法凝聚的贯穿之矢，可追踪目标并穿透路径上的敌人与建筑</Projectile_ArcsRay.description>
+  <Projectile_ArcsRay.label>光箭</Projectile_ArcsRay.label>
+  <Projectile_KingsSword.description>君王之剑魔法召唤的环绕悬浮巨剑，自动攻击施法者周围的敌人</Projectile_KingsSword.description>
+  <Projectile_KingsSword.label>君王之剑</Projectile_KingsSword.label>
+  <Projectile_LightOrb.description>光灵守护召唤的环绕光球，吸收来袭弹射物并灼烧靠近的敌人</Projectile_LightOrb.description>
+  <Projectile_LightOrb.label>光灵</Projectile_LightOrb.label>
+  <Projectile_WindMissile.description>光明之风生成的风弹，可追踪敌人或引爆造成范围伤害</Projectile_WindMissile.description>
+  <Projectile_WindMissile.label>风弹</Projectile_WindMissile.label>
+
+</LanguageData>

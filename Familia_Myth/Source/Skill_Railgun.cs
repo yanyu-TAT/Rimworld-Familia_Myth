@@ -19,7 +19,7 @@ namespace FamiliaMyth.Abilities
                 if (!canCast) return canCast;
 
                 if (Owner.GetRangedEquippedVerb() == null)
-                    return "未持有远程枪械";
+                    return "FamiliaMyth.Ability.NoRangedWeapon".Translate();
 
                 return true;
             }

@@ -3,6 +3,7 @@
 
   <!-- 探索类 · 日常任务（据点清剿） -->
   <!-- 由 IncidentWorker_GuildEnvoy 随机挑选，交给使者载体 -->
+  <!-- 玩家可见文本可经 Languages/<语言>/DefInjected/GuildQuestDef/GuildQuests.xml 覆盖（此处为默认文本，同时作为兜底） -->
   <FamiliaMyth.Quest.GuildQuestDef>
     <defName>GuildQuest_Daily_SiteClearance</defName>
     <label>据点清剿</label>

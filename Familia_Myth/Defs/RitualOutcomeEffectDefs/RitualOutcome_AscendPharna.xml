@@ -7,27 +7,27 @@
 		<comps />
 		<outcomeChances>
 			<li>
-				<label>FamiliaMyth.AscendPharnaRitualOutcomeGreatFailure</label>
+				<label>非常失败的升华仪式</label>
 				<chance>0.05</chance>
 				<positivityIndex>-2</positivityIndex>
 			</li>
 			<li>
-				<label>FamiliaMyth.AscendPharnaRitualOutcomeFailure</label>
+				<label>失败的升华仪式</label>
 				<chance>0.1</chance>
 				<positivityIndex>-1</positivityIndex>
 			</li>
 			<li>
-				<label>FamiliaMyth.AscendPharnaRitualOutcomeNormal</label>
+				<label>普通的升华仪式</label>
 				<chance>0.3</chance>
 				<positivityIndex>0</positivityIndex>
 			</li>
 			<li>
-				<label>FamiliaMyth.AscendPharnaRitualOutcomeSuccess</label>
+				<label>成功的升华仪式</label>
 				<chance>0.45</chance>
 				<positivityIndex>1</positivityIndex>
 			</li>
 			<li>
-				<label>FamiliaMyth.AscendPharnaRitualOutcomeGreatSuccess</label>
+				<label>大成功的升华仪式</label>
 				<chance>0.1</chance>
 				<positivityIndex>2</positivityIndex>
 			</li>

@@ -41,7 +41,7 @@ namespace FamiliaMyth.Abilities
         {
             if (pharna == null || stat == null) 
                 return "";
-            string label = "FamiliaMyth.DevelopableAbilityMagicLabel".Translate();
+            string label = "FamiliaMyth.DevelopableAbility.MagicLabel".Translate();
             string str = "Lv." + pharna.level.ToString()+ " " + label + Rank + ": ";
             if (stat.defName == "PsychicEntropyRecoveryRate"){
                 str += "+" + (proficiency * EntropyRecoveryPerProf).ToString("F3") + "/s";
@@ -86,7 +86,7 @@ namespace FamiliaMyth.Abilities
             storedPsyfocus -= restore;
             //关闭自动存储
             if (autoStore)
-                Messages.Message(new Message("使用了存储的精神力，自动存储已关闭。", MessageTypeDefOf.TaskCompletion));
+                Messages.Message(new Message("FamiliaMyth.DevelopableAbility.MagicAutoStoreOffMessage".Translate(), MessageTypeDefOf.TaskCompletion));
             autoStore = false;
         }
 
@@ -95,17 +95,17 @@ namespace FamiliaMyth.Abilities
             yield return new Gizmo_PsyfocusStored(this);
             yield return new Command_Action
             {
-                defaultLabel = "恢复精神力",
-                defaultDesc = "消耗已存储的精神力进行恢复",
+                defaultLabel = "FamiliaMyth.DevelopableAbility.MagicRestorePsyfocus".Translate(),
+                defaultDesc = "FamiliaMyth.DevelopableAbility.MagicRestorePsyfocusDesc".Translate(),
                 action = RestorePsyfocus,
-                disabledReason = "存储的精神力不足",
+                disabledReason = "FamiliaMyth.DevelopableAbility.MagicRestorePsyfocusDisabled".Translate(),
                 Disabled = storedPsyfocus <= 0f,
                 icon = ResotreTexture
             };
             yield return new Command_Toggle
             {
-                defaultLabel = "自动存储精神力",
-                defaultDesc = "自动存储超过50%的现有精神力，使用 恢复精神力 时自动关闭",
+                defaultLabel = "FamiliaMyth.DevelopableAbility.MagicAutoStoreLabel".Translate(),
+                defaultDesc = "FamiliaMyth.DevelopableAbility.MagicAutoStoreDesc".Translate(),
                 isActive = () => autoStore,
                 toggleAction = () => autoStore = !autoStore,
                 icon = AutoStoreTexture
@@ -141,7 +141,7 @@ namespace FamiliaMyth.Abilities
             Rect r2 = rect.ContractedBy(6f);
             Widgets.DrawWindowBackground(rect);
             Text.Font = GameFont.Small;
-            Widgets.Label(new Rect(r2.x, r2.y + 6f, r2.width, Text.LineHeight), "精神力存储");
+            Widgets.Label(new Rect(r2.x, r2.y + 6f, r2.width, Text.LineHeight), "FamiliaMyth.DevelopableAbility.MagicStoreBarTitle".Translate());
 
             //进度条
             Rect bar = new(r2.x, r2.y + 32f, r2.width - 10f, 22f);
@@ -154,7 +154,11 @@ namespace FamiliaMyth.Abilities
 
             //悬停提示
             TooltipHandler.TipRegion(bar, () =>
-                $"已存储{magic.storedPsyfocus.ToStringPercent("0.#")}/{magic.MaxStoredPsyfocus.ToStringPercent("0.#")}",
+            {
+                string tip = "FamiliaMyth.DevelopableAbility.MagicStoreTooltip".Translate(
+                    magic.storedPsyfocus.ToStringPercent("0.#"), magic.MaxStoredPsyfocus.ToStringPercent("0.#"));
+                return tip;
+            },
                 Gen.HashCombineInt(magic.GetHashCode(), 133873));
 
             return new GizmoResult(GizmoState.Clear);

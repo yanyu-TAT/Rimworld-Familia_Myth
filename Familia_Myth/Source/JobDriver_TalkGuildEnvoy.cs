@@ -35,9 +35,11 @@ namespace FamiliaMyth.Incidents
                 return;
 
             var gen = GameComponent_GuildEnvoyTracker.QuestGenerator;
+            string fallbackLabel = "FamiliaMyth.QuestMisc.EnvoyFallbackLabel".Translate();
+            string fallbackText = "FamiliaMyth.QuestMisc.EnvoyLetterFallbackText".Translate();
             var letter = LetterMaker.MakeLetter(
-                label: gen.def?.label ?? "公会使者",
-                text: gen.LetterText ?? "使者向你介绍了委托的详情。",
+                label: gen.def?.label ?? fallbackLabel,
+                text: gen.LetterText ?? fallbackText,
                 def: DefDatabase<LetterDef>.GetNamed(
                     gen.Type == QuestType.Daily 
                     ? "AcceptDailyQuestFromEnvoy" 

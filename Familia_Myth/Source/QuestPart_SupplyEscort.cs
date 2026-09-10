@@ -91,8 +91,9 @@ namespace FamiliaMyth.Quest
             if (deadlineTick > 0 && Find.TickManager.TicksGame >= deadlineTick)
             {
                 stage = Stage.Done;
-                SendLetter("押运超时",
-                    $"委托「{quest?.name}」限时 12 天已到，押运物资未能如期送达 {settlementB?.Label}。\n\n委托失败。");
+                SendLetter("FamiliaMyth.QuestPart.SupplyEscortTimeout".Translate(),
+                    "FamiliaMyth.QuestPart.SupplyEscortTimeoutText".Translate(
+                        quest?.name, settlementB?.Label));
                 Find.SignalManager.SendSignal(new Signal(inSignalTimeout));
             }
         }
@@ -134,8 +135,8 @@ namespace FamiliaMyth.Quest
             if (overweight > 0f)
             {
                 Find.WindowStack.Add(Dialog_MessageBox.CreateConfirmation(
-                    $"押运物资总重约 {actualMass:F0}kg，接收后队伍将超载约 {overweight:F0}kg，"
-                    + "可能导致队伍无法移动。\n\n确定硬塞吗？",
+                    "FamiliaMyth.QuestPart.SupplyEscortOverweightConfirm".Translate(
+                        actualMass.ToString("F0"), overweight.ToString("F0")),
                     () => CompletePickup(caravan, newManifest, actualMass)));
                 return;
             }
@@ -157,12 +158,10 @@ namespace FamiliaMyth.Quest
             stage = Stage.Escorting;
             PushManifestToComps();
 
-            SendLetter("押运物资已接收",
-                $"已从 {settlementA?.Label} 接收押运物资（总重约 {actualMass:F0}kg）：\n\n"
-                + $"{SupplyEscortUtility.ManifestSummary(manifest)}\n\n"
-                + $"请在 12 天内将上述物资原样送达 {settlementB?.Label}——"
-                + "交付时按清单逐项核对（种类与数量均需一致），可分批交付，清单外的物品不会被收取。\n\n"
-                + "注意：押运途中可能遭遇伏击。");
+            SendLetter("FamiliaMyth.QuestPart.SupplyEscortPickedUp".Translate(),
+                "FamiliaMyth.QuestPart.SupplyEscortPickedUpText".Translate(
+                    settlementA?.Label, actualMass.ToString("F0"),
+                    SupplyEscortUtility.ManifestSummary(manifest), settlementB?.Label));
 
             Find.SignalManager.SendSignal(new Signal(inSignalPickedUp, caravan.Named("CARAVAN")));
         }
@@ -188,11 +187,12 @@ namespace FamiliaMyth.Quest
                 stage = Stage.Done;
                 ClearComps();
 
-                SendLetter("押运完成",
-                    $"押运物资已如数送达 {settlementB?.Label}。\n\n公会对眷族的表现予以认可。");
+                SendLetter("FamiliaMyth.QuestPart.SupplyEscortDelivered".Translate(),
+                    "FamiliaMyth.QuestPart.SupplyEscortDeliveredText".Translate(settlementB?.Label));
 
                 QuestUtilities.DistributeExploits(participants, acceptor, baseExploits,
-                    "强制任务完成", "由于完成了物资押运：\n\n");
+                    "FamiliaMyth.QuestPart.ForcedQuestComplete".Translate(),
+                    "FamiliaMyth.QuestPart.RewardReasonSupplyEscort".Translate());
 
                 Find.SignalManager.SendSignal(new Signal(outSignalRewardsReady));
                 return;
@@ -200,13 +200,12 @@ namespace FamiliaMyth.Quest
 
             //未交齐：本次交付与剩余缺口都照实提示（一件都没收到时也发信）
             string deliveredText = delivered.NullOrEmpty()
-                ? "（远行队未携带待交清单上的物资）"
+                ? "FamiliaMyth.QuestPart.SupplyEscortNothingCarried".Translate()
                 : SupplyEscortUtility.ManifestSummary(delivered);
 
-            SendLetter("押运物资未交齐",
-                $"本次交付：{deliveredText}\n\n"
-                + $"尚缺：{SupplyEscortUtility.ManifestSummary(pending)}\n\n"
-                + $"请继续把剩余物资运至 {settlementB?.Label} 分批交付。");
+            SendLetter("FamiliaMyth.QuestPart.SupplyEscortIncomplete".Translate(),
+                "FamiliaMyth.QuestPart.SupplyEscortIncompleteText".Translate(
+                    deliveredText, SupplyEscortUtility.ManifestSummary(pending), settlementB?.Label));
         }
 
         private void SnapshotParticipants(Caravan caravan)

@@ -49,7 +49,7 @@ namespace FamiliaMyth.Abilities
         {
             if (pharna == null || stat == null)
                 return "";
-            string label = "治愈";
+            string label = "FamiliaMyth.DevelopableAbility.HealingLabel".Translate();
             string str = "Lv." + pharna.level.ToString() + " " + label + Rank + ": ";
             if (stat == StatDefOf.MedicalTendQuality)
             {

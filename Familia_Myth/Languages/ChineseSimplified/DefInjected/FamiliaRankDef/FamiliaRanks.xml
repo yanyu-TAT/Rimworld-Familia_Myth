@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- FamiliaRanks 玩家可见文本（自 Defs 迁移；Def 内文本保留为默认/兜底） -->
+
+  <ExplorerRank_I.description>初入公会的探索类眷族。</ExplorerRank_I.description>
+  <ExplorerRank_I.label>探索类 · I 级</ExplorerRank_I.label>
+  <ExplorerRank_II.description>已能在委托中独当一面的探索类眷族。</ExplorerRank_II.description>
+  <ExplorerRank_II.label>探索类 · II 级</ExplorerRank_II.label>
+  <ExplorerRank_III.description>公会中备受信赖的高级探索类眷族。</ExplorerRank_III.description>
+  <ExplorerRank_III.label>探索类 · III 级</ExplorerRank_III.label>
+
+</LanguageData>

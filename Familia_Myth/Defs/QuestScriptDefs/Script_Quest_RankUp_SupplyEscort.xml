@@ -63,8 +63,8 @@
               <node Class="QuestNode_Sequence">
                 <nodes>
                   <li Class="QuestNode_Letter">
-                    <label>强制任务失败</label>
-                    <text>押运超时，物资未能如期送达。眷族晋升暂时搁置，数日后公会使者将再次前来发布考核任务。</text>
+                    <label TKey="LetterLabelRankUpFailed">强制任务失败</label>
+                    <text TKey="LetterTextEscortTimeout">押运超时，物资未能如期送达。眷族晋升暂时搁置，数日后公会使者将再次前来发布考核任务。</text>
                   </li>
                   <li Class="FamiliaMyth.Quest.QuestNode_RankUpFailed">
                     <categoryDef>$category</categoryDef>

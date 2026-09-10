@@ -42,8 +42,8 @@
           <node Class="QuestNode_Sequence">
             <nodes>
               <li Class="QuestNode_Letter">
-                <label>遗迹探索失败</label>
-                <text>任务[resolvedQuestName]超时：圣物匣未能被及时寻获，遗迹线索已经断绝。任务失败。</text>
+                <label TKey="LetterLabelRelicFailed">遗迹探索失败</label>
+                <text TKey="LetterTextRelicTimeout">任务[resolvedQuestName]超时：圣物匣未能被及时寻获，遗迹线索已经断绝。任务失败。</text>
               </li>
               <li Class="QuestNode_End">
                 <outcome>Fail</outcome>
@@ -71,8 +71,8 @@
         <li Class="QuestNode_Signal">
           <inSignal>pickupShipThing.Spawned</inSignal>
           <node Class="QuestNode_Letter">
-            <label>公会穿梭机已抵达</label>
-            <text>公会的穿梭机已降落在据点，前来接收圣物匣。\n\n请将圣物匣装入穿梭机——圣物匣上船后穿梭机将立刻起飞，委托完成。\n\n穿梭机将在 2 天后自行起飞：届时圣物匣未装船则委托失败。</text>
+            <label TKey="LetterLabelShuttleArrived">公会穿梭机已抵达</label>
+            <text TKey="LetterTextShuttleArrived">公会的穿梭机已降落在据点，前来接收圣物匣。\n\n请将圣物匣装入穿梭机——圣物匣上船后穿梭机将立刻起飞，委托完成。\n\n穿梭机将在 2 天后自行起飞：届时圣物匣未装船则委托失败。</text>
           </node>
         </li>
 

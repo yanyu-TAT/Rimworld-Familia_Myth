@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- DevelopableAbilities player-visible text (migrated from Defs; Def text kept as default fallback) -->
+
+  <DevelopableAbility_AbnormalResistance.description>A developmental ability that increases immunity gain speed, toxin resistance and disease resistance. Proficiency rises from enduring harsh environments and resisting disease.</DevelopableAbility_AbnormalResistance.description>
+  <DevelopableAbility_AbnormalResistance.label>Abnormal Resistance</DevelopableAbility_AbnormalResistance.label>
+  <DevelopableAbility_Botany.description>A developmental ability that increases sowing and harvesting speed, harvest yield, and foraging efficiency. Proficiency rises through plant work.</DevelopableAbility_Botany.description>
+  <DevelopableAbility_Botany.label>Botany</DevelopableAbility_Botany.label>
+  <DevelopableAbility_EfficientCirculation.description>A developmental ability that increases the body's energy circulation efficiency. Reduces nutrition consumption while well rested, and restores rest in proportion to the nutrition eaten.</DevelopableAbility_EfficientCirculation.description>
+  <DevelopableAbility_EfficientCirculation.label>Efficient Circulation</DevelopableAbility_EfficientCirculation.label>
+  <DevelopableAbility_Healing.description>A developmental ability that increases tend quality, medical and surgery speed, and surgery success chance. Proficiency rises from tending the wounded and performing surgery.</DevelopableAbility_Healing.description>
+  <DevelopableAbility_Healing.label>Healing</DevelopableAbility_Healing.label>
+  <DevelopableAbility_LuckOfTheSea.description>A developmental ability that increases fishing speed and yield, and may bring in extra rare catches while fishing. Proficiency rises through fishing.</DevelopableAbility_LuckOfTheSea.description>
+  <DevelopableAbility_LuckOfTheSea.label>Luck of the Sea</DevelopableAbility_LuckOfTheSea.label>
+  <DevelopableAbility_Magic.description>A developmental ability that increases the rate at which neural heat dissipates and the neural heat limit. Proficiency rises through meditation and psycasting.</DevelopableAbility_Magic.description>
+  <DevelopableAbility_Magic.label>Magic Arts</DevelopableAbility_Magic.label>
+  <DevelopableAbility_Mineralogy.description>A developmental ability that increases mining and deep drilling speed, and mining yield. Proficiency rises through mining work.</DevelopableAbility_Mineralogy.description>
+  <DevelopableAbility_Mineralogy.label>Mineralogy</DevelopableAbility_Mineralogy.label>
+
+</LanguageData>

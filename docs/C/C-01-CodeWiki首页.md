@@ -19,11 +19,13 @@
 | 公会 | `GameComponent_FamiliaRankTracker.cs` + `GameComponent_GuildEnvoyTracker.cs`（单槽使者）+ `GuildQuestDef/Generator*`（统一工厂 `GuildQuestGenerator.Create(def)` + `Available()` 发布预筛）+ `QuestUtilities.cs` + 任务三件套（`QuestNode_Root_*` / `QuestPart_*` / `ExploitsReward`，细节见 C-02）+ 世界对象交互 comp（`WorldObjectComp_*`，如物资押运的定居点按钮）+ 任务脚本（`Defs/QuestScriptDefs/`） |
 | 眷族 UI | `UI_FamiliaPage.cs` + `UI_RadarChart.cs` |
 | 特效 | `Mote_*.cs` + `Textures/` + `Materials/` |
+| 本地化 | `Languages/` —— `Keyed/`（代码内文本 4 个文件）+ `DefInjected/`（Def 文本，文件名与 `Defs/` 一一对应）；中英各 620 键位逐键对称。机制与四条文本路径见 C-03，术语基准见 C-06，体检脚本 `12-本地化检查.ps1` |
 
 ## 内容索引
 
 - `C-02-架构详解.md` — 系统设计细节
-- `C-03-项目长期记忆.md` — 长期事实与约定
-- `C-04-已实现内容清单.md` — 已实现魔法/技能/发展能力、版本进度、美术本地化
+- `C-03-项目长期记忆.md` — 长期事实与约定（含 Harmony 补丁命名/异常防护、本地化四条路径）
+- `C-04-已实现内容清单.md` — 已实现魔法/技能/发展能力、版本进度、美术与本地化现状
 - `C-05-原版API简述.md` — 按系统分类收录的原版 API 方法速查（反编译证据，持续扩充）
+- `C-06-本地化术语表.md` — 中英译名基准、风格要求、译名取舍记录
 - 数值/设计: 主设计文档（`Familia Myth rim.txt` 及配套 txt/xlsx）

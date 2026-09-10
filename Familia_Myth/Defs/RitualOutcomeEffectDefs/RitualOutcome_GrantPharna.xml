@@ -7,7 +7,7 @@
 		<comps />
 		<outcomeChances>
 			<li>
-				<label>FamiliaMyth.GrantPharnaRitualOutcomeDone</label>
+				<label>完成</label>
 				<chance>1</chance>
 				<positivityIndex>0</positivityIndex>
 			</li>

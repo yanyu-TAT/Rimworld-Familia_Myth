@@ -1,4 +1,4 @@
-﻿using Verse;
+using Verse;
 
 namespace FamiliaMyth.Abilities
 {
@@ -30,7 +30,7 @@ namespace FamiliaMyth.Abilities
             return true;
         }
 
-        public override string CompLabelInBracketsExtra => $"剩余{cnt}次";
+        public override string CompLabelInBracketsExtra => "FamiliaMyth.Ability.RemainingCount".Translate(cnt);
 
         public override void CompExposeData()
         {

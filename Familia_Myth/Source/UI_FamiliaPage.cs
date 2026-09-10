@@ -68,7 +68,8 @@ namespace FamiliaMyth.UI
             Text.Anchor = TextAnchor.UpperCenter;
             GUI.color = accent;
             GUI.BeginGroup(nameR);
-            Widgets.Label(GenUI.AtZero(nameR), ideo?.name ?? "未知文化");
+            string cultureName = ideo?.name ?? "FamiliaMyth.UnknownCulture".Translate();
+            Widgets.Label(GenUI.AtZero(nameR), cultureName);
             GUI.EndGroup();
             Text.Anchor = TextAnchor.UpperLeft;
             GUI.color = Color.white;
@@ -174,18 +175,18 @@ namespace FamiliaMyth.UI
             if (tracker.CanRankUp(cat))
             {
                 GUI.color = new Color(1f, 0.75f, 0.2f);
-                Widgets.Label(row3, "◆ 完成强制任务即可升级评级");
+                Widgets.Label(row3, "FamiliaMyth.UI.CategoryRankUpHint".Translate());
             }
             else if (req <= 0)
             {
                 GUI.color = new Color(0.7f, 0.7f, 0.8f);
-                Widgets.Label(row3, "此方向已无更高评级");
+                Widgets.Label(row3, "FamiliaMyth.UI.CategoryMaxRank".Translate());
             }
             else
             {
                 GUI.color = new Color(0.8f, 0.8f, 0.9f);
                 int pct = Mathf.RoundToInt(frac * 100f);
-                Widgets.Label(row3, $"进度 {pct}%");
+                Widgets.Label(row3, "FamiliaMyth.UI.CategoryProgress".Translate(pct));
             }
             GUI.color = Color.white;
         }
@@ -259,7 +260,7 @@ namespace FamiliaMyth.UI
                 Text.Font = GameFont.Tiny;
                 Text.Anchor = TextAnchor.UpperLeft;
                 GUI.color = UI_GroupBox.ColorAccent;
-                Widgets.Label(bioR, $"Lv.{pharna.level}\n伟业值：{(int)pharna.exploits}");
+                Widgets.Label(bioR, "FamiliaMyth.UI.MemberBio".Translate(pharna.level, (int)pharna.exploits));
                 GUI.color = Color.white;
                 Text.Anchor = TextAnchor.UpperLeft;
 

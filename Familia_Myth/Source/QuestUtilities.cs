@@ -89,7 +89,8 @@ namespace FamiliaMyth.Quest
 
             TaggedString text = letterHeader;
             foreach (var (pawn, amount) in gains)
-                text += $"{pawn.Name.ToStringShort} 获得了 {amount:F1} 点伟业值\n";
+                text += "FamiliaMyth.QuestMisc.ExploitsGainedLine".Translate(
+                    pawn.Name.ToStringShort, amount.ToString("F1"));
 
             Letter letter = acceptor != null
                 ? LetterMaker.MakeLetter(letterLabel, text, LetterDefOf.PositiveEvent, acceptor)

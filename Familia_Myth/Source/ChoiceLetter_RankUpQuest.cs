@@ -35,7 +35,7 @@ namespace Familia_Myth.Source
                     yield break;
                 }
 
-                yield return new("确认")
+                yield return new("FamiliaMyth.QuestMisc.RankUpQuestConfirm".Translate())
                 {
                     action = () =>
                     {
@@ -46,16 +46,12 @@ namespace Familia_Myth.Source
                     resolveTree = true
                 };
 
-                yield return new("了解更多")
+                yield return new("FamiliaMyth.QuestMisc.RankUpQuestLearnMore".Translate())
                 {
                     action = () =>
                     {
                         var tracker = GameComponent_FamiliaRankTracker.Instance;
-                        var text = $"对于在某一方面有所建树的眷族，公会会发布强制任务以检验其实力。\n" +
-                            $"该任务不可拒绝，若超时或失败则会在一段时间后重新发布。\n\n" +
-                            $"请注意，该任务难度较高，请尽量派出全部战力。\n" +
-                            $"完成任务即可提升眷族在「{Category.LabelCap}」方面的评级。\n" +
-                            $"当然也能获取大量伟业值，将平均分配给全部眷族成员。";
+                        var text = "FamiliaMyth.QuestMisc.RankUpQuestLearnMoreText".Translate(Category.LabelCap);
                         Find.WindowStack.Add(new Dialog_MessageBox(text));
                     },
                     resolveTree = false

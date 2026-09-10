@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Hediff_Provoke player-visible text (migrated from Defs; Def text kept as default/fallback) -->
+
+  <ProvokeInEffect.description>Drawing the hostility of nearby enemies, making this person their attack target.</ProvokeInEffect.description>
+  <ProvokeInEffect.label>Provoke</ProvokeInEffect.label>
+
+</LanguageData>

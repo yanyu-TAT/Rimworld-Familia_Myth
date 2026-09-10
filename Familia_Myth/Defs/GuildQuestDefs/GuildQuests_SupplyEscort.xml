@@ -4,6 +4,7 @@
   <!-- 探索类 · （强制任务）物资押运 -->
   <!-- 达到升级点数后由 GameComponent_FamiliaRankTracker 触发，不可拒绝 -->
   <!-- Available() 预筛：世界层凑不出合格 A/B 定居点组合时不发布 -->
+  <!-- 玩家可见文本可经 Languages/<语言>/DefInjected/GuildQuestDef/GuildQuests.xml 覆盖（此处为默认文本，同时作为兜底） -->
   <FamiliaMyth.Quest.GuildQuestDef>
     <defName>GuildQuest_RankUp_SupplyEscort</defName>
     <label>物资押运</label>

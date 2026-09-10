@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Incident_QuestDaily 玩家可见文本（自 Defs 迁移；Def 内文本保留为默认/兜底） -->
+
+  <GiveQuest_Daily.label>公会使者到访</GiveQuest_Daily.label>
+  <GiveQuest_Daily.letterLabel>公会使者到访</GiveQuest_Daily.letterLabel>
+
+</LanguageData>

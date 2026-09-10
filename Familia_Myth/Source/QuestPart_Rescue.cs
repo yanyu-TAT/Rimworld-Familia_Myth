@@ -61,9 +61,8 @@ namespace FamiliaMyth.Quest
 
                 JoinVictimsToPlayer();
                 Find.SignalManager.SendSignal(new Signal(inSignalRescueDone));
-                SendLetter("搜救完成",
-                    $"威胁已清除，伤员将听从你的指挥。\n" +
-                    "其原派系的穿梭机将在数小时后抵达。");
+                SendLetter("FamiliaMyth.QuestPart.RescueSearchComplete".Translate(),
+                    "FamiliaMyth.QuestPart.RescueSearchCompleteText".Translate());
                 return;
             }
 
@@ -91,7 +90,8 @@ namespace FamiliaMyth.Quest
             {
                 //全灭：直接失败（尸体派系由 QuestPart_ExtraFaction 的原版行为自动归还原派系）
                 stage = Stage.Done;
-                SendLetter("救援失败", "全部伤员在获救前不幸遇难。");
+                SendLetter("FamiliaMyth.QuestPart.RescueFailed".Translate(),
+                    "FamiliaMyth.QuestPart.RescueFailedAllDeadText".Translate());
                 quest.End(QuestEndOutcome.Fail);
             }
         }
@@ -144,17 +144,20 @@ namespace FamiliaMyth.Quest
                 int boarded = CountBoarded();
                 float ratio = totalCount > 0 ? (float)boarded / totalCount : 0f;
 
-                SendLetter("救援任务完成", $"穿梭机已接走 {boarded}/{totalCount} 名伤员。");
+                SendLetter("FamiliaMyth.QuestPart.RescueComplete".Translate(),
+                    "FamiliaMyth.QuestPart.RescueCompleteText".Translate(boarded, totalCount));
                 QuestUtilities.DistributeExploits(participants, acceptor,
-                    baseExploits * ratio, "委托完成", "救援任务酬劳：\n\n");
+                    baseExploits * ratio,
+                    "FamiliaMyth.QuestPart.QuestComplete".Translate(),
+                    "FamiliaMyth.QuestPart.RewardReasonRescue".Translate());
                 GameComponent_FamiliaRankTracker.Instance?.GainPoints(category, 10);
                 quest.End(QuestEndOutcome.Success);
                 return;
             }
 
             //失败（超时未满起飞）：已登机者仍随穿梭机返回；其余恢复原派系后自行离图
-            SendLetter("救援失败",
-                "穿梭机未能接走全部伤员，已先行离开。\n未登机的遇难者将自行离开。");
+            SendLetter("FamiliaMyth.QuestPart.RescueFailed".Translate(),
+                "FamiliaMyth.QuestPart.RescueFailedShuttleLeftText".Translate());
 
             RestoreOriginalFactions();
             MakeLeaveMap();

@@ -13,11 +13,11 @@
     <!-- HediffComp_ThoughtSetter 要求记忆类 Thought（会 cast 为 Thought_Memory），
          必须显式指定 thoughtClass，否则默认按 Thought_Situational 实例化导致强制转换失败 -->
     <thoughtClass>Thought_Memory</thoughtClass>
-    <label>FamiliaMyth.VirtueThought.Vigorous.Label</label>
+    <label>美德：振奋</label>
     <stages>
       <li>
-        <label>FamiliaMyth.VirtueThought.Vigorous.StageLabel</label>
-        <description>FamiliaMyth.VirtueThought.Vigorous.Description</description>
+        <label>振奋</label>
+        <description>同伴的振奋让我也感到精神振奋</description>
         <baseMoodEffect>15</baseMoodEffect>
       </li>
     </stages>

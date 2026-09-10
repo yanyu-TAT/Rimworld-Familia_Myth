@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Hediff_AbnormalResistanceImmunity 玩家可见文本（自 Defs 迁移；Def 内文本保留为默认/兜底） -->
+
+  <Hediff_AbnormalResistanceImmunity.description>发展能力「异常抗性」在抵抗疾病/感染时短暂生效的隐藏免疫标记。</Hediff_AbnormalResistanceImmunity.description>
+  <Hediff_AbnormalResistanceImmunity.label>异常抗性</Hediff_AbnormalResistanceImmunity.label>
+
+</LanguageData>

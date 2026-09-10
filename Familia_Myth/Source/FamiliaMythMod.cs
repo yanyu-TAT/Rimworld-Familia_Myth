@@ -8,6 +8,9 @@ namespace FamiliaMyth.Core
     /// </summary>
     public class FamiliaMythMod : ModBase
     {
+        /// <summary>
+        /// 仪式文本中对神明的称呼；预留给玩家自定义名称的接口，不参与本地化
+        /// </summary>
         public static string godName = "你";
         public override string ModIdentifier => "FamiliaMyth";
     }
@@ -158,4 +161,5 @@ namespace FamiliaMyth.Core
  * 09/10 13:32 修复了恩惠stat出现在非pawn的thing的信息卡中的bug
  * 09/11 00:14 添加了任务物资押运，待更多测试，部分任务文本可能需要调整；添加了部分调试指令并规范了实现
  * 09/11 01:35 添加了任务难民安置，待更多测试
+ * 09/11 04:11 规范了所有Harmony Patch的实现；完成了本地化并迁移了原有的硬编码文本，部分文案可能需要调整
  */

@@ -36,7 +36,7 @@ namespace FamiliaMyth.Abilities
         {
             if (pharna == null || stat == null)
                 return "";
-            string label = "矿物学";
+            string label = "FamiliaMyth.DevelopableAbility.MineralogyLabel".Translate();
             string str = "Lv." + pharna.level.ToString() + " " + label + Rank + ": ";
             if (stat == StatDefOf.MiningSpeed)
             {

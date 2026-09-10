@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- PawnKindDef_Guild_Envoy player-visible text (migrated from Defs; Def text kept as default fallback) -->
+
+  <Guild_Envoy.label>Guild envoy</Guild_Envoy.label>
+  <Guild_Envoy.labelPlural>Guild envoys</Guild_Envoy.labelPlural>
+
+</LanguageData>

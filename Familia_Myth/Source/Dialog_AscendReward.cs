@@ -224,14 +224,15 @@ namespace FamiliaMyth.UI
             GUI.color = color;
             Text.Anchor = TextAnchor.MiddleRight;
             Rect rarityRect = new(titleRect.xMax - 70f, titleRect.y, 65f, titleRect.height);
-            Widgets.Label(rarityRect, reward.Rarity switch
+            string rarityLabel = reward.Rarity switch
             {
-                RewardRarity.Unique => "★ 独有",
-                RewardRarity.Rare => "★ 罕见",
-                RewardRarity.Uncommon => "★ 稀有",
-                RewardRarity.Common => "★ 通常",
+                RewardRarity.Unique => (string)"FamiliaMyth.UI.RarityUnique".Translate(),
+                RewardRarity.Rare => (string)"FamiliaMyth.UI.RarityRare".Translate(),
+                RewardRarity.Uncommon => (string)"FamiliaMyth.UI.RarityUncommon".Translate(),
+                RewardRarity.Common => (string)"FamiliaMyth.UI.RarityCommon".Translate(),
                 _ => ""
-            });
+            };
+            Widgets.Label(rarityRect, rarityLabel);
             Text.Anchor = TextAnchor.UpperLeft;
             GUI.color = Color.white;
 
@@ -259,9 +260,9 @@ namespace FamiliaMyth.UI
         {
             string typeLabel = reward.RewardType switch
             {
-                RewardType.Spell => "魔法",
-                RewardType.Skill => "技能",
-                RewardType.DevelopableAbility => "发展能力",
+                RewardType.Spell => (string)"FamiliaMyth.UI.RewardTypeSpell".Translate(),
+                RewardType.Skill => (string)"FamiliaMyth.UI.RewardTypeSkill".Translate(),
+                RewardType.DevelopableAbility => (string)"FamiliaMyth.UI.RewardTypeDevelopableAbility".Translate(),
                 _ => "?"
             };
 

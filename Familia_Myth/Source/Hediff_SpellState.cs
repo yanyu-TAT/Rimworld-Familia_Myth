@@ -11,7 +11,7 @@ namespace FamiliaMyth.Abilities
         public ISpellWithState spell;
 
         public override string LabelBase => spell?.EffectName ?? base.LabelBase;
-        public override string LabelInBrackets => "剩余" + spell?.RemainingTimeText ?? base.LabelInBrackets;
+        public override string LabelInBrackets => (string)("FamiliaMyth.Ability.SpellStateRemaining".Translate() + spell?.RemainingTimeText) ?? base.LabelInBrackets;
 
         public override void ExposeData()
         {

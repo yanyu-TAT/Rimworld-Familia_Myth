@@ -68,16 +68,15 @@ namespace FamiliaMyth.Quest
                 SnapshotParticipants();
                 if (wanted == null || wanted.Dead || wanted.Destroyed)
                 {
-                    SettleNormal("通缉犯已被击毙", "罪犯已在窝点中被消灭，委托完成。");
+                    SettleNormal("FamiliaMyth.QuestPart.CriminalKilledInOutpost".Translate(),
+                        "FamiliaMyth.QuestPart.CriminalKilledInOutpostText".Translate());
                     return;
                 }
 
                 stage = Stage.Escorting;
                 Find.SignalManager.SendSignal(new Signal(inSignalCleared));
-                SendLetter("制服通缉犯",
-                    "窝点威胁已清除，通缉犯仍然活着并被制服。\n\n" +
-                    "请将其带上远行队离开营地并带回据点——自离开营地起 1~3 天内，公会的押解穿梭机将在据点接应。\n\n" +
-                    "若通缉犯死亡，委托将按完成结算；若被招募、奴役或失踪，委托将失败。");
+                SendLetter("FamiliaMyth.QuestPart.CriminalSubdued".Translate(),
+                    "FamiliaMyth.QuestPart.CriminalSubduedText".Translate());
                 return;
             }
 
@@ -117,7 +116,8 @@ namespace FamiliaMyth.Quest
             if (signal.tag == inSignalSatisfied) { SettleDouble(); return; }
             if (signal.tag == inSignalUnsatisfied)
             {
-                SettleFail("押解失败", "押解穿梭机起飞时，通缉犯仍活着且未登机，委托失败。");
+                SettleFail("FamiliaMyth.QuestPart.ExtraditionFailed".Translate(),
+                    "FamiliaMyth.QuestPart.ExtraditionFailedText".Translate());
                 return;
             }
             base.Notify_QuestSignalReceived(signal);
@@ -127,7 +127,8 @@ namespace FamiliaMyth.Quest
         public override void Notify_PawnKilled(Pawn pawn, DamageInfo? dinfo)
         {
             if (stage == Stage.Done || pawn != wanted || stage == Stage.WaitingThreatClear) return;
-            SettleNormal("通缉犯死亡", "通缉犯已死亡，公会按追捕完成结算委托。");
+            SettleNormal("FamiliaMyth.QuestPart.CriminalDied".Translate(),
+                "FamiliaMyth.QuestPart.CriminalDiedText".Translate());
         }
 
         //监控返回值：false = 已结算/应停止本阶段推进
@@ -135,23 +136,24 @@ namespace FamiliaMyth.Quest
         {
             if (wanted == null || wanted.Destroyed || wanted.Dead)
             {
-                SettleNormal("通缉犯死亡", "通缉犯已死亡，公会按追捕完成结算委托。");
+                SettleNormal("FamiliaMyth.QuestPart.CriminalDied".Translate(),
+                    "FamiliaMyth.QuestPart.CriminalDiedText".Translate());
                 return false;
             }
 
             //招募/奴役：脱离囚犯押送，视为失败
             if (wanted.Faction == Faction.OfPlayer || wanted.IsSlave)
             {
-                SettleFail("通缉犯被据为己有",
-                    "通缉犯被招募或奴役，脱离了公会的押送。委托失败。");
+                SettleFail("FamiliaMyth.QuestPart.CriminalClaimed".Translate(),
+                    "FamiliaMyth.QuestPart.CriminalClaimedText".Translate());
                 return false;
             }
 
             //活着失踪：不在窝点图 / 玩家远行队 / 玩家据点（含被丢弃、留原地离图）
             if (!InLegalHold())
             {
-                SettleFail("通缉犯失踪",
-                    "通缉犯在押解前失踪或遭遗弃，委托失败。");
+                SettleFail("FamiliaMyth.QuestPart.CriminalMissing".Translate(),
+                    "FamiliaMyth.QuestPart.CriminalMissingText".Translate());
                 return false;
             }
             return true;
@@ -216,10 +218,11 @@ namespace FamiliaMyth.Quest
             stage = Stage.Done;
 
             RemoveWantedFromWorld();
-            SendLetter("押解完成",
-                "公会的押解穿梭机已载着活着的通缉犯离开据点。\n\n酬劳翻倍发放。");
+            SendLetter("FamiliaMyth.QuestPart.ExtraditionComplete".Translate(),
+                "FamiliaMyth.QuestPart.ExtraditionCompleteText".Translate());
             QuestUtilities.DistributeExploits(participants, acceptor, baseExploits * 2f,
-                "委托完成·双倍酬劳", "由于顺利押解通缉犯：\n\n");
+                "FamiliaMyth.QuestPart.QuestCompleteDoubleReward".Translate(),
+                "FamiliaMyth.QuestPart.RewardReasonExtradition".Translate());
             GameComponent_FamiliaRankTracker.Instance?.GainPoints(category, 20);
             quest.End(QuestEndOutcome.Success);
         }
@@ -232,7 +235,8 @@ namespace FamiliaMyth.Quest
 
             SendLetter(label, text);
             QuestUtilities.DistributeExploits(participants, acceptor, baseExploits,
-                "委托完成", "由于任务中的出色表现：\n\n");
+                "FamiliaMyth.QuestPart.QuestComplete".Translate(),
+                "FamiliaMyth.QuestPart.RewardReasonOutstanding".Translate());
             GameComponent_FamiliaRankTracker.Instance?.GainPoints(category, 10);
             quest.End(QuestEndOutcome.Success);
         }

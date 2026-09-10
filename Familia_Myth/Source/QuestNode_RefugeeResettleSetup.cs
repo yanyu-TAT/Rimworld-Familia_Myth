@@ -48,11 +48,11 @@ namespace FamiliaMyth.Quest
 
             //到访：地图边缘走入 + 当拍加入玩家派系（临时加入，带 MiniFaction 标记 = lodger）。
             //inSignal 必须显式传：根层 slate 没有 "inSignal" 变量，缺省取值会得到 null → 部件永不触发
+            string arrivalLabel = "FamiliaMyth.QuestMisc.RefugeeResettleArrivalLetterLabel".Translate();
+            string arrivalText = "FamiliaMyth.QuestMisc.RefugeeResettleArrivalLetterText".Translate();
             quest.PawnsArrive(victims, inSignal: initiate, mapParent: map.Parent, joinPlayer: true,
-                customLetterLabel: "难民抵达",
-                customLetterText: "公会安置的难民已抵达殖民地边缘。\n\n"
-                    + "他们将在殖民地停留 15 天，之后由公会穿梭机接走。\n"
-                    + "请保护他们免受追杀者的袭击。\n\n{BASETEXT}");
+                customLetterLabel: arrivalLabel,
+                customLetterText: arrivalText);
 
             //装备锁定：难民是安置对象，不允许被剥取装备
             quest.SetAllApparelLocked(victims, inSignal: initiate);
@@ -70,10 +70,13 @@ namespace FamiliaMyth.Quest
             var joinSignals = new List<string>();
             foreach (var pawn in victims)
             {
+                string offerLabel = "FamiliaMyth.QuestMisc.RefugeeJoinOfferLetterLabel".Translate();
+                string offerText = "FamiliaMyth.QuestMisc.RefugeeJoinOfferLetterText".Translate();
+                string offerDesc = "FamiliaMyth.QuestMisc.RefugeeJoinOfferDesc".Translate(pawn.Name.ToStringShort);
                 var offer = quest.PawnJoinOffer(pawn,
-                    "有人请求加入",
-                    "难民请求加入",
-                    $"{pawn.Name.ToStringShort} 表示愿意留在殖民地生活。\n\n是否接纳为正式成员？",
+                    offerLabel,
+                    offerText,
+                    offerDesc,
                     inSignal: initiate,
                     charity: true);
                 if (!offer.outSignalPawnAccepted.NullOrEmpty())

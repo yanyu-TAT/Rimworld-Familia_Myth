@@ -105,9 +105,8 @@ namespace FamiliaMyth.Quest
                 quest = quest,
                 target = caravan,
                 points = ambushPoints,
-                customLetterLabel = "押运队遭遇伏击",
-                customLetterText = "押运队在路上遭到伏击！\n\n"
-                    + "敌方武装拦住了去路——打赢这场战斗才能继续赶路。\n\n{BASETEXT}"
+                customLetterLabel = "FamiliaMyth.QuestPart.SupplyEscortAmbush".Translate(),
+                customLetterText = "FamiliaMyth.QuestPart.SupplyEscortAmbushText".Translate()
             };
 
             return def.Worker.TryExecute(parms);

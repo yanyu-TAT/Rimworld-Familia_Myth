@@ -36,6 +36,7 @@
 | 反编译原版  | 通过ilspycmd输出到decompiledFiles\，详见decompiledFiles\ilspy_help.txt             |
 | 查看游戏日志 | 项目根目录 `Player.log`                                               |
 | 检查 XML | PowerShell `[xml](Get-Content <file>)` 解析验证                      |
+| 本地化体检 | `pwsh -File .\12-本地化检查.ps1`（7 项：Def 文本覆盖 / TKey / rulesStrings / key 占位 / Keyed 中英差集 / Translate 键 / **XML 类型引用可解析性**） |
 
 > 游戏程序集引用路径为 Steam 本地目录（见 csproj），CI 上不可编译；构建与测试均在本机完成。
 
@@ -150,7 +151,14 @@
 
 ```
 ✅ 玩家可见文本进 Languages/（ChineseSimplified + English），用 DefInjected/Keyed
+✅ 四条路径别混用：Def 字段→DefInjected（`<DefName>.<字段>`）；rulesStrings→DefInjected 整表替换；
+   任务节点 SlateRef 文本→Def 元素加 `TKey="引用名"` + 语言文件 `<DefName>.<引用名>.slateRef`；
+   代码内文本→Keyed + `"Key".Translate()`（键名 `FamiliaMyth.<域>.<语义>`）
+✅ Def 内文本一律保留作默认/兜底，由语言文件覆盖（原版模式 `<label TKey="Xxx">Default</label>`）
+❌ 把 Keyed 键填进 Def 字段——Def 字段不会自动 Translate，只会把键原样显示（细则见 C-03）
+❌ 清空 Def 内文本（语言键缺失时会退化成 defName）
 ❌ 将纯展示文本硬编码散落在逻辑代码里（例外：运行时动态拼接）
+✅ 本地化完整性用根目录 `12-本地化检查.ps1` 校验
 ```
 
 ***
@@ -202,6 +210,7 @@
 | 11 | 复用原版部件未核对其隐式前置（缺数据在解析/结算期才炸）      | 先反编译确认前置；必要时自建预检/兜底                                         |
 | 12 | 归位/移交与信号窗口错位（`Sent*` 当拍成员仍在容器内）     | 在信号当拍完成归位                                                    |
 | 13 | 派生名单漏列应排除类别（把该留下的对象赶走）            | 逐项列出排除集合并核对成功/失败两线口径                                       |
+| 14 | 补丁 catch 里 `return false` 静默屏蔽原版方法 / 成对 `__state` 未设哨兵值 | Prefix 的 catch 一律 `return true` 放行原版；Prefix 出错时给 `__state` 写哨兵值令 Postfix 短路（见 C-03） |
 
 ***
 
@@ -209,7 +218,7 @@
 
 | 目录/前缀                                       | 职责                      |
 | ------------------------------------------- | ----------------------- |
-| `Patch_*.cs`                                | Harmony 补丁（成长、意志、触发类效果） |
+| `Patch_*.cs`                                | Harmony 补丁（成长、意志、技能触发等；类名与文件名对应、命名空间统一 `FamiliaMyth.Patch`、方法体必包 try-catch，细则见 C-03） |
 | `Spell*.cs` + `SpellDef.cs`                 | 魔法框架与具体魔法（继承原版 Ability） |
 | `Skill*.cs` + `SkillDef.cs`                 | 技能（主动/被动/触发；charge 充能 + active 效果生命周期） |
 | `HediffComp_SkillState`（override CompLabelInBracketsExtra）/ `HediffComp_SkillInEffect` | 技能状态指示（Def 用 HediffWithComps，comp 反查 skillDef 的 StateText 展示括号标签；effect 生命周期间回调） |
@@ -235,6 +244,7 @@
 | `UI_*.cs`                                   | 界面（眷族页、升级奖励弹窗、雷达图）      |
 | `StatPart_*`                                | StatDef 注入修正            |
 | `Defs/` + `Patches/`                        | XML 定义与条件补丁             |
+| `Languages/`（`Keyed/` + `DefInjected/`）    | 本地化文本（中英各 620 键位逐键对称）；`Keyed/` 放代码内文本、`DefInjected/` 放 Def 文本且文件名与 `Defs/` 一一对应；四条文本路径与命名规范见 C-03，术语基准见 C-06 |
 
 > 新增模块/文件时同步更新本表。
 
@@ -255,6 +265,8 @@
   | 操作                     | 更新内容                                    |
   | ---------------------- | --------------------------------------- |
   | 新增模块/文件                | 更新「模块速查表」                               |
+  | 新增/迁移玩家可见文本            | 按 C-03「四条文本路径」处理；新术语先补 `docs/C/C-06-本地化术语表.md`；跑 `12-本地化检查.ps1` 确认对称 |
+  | 重命名类名 / 文件              | 同步 `Defs`/`Patches` 内相关类型引用；跑 `12-本地化检查.ps1` 第 [7] 项（见 B-04 BUG-020） |
   | 新增依赖/工具                | 更新「项目身份」技术栈行                            |
   | 发现代码与现有规范明显偏离（或新的代码规范） | 先提出偏离点并询问是否为新的规范，确认后追加「强制规范 / 基础代码规范」   |
   | 做出架构决策                 | 追加到关键决策记录（可写 docs/C/C-02）               |

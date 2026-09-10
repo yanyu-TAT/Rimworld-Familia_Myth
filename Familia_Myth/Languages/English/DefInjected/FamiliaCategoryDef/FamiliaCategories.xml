@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- FamiliaCategories player-visible text (migrated from Defs; Def text kept as default fallback) -->
+
+  <Explorer.description>A Familia devoted to exploration and combat.</Explorer.description>
+  <Explorer.label>Explorer</Explorer.label>
+
+</LanguageData>

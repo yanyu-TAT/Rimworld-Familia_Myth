@@ -59,8 +59,8 @@
               <node Class="QuestNode_Sequence">
                 <nodes>
                   <li Class="QuestNode_Letter">
-                    <label>救援失败</label>
-                    <text>救援任务[resolvedQuestName]超时，威胁未能及时清除。任务失败。</text>
+                    <label TKey="LetterLabelRescueFailed">救援失败</label>
+                    <text TKey="LetterTextRescueTimeout">救援任务[resolvedQuestName]超时，威胁未能及时清除。任务失败。</text>
                   </li>
                   <li Class="QuestNode_End">
                     <outcome>Fail</outcome>
@@ -90,8 +90,8 @@
             <li Class="QuestNode_Signal">
               <inSignal>pickupShipThing.Spawned</inSignal>
               <node Class="QuestNode_Letter">
-                <label>救援穿梭机已抵达</label>
-                <text>穿梭机已降落在遇难地点。\n\n请让获救的伤员尽快登机——穿梭机将在 3 天后起飞。</text>
+                <label TKey="LetterLabelShuttleArrived">救援穿梭机已抵达</label>
+                <text TKey="LetterTextShuttleArrived">穿梭机已降落在遇难地点。\n\n请让获救的伤员尽快登机——穿梭机将在 3 天后起飞。</text>
               </node>
             </li>
 

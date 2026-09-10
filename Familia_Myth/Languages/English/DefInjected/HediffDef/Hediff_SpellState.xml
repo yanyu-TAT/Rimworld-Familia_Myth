@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Hediff_SpellState player-visible text (migrated from Defs; Def text kept as default/fallback) -->
+
+  <Hediff_SpellState.description>Displays the remaining duration of a spell effect.</Hediff_SpellState.description>
+  <Hediff_SpellState.label>Spell Effect</Hediff_SpellState.label>
+
+</LanguageData>

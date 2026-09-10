@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Hediff_NoahHeal 玩家可见文本（自 Defs 迁移；Def 内文本保留为默认/兜底） -->
+
+  <Hediff_NoahHeal.description>加快伤口愈合速度</Hediff_NoahHeal.description>
+  <Hediff_NoahHeal.label>诺亚治愈</Hediff_NoahHeal.label>
+
+</LanguageData>

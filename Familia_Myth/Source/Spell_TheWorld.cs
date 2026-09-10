@@ -33,7 +33,7 @@ namespace FamiliaMyth.Abilities
             }
         }
 
-        public string EffectName => "时间停止";
+        public string EffectName => "FamiliaMyth.Ability.TimeStop".Translate();
 
         private Hediff_SpellState state;
         public Hediff_SpellState State { get => state; set => state = value; }
@@ -48,7 +48,7 @@ namespace FamiliaMyth.Abilities
                 if (!AnyActiveField) 
                     return true;
                 if (Fields.Keys.Any(p => p == pawn))
-                    return "当前的时停效果尚未结束。";
+                    return "FamiliaMyth.Ability.TimeStopActive".Translate();
 
                 return true;
             }

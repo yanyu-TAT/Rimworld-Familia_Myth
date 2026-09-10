@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- ==================== Rarity labels (ascension reward card) ==================== -->
+  <FamiliaMyth.UI.RarityUnique>★ Unique</FamiliaMyth.UI.RarityUnique>
+  <FamiliaMyth.UI.RarityRare>★ Rare</FamiliaMyth.UI.RarityRare>
+  <FamiliaMyth.UI.RarityUncommon>★ Uncommon</FamiliaMyth.UI.RarityUncommon>
+  <FamiliaMyth.UI.RarityCommon>★ Common</FamiliaMyth.UI.RarityCommon>
+
+  <!-- ==================== Ascension reward type prefix ==================== -->
+  <FamiliaMyth.UI.RewardTypeSpell>Spell</FamiliaMyth.UI.RewardTypeSpell>
+  <FamiliaMyth.UI.RewardTypeSkill>Skill</FamiliaMyth.UI.RewardTypeSkill>
+  <FamiliaMyth.UI.RewardTypeDevelopableAbility>Developmental Ability</FamiliaMyth.UI.RewardTypeDevelopableAbility>
+
+  <!-- ==================== Familia rank page ==================== -->
+  <FamiliaMyth.UI.FamiliaTab>Familia</FamiliaMyth.UI.FamiliaTab>
+  <FamiliaMyth.UI.CategoryRankUpHint>◆ Complete a Rank-Up Quest to raise this rank</FamiliaMyth.UI.CategoryRankUpHint>
+  <FamiliaMyth.UI.CategoryMaxRank>No higher rank in this category</FamiliaMyth.UI.CategoryMaxRank>
+  <FamiliaMyth.UI.CategoryProgress>Progress {0}%</FamiliaMyth.UI.CategoryProgress>
+  <FamiliaMyth.UI.MemberBio>Lv.{0}\nExploits: {1}</FamiliaMyth.UI.MemberBio>
+
+  <!-- ==================== Stat panel explanation fragments ==================== -->
+  <FamiliaMyth.Stat.PharnaExploits>Current exploits: {0} / 999\nPharna level: Lv.{1}</FamiliaMyth.Stat.PharnaExploits>
+  <FamiliaMyth.Stat.PharnaExperience>Current experience =\n{0}</FamiliaMyth.Stat.PharnaExperience>
+  <FamiliaMyth.Stat.PharnaStatus>Current: {0} | Potential: {1}\nTotal: {2}\n</FamiliaMyth.Stat.PharnaStatus>
+  <FamiliaMyth.Stat.FlameAffinityPrefix>Skill Flame Affinity: </FamiliaMyth.Stat.FlameAffinityPrefix>
+
+</LanguageData>

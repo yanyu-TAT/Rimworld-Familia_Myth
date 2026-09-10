@@ -36,7 +36,7 @@ namespace FamiliaMyth.Abilities
         {
             if (pharna == null || stat == null)
                 return "";
-            string label = "植生学";
+            string label = "FamiliaMyth.DevelopableAbility.BotanyLabel".Translate();
             string str = "Lv." + pharna.level.ToString() + " " + label + Rank + ": ";
             if (stat == StatDefOf.PlantWorkSpeed)
             {

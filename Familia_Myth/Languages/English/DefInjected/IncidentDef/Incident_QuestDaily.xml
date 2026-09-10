@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Incident_QuestDaily player-visible text (migrated from Defs; Def text kept as default fallback) -->
+
+  <GiveQuest_Daily.label>Guild envoy visits</GiveQuest_Daily.label>
+  <GiveQuest_Daily.letterLabel>Guild envoy visits</GiveQuest_Daily.letterLabel>
+
+</LanguageData>

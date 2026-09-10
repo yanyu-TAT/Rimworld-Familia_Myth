@@ -65,7 +65,7 @@ namespace FamiliaMyth.Abilities
         {
             if (!CanHitTarget(target))
             {
-                Messages.Message("目标不在有效范围内", MessageTypeDefOf.RejectInput);
+                Messages.Message("FamiliaMyth.Ability.TargetOutOfRange".Translate(), MessageTypeDefOf.RejectInput);
                 return false;
             }
             return true;

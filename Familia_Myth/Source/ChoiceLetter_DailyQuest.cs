@@ -34,7 +34,7 @@ namespace FamiliaMyth.Incidents
                 }
 
                 //接受委托
-                var acceptionOption = new DiaOption("接受委托")
+                var acceptionOption = new DiaOption("FamiliaMyth.QuestLetter.Accept".Translate())
                 {
                     action = () =>
                     {
@@ -57,7 +57,7 @@ namespace FamiliaMyth.Incidents
 
                             if (!options.Any())
                             {
-                                var option = new FloatMenuOption("没有已有恩惠的殖民者", null)
+                                var option = new FloatMenuOption("FamiliaMyth.QuestLetter.NoPharnaColonist".Translate(), null)
                                 {
                                     Disabled = true
                                 };
@@ -72,7 +72,7 @@ namespace FamiliaMyth.Incidents
                 yield return acceptionOption;
 
                 //拒绝委托
-                var rejectOption = new DiaOption("拒绝委托")
+                var rejectOption = new DiaOption("FamiliaMyth.QuestLetter.Reject".Translate())
                 {
                     action = () =>
                     {
@@ -88,17 +88,11 @@ namespace FamiliaMyth.Incidents
                 yield return rejectOption;
 
                 //了解更多
-                var infoOption = new DiaOption("了解更多")
+                var infoOption = new DiaOption("FamiliaMyth.QuestLetter.LearnMore".Translate())
                 {
                     action = () =>
                     {
-                        var text = "冒险者公会是最初降临的神明所建立的组织，负责转交和发布委托。\n\n" +
-                            "接受委托后，公会将在你的据点附近标记目标。\n" +
-                            "带领冒险者前去清剿所有敌人以完成委托。\n\n" +
-                            "提示：\n" +
-                            "完成委托可以获取升华恩惠所需要的伟业值。\n" +
-                            "由接取者获得50%的伟业值，\n" +
-                            "其余部分将均分给队伍中其他的冒险者。";
+                        var text = "FamiliaMyth.QuestLetter.InfoText".Translate();
                         Find.WindowStack.Add(new Dialog_MessageBox(text));
                     },
                     resolveTree = false

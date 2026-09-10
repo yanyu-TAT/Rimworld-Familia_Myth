@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Hediff_ZeoGullveig 玩家可见文本（自 Defs 迁移；Def 内文本保留为默认/兜底） -->
+
+  <Hediff_ZeoGullveig.description>重生女神之礼赞附加的痛觉抑制效果</Hediff_ZeoGullveig.description>
+  <Hediff_ZeoGullveig.label>重生女神之礼赞</Hediff_ZeoGullveig.label>
+
+</LanguageData>

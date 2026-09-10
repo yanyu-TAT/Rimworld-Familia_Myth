@@ -46,7 +46,7 @@ namespace FamiliaMyth.Abilities
 
                 if (Owner.GetMeleeSharpWeapon() == null)
                 {
-                    return "未持有太刀（锐伤近战武器）";
+                    return "FamiliaMyth.Ability.NoKatana".Translate();
                 }
                 return true;
             }

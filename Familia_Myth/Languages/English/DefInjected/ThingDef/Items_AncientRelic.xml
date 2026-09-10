@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Items_AncientRelic player-visible text (migrated from Defs; Def text kept as default fallback) -->
+
+  <FM_AncientRelicArtifact.description>A treasure left behind by the ancient spirits. It holds unbelievable power, but for now it seems it cannot be opened.</FM_AncientRelicArtifact.description>
+  <FM_AncientRelicArtifact.label>Spirit Treasure</FM_AncientRelicArtifact.label>
+
+</LanguageData>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- ============================================================
+       Guild quest script (QuestScriptDef) text
+       Two kinds of keys:
+         1) <DefName>.questNameRules.rulesStrings / questDescriptionRules.rulesStrings
+            Whole rule list replacement (must match the <li> structure of the original Def)
+         2) <DefName>.TKeyValue.slateRef
+            Node text (label / text / letterLabel) carrying a TKey attribute in the Def
+       Note: \n is the RimWorld line-break escape, do not rewrite it as a real newline
+       ============================================================ -->
+
+  <!-- ==================== Site Clearance (Daily) ==================== -->
+  <Quest_Daily_SiteClearance.questNameRules.rulesStrings>
+    <li>questName->Site Clearance</li>
+  </Quest_Daily_SiteClearance.questNameRules.rulesStrings>
+  <Quest_Daily_SiteClearance.questDescriptionRules.rulesStrings>
+    <li>questDescription->A Guild envoy has brought a commission. [enemyDesc] have gathered near [label], threatening the safety of the surrounding region. Assign adventurers bearing Pharna to eliminate the threat.</li>
+    <li>enemyDesc->[enemiesCount] [enemiesLabel]</li>
+  </Quest_Daily_SiteClearance.questDescriptionRules.rulesStrings>
+  <Quest_Daily_SiteClearance.LetterLabelQuestCompleted.slateRef>Commission complete</Quest_Daily_SiteClearance.LetterLabelQuestCompleted.slateRef>
+  <Quest_Daily_SiteClearance.LetterLabelQuestExpired.slateRef>Quest expired</Quest_Daily_SiteClearance.LetterLabelQuestExpired.slateRef>
+  <Quest_Daily_SiteClearance.LetterTextQuestExpired.slateRef>The enemies have withdrawn. The quest [resolvedQuestName] has expired.</Quest_Daily_SiteClearance.LetterTextQuestExpired.slateRef>
+
+  <!-- ==================== Site Clearance (Rank-Up Quest) ==================== -->
+  <Quest_RankUp_SiteClearance.questNameRules.rulesStrings>
+    <li>questName->Site Clearance</li>
+  </Quest_RankUp_SiteClearance.questNameRules.rulesStrings>
+  <Quest_RankUp_SiteClearance.questDescriptionRules.rulesStrings>
+    <li>questDescription->A Guild envoy has brought a Rank-Up Quest. [enemyDesc] have already massed near [label], threatening the surrounding region. Commit every able fighter and eliminate the threat.</li>
+    <li>enemyDesc->[enemiesCount] [enemiesLabel]</li>
+  </Quest_RankUp_SiteClearance.questDescriptionRules.rulesStrings>
+  <Quest_RankUp_SiteClearance.LetterLabelRankUpCompleted.slateRef>Rank-Up Quest complete</Quest_RankUp_SiteClearance.LetterLabelRankUpCompleted.slateRef>
+  <Quest_RankUp_SiteClearance.LetterLabelRankUpFailed.slateRef>Rank-Up Quest failed</Quest_RankUp_SiteClearance.LetterLabelRankUpFailed.slateRef>
+  <Quest_RankUp_SiteClearance.LetterTextRankUpFailed.slateRef>The Rank-Up Quest [resolvedQuestName] has timed out. The Familia's promotion is postponed for now. A Guild envoy will issue a Rank-Up Quest again in a few days.</Quest_RankUp_SiteClearance.LetterTextRankUpFailed.slateRef>
+
+  <!-- ==================== Ancient Relic ==================== -->
+  <Quest_AncientRelic.questNameRules.rulesStrings>
+    <li>questName->Ancient Relic</li>
+  </Quest_AncientRelic.questNameRules.rulesStrings>
+  <Quest_AncientRelic.questDescriptionRules.rulesStrings>
+    <li>questDescription->The Guild has received word: a newly discovered ancient ruin near the colony holds treasure left behind by the spirits of old.\n\nTravel to the marked ruins, find and open the mechanism crate within, then bring the treasure back to your settlement.\n\nNote: if the relic box goes missing, is destroyed, or falls into the wrong hands, the commission will fail.</li>
+  </Quest_AncientRelic.questDescriptionRules.rulesStrings>
+  <Quest_AncientRelic.LetterLabelRelicFailed.slateRef>Commission failed</Quest_AncientRelic.LetterLabelRelicFailed.slateRef>
+  <Quest_AncientRelic.LetterTextRelicTimeout.slateRef>The quest [resolvedQuestName] has timed out: the target item has already been found by the Dark Faction. Quest failed.</Quest_AncientRelic.LetterTextRelicTimeout.slateRef>
+  <Quest_AncientRelic.LetterLabelShuttleArrived.slateRef>Guild shuttle has arrived</Quest_AncientRelic.LetterLabelShuttleArrived.slateRef>
+  <Quest_AncientRelic.LetterTextShuttleArrived.slateRef>The Guild's shuttle has landed at your settlement to collect the target item.\nLoad it aboard the shuttle to complete the quest.\n\nThe shuttle will leave in 2 days.</Quest_AncientRelic.LetterTextShuttleArrived.slateRef>
+
+  <!-- ==================== Criminal Hunt ==================== -->
+  <Quest_CriminalHunt.questNameRules.rulesStrings>
+    <li>questName->Wanted Notice</li>
+  </Quest_CriminalHunt.questNameRules.rulesStrings>
+  <Quest_CriminalHunt.questDescriptionRules.rulesStrings>
+    <li>questDescription->The Guild has issued a wanted notice: the wanted criminal [wanted_nameDef] is hiding in a bandit-guarded outpost near the colony, and a bounty is offered for their capture.\nTravel to the marked location and clear out the outpost.\nKill the criminal, or take them prisoner and bring them back to your settlement to hand over to the Guild's extradition shuttle, to earn double the reward.\n\nNote: if the criminal is recruited, enslaved, or goes missing before extradition, the commission will be treated as failed.</li>
+  </Quest_CriminalHunt.questDescriptionRules.rulesStrings>
+  <Quest_CriminalHunt.LetterLabelHuntFailed.slateRef>Hunt failed</Quest_CriminalHunt.LetterLabelHuntFailed.slateRef>
+  <Quest_CriminalHunt.LetterTextHuntTimeout.slateRef>The quest [resolvedQuestName] has timed out. The wanted criminal [wanted_nameDef] has moved on. Quest failed.</Quest_CriminalHunt.LetterTextHuntTimeout.slateRef>
+  <Quest_CriminalHunt.LetterLabelEscortShuttleArrived.slateRef>Extradition shuttle has arrived</Quest_CriminalHunt.LetterLabelEscortShuttleArrived.slateRef>
+  <Quest_CriminalHunt.LetterTextEscortShuttleArrived.slateRef>The Guild's extradition shuttle has landed at your settlement.\n\nAssign a colonist to put the wanted criminal aboard the shuttle.\n\nThe shuttle will leave in 2 days: if the criminal has not boarded by then, the commission will fail.</Quest_CriminalHunt.LetterTextEscortShuttleArrived.slateRef>
+
+  <!-- ==================== Rescue ==================== -->
+  <Quest_Rescue.questNameRules.rulesStrings>
+    <li>questName->Rescue</li>
+  </Quest_Rescue.questNameRules.rulesStrings>
+  <Quest_Rescue.questDescriptionRules.rulesStrings>
+    <li>questDescription->A distress signal has come from near the colony. A trade caravan has been attacked and urgently needs help.\n\nTravel to the marked location, clear the threat, and rescue the wounded. Once the threat is gone, the wounded will temporarily join your side; escort them aboard. A shuttle from their faction will land on the spot to pick them up (they must board within 3 days of its landing).\n\nThe reward is paid in proportion to the wounded who successfully board and depart.</li>
+  </Quest_Rescue.questDescriptionRules.rulesStrings>
+  <Quest_Rescue.LetterLabelRescueFailed.slateRef>Rescue failed</Quest_Rescue.LetterLabelRescueFailed.slateRef>
+  <Quest_Rescue.LetterTextRescueTimeout.slateRef>The rescue quest [resolvedQuestName] has timed out. The threat was not cleared in time. Quest failed.</Quest_Rescue.LetterTextRescueTimeout.slateRef>
+  <Quest_Rescue.LetterLabelShuttleArrived.slateRef>Rescue shuttle has arrived</Quest_Rescue.LetterLabelShuttleArrived.slateRef>
+  <Quest_Rescue.LetterTextShuttleArrived.slateRef>The shuttle has landed at the site of the disaster.\n\nGet the rescued wounded aboard as soon as possible. The shuttle will leave in 3 days.</Quest_Rescue.LetterTextShuttleArrived.slateRef>
+
+  <!-- ==================== Supply Escort (Rank-Up Quest) ==================== -->
+  <Quest_RankUp_SupplyEscort.questNameRules.rulesStrings>
+    <li>questName->Supply Escort</li>
+  </Quest_RankUp_SupplyEscort.questNameRules.rulesStrings>
+  <Quest_RankUp_SupplyEscort.questDescriptionRules.rulesStrings>
+    <li>questDescription->A Guild envoy has brought a Rank-Up Quest: a shipment of supplies must be escorted from [settlementA_label] to [settlementB_label].\n\nSend a caravan to the pickup point, take charge of the supplies, and deliver them to the delivery point within 12 days.\n\nThe Dark Faction may already have its eye on this cargo. Be prepared.</li>
+  </Quest_RankUp_SupplyEscort.questDescriptionRules.rulesStrings>
+  <Quest_RankUp_SupplyEscort.LetterLabelRankUpFailed.slateRef>Rank-Up Quest failed</Quest_RankUp_SupplyEscort.LetterLabelRankUpFailed.slateRef>
+  <Quest_RankUp_SupplyEscort.LetterTextEscortTimeout.slateRef>The escort timed out; the supplies were not delivered on schedule.\n\nThe Familia's promotion is postponed for now. A Guild envoy will come again in a few days to issue another trial quest.</Quest_RankUp_SupplyEscort.LetterTextEscortTimeout.slateRef>
+
+  <!-- ==================== Refugee Resettlement (Rank-Up Quest) ==================== -->
+  <Quest_RankUp_RefugeeResettle.questNameRules.rulesStrings>
+    <li>questName->Refugee Resettlement</li>
+  </Quest_RankUp_RefugeeResettle.questNameRules.rulesStrings>
+  <Quest_RankUp_RefugeeResettle.questDescriptionRules.rulesStrings>
+    <li>questDescription->The Guild has sent [refugeeCount] refugees, who will stay at your colony for about 15 days.\nThe Dark Faction hunting them may launch attacks during that time. Be prepared.\nAfter 15 days a Guild shuttle will come to take the refugees away.\n\nIf any of them wish to stay, they may be accepted as full members (counted as surviving).\n\nNote: imprisoning or enslaving the refugees, or performing harmful surgery on them, will cause the commission to be revoked immediately.\n\nThe reward is paid in proportion to the number of survivors out of the total.</li>
+  </Quest_RankUp_RefugeeResettle.questDescriptionRules.rulesStrings>
+  <Quest_RankUp_RefugeeResettle.LetterLabelShuttleArrived.slateRef>Guild shuttle has arrived</Quest_RankUp_RefugeeResettle.LetterLabelShuttleArrived.slateRef>
+  <Quest_RankUp_RefugeeResettle.LetterTextShuttleArrived.slateRef>The Guild's shuttle has landed at your settlement.\n\nGet the refugees aboard as soon as possible. The shuttle will depart in 2 days; anyone still not aboard by then will be considered missing and will leave on their own.</Quest_RankUp_RefugeeResettle.LetterTextShuttleArrived.slateRef>
+  <Quest_RankUp_RefugeeResettle.LetterLabelRankUpFailed.slateRef>Rank-Up Quest failed</Quest_RankUp_RefugeeResettle.LetterLabelRankUpFailed.slateRef>
+  <Quest_RankUp_RefugeeResettle.LetterTextRankUpFailed.slateRef>The refugee resettlement commission has been revoked, and the remaining refugees will leave the colony on their own.\n\nThe Familia's promotion is postponed for now. A Guild envoy will come again in a few days to issue another trial quest.</Quest_RankUp_RefugeeResettle.LetterTextRankUpFailed.slateRef>
+
+</LanguageData>

@@ -5,6 +5,24 @@
 	<Skill_DesperateArmyWin.description>心情低于50%时，根据心情低落程度获得大幅能力值补正。\n\n力量/耐久/敏捷：+200 × t + 100\n意志：+300 × t + 150\n（t = 心情低于50%的百分比 / 50%）</Skill_DesperateArmyWin.description>
 
 	<Skill_Railgun.label>超电磁炮</Skill_Railgun.label>
-	<Skill_Railgun.description>持有远程枪械时可释放：向武器注入电磁能量，接下来的5次射击贯穿弹道，对路径上所有敌人造成200%伤害并眩晕2秒，遇墙拦截并对墙造成贯穿伤害。</Skill_Railgun.description>
+	<Skill_Railgun.description>持有远程枪械时可释放：向武器注入电磁能量，接下来的5次射击将会贯穿路径上所有敌人造成200%伤害并眩晕2秒。</Skill_Railgun.description>
+
+  <!-- 自 Defs 迁移补充 -->
+  <Skill_BerserkerChaos.description>常态生效：受伤越重，近战伤害越高。</Skill_BerserkerChaos.description>
+  <Skill_BerserkerChaos.label>狂化招乱</Skill_BerserkerChaos.label>
+  <Skill_Ember.description>被击倒时触发：短时间内强制维持生存并高速修复伤势，之后强制昏迷。</Skill_Ember.description>
+  <Skill_Ember.label>余烬</Skill_Ember.label>
+  <Skill_FlameAffinity.description>常态生效：热能护甲大幅提高，最高舒适温度大幅提高，易燃性提高，不再畏惧火焰，燃烧时持续恢复伤势</Skill_FlameAffinity.description>
+  <Skill_FlameAffinity.label>火焰亲和</Skill_FlameAffinity.label>
+  <Skill_IaiSpiritSlash.description>持有近战武器（锐伤）时可释放：进入居合状态，期间吸收所有受到的伤害；3秒后拔刀向指定方向闪现一段距离，并对路径附近敌人造成100%伤害+50%吸收的伤害。</Skill_IaiSpiritSlash.description>
+  <Skill_IaiSpiritSlash.label>居合拔刀气刃斩</Skill_IaiSpiritSlash.label>
+  <Skill_LanceCharge.description>持有锐伤近战武器时可释放：向 10 格内的目标点冲刺，对路径附近的敌人造成 150% 伤害并将其击退。</Skill_LanceCharge.description>
+  <Skill_LanceCharge.label>夹枪冲锋</Skill_LanceCharge.label>
+  <Skill_Provoke.description>征召时可释放：使周围20格内的敌人攻击目标变为自己，持续3小时。</Skill_Provoke.description>
+  <Skill_Provoke.label>吸引仇恨</Skill_Provoke.label>
+  <Skill_RoundhouseKick.description>选择自身相邻8格内的单个敌人，造成100%徒手伤害并将其击退5格；若击退路径上有阻挡则再造成200%伤害。可存储3次，每次冷却3小时。</Skill_RoundhouseKick.description>
+  <Skill_RoundhouseKick.label>回旋踢</Skill_RoundhouseKick.label>
+  <Skill_SwordRain.description>持有锐伤近战武器时可释放：对周围4格范围内敌人造成两次100%伤害；造成击杀或倒地则立刻重置冷却（最多两次）。</Skill_SwordRain.description>
+  <Skill_SwordRain.label>剑雨滂沱</Skill_SwordRain.label>
 
 </LanguageData>

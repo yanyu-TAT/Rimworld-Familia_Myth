@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Jobs_Mission 玩家可见文本（自 Defs 迁移；Def 内文本保留为默认/兜底） -->
+
+  <TalkGuildEnvoy.reportString>与TargetA对话。</TalkGuildEnvoy.reportString>
+
+</LanguageData>

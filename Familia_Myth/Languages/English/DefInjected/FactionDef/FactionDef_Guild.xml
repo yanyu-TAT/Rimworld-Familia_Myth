@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- FactionDef_Guild player-visible text (migrated from Defs; Def text kept as default fallback) -->
+
+  <Guild.fixedName>Guild</Guild.fixedName>
+  <Guild.label>Guild</Guild.label>
+
+</LanguageData>

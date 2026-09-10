@@ -67,7 +67,7 @@
                   <li Class="FamiliaMyth.Quest.QuestNode_ExploitsReward">
                     <site>$site</site>
                     <totalExploits>$totalExploits</totalExploits>
-                    <letterLabel>强制任务完成</letterLabel>
+                    <letterLabel TKey="LetterLabelRankUpCompleted">强制任务完成</letterLabel>
                   </li>
                   <!-- 触发奖励结算 -->
                   <li Class="QuestNode_SendSignals">
@@ -91,8 +91,8 @@
               <node Class="QuestNode_Sequence">
                 <nodes>
                   <li Class="QuestNode_Letter">
-                    <label>强制任务失败</label>
-                    <text>强制任务[resolvedQuestName]已超时，眷族晋升暂时搁置。数日后公会使者将再次前来发布考核任务。</text>
+                    <label TKey="LetterLabelRankUpFailed">强制任务失败</label>
+                    <text TKey="LetterTextRankUpFailed">强制任务[resolvedQuestName]已超时，眷族晋升暂时搁置。数日后公会使者将再次前来发布考核任务。</text>
                   </li>
                   <!-- 通知 tracker 记录失败，进入 3~5 天冷却后自动重发 -->
                   <li Class="FamiliaMyth.Quest.QuestNode_RankUpFailed">

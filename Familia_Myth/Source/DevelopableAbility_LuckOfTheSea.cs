@@ -1,4 +1,4 @@
-﻿using FamiliaMyth.Pharna;
+using FamiliaMyth.Pharna;
 using RimWorld;
 using Verse;
 
@@ -39,7 +39,7 @@ namespace FamiliaMyth.Abilities
         public override string GetExplanation(StatDef stat)
         {
             if (pharna == null || stat == null) return "";
-            string label = "海之眷顾";
+            string label = "FamiliaMyth.DevelopableAbility.LuckOfTheSeaLabel".Translate();
             string str = "Lv." + pharna.level + " " + label + Rank + ": ";
             if (stat == StatDefOf.FishingSpeed)
             {

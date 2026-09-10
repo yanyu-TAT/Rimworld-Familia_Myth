@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- FactionDef_Guild 玩家可见文本（自 Defs 迁移；Def 内文本保留为默认/兜底） -->
+
+  <Guild.fixedName>公会</Guild.fixedName>
+  <Guild.label>公会</Guild.label>
+
+</LanguageData>

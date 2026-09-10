@@ -41,6 +41,6 @@
 	<FamiliaMyth.TextMote_Dodge>闪避</FamiliaMyth.TextMote_Dodge>
 
 	<!-- 遗迹探索·圣物匣描述模板（{0}=随机异教圣物名） -->
-	<FM_AncientRelic_Description>{0}——一枚封存的圣物匣，据信曾为某个早已湮灭的文明所敬奉。铭文与纹饰皆非当今任何已知文化，唯有历经岁月而不朽的质地诉说着它的来历。公会愿以厚报换取此物。</FM_AncientRelic_Description>
+	<FM_AncientRelic_Description>{0}——古代仙精留下的强大宝物，虽然现在还暂时无法开启，但不能让其流入恶徒之手。交付给公会以完成委托。</FM_AncientRelic_Description>
 
 </LanguageData>

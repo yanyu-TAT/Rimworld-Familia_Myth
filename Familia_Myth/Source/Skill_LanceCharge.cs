@@ -48,7 +48,7 @@ namespace FamiliaMyth.Abilities
                 if (!canCast) return canCast;
 
                 if (Owner.GetMeleeSharpWeapon() == null)
-                    return "未持有长矛（锐伤近战武器）";
+                    return "FamiliaMyth.Ability.NoSpear".Translate();
 
                 return true;
             }

@@ -1,4 +1,4 @@
-﻿using FamiliaMyth.Pharna;
+using FamiliaMyth.Pharna;
 using RimWorld;
 using System.Text;
 using Verse;
@@ -27,8 +27,7 @@ namespace FamiliaMyth.Abilities
 
         private string GetExploitsExplanation(Hediff_Pharna pharna)
         {
-            return $"当前伟业值: {(int)pharna.exploits} / 999\n"
-                 + $"恩惠等级: Lv.{pharna.level}";
+            return "FamiliaMyth.Stat.PharnaExploits".Translate((int)pharna.exploits, pharna.level);
         }
 
         private string GetExperienceExplanation(Hediff_Pharna pharna)
@@ -45,7 +44,7 @@ namespace FamiliaMyth.Abilities
                 sb.AppendLine(s);
             }
 
-            return $"当前经验值 =\n" + sb.ToString().TrimEnd();
+            return "FamiliaMyth.Stat.PharnaExperience".Translate(sb.ToString().TrimEnd());
         }
 
         private string GetStatusExplanation(Hediff_Pharna pharna)
@@ -59,8 +58,8 @@ namespace FamiliaMyth.Abilities
             int level = pharna.level;
 
             string s = $"Lv.{level} {typeName}{rank}{(int)cur}\n\n";
-            s += $"当前: {(int)cur} | 潜在: {(int)pot}\n" +
-                 $"合计: {(int)full}\n";
+            string status = "FamiliaMyth.Stat.PharnaStatus".Translate((int)cur, (int)pot, (int)full);
+            s += status;
 
             s += explanation;
 

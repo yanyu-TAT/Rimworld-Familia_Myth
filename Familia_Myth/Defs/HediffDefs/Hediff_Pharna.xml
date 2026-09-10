@@ -3,8 +3,8 @@
 	<HediffDef>
 		<defName>Hediff_Pharna</defName>
 		<hediffClass>FamiliaMyth.Pharna.Hediff_Pharna</hediffClass>
-		<label>FamiliaMyth.PharnaHediffLabel</label>
-		<description>FamiliaMyth.PharnaHediffDescription</description>
+		<label>神之恩惠</label>
+		<description>超凡智能降下的恩惠正在此人身上发挥作用</description>
 		<initialSeverity>1</initialSeverity>
 		<maxSeverity>10</maxSeverity>
 		<isBad>false</isBad>

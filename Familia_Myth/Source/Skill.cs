@@ -29,13 +29,13 @@ namespace FamiliaMyth.Abilities
         {
             get
             {
-                if (active) return "生效中";
+                if (active) return "FamiliaMyth.Ability.SkillActive".Translate();
                 string s = "";
                 //可多次充能的技能
                 if (MaxCharge > 1)
                 {
                     //显示充能次数
-                    s += $"当前充能:{Charge}";
+                    s += "FamiliaMyth.Ability.SkillCharge".Translate(Charge);
                     //未在冷却中或充能已满则不显示冷却文本
                     if (!IsCooldown || MaxCharged) return s;
                     //冷却文本和充能文本间的逗号
@@ -44,15 +44,15 @@ namespace FamiliaMyth.Abilities
                 else if (!IsCooldown)
                 {
                     //不可多次充能且已冷却完毕
-                    s += "可适用";
+                    s += "FamiliaMyth.Ability.SkillReady".Translate();
                     return s;
                 }
 
                 //冷却文本
                 if (cooldownTimer < 2500)
-                    s += "冷却剩余:" + cooldownTimer.ToStringSecondsFromTicks("F0");
+                    s += "FamiliaMyth.Ability.SkillCooldown".Translate(cooldownTimer.ToStringSecondsFromTicks("F0"));
                 else
-                    s+=  "冷却剩余:" + cooldownTimer.ToStringTicksToPeriod();
+                    s += "FamiliaMyth.Ability.SkillCooldown".Translate(cooldownTimer.ToStringTicksToPeriod());
 
                 return s;
             }
@@ -175,7 +175,7 @@ namespace FamiliaMyth.Abilities
 
                 var check = pharna?.CheckStunning ?? true;
                 if (!check)
-                    return $"{check.Reason}效果结束前不可重复释放";
+                    return "FamiliaMyth.Ability.StunnedCannotCast".Translate(check.Reason);
 
                 return true;
             }

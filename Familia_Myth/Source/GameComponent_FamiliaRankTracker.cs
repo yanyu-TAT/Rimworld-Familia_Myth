@@ -141,12 +141,10 @@ namespace FamiliaMyth.Familia
             var state = GetOrAddState(category);
             state.curRankUpPoints += amount;
 
-            var letter = LetterMaker.MakeLetter(
-                "眷族成长",
-                $"由于在「{category.LabelCap}」方面的卓越贡献\n" +
-                $"您的眷族获得了 {amount} 点升级点数。\n\n" +
-                $"当前：{state.curRankUpPoints} / {GetUpgradePointsRequired(category)}",
-                LetterDefOf.PositiveEvent);
+            string pointsLabel = "FamiliaMyth.QuestMisc.RankUpPointsLetterLabel".Translate();
+            string pointsText = "FamiliaMyth.QuestMisc.RankUpPointsLetterText".Translate(
+                category.LabelCap, amount, state.curRankUpPoints, GetUpgradePointsRequired(category));
+            var letter = LetterMaker.MakeLetter(pointsLabel, pointsText, LetterDefOf.PositiveEvent);
             Find.LetterStack.ReceiveLetter(letter);
         }
 
@@ -219,9 +217,8 @@ namespace FamiliaMyth.Familia
             if (quest == null) return false;   //任务生成失败（Quest 脚本异常时静默，避免留下无任务使者）
             state.OnRankUpQuestStart(quest.id);
 
-            TaggedString label = "公会使者到访";
-            TaggedString text = $"来自冒险者公会的使者 {envoy.Name.ToStringShort} 已到达你的据点。\n\n" +
-                "请派遣殖民者前往与使者对话，了解委托的详情。";
+            TaggedString label = "FamiliaMyth.QuestMisc.EnvoyArrivalLetterLabel".Translate();
+            TaggedString text = "FamiliaMyth.QuestMisc.EnvoyArrivalLetterText".Translate(envoy.Name.ToStringShort);
             ChoiceLetter letter = LetterMaker.MakeLetter(
                 label, text, LetterDefOf.NeutralEvent, envoy);
             Find.LetterStack.ReceiveLetter(letter);
@@ -239,10 +236,10 @@ namespace FamiliaMyth.Familia
             state.curRankUpPoints -= next.upgradePointsRequired;
             state.rankUpQuestID = -1;
 
-            var letter = LetterMaker.MakeLetter(
-                "眷族评级晋升",
-                $"公会已将您的眷族在「{category.LabelCap}」方面的评级提升为「{next.LabelCap}」！",
-                LetterDefOf.PositiveEvent);
+            string promotionLabel = "FamiliaMyth.QuestMisc.RankUpPromotionLetterLabel".Translate();
+            string promotionText = "FamiliaMyth.QuestMisc.RankUpPromotionLetterText".Translate(
+                category.LabelCap, next.LabelCap);
+            var letter = LetterMaker.MakeLetter(promotionLabel, promotionText, LetterDefOf.PositiveEvent);
             Find.LetterStack.ReceiveLetter(letter);
         }
 

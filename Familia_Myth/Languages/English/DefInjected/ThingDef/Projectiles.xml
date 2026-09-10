@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Projectiles player-visible text (migrated from Defs; Def text kept as default fallback) -->
+
+  <Projectile_ArcsRay.description>A piercing arrow of light conjured by the Arcs Ray spell. It tracks its target and passes through enemies and buildings along its path</Projectile_ArcsRay.description>
+  <Projectile_ArcsRay.label>Light Arrow</Projectile_ArcsRay.label>
+  <Projectile_KingsSword.description>A hovering greatsword summoned by the King's Sword spell. It circles the caster and attacks nearby enemies on its own</Projectile_KingsSword.description>
+  <Projectile_KingsSword.label>King's Sword</Projectile_KingsSword.label>
+  <Projectile_LightOrb.description>A light orb summoned by the Guardian Light Spirits spell. It circles the caster, absorbing incoming projectiles and burning nearby enemies</Projectile_LightOrb.description>
+  <Projectile_LightOrb.label>Light Spirit</Projectile_LightOrb.label>
+  <Projectile_WindMissile.description>A wind bolt conjured by the Luminous Wind spell. It can track enemies, or be detonated for area damage</Projectile_WindMissile.description>
+  <Projectile_WindMissile.label>Wind Bolt</Projectile_WindMissile.label>
+
+</LanguageData>

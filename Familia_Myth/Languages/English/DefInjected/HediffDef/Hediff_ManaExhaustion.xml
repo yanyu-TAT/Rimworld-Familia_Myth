@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Hediff_ManaExhaustion player-visible text (migrated from Defs; Def text kept as default/fallback) -->
+
+  <Hediff_ManaExhaustion.description>Magic power is drained to the point of exhaustion after casting an explosion spell, leaving the body paralyzed and unable to act for a short time.</Hediff_ManaExhaustion.description>
+  <Hediff_ManaExhaustion.label>Mana Exhaustion</Hediff_ManaExhaustion.label>
+
+</LanguageData>

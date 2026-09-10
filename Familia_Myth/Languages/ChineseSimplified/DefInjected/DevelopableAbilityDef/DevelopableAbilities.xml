@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- DevelopableAbilities 玩家可见文本（自 Defs 迁移；Def 内文本保留为默认/兜底） -->
+
+  <DevelopableAbility_AbnormalResistance.description>提升免疫获得速度，毒素抗性以及抵抗疾病概率的发展能力。在恶劣环境中生存或抵抗疾病时提升熟练度。</DevelopableAbility_AbnormalResistance.description>
+  <DevelopableAbility_AbnormalResistance.label>异常抗性</DevelopableAbility_AbnormalResistance.label>
+  <DevelopableAbility_Botany.description>提升播种/收获速度、收获效率以及野外采集效率的发展能力。通过植物类工作提升熟练度。</DevelopableAbility_Botany.description>
+  <DevelopableAbility_Botany.label>植生学</DevelopableAbility_Botany.label>
+  <DevelopableAbility_EfficientCirculation.description>提升身体能量循环效率的发展能力。休息充足时降低营养消耗，进食时按比例回复休息值。</DevelopableAbility_EfficientCirculation.description>
+  <DevelopableAbility_EfficientCirculation.label>高效循环</DevelopableAbility_EfficientCirculation.label>
+  <DevelopableAbility_Healing.description>提升治疗品质、医疗/手术速度以及手术成功率的发展能力。通过治疗伤员、进行手术提升熟练度。</DevelopableAbility_Healing.description>
+  <DevelopableAbility_Healing.label>治愈</DevelopableAbility_Healing.label>
+  <DevelopableAbility_LuckOfTheSea.description>提升钓鱼速度与产出数量，并有概率在钓鱼时额外获得稀有渔获的发展能力。通过钓鱼提升熟练度。</DevelopableAbility_LuckOfTheSea.description>
+  <DevelopableAbility_LuckOfTheSea.label>海之眷顾</DevelopableAbility_LuckOfTheSea.label>
+  <DevelopableAbility_Magic.description>提升心灵熵消散速度与心灵熵上限的发展能力。通过冥想和灵能使用提升熟练度。</DevelopableAbility_Magic.description>
+  <DevelopableAbility_Magic.label>魔导</DevelopableAbility_Magic.label>
+  <DevelopableAbility_Mineralogy.description>提升采矿/深钻井操作速度以及采矿效率的发展能力。通过采矿类工作提升熟练度。</DevelopableAbility_Mineralogy.description>
+  <DevelopableAbility_Mineralogy.label>矿物学</DevelopableAbility_Mineralogy.label>
+
+</LanguageData>

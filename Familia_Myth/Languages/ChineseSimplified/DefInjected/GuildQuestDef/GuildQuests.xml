@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- ==================== 公会任务定义（GuildQuestDef） ==================== -->
+  <!-- 键名格式：DefName.字段名 -->
+  <!-- 注意：\n 为 RimWorld 换行转义，请勿改写成真实换行 -->
+
+  <!-- 探索类 · 日常（据点清剿） -->
+  <GuildQuest_Daily_SiteClearance.label>据点清剿</GuildQuest_Daily_SiteClearance.label>
+  <GuildQuest_Daily_SiteClearance.letterText>使者向你介绍了剿灭委托的详情。\n\n公会在附近发现了一处邪恶派阀据点，\n放任不管会严重危害周边治安。现请求派出冒险者前去肃清。\n\n是否接受？</GuildQuest_Daily_SiteClearance.letterText>
+
+  <!-- 探索类 · 强制（据点清剿） -->
+  <GuildQuest_RankUp_SiteClearance.label>据点清剿</GuildQuest_RankUp_SiteClearance.label>
+  <GuildQuest_RankUp_SiteClearance.letterText>使者向你介绍了强制任务的详情，并提醒你做好准备。\n\n公会在附近发现了一处邪恶派阀据点，\n放任不管会严重危害周边治安。现请求派出冒险者前去肃清。</GuildQuest_RankUp_SiteClearance.letterText>
+
+  <!-- 探索类 · 日常（遗迹探索） -->
+  <GuildQuest_AncientRelic.label>遗迹探索</GuildQuest_AncientRelic.label>
+  <GuildQuest_AncientRelic.letterText>使者带来了新发现遗迹的相关信息。\n\n据传殖民地附近新发现的遗迹中有古代仙精留下的重要宝物。\n\n前往遗迹取回圣物匣并带回据点，公会的穿梭机会在数日后抵达，交付给穿梭机即可完成委托。\n宝物被取走后，觊觎其力量的黑暗派阀可能会前来争夺，务必小心。\n\n是否接受？</GuildQuest_AncientRelic.letterText>
+
+  <!-- 探索类 · 日常（罪犯追捕） -->
+  <GuildQuest_Daily_CriminalHunt.label>罪犯追捕</GuildQuest_Daily_CriminalHunt.label>
+  <GuildQuest_Daily_CriminalHunt.letterText>使者带来了公会发布的通缉令。\n\n一名被悬赏的通缉犯正藏身于殖民地附近的罪犯窝点中，\n窝点内有武装匪徒看守。公会请求你派出冒险者将其捉拿归案。\n\n当场击毙通缉犯，或将其俘虏后带回殖民地转交给公会的押解穿梭机即可完成任务——\n若能将囚犯活着送上穿梭机，将获得双倍酬劳。\n\n是否接受？</GuildQuest_Daily_CriminalHunt.letterText>
+
+  <!-- 探索类 · 强制（难民安置） -->
+  <GuildQuest_RankUp_RefugeeResettle.label>难民安置</GuildQuest_RankUp_RefugeeResettle.label>
+  <GuildQuest_RankUp_RefugeeResettle.letterText>使者向你介绍了强制任务的详情，并提醒你做好准备。\n\n一批受到黑暗派阀追杀的避难者希望临时安置在你的殖民地，\n他们将在殖民地停留 15 天，之后由公会穿梭机接走安置于其他地方。\n请保护他们免于黑暗派阀的追杀，并尽量让更多人活着离开。</GuildQuest_RankUp_RefugeeResettle.letterText>
+
+  <!-- 探索类 · 日常（紧急救援） -->
+  <GuildQuest_Rescue.label>紧急救援</GuildQuest_Rescue.label>
+  <GuildQuest_Rescue.letterText>使者带来了遇难信号。\n\n一支商队队在殖民地附近遭到魔物袭击，成员下落不明，急需救援。\n\n前往标记地点，清除威胁并营救伤员，等待一段时间后，他们所属的派系会派穿梭机接走伤员。\n请在等待期间保护他们并尽量让更多人活着离开。\n\n是否接受？</GuildQuest_Rescue.letterText>
+
+  <!-- 探索类 · 强制（物资押运） -->
+  <GuildQuest_RankUp_SupplyEscort.label>物资押运</GuildQuest_RankUp_SupplyEscort.label>
+  <GuildQuest_RankUp_SupplyEscort.letterText>使者向你介绍了强制任务的详情，并提醒你做好准备。\n\n公会有一批物资急需运输\n在12天内前往接受物资并完成交付，即可完成任务。\n途中可能会有黑暗派阀成员前来抢夺物资，请做好准备。</GuildQuest_RankUp_SupplyEscort.letterText>
+
+</LanguageData>

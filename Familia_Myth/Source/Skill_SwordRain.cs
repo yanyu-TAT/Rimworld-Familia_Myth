@@ -29,7 +29,7 @@ namespace FamiliaMyth.Abilities
                 if (!canCast) return canCast;
 
                 if (Owner.GetMeleeSharpWeapon() == null)
-                    return "未持有剑（锐伤近战武器）";
+                    return "FamiliaMyth.Ability.NoSharpWeapon".Translate();
 
                 return true;
             }
@@ -47,7 +47,7 @@ namespace FamiliaMyth.Abilities
 
             if (GetEnemiesInRange().ToList().NullOrEmpty())
             {
-                Messages.Message("范围内没有敌人", MessageTypeDefOf.RejectInput);
+                Messages.Message("FamiliaMyth.Ability.NoEnemyInRange".Translate(), MessageTypeDefOf.RejectInput);
                 return false;
             }
 

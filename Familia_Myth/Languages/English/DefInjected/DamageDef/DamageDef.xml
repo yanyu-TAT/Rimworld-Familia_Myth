@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- DamageDef player-visible text (migrated from Defs; Def text kept as default fallback) -->
+
+  <LightArrow.label>Light Arrow</LightArrow.label>
+  <LightArrow.deathMessage>{0} has been pierced to death.</LightArrow.deathMessage>
+  <SpellExplosion.deathMessage>{0} was vaporized by an explosion spell.</SpellExplosion.deathMessage>
+  <SpellExplosion.label>Explosion</SpellExplosion.label>
+
+</LanguageData>

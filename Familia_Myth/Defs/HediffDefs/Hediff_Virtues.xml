@@ -14,8 +14,8 @@
   <HediffDef>
     <defName>Hediff_VirtueBuff_Stalwart</defName>
     <hediffClass>HediffWithComps</hediffClass>
-    <label>FamiliaMyth.VirtueBuff.Stalwart.Label</label>
-    <description>FamiliaMyth.VirtueBuff.Stalwart.Description</description>
+    <label>美德：坚定</label>
+    <description>意志坚定，身心坚不可摧</description>
     <isBad>false</isBad>
     <initialSeverity>1</initialSeverity>
     <maxSeverity>1</maxSeverity>
@@ -43,8 +43,8 @@
   <HediffDef>
     <defName>Hediff_VirtueBuff_Courageous</defName>
     <hediffClass>HediffWithComps</hediffClass>
-    <label>FamiliaMyth.VirtueBuff.Courageous.Label</label>
-    <description>FamiliaMyth.VirtueBuff.Courageous.Description</description>
+    <label>美德：无畏</label>
+    <description>勇气充盈，我已无所畏惧</description>
     <isBad>false</isBad>
     <initialSeverity>1</initialSeverity>
     <maxSeverity>1</maxSeverity>
@@ -72,8 +72,8 @@
   <HediffDef>
     <defName>Hediff_VirtueBuff_Focused</defName>
     <hediffClass>HediffWithComps</hediffClass>
-    <label>FamiliaMyth.VirtueBuff.Focused.Label</label>
-    <description>FamiliaMyth.VirtueBuff.Focused.Description</description>
+    <label>美德：专注</label>
+    <description>精神集中，脑中思绪清明</description>
     <isBad>false</isBad>
     <initialSeverity>1</initialSeverity>
     <maxSeverity>1</maxSeverity>
@@ -110,8 +110,8 @@
   <HediffDef>
     <defName>Hediff_VirtueBuff_Powerful</defName>
     <hediffClass>HediffWithComps</hediffClass>
-    <label>FamiliaMyth.VirtueBuff.Powerful.Label</label>
-    <description>FamiliaMyth.VirtueBuff.Powerful.Description</description>
+    <label>美德：勇猛</label>
+    <description>力量澎湃，此刻战意昂扬</description>
     <isBad>false</isBad>
     <initialSeverity>1</initialSeverity>
     <maxSeverity>1</maxSeverity>
@@ -149,8 +149,8 @@
   <HediffDef>
     <defName>Hediff_VirtueBuff_Vigorous</defName>
     <hediffClass>HediffWithComps</hediffClass>
-    <label>FamiliaMyth.VirtueBuff.Vigorous.Label</label>
-    <description>FamiliaMyth.VirtueBuff.Vigorous.Description</description>
+    <label>美德：振奋</label>
+    <description>活力焕发，全身充满干劲</description>
     <isBad>false</isBad>
     <initialSeverity>1</initialSeverity>
     <maxSeverity>1</maxSeverity>
@@ -194,8 +194,8 @@
   <HediffDef>
     <defName>Hediff_VirtueAura_Focused</defName>
     <hediffClass>HediffWithComps</hediffClass>
-    <label>FamiliaMyth.VirtueAura.Focused.Label</label>
-    <description>FamiliaMyth.VirtueAura.Focused.Description</description>
+    <label>美德：专注</label>
+    <description>受身边同伴的专注感染，全神贯注</description>
     <isBad>false</isBad>
     <initialSeverity>1</initialSeverity>
     <maxSeverity>1</maxSeverity>
@@ -219,8 +219,8 @@
   <HediffDef>
     <defName>Hediff_VirtueAura_Powerful</defName>
     <hediffClass>HediffWithComps</hediffClass>
-    <label>FamiliaMyth.VirtueAura.Powerful.Label</label>
-    <description>FamiliaMyth.VirtueAura.Powerful.Description</description>
+    <label>美德：勇猛</label>
+    <description>受身边同伴的气概鼓舞，健步如飞</description>
     <isBad>false</isBad>
     <initialSeverity>1</initialSeverity>
     <maxSeverity>1</maxSeverity>
@@ -241,8 +241,8 @@
   <HediffDef>
     <defName>Hediff_VirtueAura_Vigorous</defName>
     <hediffClass>HediffWithComps</hediffClass>
-    <label>FamiliaMyth.VirtueAura.Vigorous.Label</label>
-    <description>FamiliaMyth.VirtueAura.Vigorous.Description</description>
+    <label>美德：振奋</label>
+    <description>被身边同伴的活力感染，斗志昂扬</description>
     <isBad>false</isBad>
     <initialSeverity>1</initialSeverity>
     <maxSeverity>1</maxSeverity>
