@@ -7,6 +7,7 @@
     <label>力量</label>
     <description>提升近战伤害系数和利器/钝器穿甲，提升负重能力。\n\n近战伤害系数：+k × 0.00075\n近战利器穿甲：+k × 0.00030\n近战钝器穿甲：+k × 0.00020\n负重能力：× (1 + k × 0.00050)</description>
     <category>Pharna</category>
+    <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <defaultBaseValue>0</defaultBaseValue>
     <hideAtValue>-1</hideAtValue>
     <showOnPawns>true</showOnPawns>
@@ -30,6 +31,7 @@
     <label>耐久</label>
     <description>提升锐器/钝器/热能护甲，提高愈合系数，降低受伤系数、硬直时间和疼痛阈值，减缓休息值下降。\n\n锐器护甲：+k × 0.00025\n钝器护甲：+k × 0.00025\n热能护甲：+k × 0.00009\n愈合系数：+k × 0.00007\n受伤系数：× 0.9999^k\n硬直时间：× 0.9995^k\n疼痛阈值：× 0.9995^k\n休息下降：× 0.9998^k</description>
     <category>Pharna</category>
+    <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <defaultBaseValue>0</defaultBaseValue>
     <hideAtValue>-1</hideAtValue>
     <showOnPawns>true</showOnPawns>
@@ -53,6 +55,7 @@
     <label>灵巧</label>
     <description>提升全局工作速度，降低近战冷却和瞄准时间，缩短远程冷却，提升射击精度。\n\n全局工作速度：+k × 0.00030\n近战冷却系数：× 0.9998^k\n瞄准时间：× 0.9995^k\n远程冷却：× 0.9998^k\n射击精度：+k × 0.00030</description>
     <category>Pharna</category>
+    <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <defaultBaseValue>0</defaultBaseValue>
     <hideAtValue>-1</hideAtValue>
     <showOnPawns>true</showOnPawns>
@@ -76,6 +79,7 @@
     <label>敏捷</label>
     <description>提升移动速度，提升近战闪避和远程闪避。\n\n移动速度：× (1 + k × 0.00025)\n近战闪避：+k × 0.00100\n远程闪避：+k × 0.00075</description>
     <category>Pharna</category>
+    <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <defaultBaseValue>0</defaultBaseValue>
     <hideAtValue>-1</hideAtValue>
     <showOnPawns>true</showOnPawns>
@@ -99,6 +103,7 @@
     <label>魔力</label>
     <description>提升心灵熵阈值和冥想精神力获取，提升魔法强度。\n\n心灵熵阈值：+k × 0.05000\n冥想精神力获取：+k × 0.00010</description>
     <category>Pharna</category>
+    <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <defaultBaseValue>0</defaultBaseValue>
     <hideAtValue>-1</hideAtValue>
     <showOnPawns>true</showOnPawns>
@@ -122,6 +127,7 @@
     <label>意志</label>
     <description>提升美德触发概率，缩短美德冷却间隔。\n\n美德触发概率：0.75 × (1 - e^(-0.00025 × k))\n美德冷却间隔：(10 - 0.001 × k) 天</description>
     <category>Pharna</category>
+    <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <defaultBaseValue>0</defaultBaseValue>
     <hideAtValue>-1</hideAtValue>
     <showOnPawns>true</showOnPawns>
@@ -147,6 +153,7 @@
     <label>魔力输出</label>
     <description>该角色输出魔力的功率，影响释放魔法时的部分效果</description>
     <category>Pharna</category>
+    <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <toStringStyle>PercentZero</toStringStyle>
     <defaultBaseValue>1</defaultBaseValue>
     <hideAtValue>1</hideAtValue>
@@ -168,6 +175,7 @@
     <label>魔力输出·攻击</label>
     <description>释放攻击魔法时的魔力输出。</description>
     <category>Pharna</category>
+    <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <toStringStyle>PercentZero</toStringStyle>
     <defaultBaseValue>1</defaultBaseValue>
     <hideAtValue>1</hideAtValue>
@@ -191,6 +199,7 @@
     <label>魔力输出·治疗</label>
     <description>释放治疗魔法时的魔力输出。</description>
     <category>Pharna</category>
+    <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <toStringStyle>PercentZero</toStringStyle>
     <defaultBaseValue>1</defaultBaseValue>
     <hideAtValue>1</hideAtValue>
@@ -214,6 +223,7 @@
     <label>防御魔力输出</label>
     <description>释放防御魔法时使用的魔力输出。</description>
     <category>Pharna</category>
+    <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <toStringStyle>PercentZero</toStringStyle>
     <defaultBaseValue>1</defaultBaseValue>
     <hideAtValue>1</hideAtValue>
@@ -237,6 +247,7 @@
     <label>魔力输出·增益</label>
     <description>释放增益魔法时的魔力输出。</description>
     <category>Pharna</category>
+    <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <toStringStyle>PercentZero</toStringStyle>
     <defaultBaseValue>1</defaultBaseValue>
     <hideAtValue>1</hideAtValue>
@@ -260,6 +271,7 @@
     <label>减益魔力输出</label>
     <description>释放减益魔法时使用的魔力输出。</description>
     <category>Pharna</category>
+    <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <toStringStyle>PercentZero</toStringStyle>
     <defaultBaseValue>1</defaultBaseValue>
     <hideAtValue>1</hideAtValue>
@@ -283,6 +295,7 @@
     <label>魔力输出·赋予</label>
     <description>释放赋予魔法时的魔力输出。</description>
     <category>Pharna</category>
+    <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <toStringStyle>PercentZero</toStringStyle>
     <defaultBaseValue>1</defaultBaseValue>
     <hideAtValue>1</hideAtValue>
@@ -306,6 +319,7 @@
     <label>领域魔力输出</label>
     <description>释放领域魔法时使用的魔力输出。</description>
     <category>Pharna</category>
+    <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <toStringStyle>PercentZero</toStringStyle>
     <defaultBaseValue>1</defaultBaseValue>
     <hideAtValue>1</hideAtValue>
@@ -329,6 +343,7 @@
     <label>魔力输出·召唤</label>
     <description>释放召唤魔法时的魔力输出。</description>
     <category>Pharna</category>
+    <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <toStringStyle>PercentZero</toStringStyle>
     <defaultBaseValue>1</defaultBaseValue>
     <hideAtValue>1</hideAtValue>
@@ -354,6 +369,7 @@
     <label>经验值</label>
     <description>通过日常练习和学习获取的总经验值，每获得1点能力值同时获得1点经验值。\n\n力量：击倒敌人+5，击杀敌人+8，近战技能+0.5/点，采矿技能+1/点\n耐久：承受伤害+2/点，伤口愈合+2/点，免疫+2/点，获取营养值+2/点\n灵巧：生产和创作类技能+0.5/点，高品质作品可获得额外灵巧经验\n敏捷：移动+0.1/格，闪避成功+5\n魔力：灵能（增加心灵熵）+0.1/点\n意志：冥想+2/小时，疼痛+5/小时×疼痛百分比，灵感+10，仁善+20（全员），深入交流/美言+2（双方）</description>
     <category>Pharna</category>
+    <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <defaultBaseValue>0</defaultBaseValue>
     <hideAtValue>-1</hideAtValue>
     <showOnPawns>true</showOnPawns>
@@ -376,6 +392,7 @@
     <label>伟业值</label>
     <description>通过完成远征任务和公会委托获取的伟业值。\n\n升级条件：至少一个能力项目达到等级D（500点），并且拥有足够的伟业值（999点）。\n达到999点即可升华恩惠，将所有现有能力值叠加至潜在能力值。</description>
     <category>Pharna</category>
+    <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <defaultBaseValue>0</defaultBaseValue>
     <hideAtValue>-1</hideAtValue>
     <showOnPawns>true</showOnPawns>
