@@ -195,3 +195,19 @@
 - 是否规范缺失: 是（四条文本路径混用）
 - 规范反哺: AGENTS.md「五、基础代码规范 · 本地化」重写为四条路径说明 + 两条 ❌；`docs/C/C-03-项目长期记忆.md` 记录四条路径与取证；新增 `docs/C/C-06-本地化术语表.md`。
 - 关联: 次数 58（同一写法）
+
+## BUG-022 | 美德文本两则：beginLetter 漏字 + 振奋 thought 自身/同伴共用导致叙事错位
+- 现象: ①「振奋」美德开始信件显示为 `{0}的精神不再：[PAWN_pronoun]现在振奋昂扬`（"精神不再"后缺半句）；②触发者本人读到的心情记忆是「**同伴的**振奋让我也感到精神振奋」——而他自己就是振奋的源头。
+- 根因: ①纯笔误漏字；②`Hediff_VirtueBuff_Vigorous`（自身主 Buff）与 `Hediff_VirtueAura_Vigorous`（范围光环）**共用同一条 `ThoughtDef`** `Thought_Virtue_Vigorous_Morale`，而该 thought 文案是站在"被同伴感染"的视角写的。
+- 修复方案: ①重写该句（顺带统一五种美德的 beginLetter 口吻为"精神连结/自我振作"）；②新增 `Thought_Virtue_Vigorous_Self` 专供触发者本人，Morale 保留给受光环影响的同伴；主 Buff 的 `HediffCompProperties_ThoughtSetter.thought` 改指 Self，中英双语补键。
+- 是否规范缺失: 否（一次性笔误 + 复用组件时未核对叙事视角）
+- 规范反哺: `docs/C/C-06` 增补「美德心声」小节，并注明该类键名由代码动态拼接、`12-本地化检查.ps1` **抓不到**，改动后须人工核对中英对称。
+- 关联: 次数 1
+
+## BUG-023 | 美德启动失败残留 `currentVirtue` → 静默吞掉一次精神崩溃
+- 现象: 偶发「该崩溃却没崩溃、也没有美德触发」——小人情绪崩溃当拍没有进入任何精神状态，且此后一段时间内也不再触发美德。
+- 根因: `Hediff_Pharna.TryTriggerVirtue` 原写法 `currentVirtue = type; return pawn.mindState.mentalStateHandler.TryStartMentalState(def);`。当 `TryStartMentalState` 返回 false（未能启动，如已在其他精神状态中）时，`currentVirtue` 已赋值却不存在对应美德；此后 `Patch_MentalBreaker` 开头的 `if (pharna.currentVirtue.HasValue) { __result = false; return false; }` 会认定"已在美德中"而**直接放行 return false**，把这次崩溃凭空消除。又因状态从未开始，`PostEnd` 不会执行，`currentVirtue` 迟迟得不到清理。
+- 修复方案: `TryStartMentalState` 返回 false 时回退 `currentVirtue = null` 并 return false。**注意不能把赋值挪到启动之后**——`MentalState_Virtue.PostStart` 依赖 `pharna.currentVirtue` 取美德类型。
+- 是否规范缺失: 是（"先写共享状态、再执行可能失败的动作"必须在失败路径回滚，否则残留值会被其他系统误读）
+- 规范反哺: AGENTS.md「四、强制规范 · 核心开发原则」新增一条 ✅；`docs/C/C-02` 意志/美德段与 `C-03` 约定同步记录。
+- 关联: 次数 1

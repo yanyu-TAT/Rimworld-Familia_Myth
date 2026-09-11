@@ -25,7 +25,7 @@
     <defName>MentalState_Virtue_Stalwart</defName>
     <label>坚定</label>
     <beginLetterLabel>美德：坚定</beginLetterLabel>
-    <beginLetter>{0}的意志受到考验：[PAWN_pronoun]变得坚定不移</beginLetter>
+    <beginLetter>{0}的意志受到考验：[PAWN_pronoun]咬紧牙关，把快要折断的东西重新撑了起来</beginLetter>
     <recoveryMessage>{0}已经恢复了</recoveryMessage>
     <baseInspectLine>美德：坚定</baseInspectLine>
   </MentalStateDef>
@@ -34,7 +34,7 @@
     <defName>MentalState_Virtue_Courageous</defName>
     <label>无畏</label>
     <beginLetterLabel>美德：无畏</beginLetterLabel>
-    <beginLetter>{0}的恐惧被驱散了：[PAWN_pronoun]变得无所畏惧</beginLetter>
+    <beginLetter>{0}的恐惧被驱散了：想起自己为何站在这里，[PAWN_pronoun]便不再退却</beginLetter>
     <recoveryMessage>{0}已经恢复了</recoveryMessage>
     <baseInspectLine>美德：无畏</baseInspectLine>
   </MentalStateDef>
@@ -43,7 +43,7 @@
     <defName>MentalState_Virtue_Focused</defName>
     <label>专注</label>
     <beginLetterLabel>美德：专注</beginLetterLabel>
-    <beginLetter>{0}的思绪不再迷惘：[PAWN_pronoun]此刻全神贯注</beginLetter>
+    <beginLetter>{0}的思绪不再迷惘：杂念尽数落下，[PAWN_pronoun]眼中只剩下该做的事</beginLetter>
     <recoveryMessage>{0}已经恢复了</recoveryMessage>
     <baseInspectLine>美德：专注</baseInspectLine>
   </MentalStateDef>
@@ -52,7 +52,7 @@
     <defName>MentalState_Virtue_Powerful</defName>
     <label>勇猛</label>
     <beginLetterLabel>美德：勇猛</beginLetterLabel>
-    <beginLetter>{0}的战意已经点燃：[PAWN_pronoun]已经势不可挡</beginLetter>
+    <beginLetter>{0}的战意已经点燃：此刻[PAWN_pronoun]确信，身后的东西无人能够碰触</beginLetter>
     <recoveryMessage>{0}已经恢复了</recoveryMessage>
     <baseInspectLine>美德：勇猛</baseInspectLine>
   </MentalStateDef>
@@ -61,7 +61,7 @@
     <defName>MentalState_Virtue_Vigorous</defName>
     <label>振奋</label>
     <beginLetterLabel>美德：振奋</beginLetterLabel>
-    <beginLetter>{0}的精神不再：[PAWN_pronoun]现在振奋昂扬</beginLetter>
+    <beginLetter>{0}重新振作了起来：[PAWN_pronoun]抬起头，发觉自己并不是一个人</beginLetter>
     <recoveryMessage>{0}已经恢复了</recoveryMessage>
     <baseInspectLine>美德：振奋</baseInspectLine>
   </MentalStateDef>

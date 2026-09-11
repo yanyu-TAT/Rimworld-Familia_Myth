@@ -1,3 +1,4 @@
+using FamiliaMyth.Core;
 using RimWorld;
 using Verse;
 using Verse.AI;
@@ -54,6 +55,14 @@ namespace FamiliaMyth.Pharna
             mote = (Mote_Floating)ThingMaker.MakeThing(MoteDef);
             mote.Attach(pawn);
             GenSpawn.Spawn(mote, pawn.Position, pawn.Map);
+
+            //美德触发时的飘字，二者择一
+            if (pawn.Spawned && pawn.Map != null)
+            {
+                string voiceKey = Rand.Bool ? "FamiliaMyth.Virtue.Whisper." : "FamiliaMyth.Virtue.Prayer.";
+                MoteMaker.ThrowText(pawn.DrawPos, pawn.Map,
+                    TranslateHelper.Translate(voiceKey + type, ("god", FamiliaMythMod.GodAddress)).Resolve());
+            }
         }
 
         public override void PostEnd()
@@ -80,6 +89,7 @@ namespace FamiliaMyth.Pharna
         public override void ExposeData()
         {
             base.ExposeData();
+            Scribe_Values.Look(ref type, "type");
             Scribe_References.Look(ref buff, "buff");
             Scribe_References.Look(ref mote, "mote");
         }

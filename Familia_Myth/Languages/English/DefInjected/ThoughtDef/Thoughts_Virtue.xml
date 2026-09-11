@@ -10,4 +10,9 @@
   <Thought_Virtue_Vigorous_Morale.stages.0.label>Vigorous</Thought_Virtue_Vigorous_Morale.stages.0.label>
   <Thought_Virtue_Vigorous_Morale.stages.0.description>A companion's vigor lifts my spirits too</Thought_Virtue_Vigorous_Morale.stages.0.description>
 
+  <!-- The pawn who triggered it (own resolve, not caught from a companion) -->
+  <Thought_Virtue_Vigorous_Self.label>Virtue: Vigorous</Thought_Virtue_Vigorous_Self.label>
+  <Thought_Virtue_Vigorous_Self.stages.0.label>Vigorous</Thought_Virtue_Vigorous_Self.stages.0.label>
+  <Thought_Virtue_Vigorous_Self.stages.0.description>I can still stand, and I am not alone</Thought_Virtue_Vigorous_Self.stages.0.description>
+
 </LanguageData>

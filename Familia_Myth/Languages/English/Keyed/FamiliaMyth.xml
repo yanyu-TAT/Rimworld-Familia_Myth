@@ -17,8 +17,19 @@
 	<!-- Pharna display name in stat panel, e.g. "Pharna(Lv.3 AgilityF399): +0.12" -->
 	<FamiliaMyth.Pharna>Pharna</FamiliaMyth.Pharna>
 
+	<!-- Default name of the god from the player's point of view -->
+	<FamiliaMyth.DefaultGodName1>You</FamiliaMyth.DefaultGodName1>
+	<!-- Default name of the god as the Familia addresses them -->
+	<FamiliaMyth.DefaultGodName2>My god</FamiliaMyth.DefaultGodName2>
+	<!-- Honorific appended to the Familia's address (none in English) -->
+	<FamiliaMyth.Honorific></FamiliaMyth.Honorific>
+
+	<!-- Mod setting: custom god name -->
+	<FamiliaMyth.Setting.GodName.Label>God Name</FamiliaMyth.Setting.GodName.Label>
+	<FamiliaMyth.Setting.GodName.Desc>The name your Familia addresses you by. Leave empty to use the default.</FamiliaMyth.Setting.GodName.Desc>
+
 	<!-- Letter description after Grant Pharna ritual completes. {god}=god name, {pawn}=pawn name -->
-	<FamiliaMyth.GrantPharnaRitualDone>{god} has bestowed Pharna upon {pawn}. {pawn} is now a member of {god}'s Familia.</FamiliaMyth.GrantPharnaRitualDone>
+	<FamiliaMyth.GrantPharnaRitualDone>{god} bestowed Pharna upon {pawn}. {pawn} is now a member of Familia.</FamiliaMyth.GrantPharnaRitualDone>
 
 	<!-- Refusal: colonist already has Pharna, cannot grant again -->
 	<FamiliaMyth.AlreadyHavePharnaRefusion>Already has Pharna</FamiliaMyth.AlreadyHavePharnaRefusion>
@@ -42,5 +53,20 @@
 
 	<!-- Ancient relic quest - relic box description template ({0} = generated foreign-culture relic name) -->
 	<FM_AncientRelic_Description>{0} - a sealed relic box once venerated by a long-vanished civilization. Its inscriptions and ornaments belong to no culture known today, and only its ageless craftsmanship hints at its origin. The Guild will pay handsomely for it.</FM_AncientRelic_Description>
+
+	<!-- ==================== Virtue whispers ==================== -->
+	<!-- Whisper: self-talk that never names the god -->
+	<FamiliaMyth.Virtue.Whisper.Stalwart>Not here. Not yet...</FamiliaMyth.Virtue.Whisper.Stalwart>
+	<FamiliaMyth.Virtue.Whisper.Courageous>I'm not afraid. I'm not.</FamiliaMyth.Virtue.Whisper.Courageous>
+	<FamiliaMyth.Virtue.Whisper.Focused>Just look ahead. That's all.</FamiliaMyth.Virtue.Whisper.Focused>
+	<FamiliaMyth.Virtue.Whisper.Powerful>Nobody gets past me.</FamiliaMyth.Virtue.Whisper.Powerful>
+	<FamiliaMyth.Virtue.Whisper.Vigorous>I can still stand.</FamiliaMyth.Virtue.Whisper.Vigorous>
+
+	<!-- Prayer: spoken to the god -->
+	<FamiliaMyth.Virtue.Prayer.Stalwart>{god}, I can still hold.</FamiliaMyth.Virtue.Prayer.Stalwart>
+	<FamiliaMyth.Virtue.Prayer.Courageous>{god}, please drive away my fear.</FamiliaMyth.Virtue.Prayer.Courageous>
+	<FamiliaMyth.Virtue.Prayer.Focused>{god}, please show me the way.</FamiliaMyth.Virtue.Prayer.Focused>
+	<FamiliaMyth.Virtue.Prayer.Powerful>{god}, I won't let them through.</FamiliaMyth.Virtue.Prayer.Powerful>
+	<FamiliaMyth.Virtue.Prayer.Vigorous>{god}... I won't fall.</FamiliaMyth.Virtue.Prayer.Vigorous>
 
 </LanguageData>

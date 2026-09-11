@@ -157,7 +157,7 @@
     <comps>
       <li Class="HediffCompProperties_DisappearsOnDeath"/>
       <li Class="HediffCompProperties_ThoughtSetter">
-        <thought>Thought_Virtue_Vigorous_Morale</thought>
+        <thought>Thought_Virtue_Vigorous_Self</thought>
         <moodOffset>15</moodOffset>
       </li>
       <li Class="HediffCompProperties_GiveHediffsInRange">

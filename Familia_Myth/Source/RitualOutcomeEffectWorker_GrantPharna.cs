@@ -13,7 +13,7 @@ namespace FamiliaMyth.Ritual
         private static HediffDef cachedPharnaDef;
         private static HediffDef PharnaDef => cachedPharnaDef ??= DefDatabase<HediffDef>.GetNamed("Hediff_Pharna");
 
-        private static string GodName => FamiliaMythMod.godName;
+        private static string GodName => FamiliaMythMod.godName ?? FamiliaMythMod.DefaultGodName1;
 
         // 无质量组件，直接返回固定结果
         public override RitualOutcomePossibility GetOutcome(float quality, LordJob_Ritual ritual)

@@ -17,6 +17,14 @@
 	<!-- 属性面板中恩惠的显示名称，如"恩惠(Lv.3 敏捷F399): +0.12" -->
 	<FamiliaMyth.Pharna>神之恩惠</FamiliaMyth.Pharna>
 
+	<FamiliaMyth.DefaultGodName1>你</FamiliaMyth.DefaultGodName1>
+	<FamiliaMyth.DefaultGodName2>神明</FamiliaMyth.DefaultGodName2>
+	<FamiliaMyth.Honorific>大人</FamiliaMyth.Honorific>
+
+	<!-- 模组设置：自定义神名 -->
+	<FamiliaMyth.Setting.GodName.Label>神名</FamiliaMyth.Setting.GodName.Label>
+	<FamiliaMyth.Setting.GodName.Desc>眷族对你的称呼。留空则使用默认称呼。</FamiliaMyth.Setting.GodName.Desc>
+
 	<!-- 赋予恩惠仪式完成后的信件描述文本 -->
 	<FamiliaMyth.GrantPharnaRitualDone>{god} 向 {pawn} 降下了神之恩惠。现在 {pawn} 是 {god} 眷族的一员了。</FamiliaMyth.GrantPharnaRitualDone>
 
@@ -42,5 +50,20 @@
 
 	<!-- 遗迹探索·圣物匣描述模板（{0}=随机异教圣物名） -->
 	<FM_AncientRelic_Description>{0}——古代仙精留下的强大宝物，虽然现在还暂时无法开启，但不能让其流入恶徒之手。交付给公会以完成委托。</FM_AncientRelic_Description>
+
+	<!-- ==================== 美德触发时的眷族心声 ==================== -->
+	<!-- 独白：不点破神存在的低声自语 -->
+	<FamiliaMyth.Virtue.Whisper.Stalwart>还不能倒在这里……</FamiliaMyth.Virtue.Whisper.Stalwart>
+	<FamiliaMyth.Virtue.Whisper.Courageous>我不怕。我不怕。</FamiliaMyth.Virtue.Whisper.Courageous>
+	<FamiliaMyth.Virtue.Whisper.Focused>只看前面就好。</FamiliaMyth.Virtue.Whisper.Focused>
+	<FamiliaMyth.Virtue.Whisper.Powerful>谁也别想过去。</FamiliaMyth.Virtue.Whisper.Powerful>
+	<FamiliaMyth.Virtue.Whisper.Vigorous>我还站得住。</FamiliaMyth.Virtue.Whisper.Vigorous>
+
+	<!-- 祷告：对神说的话 -->
+	<FamiliaMyth.Virtue.Prayer.Stalwart>{god}，我还撑得住。</FamiliaMyth.Virtue.Prayer.Stalwart>
+	<FamiliaMyth.Virtue.Prayer.Courageous>{god}，请驱散我的畏惧。</FamiliaMyth.Virtue.Prayer.Courageous>
+	<FamiliaMyth.Virtue.Prayer.Focused>{god}啊，请为我指明前路。</FamiliaMyth.Virtue.Prayer.Focused>
+	<FamiliaMyth.Virtue.Prayer.Powerful>{god}，我不会让他们过去。</FamiliaMyth.Virtue.Prayer.Powerful>
+	<FamiliaMyth.Virtue.Prayer.Vigorous>{god}……我不会倒下。</FamiliaMyth.Virtue.Prayer.Vigorous>
 
 </LanguageData>

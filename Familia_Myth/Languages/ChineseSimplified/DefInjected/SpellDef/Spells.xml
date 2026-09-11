@@ -9,7 +9,7 @@
   <Spell_Explosion.label>爆裂魔法</Spell_Explosion.label>
   <Spell_FusilladeFlameSpears.description>咏唱过程中锁定扇形范围内敌人，结束时发射火标枪轰炸目标附近区域</Spell_FusilladeFlameSpears.description>
   <Spell_FusilladeFlameSpears.label>齐射火标枪</Spell_FusilladeFlameSpears.label>
-  <Spell_KingsSword.description>召唤一把悬浮环绕的巨剑，自动攻击靠近施法者的敌人。在场期间重复施法可叠加持续时间，并将攻击范围与伤害翻倍</Spell_KingsSword.description>
+  <Spell_KingsSword.description>召唤一把悬浮环绕的巨剑，自动攻击靠近施法者的敌人。在场期间重复施法可叠加持续时间，并使攻击范围与伤害大幅提升</Spell_KingsSword.description>
   <Spell_KingsSword.label>君王之剑</Spell_KingsSword.label>
   <Spell_LightGuard.description>咏唱结束后召唤数个环绕施法者的光灵，吸收来袭弹射物并灼烧靠近的敌人；光灵数量与持续时间受法强影响</Spell_LightGuard.description>
   <Spell_LightGuard.label>光灵守护</Spell_LightGuard.label>

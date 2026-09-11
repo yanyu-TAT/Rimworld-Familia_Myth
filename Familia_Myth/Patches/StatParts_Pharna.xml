@@ -498,16 +498,16 @@
     </Operation>
 
 
-    <!-- ==================== 魔力 (Mana) ====================== -->
+    <!-- ==================== 意志 (Will)（魔力：魔法威力见 Defs/StatDefs/PharnaStats.xml） ====================== -->
 
-    <!-- 魔力：心灵熵阈值上限（Offset 叠加） -->
+    <!-- 意志：心灵熵阈值上限（Offset 叠加） -->
     <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="PsychicEntropyMax"]/parts</xpath>
         <match Class="PatchOperationAdd">
             <xpath>Defs/StatDef[defName="PsychicEntropyMax"]/parts</xpath>
             <value>
                 <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
-                    <statusType>Mana</statusType>
+                    <statusType>Will</statusType>
                     <mode>Offset</mode>
                     <a>0.01000</a>
                     <displayAsPercent>false</displayAsPercent>
@@ -519,7 +519,7 @@
             <value>
                 <parts>
                     <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
-                        <statusType>Mana</statusType>
+                        <statusType>Will</statusType>
                         <mode>Offset</mode>
                         <a>0.01000</a>
                         <displayAsPercent>false</displayAsPercent>
@@ -529,14 +529,14 @@
         </nomatch>
     </Operation>
 
-    <!-- 魔力：冥想精神力获取每日提升（Offset 叠加） -->
+    <!-- 意志：冥想精神力获取每日提升（Offset 叠加） -->
     <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="MeditationFocusGain"]/parts</xpath>
         <match Class="PatchOperationAdd">
             <xpath>Defs/StatDef[defName="MeditationFocusGain"]/parts</xpath>
             <value>
                 <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
-                    <statusType>Mana</statusType>
+                    <statusType>Will</statusType>
                     <mode>Offset</mode>
                     <a>0.00001</a>
                     <displayAsPercent>true</displayAsPercent>
@@ -548,7 +548,7 @@
             <value>
                 <parts>
                     <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
-                        <statusType>Mana</statusType>
+                        <statusType>Will</statusType>
                         <mode>Offset</mode>
                         <a>0.00001</a>
                         <displayAsPercent>true</displayAsPercent>

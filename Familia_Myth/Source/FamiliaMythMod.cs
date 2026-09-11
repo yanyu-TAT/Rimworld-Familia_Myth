@@ -1,4 +1,5 @@
 using HugsLib;
+using HugsLib.Settings;
 using Verse;
 
 namespace FamiliaMyth.Core
@@ -9,10 +10,45 @@ namespace FamiliaMyth.Core
     public class FamiliaMythMod : ModBase
     {
         /// <summary>
-        /// 仪式文本中对神明的称呼；预留给玩家自定义名称的接口，不参与本地化
+        /// 相对于玩家的默认神名：如 “你”
         /// </summary>
-        public static string godName = "你";
+        public static string DefaultGodName1 = "FamiliaMyth.DefaultGodName1".Translate();
+        /// <summary>
+        /// 相对于眷族的默认神名：如 “神明”
+        /// </summary>
+        public static string DefaultGodName2 = "FamiliaMyth.DefaultGodName2".Translate();
+        /// <summary>
+        /// 玩家自定义的神名，为空则应使用默认名称
+        /// </summary>
+        //神名长度上限：过长的名字会让美德飘字溢出屏幕
+        private const int MaxGodNameLength = 16;
+        private static SettingHandle<string> godNameHandle;
+        public static string godName => godNameHandle.Value.NullOrEmpty() ? null : godNameHandle.Value;
+        /// <summary>
+        /// 眷族对神明的称呼
+        /// </summary>
+        public static string GodAddress
+        {
+            get
+            {
+                string godAddress = godName ?? DefaultGodName2;
+                godAddress += "FamiliaMyth.Honorific".Translate();
+                return godAddress;
+            }
+        }
+
         public override string ModIdentifier => "FamiliaMyth";
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            godNameHandle = Settings.GetHandle(
+                "godName",
+                "FamiliaMyth.Setting.GodName.Label".Translate(),
+                "FamiliaMyth.Setting.GodName.Desc".Translate(),
+                string.Empty,
+                v => v.NullOrEmpty() || v.Length <= MaxGodNameLength);
+        }
     }
 
     /// <summary>
@@ -73,7 +109,7 @@ namespace FamiliaMyth.Core
  * - [ ] 完整添加本地化
  * - [ ] 试玩，调整数值
  * - [ ] 调整部分设定问题
- * - [ ] 添加更多提示和消息，以及战斗日志
+ * - [ ] 添加更多提示和消息（如成长反馈），以及战斗日志
  * - [ ] 优化性能问题
  * - [ ] 添加升华奖励图鉴
  */
@@ -163,4 +199,5 @@ namespace FamiliaMyth.Core
  * 09/11 01:35 添加了任务难民安置，待更多测试
  * 09/11 04:11 规范了所有Harmony Patch的实现；完成了本地化并迁移了原有的硬编码文本，部分文案可能需要调整
  * 09/11 22:06 完成了数值平衡，考虑进入试玩阶段
+ * 09/12 00:08 将魔力的冥想效率/心灵熵阈值的加成迁移到了意志下，并调整了意志原有的部分加成；修改了美德系统的部分文案以及一些bug；引入了自定义神名的设置项
  */

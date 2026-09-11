@@ -23,4 +23,19 @@
     </stages>
   </ThoughtDef>
 
+  <!-- 触发者本人的振奋：与同伴获得的 Morale 分开，
+       叙事上「自己重新振作」而非「被身边人感染」 -->
+  <ThoughtDef>
+    <defName>Thought_Virtue_Vigorous_Self</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <label>美德：振奋</label>
+    <stages>
+      <li>
+        <label>振奋</label>
+        <description>我还能站起来，而且我并不孤单</description>
+        <baseMoodEffect>15</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
 </Defs>

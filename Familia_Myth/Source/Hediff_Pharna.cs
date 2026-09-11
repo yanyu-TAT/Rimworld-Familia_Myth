@@ -464,7 +464,13 @@ namespace FamiliaMyth.Pharna
 
             if (def == null) return false;
             currentVirtue = type;
-            return pawn.mindState.mentalStateHandler.TryStartMentalState(def);
+            //启动失败必须回退：残留的 currentVirtue 会让 Patch_MentalBreaker 误判「已在美德中」而吞掉本次崩溃
+            if (!pawn.mindState.mentalStateHandler.TryStartMentalState(def))
+            {
+                currentVirtue = null;
+                return false;
+            }
+            return true;
         }
 
         public override void Notify_PawnPostApplyDamage(DamageInfo dinfo, float totalDamageDealt)

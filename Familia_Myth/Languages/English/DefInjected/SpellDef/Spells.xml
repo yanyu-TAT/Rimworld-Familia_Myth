@@ -9,7 +9,7 @@
   <Spell_Explosion.label>Explosion</Spell_Explosion.label>
   <Spell_FusilladeFlameSpears.description>Locks onto enemies within a cone while chanting, then looses flame spears that bombard the area around them when the cast ends</Spell_FusilladeFlameSpears.description>
   <Spell_FusilladeFlameSpears.label>Fusillade Flame Spears</Spell_FusilladeFlameSpears.label>
-  <Spell_KingsSword.description>Summons a greatsword that hovers and circles around the caster, attacking nearby enemies on its own. Casting it again while it is active extends its duration and doubles its attack range and damage</Spell_KingsSword.description>
+  <Spell_KingsSword.description>Summons a greatsword that hovers and circles around the caster, attacking nearby enemies on its own. Casting it again while it is active extends its duration and greatly increases its attack range and damage</Spell_KingsSword.description>
   <Spell_KingsSword.label>King's Sword</Spell_KingsSword.label>
   <Spell_LightGuard.description>Once the incantation ends, summons several light spirits to circle the caster, absorbing incoming projectiles and burning nearby enemies. The number of spirits and the duration are affected by spell power</Spell_LightGuard.description>
   <Spell_LightGuard.label>Guardian Light Spirits</Spell_LightGuard.label>

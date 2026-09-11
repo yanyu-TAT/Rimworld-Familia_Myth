@@ -337,7 +337,7 @@
 	<FamiliaMyth.Abilities.SpellDef>
 		<defName>Spell_KingsSword</defName>
 		<label>君王之剑</label>
-		<description>召唤一把悬浮环绕的巨剑，自动攻击靠近施法者的敌人。在场期间重复施法可叠加持续时间，并将攻击范围与伤害翻倍</description>
+		<description>召唤一把悬浮环绕的巨剑，自动攻击靠近施法者的敌人。在场期间重复施法可叠加持续时间，并使攻击范围与伤害大幅提升</description>
 
 		<!-- 魔法实现类 -->
 		<spellClass>FamiliaMyth.Abilities.Spell_KingsSword</spellClass>

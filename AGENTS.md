@@ -13,7 +13,7 @@
 | 包 ID | `yanyu.familiamyth`                                                          |
 | 语言   | C# 10 / .NET Framework 4.7.2（`net472`，`LangVersion 10.0`）                    |
 | 游戏   | RimWorld 1.6（`Assembly-CSharp`）+ Unity（IMGUI / TextMeshPro / CoreModule）     |
-| 依赖库  | HugsLib（`ModBase`）、Harmony 2.x（`[HarmonyPatch]`）、Royalty / Ideology DLC      |
+| 依赖库  | HugsLib（`ModBase` + `ModSettings` 模组设置）、Harmony 2.x（`[HarmonyPatch]`）、Royalty / Ideology DLC      |
 | 可选依赖 | Odyssey（海之眷顾等部分能力需要）                                                         |
 | 输出   | SDK 风格 csproj，`BaseOutputPath` 直出 `Familia_Myth/Assemblies/Familia_Myth.dll` |
 | 远程仓库 | GitHub `yanyu-TAT/Rimworld-Familia_Myth`（main）                               |
@@ -75,6 +75,7 @@
 ✅ Bug 溯源/修复/调试中勿臆测实际现象——先确认对象与机制身份、原版交互路径，收集现场状态（版本/位置/日志/报错原文）；有疑问直接向用户提出，再动手
 ✅ 复用原版部件/工具前先反编译核对其**隐式前置条件**——缺数据不会在部件入口报错，往往在更晚的文本解析/结算期才炸；必要时自建预检或兜底（如 B-04 BUG-018 延迟回报部件缺 rewardGiver）
 ✅ 跨系统「归位/移交」步骤必须与**信号窗口**对齐：`SentSatisfied/SentUnsatisfied` 当拍成员仍在穿梭机容器内，归位须在此当拍完成（如 B-04 BUG-018）
+✅ 「先写共享状态、再执行可能失败的动作」时，失败路径必须回滚该状态——残留值会被其他系统误读（如 `currentVirtue` 残留致崩溃被静默吞掉，见 B-04 BUG-023）
 ❌ 从公共名单派生「待处理子集」时漏列应排除类别（离场名单漏排「已登机/已转正」者 → 把该留下的人赶走，见 B-04 BUG-019）
 ```
 
@@ -155,6 +156,7 @@
    任务节点 SlateRef 文本→Def 元素加 `TKey="引用名"` + 语言文件 `<DefName>.<引用名>.slateRef`；
    代码内文本→Keyed + `"Key".Translate()`（键名 `FamiliaMyth.<域>.<语义>`）
 ✅ Def 内文本一律保留作默认/兜底，由语言文件覆盖（原版模式 `<label TKey="Xxx">Default</label>`）
+✅ `description` 只写**客观定性**描述（大量 / 数次 / 大范围 / 片刻），精确数值与叙事留给图鉴——运行时精确值已由 UI 承担（充能数 / 状态标签 / 剩余次数）
 ❌ 把 Keyed 键填进 Def 字段——Def 字段不会自动 Translate，只会把键原样显示（细则见 C-03）
 ❌ 清空 Def 内文本（语言键缺失时会退化成 defName）
 ❌ 将纯展示文本硬编码散落在逻辑代码里（例外：运行时动态拼接）
@@ -241,11 +243,12 @@
 | `QuestNode_Root_RankUp_RefugeeResettle` / `QuestNode_RefugeeResettleSetup` + `QuestPart_RefugeeResettle` + `QuestPart_AddQuestRefugeeDelayedRewardSafe` | 「难民安置」过程 part：强制任务；难民**地图边缘到访并临时加入玩家派系**（`quest.PawnsArrive(joinPlayer:true)` 边缘走入 + `MiniFaction` 标记 = lodger，临时隐藏难民派系由 `FactionGenerator` 现生成、与原版难民事件一致）→ 到场当拍随机受伤（部分倒地）→ 停留 15 天：**点数×1.2 的袭击 2 次**（首发 3~5 天、间隔 3~5 天，关「大威胁」难度则本次作废）+ 心情驱动劝加入（`PawnJoinOffer`，加入即转正并从 `CompShuttle.requiredPawns` 移除、全员加入则直接结算不召船）→ 第 15 天公会穿梭机（`Util_TransportShip_Pickup`，2 天窗口，仅落地发信）；失败线 = 囚禁/奴役、二次有害手术（`victims.SurgeryViolation`）、全灭、无人生还 → 存活难民转中立后自行离图（被囚禁/奴役的受害者本人留下）；伟业值按存活率（登机 + 加入）结算（见 C-02） |
 | `GameComponent_*.cs`                            | 存档级追踪（`FamiliaRankTracker`：多分类评级/升级点数/强制任务与重发冷却、统一发布轮询、公会派系补建；`GuildEnvoyTracker`：全局单槽待对话使者）+ 位移/击退引擎（LanceCharge/RoundhouseKick） |
 | `JobDriver_*`                               | 工作驱动（对话使者等）             |
-| `MentalState_*` / `Hediff_*` / `Verb_*`     | 精神状态、词缀、咏唱 verb         |
+| `MentalState_*` / `Hediff_*` / `Verb_*`     | 精神状态（`MentalState_Virtue`：美德状态 + 触发当拍随机飘出独白/祷告心声）、词缀、咏唱 verb         |
+| `FamiliaMythMod.cs`（模组主类） | HugsLib `ModBase` 子类：`Initialize()` 里经 `Settings.GetHandle` 注册模组设置（神名）；持有神名三件套 `DefaultGodName1`（玩家视角）/ `DefaultGodName2` + `Honorific`（眷族视角）与 `GodAddress`（接口签名与陷阱见 C-03） |
 | `UI_*.cs`                                   | 界面（眷族页、升级奖励弹窗、雷达图）      |
 | `StatPart_*`                                | StatDef 注入修正            |
 | `Defs/` + `Patches/`                        | XML 定义与条件补丁             |
-| `Languages/`（`Keyed/` + `DefInjected/`）    | 本地化文本（中英各 620 键位逐键对称）；`Keyed/` 放代码内文本、`DefInjected/` 放 Def 文本且文件名与 `Defs/` 一一对应；四条文本路径与命名规范见 C-03，术语基准见 C-06 |
+| `Languages/`（`Keyed/` + `DefInjected/`）    | 本地化文本（中英逐键对称，`12-本地化检查.ps1` 7 项全绿）；`Keyed/` 放代码内文本、`DefInjected/` 放 Def 文本且文件名与 `Defs/` 一一对应；四条文本路径与命名规范见 C-03，术语基准见 C-06 |
 
 > 新增模块/文件时同步更新本表。
 
