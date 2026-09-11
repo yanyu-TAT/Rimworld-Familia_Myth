@@ -4,7 +4,7 @@ using Verse;
 
 namespace FamiliaMyth.Patch
 {
-    [HarmonyPatch(typeof(Thing), "DoTick")]
+    [HarmonyPatch(typeof(Thing), nameof(Thing.DoTick))]
     public static class Patch_TheWorld
     {
         public static bool Prefix(Thing __instance)

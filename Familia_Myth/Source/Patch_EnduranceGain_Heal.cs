@@ -5,7 +5,7 @@ using Verse;
 namespace FamiliaMyth.Patch
 {
     [HarmonyPatch(typeof(Hediff_Injury), nameof(Hediff_Injury.Heal))]
-    public static class Patch_Hediff_Injury
+    public static class Patch_EnduranceGain_Heal
     {
         public static void Postfix(Hediff_Injury __instance, float amount)
         {
@@ -16,7 +16,7 @@ namespace FamiliaMyth.Patch
             }
             catch (Exception ex)
             {
-                Log.Error($"[FamiliaMyth] {nameof(Patch_Hediff_Injury)} error: {ex}");
+                Log.Error($"[FamiliaMyth] {nameof(Patch_EnduranceGain_Heal)} error: {ex}");
             }
         }
     }

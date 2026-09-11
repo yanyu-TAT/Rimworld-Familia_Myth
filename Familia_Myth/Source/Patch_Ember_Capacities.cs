@@ -6,7 +6,7 @@ using Verse;
 namespace FamiliaMyth.Patch
 {
     [HarmonyPatch(typeof(PawnCapacitiesHandler), nameof(PawnCapacitiesHandler.GetLevel))]
-    public static class Patch_PawnCapacitiesHandler
+    public static class Patch_Ember_Capacities
     {
         private static PawnCapacityDef def;
         private static PawnCapacityDef Def => def ??= DefDatabase<PawnCapacityDef>.GetNamed("Metabolism");
@@ -34,7 +34,7 @@ namespace FamiliaMyth.Patch
             }
             catch (Exception ex)
             {
-                Log.Error($"[FamiliaMyth] {nameof(Patch_PawnCapacitiesHandler)} error: {ex}");
+                Log.Error($"[FamiliaMyth] {nameof(Patch_Ember_Capacities)} error: {ex}");
             }
         }
     }

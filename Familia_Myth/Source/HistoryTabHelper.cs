@@ -36,7 +36,7 @@ namespace FamiliaMyth.UI
 namespace FamiliaMyth.Patch
 {
     [HarmonyPatch(typeof(MainTabWindow_History), nameof(MainTabWindow_History.PreOpen))]
-    public static class Patch_MainTabWindow_History_PreOpen
+    public static class Patch_FamiliaTab_PreOpen
     {
         public static void Postfix(MainTabWindow_History __instance)
         {
@@ -52,13 +52,13 @@ namespace FamiliaMyth.Patch
             }
             catch (Exception ex)
             {
-                Log.Error($"[FamiliaMyth] {nameof(Patch_MainTabWindow_History_PreOpen)} error: {ex}");
+                Log.Error($"[FamiliaMyth] {nameof(Patch_FamiliaTab_PreOpen)} error: {ex}");
             }
         }
     }
 
     [HarmonyPatch(typeof(MainTabWindow_History), nameof(MainTabWindow_History.DoWindowContents))]
-    public static class Patch_MainTabWindow_History_DoWindowContents
+    public static class Patch_FamiliaTab_Draw
     {
         public static bool Prefix(MainTabWindow_History __instance, Rect rect)
         {
@@ -76,7 +76,7 @@ namespace FamiliaMyth.Patch
             }
             catch (Exception ex)
             {
-                Log.Error($"[FamiliaMyth] {nameof(Patch_MainTabWindow_History_DoWindowContents)} error: {ex}");
+                Log.Error($"[FamiliaMyth] {nameof(Patch_FamiliaTab_Draw)} error: {ex}");
                 return true; //出错则回退原版历史页绘制
             }
         }

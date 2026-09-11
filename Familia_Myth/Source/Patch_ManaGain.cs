@@ -8,7 +8,7 @@ using Verse;
 namespace FamiliaMyth.Patch
 {
     [HarmonyPatch(typeof(Pawn_PsychicEntropyTracker), nameof(Pawn_PsychicEntropyTracker.TryAddEntropy))]
-    public static class Patch_Pawn_PsychicEntropyTracker
+    public static class Patch_ManaGain_Entropy
     {
         private static DevelopableAbilityDef magicDef;
         private static DevelopableAbilityDef MagicDef => magicDef ??= DefDatabase<DevelopableAbilityDef>.GetNamed("DevelopableAbility_Magic");
@@ -22,7 +22,7 @@ namespace FamiliaMyth.Patch
             {
                 //置极大值，令 Postfix 的 amount 恒为负而直接跳过结算
                 __state = float.MaxValue;
-                Log.Error($"[FamiliaMyth] {nameof(Patch_Pawn_PsychicEntropyTracker)} prefix error: {ex}");
+                Log.Error($"[FamiliaMyth] {nameof(Patch_ManaGain_Entropy)} prefix error: {ex}");
             }
         }
 
@@ -47,13 +47,13 @@ namespace FamiliaMyth.Patch
             }
             catch (Exception ex)
             {
-                Log.Error($"[FamiliaMyth] {nameof(Patch_Pawn_PsychicEntropyTracker)} postfix error: {ex}");
+                Log.Error($"[FamiliaMyth] {nameof(Patch_ManaGain_Entropy)} postfix error: {ex}");
             }
         }
 
 
         [HarmonyPatch(typeof(Pawn_PsychicEntropyTracker), nameof(Pawn_PsychicEntropyTracker.OffsetPsyfocusDirectly))]
-        public static class Patch_Pawn_PsychicEntropyTracker_OffsetPsyfocus
+        public static class Patch_ManaGain_Psyfocus
         {
             public static void Postfix(Pawn_PsychicEntropyTracker __instance, float offset)
             {
@@ -68,7 +68,7 @@ namespace FamiliaMyth.Patch
                 }
                 catch (Exception ex)
                 {
-                    Log.Error($"[FamiliaMyth] {nameof(Patch_Pawn_PsychicEntropyTracker_OffsetPsyfocus)} error: {ex}");
+                    Log.Error($"[FamiliaMyth] {nameof(Patch_ManaGain_Psyfocus)} error: {ex}");
                 }
             }
         }
@@ -91,12 +91,12 @@ namespace FamiliaMyth.Patch
             }
             catch (Exception ex)
             {
-                Log.Error($"[FamiliaMyth] {nameof(Patch_Pawn_PsychicEntropyTracker)}.Postfix_NeedToShowGizmo error: {ex}");
+                Log.Error($"[FamiliaMyth] {nameof(Patch_ManaGain_Entropy)}.Postfix_NeedToShowGizmo error: {ex}");
             }
         }
 
         [HarmonyPatch(typeof(Pawn_PsychicEntropyTracker), "NeedsPsyfocus", MethodType.Getter)]
-        public static class Patch_Pawn_PsychicEntropyTracker_NeedsPsyfocus
+        public static class Patch_ManaGain_NeedsPsyfocus
         {
             public static void Postfix(ref bool __result, Pawn_PsychicEntropyTracker __instance)
             {
@@ -115,7 +115,7 @@ namespace FamiliaMyth.Patch
                 }
                 catch (Exception ex)
                 {
-                    Log.Error($"[FamiliaMyth] {nameof(Patch_Pawn_PsychicEntropyTracker_NeedsPsyfocus)} error: {ex}");
+                    Log.Error($"[FamiliaMyth] {nameof(Patch_ManaGain_NeedsPsyfocus)} error: {ex}");
                 }
             }
         }

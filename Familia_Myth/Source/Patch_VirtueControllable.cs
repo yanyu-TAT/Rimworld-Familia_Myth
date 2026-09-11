@@ -7,7 +7,7 @@ namespace FamiliaMyth.Patch
 {
     //美德状态期间令InMentalState返回 false。
     [HarmonyPatch(typeof(MentalStateHandler), nameof(MentalStateHandler.InMentalState), MethodType.Getter)]
-    public static class Patch_MentalState_Controllable_InMentalState
+    public static class Patch_VirtueControllable_InMentalState
     {
         public static bool Prefix(MentalStateHandler __instance, ref bool __result)
         {
@@ -22,7 +22,7 @@ namespace FamiliaMyth.Patch
             }
             catch (Exception ex)
             {
-                Log.Error($"[FamiliaMyth] {nameof(Patch_MentalState_Controllable_InMentalState)} error: {ex}");
+                Log.Error($"[FamiliaMyth] {nameof(Patch_VirtueControllable_InMentalState)} error: {ex}");
                 return true; //出错则放行原版精神状态判定
             }
         }
@@ -30,7 +30,7 @@ namespace FamiliaMyth.Patch
 
     //美德状态期间令 Pawn.MentalStateDef 返回 null，使殖民者恢复玩家控制（征召按钮、右键命令）。
     [HarmonyPatch(typeof(Pawn), nameof(Pawn.MentalStateDef), MethodType.Getter)]
-    public static class Patch_MentalState_Controllable_MentalStateDef
+    public static class Patch_VirtueControllable_MentalStateDef
     {
         public static bool Prefix(Pawn __instance, ref MentalStateDef __result)
         {
@@ -45,7 +45,7 @@ namespace FamiliaMyth.Patch
             }
             catch (Exception ex)
             {
-                Log.Error($"[FamiliaMyth] {nameof(Patch_MentalState_Controllable_MentalStateDef)} error: {ex}");
+                Log.Error($"[FamiliaMyth] {nameof(Patch_VirtueControllable_MentalStateDef)} error: {ex}");
                 return true; //出错则放行原版
             }
         }
@@ -53,7 +53,7 @@ namespace FamiliaMyth.Patch
 
     //激活时若已征召则恢复征召
     [HarmonyPatch(typeof(MentalStateHandler), nameof(MentalStateHandler.TryStartMentalState))]
-    public static class Patch_MentalState_Controllable_TryStart
+    public static class Patch_VirtueControllable_TryStart
     {
         public static void Prefix(MentalStateHandler __instance, MentalStateDef stateDef, ref (Pawn pawn, bool wasDrafted)? __state)
         {
@@ -73,7 +73,7 @@ namespace FamiliaMyth.Patch
             {
                 //置空，令 Postfix 直接跳过
                 __state = null;
-                Log.Error($"[FamiliaMyth] {nameof(Patch_MentalState_Controllable_TryStart)} prefix error: {ex}");
+                Log.Error($"[FamiliaMyth] {nameof(Patch_VirtueControllable_TryStart)} prefix error: {ex}");
             }
         }
 
@@ -88,7 +88,7 @@ namespace FamiliaMyth.Patch
             }
             catch (Exception ex)
             {
-                Log.Error($"[FamiliaMyth] {nameof(Patch_MentalState_Controllable_TryStart)} postfix error: {ex}");
+                Log.Error($"[FamiliaMyth] {nameof(Patch_VirtueControllable_TryStart)} postfix error: {ex}");
             }
         }
     }

@@ -6,7 +6,7 @@ using Verse.AI;
 namespace FamiliaMyth.Patch
 {
     [HarmonyPatch(typeof(MentalBreaker), nameof(MentalBreaker.TryDoRandomMoodCausedMentalBreak))]
-    public static class Patch_MentalBreaker
+    public static class Patch_Virtue_Trigger
     {
         public static bool Prefix(MentalBreaker __instance, ref bool __result)
         {
@@ -35,7 +35,7 @@ namespace FamiliaMyth.Patch
             }
             catch (Exception ex)
             {
-                Log.Error($"[FamiliaMyth] {nameof(Patch_MentalBreaker)} error: {ex}");
+                Log.Error($"[FamiliaMyth] {nameof(Patch_Virtue_Trigger)} error: {ex}");
                 return true; //出错则放行原版崩溃逻辑
             }
         }

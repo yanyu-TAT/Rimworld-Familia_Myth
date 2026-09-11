@@ -7,7 +7,7 @@ using FamiliaMyth.Abilities;
 namespace FamiliaMyth.Patch
 {
     [HarmonyPatch(typeof(Pawn_SkillTracker), nameof(Pawn_SkillTracker.Learn))]
-    public static class Patch_Pawn_SkillTracker
+    public static class Patch_SkillGrowth
     {
         //技能经验 -> 能力值 转化率（每点 XP）
         private const float StrengthPerXpMelee = 0.02f;
@@ -58,7 +58,7 @@ namespace FamiliaMyth.Patch
             }
             catch (Exception ex)
             {
-                Log.Error($"[FamiliaMyth] {nameof(Patch_Pawn_SkillTracker)} error: {ex}");
+                Log.Error($"[FamiliaMyth] {nameof(Patch_SkillGrowth)} error: {ex}");
             }
         }
     }

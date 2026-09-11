@@ -6,7 +6,7 @@ using Verse;
 namespace FamiliaMyth.Patch
 {
     [HarmonyPatch(typeof(RecordsUtility), nameof(RecordsUtility.Notify_BillDone))]
-    public static class Patch_RecordsUtility_BillDone
+    public static class Patch_DexterityGain_Craft
     {
         [HarmonyPostfix]
         public static void Postfix(Pawn billDoer, List<Thing> products)
@@ -36,7 +36,7 @@ namespace FamiliaMyth.Patch
             }
             catch (Exception ex)
             {
-                Log.Error($"[FamiliaMyth] {nameof(Patch_RecordsUtility_BillDone)} error: {ex}");
+                Log.Error($"[FamiliaMyth] {nameof(Patch_DexterityGain_Craft)} error: {ex}");
             }
         }
     }

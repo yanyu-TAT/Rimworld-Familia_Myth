@@ -50,7 +50,7 @@ namespace FamiliaMyth.Patch
         }
     }
 
-    [HarmonyPatch(typeof(Pawn_JobTracker), "IsCurrentJobPlayerInterruptible")]
+    [HarmonyPatch(typeof(Pawn_JobTracker), nameof(Pawn_JobTracker.IsCurrentJobPlayerInterruptible))]
     public static class Patch_FlameAffinity_Interruptible
     {
         //防止着火时玩家无法操控

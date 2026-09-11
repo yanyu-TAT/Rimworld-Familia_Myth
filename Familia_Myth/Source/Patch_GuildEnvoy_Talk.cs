@@ -8,7 +8,7 @@ using Verse.AI;
 namespace FamiliaMyth.Patch
 {
     [HarmonyPatch(typeof(Pawn), nameof(Pawn.GetFloatMenuOptions))]
-    public static class Patch_Pawn_FloatMenu
+    public static class Patch_GuildEnvoy_Talk
     {
         static void Postfix(Pawn __instance, ref IEnumerable<FloatMenuOption> __result, Pawn selPawn)
         {
@@ -46,7 +46,7 @@ namespace FamiliaMyth.Patch
             }
             catch (Exception ex)
             {
-                Log.Error($"[FamiliaMyth] {nameof(Patch_Pawn_FloatMenu)} error: {ex}");
+                Log.Error($"[FamiliaMyth] {nameof(Patch_GuildEnvoy_Talk)} error: {ex}");
             }
         }
     }

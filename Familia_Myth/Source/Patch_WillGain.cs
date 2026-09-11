@@ -24,7 +24,7 @@ namespace FamiliaMyth.Patch
         }
     }
 
-    [HarmonyPatch(typeof(InspirationHandler), "TryStartInspiration")]
+    [HarmonyPatch(typeof(InspirationHandler), nameof(InspirationHandler.TryStartInspiration))]
     public static class Patch_WillGain_Inspiration
     {
         public static void Postfix(InspirationHandler __instance, ref bool __result)
@@ -44,7 +44,7 @@ namespace FamiliaMyth.Patch
         }
     }
 
-    [HarmonyPatch(typeof(HistoryEventsManager), "RecordEvent")]
+    [HarmonyPatch(typeof(HistoryEventsManager), nameof(HistoryEventsManager.RecordEvent))]
     public static class Patch_WillGain_Charity
     {
         public static void Postfix(HistoryEvent historyEvent)
@@ -70,7 +70,7 @@ namespace FamiliaMyth.Patch
         }
     }
 
-    [HarmonyPatch(typeof(Pawn_InteractionsTracker), "TryInteractWith")]
+    [HarmonyPatch(typeof(Pawn_InteractionsTracker), nameof(Pawn_InteractionsTracker.TryInteractWith))]
     public static class Patch_WillGain_Interaction
     {
         private static readonly AccessTools.FieldRef<Pawn_InteractionsTracker, Pawn> PawnRef =

@@ -6,7 +6,7 @@ using Verse;
 namespace FamiliaMyth.Patch
 {
     [HarmonyPatch(typeof(Verb_MeleeAttack), "TryCastShot")]
-    public static class Patch_Verb_MeleeAttack
+    public static class Patch_AgilityGain_Dodge
     {
         private static HashSet<RulePackDef> dodgeRules;
         private static HashSet<RulePackDef> DodgeRules
@@ -35,7 +35,7 @@ namespace FamiliaMyth.Patch
             {
                 //置无效值，令 Postfix 直接跳过本次结算
                 __state = -1;
-                Log.Error($"[FamiliaMyth] {nameof(Patch_Verb_MeleeAttack)} prefix error: {ex}");
+                Log.Error($"[FamiliaMyth] {nameof(Patch_AgilityGain_Dodge)} prefix error: {ex}");
             }
         }
 
@@ -46,8 +46,8 @@ namespace FamiliaMyth.Patch
                 if (__state < 0) return;
                 if (__result) return;
 
-                var battles = Find.BattleLog.Battles;
-                if (battles.Count <= 0) return;
+                var battles = Find.BattleLog?.Battles;
+                if (battles == null || battles.Count <= 0) return;
 
                 var entries = battles[0].Entries;
                 if (entries.Count <= __state) return;
@@ -63,7 +63,7 @@ namespace FamiliaMyth.Patch
             }
             catch (Exception ex)
             {
-                Log.Error($"[FamiliaMyth] {nameof(Patch_Verb_MeleeAttack)} postfix error: {ex}");
+                Log.Error($"[FamiliaMyth] {nameof(Patch_AgilityGain_Dodge)} postfix error: {ex}");
             }
         }
     }

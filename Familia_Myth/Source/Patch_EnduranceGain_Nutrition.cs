@@ -6,7 +6,7 @@ using Verse;
 namespace FamiliaMyth.Patch
 {
     [HarmonyPatch(typeof(Thing), nameof(Thing.Ingested))]
-    public static class Patch_Thing
+    public static class Patch_EnduranceGain_Nutrition
     {
         //每点摄入营养值的能力值增长
         private const float EndurancePerNutrition = 2f;
@@ -32,7 +32,7 @@ namespace FamiliaMyth.Patch
             }
             catch (Exception ex)
             {
-                Log.Error($"[FamiliaMyth] {nameof(Patch_Thing)} error: {ex}");
+                Log.Error($"[FamiliaMyth] {nameof(Patch_EnduranceGain_Nutrition)} error: {ex}");
             }
         }
     }

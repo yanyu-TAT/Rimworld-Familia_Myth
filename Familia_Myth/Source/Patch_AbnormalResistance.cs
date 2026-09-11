@@ -7,10 +7,10 @@ using Verse;
 
 namespace FamiliaMyth.Patch
 {
-    public static class Patch_ImmunityHandler
+    public static class Patch_AbnormalResistance
     {
         [HarmonyPatch]
-        public static class Patch_ImmunityHandler_DiseaseContract
+        public static class Patch_AbnormalResistance_DiseaseContract
         {
             public static MethodBase TargetMethod() =>
                 AccessTools.Method(typeof(ImmunityHandler), nameof(ImmunityHandler.DiseaseContractChanceFactor),
@@ -41,13 +41,13 @@ namespace FamiliaMyth.Patch
                 }
                 catch (Exception ex)
                 {
-                    Log.Error($"[FamiliaMyth] {nameof(Patch_ImmunityHandler_DiseaseContract)} error: {ex}");
+                    Log.Error($"[FamiliaMyth] {nameof(Patch_AbnormalResistance_DiseaseContract)} error: {ex}");
                 }
             }
         }
 
         [HarmonyPatch(typeof(Pawn_HealthTracker), nameof(Pawn_HealthTracker.RemoveHediff))]
-        public static class Patch_ImmunityHandler_RemoveHediff
+        public static class Patch_AbnormalResistance_Cure
         {
             public static void Postfix(Pawn_HealthTracker __instance, Hediff hediff, Pawn ___pawn)
             {
@@ -62,13 +62,13 @@ namespace FamiliaMyth.Patch
                 }
                 catch (Exception ex)
                 {
-                    Log.Error($"[FamiliaMyth] {nameof(Patch_ImmunityHandler_RemoveHediff)} error: {ex}");
+                    Log.Error($"[FamiliaMyth] {nameof(Patch_AbnormalResistance_Cure)} error: {ex}");
                 }
             }
         }
 
         [HarmonyPatch(typeof(HediffComp_SeverityModifierBase), nameof(HediffComp_SeverityModifierBase.CompPostTickInterval))]
-        public static class Patch_ImmunityHandler_ToxinDissipation
+        public static class Patch_AbnormalResistance_Toxin
         {
             public static void Postfix(HediffComp_SeverityModifierBase __instance)
             {
@@ -93,7 +93,7 @@ namespace FamiliaMyth.Patch
                 }
                 catch (Exception ex)
                 {
-                    Log.Error($"[FamiliaMyth] {nameof(Patch_ImmunityHandler_ToxinDissipation)} error: {ex}");
+                    Log.Error($"[FamiliaMyth] {nameof(Patch_AbnormalResistance_Toxin)} error: {ex}");
                 }
             }
         }

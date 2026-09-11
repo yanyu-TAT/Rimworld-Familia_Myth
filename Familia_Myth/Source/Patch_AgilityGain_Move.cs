@@ -6,7 +6,7 @@ using Verse.AI;
 namespace FamiliaMyth.Patch
 {
     [HarmonyPatch(typeof(Pawn_PathFollower), "TryEnterNextPathCell")]
-    public static class Patch_Pawn_PathFollower
+    public static class Patch_AgilityGain_Move
     {
         //移动每格的能力值增长
         private const float AgilityPerCell = 0.01f;
@@ -20,7 +20,7 @@ namespace FamiliaMyth.Patch
             {
                 //置无效值，令 Postfix 直接跳过本次结算
                 __state = IntVec3.Invalid;
-                Log.Error($"[FamiliaMyth] {nameof(Patch_Pawn_PathFollower)} prefix error: {ex}");
+                Log.Error($"[FamiliaMyth] {nameof(Patch_AgilityGain_Move)} prefix error: {ex}");
             }
         }
 
@@ -37,7 +37,7 @@ namespace FamiliaMyth.Patch
             }
             catch (Exception ex)
             {
-                Log.Error($"[FamiliaMyth] {nameof(Patch_Pawn_PathFollower)} postfix error: {ex}");
+                Log.Error($"[FamiliaMyth] {nameof(Patch_AgilityGain_Move)} postfix error: {ex}");
             }
         }
     }

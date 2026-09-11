@@ -5,7 +5,7 @@ using Verse;
 namespace FamiliaMyth.Patch
 {
     [HarmonyPatch(typeof(Pawn), nameof(Pawn.PostApplyDamage))]
-    public static class Patch_Pawn
+    public static class Patch_EnduranceGain_Damage
     {
         public static void Postfix(Pawn __instance, DamageInfo dinfo, float totalDamageDealt)
         {
@@ -16,7 +16,7 @@ namespace FamiliaMyth.Patch
             }
             catch (Exception ex)
             {
-                Log.Error($"[FamiliaMyth] {nameof(Patch_Pawn)} error: {ex}");
+                Log.Error($"[FamiliaMyth] {nameof(Patch_EnduranceGain_Damage)} error: {ex}");
             }
         }
     }

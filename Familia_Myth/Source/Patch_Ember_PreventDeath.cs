@@ -3,8 +3,8 @@ using Verse;
 
 namespace FamiliaMyth.Patch
 {
-    [HarmonyPatch(typeof(Pawn_HealthTracker), "ShouldBeDead")]
-    public static class Patch_Pawn_HealthTracker
+    [HarmonyPatch(typeof(Pawn_HealthTracker), nameof(Pawn_HealthTracker.ShouldBeDead))]
+    public static class Patch_Ember_PreventDeath
     {
         public static void Postfix(Pawn ___pawn, ref bool __result)
         {
@@ -18,7 +18,7 @@ namespace FamiliaMyth.Patch
             }
             catch (Exception ex)
             {
-                Log.Error($"[FamiliaMyth] {nameof(Patch_Pawn_HealthTracker)} error: {ex}");
+                Log.Error($"[FamiliaMyth] {nameof(Patch_Ember_PreventDeath)} error: {ex}");
             }
         }
     }

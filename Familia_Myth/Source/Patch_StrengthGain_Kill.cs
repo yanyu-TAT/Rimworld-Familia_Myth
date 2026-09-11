@@ -6,7 +6,7 @@ using Verse;
 namespace FamiliaMyth.Patch
 {
     [HarmonyPatch(typeof(RecordsUtility), nameof(RecordsUtility.Notify_PawnKilled))]
-    public static class Patch_RecordsUtility_PawnKilled
+    public static class Patch_StrengthGain_Kill
     {
         [HarmonyPostfix]
         public static void Postfix(Pawn killed, Pawn killer)
@@ -23,7 +23,7 @@ namespace FamiliaMyth.Patch
             }
             catch (Exception ex)
             {
-                Log.Error($"[FamiliaMyth] {nameof(Patch_RecordsUtility_PawnKilled)} error: {ex}");
+                Log.Error($"[FamiliaMyth] {nameof(Patch_StrengthGain_Kill)} error: {ex}");
             }
         }
     }
