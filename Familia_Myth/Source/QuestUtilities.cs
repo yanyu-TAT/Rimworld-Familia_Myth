@@ -13,8 +13,9 @@ namespace FamiliaMyth.Quest
         public const float LevelWeight = 1f / 80f;
         public const float ExpWeight = 1f / 20000f;
 
-        //伟业值奖励系数：点数 × 该系数
-        public const float ExploitsFactor = 0.08f;
+        //伟业值奖励（固定量，不随难度点数变化）
+        public const float DailyExploits = 500f;
+        public const float RankUpExploits = 900f;
 
         //计算任务威胁点数与伟业值奖励
         public static void CalculateTaskParams(bool isRankUp, out float threatPoints, out float totalExploits)
@@ -24,7 +25,7 @@ namespace FamiliaMyth.Quest
                 points *= RankUpMultiplier;
 
             threatPoints = points;
-            totalExploits = points * ExploitsFactor;
+            totalExploits = isRankUp ? RankUpExploits : DailyExploits;
         }
 
         //全殖民地恩惠成长因子：随所有受恩惠殖民者的总等级与总经验平滑增长

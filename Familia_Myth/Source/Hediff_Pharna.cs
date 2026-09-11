@@ -19,6 +19,12 @@ namespace FamiliaMyth.Pharna
     public class Hediff_Pharna : Hediff_Level
     {
         private static readonly float MaxExploit = 999f;
+
+        // 成长衰减：单项当前值 / 本周期六项总和 超过阈值后开始反比衰减
+        private const float StatDecayThreshold = 400f;
+        private const float StatDecayScale = 500f;
+        private const float TotalStatDecayThreshold = 2000f;
+        private const float TotalStatDecayScale = 2500f;
         private static readonly List<string> ranks = new();
 
         public float strength;      //力量
@@ -48,6 +54,9 @@ namespace FamiliaMyth.Pharna
 
         //能力值上限
         public float maxStatus = 999f;
+
+        // 本周期累积经验：六项当前值之和（升华时随当前值一并归零）
+        public float TotalStatus => strength + endurance + dexterity + agility + mana + will;
 
         //美德触发间隔（10-0.001x）天
         protected int VirtueTriggerInterval => (int)((10f - 0.001 * GetFinalStatus(PharnaStatusType.Will)) * GenDate.TicksPerDay);
@@ -279,7 +288,13 @@ namespace FamiliaMyth.Pharna
         public bool GainStatus(PharnaStatusType type, float amount)
         {
             if (amount <= 0f) return false;
-            float capped = Math.Min(amount, maxStatus - GetCurrentStatus(type));
+            float current = GetCurrentStatus(type);
+            if (current >= maxStatus) return false;
+            // 双衰减：单项与总量各自超过阈值后开始反比衰减，未超阈值时为正常线性增长
+            float statExcess = Mathf.Max(0f, current - StatDecayThreshold);
+            float totalExcess = Mathf.Max(0f, TotalStatus - TotalStatDecayThreshold);
+            float decay = 1f / (1f + statExcess / StatDecayScale) / (1f + totalExcess / TotalStatDecayScale);
+            float capped = Math.Min(amount * decay, maxStatus - current);
             switch(type)
             {
                 case PharnaStatusType.Strength: strength += capped; break;
@@ -290,7 +305,7 @@ namespace FamiliaMyth.Pharna
                 case PharnaStatusType.Will: will += capped; break;
                 default: return false;
             }
-            experience += capped;
+            experience += amount;
             return true;
         }
 

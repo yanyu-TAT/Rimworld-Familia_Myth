@@ -250,3 +250,25 @@ GenerateShuttle(Faction owningFaction = null, IEnumerable<Pawn> requiredPawns = 
 - 发出点 `PsychicRitualToil_TargetCleanup.Start`（L50，无条件广播；另在目标有非玩家 HomeFaction 时对该派系 goodwill -25 并记 `WasPsychicRitualTarget`）；来源仪式为 Anomaly 的 `Psychophagy / Philophagy / Chronophagy / Brainwipe / ImbueDeathRefusal`。
 - 但 5 个 Target 角色的 `allowedConditions` 均为 `Default, Downed, Prisoner, Sleeping, IdeoUnwilling`（`Data/Anomaly/Defs/PsychicRitualDefs/PsychicRitualRoles.xml:41/50/59/68/77`），**无一声明 `TemporaryFactionMember`**；而 `PsychicRitualRoleDef.PawnCanDo` 规定 `!ConditionAllowed(Condition.TemporaryFactionMember) && pawn.IsQuestLodger()` → 拒绝（`ConditionAllowed` 是位掩码「豁免清单」，L209-212 / L439）→ **lodger 不可能被选为这些仪式的目标**（即便已被逮捕，lodger 标记仍在）。
 - 出处：`decompiledFiles/Verse.AI.Group/PsychicRitualToil_TargetCleanup.cs`、`RimWorld/PsychicRitualRoleDef.cs`、`Data/Anomaly/Defs/PsychicRitualDefs/PsychicRitualRoles.xml`。
+
+## 二、成长与数值系统
+
+### Hediff_Level（等级型 Hediff 基类）
+- `ChangeLevel(int levelOffset)`：`level = (int)Mathf.Clamp(level + levelOffset, def.minSeverity, def.maxSeverity)` → **等级上下限由 HediffDef 的 min/maxSeverity 决定**；本项目「恩惠」即以此把等级封在 Lv1~Lv10（`Hediff_Pharna.xml` 的 `<maxSeverity>10</maxSeverity>`）。
+- `TickInterval(int delta)`：同步 `Severity = level`（故 severity 即等级）；`SetLevelTo(int)` 转调 `ChangeLevel`；`ShouldRemove => level == 0`。
+- `PostAdd` 与读档 `PostLoadInit` 均要求 `Part != null`（否则 Log.Error，后者还会移除自身）→ 自定义 HediffDef 必须指定 `part`，本项目用躯干。
+- 出处：`decompiledFiles/Verse/Hediff_Level.cs`。
+
+### StorytellerUtility 威胁点数（原版难度基准）
+- `DefaultSiteThreatPointsNow(IIncidentTarget)` = `PointsPerWealthCurve.Evaluate(财富)` + Σ`PointsPerColonistByWealthCurve.Evaluate(财富)`（每名自由殖民者；动物按 `0.08 × combatPower`、机械体另计）→ 由**全殖民地财富与人口**共同决定。
+- 曲线值：`PointsPerWealthCurve`（0→0、14000→0、400000→2400、700000→3600、1000000→4200）；`PointsPerColonistByWealthCurve`（0→15、10000→15、400000→140、1000000→200）。
+- 本项目任务难度即以此为基准（`QuestUtilities.CalculateTaskParams` 的 `points = DefaultSiteThreatPointsNow() × PharnaGrowthFactor()`）；**伟业值奖励已改为固定量，不随该点数变化**（见 C-03 数值平衡框架）。
+- 出处：`decompiledFiles/RimWorld/StorytellerUtility.cs`。
+
+### StatDef.forInformationOnly（「仅信息」标记）
+- 定义：`Verse/StatDef.cs:18` 的 `public bool forInformationOnly;`。
+- **全库唯一使用点**：`RimWorld/ScenPart_StatFactor.cs:31` —— `if (!allDef.forInformationOnly && allDef.CanShowWithLoadedMods())`，即**剧本编辑器**在列出「可设系数的 Stat」时将其过滤掉。
+- **不影响**运行时取值、`StatPart` 的应用、信息卡显示。Stat 取值流程为：`StatWorker.GetValue` → `GetValueUnfinalized`（**子类可 override**，如 `StatWorker_MeleeArmorPenetration` 在此反算武器穿甲）→ `FinalizeValue`（**在此统一应用 `stat.parts`**）→ `PostProcessValue`/`postProcessCurve`。
+- 原版惯例：用于「值由其他数据派生、玩家与剧本无法直接设定」的展示型 Stat —— `MeleeWeapon_AverageDPS`、`MeleeWeapon_AverageArmorPenetration`（`Stats_Weapons_Melee.xml`）、`MaxInstallCount`（`Stats_Misc.xml`）。
+- 本项目用法：`Defs/StatDefs/PharnaStats.xml` 的 **17 个恩惠展示 Stat**（六项能力值 + `SpellPower` 系列 + 经验/伟业值）全部标注 —— 它们的值均由 `StatPart_PharnaDisplay` 从恩惠 Hediff 派生，玩家与剧本都不应直接设定。
+- 出处：`decompiledFiles/Verse/StatDef.cs`、`RimWorld/ScenPart_StatFactor.cs`、`RimWorld/StatWorker.cs`、`RimWorld/StatWorker_MeleeArmorPenetration.cs`。

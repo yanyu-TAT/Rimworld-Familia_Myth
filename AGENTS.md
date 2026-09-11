@@ -219,6 +219,7 @@
 | 目录/前缀                                       | 职责                      |
 | ------------------------------------------- | ----------------------- |
 | `Patch_*.cs`                                | Harmony 补丁（成长、意志、技能触发等；类名与文件名对应、命名空间统一 `FamiliaMyth.Patch`、方法体必包 try-catch，细则见 C-03） |
+| `Hediff_Pharna.cs`（恩惠状态与成长）              | 成长入口 `GainStatus`（含**阈值式双衰减**：单项 400 / 总量 2000 起衰减，参数为文件顶部 4 个 const）；`CycleExp` = 六项当前值之和；`Ascend()` 把当前值累入潜在值并清零、消耗伟业值升级；等级上限由 `HediffDef.maxSeverity` 决定（细则见 C-03） |
 | `Spell*.cs` + `SpellDef.cs`                 | 魔法框架与具体魔法（继承原版 Ability） |
 | `Skill*.cs` + `SkillDef.cs`                 | 技能（主动/被动/触发；charge 充能 + active 效果生命周期） |
 | `HediffComp_SkillState`（override CompLabelInBracketsExtra）/ `HediffComp_SkillInEffect` | 技能状态指示（Def 用 HediffWithComps，comp 反查 skillDef 的 StateText 展示括号标签；effect 生命周期间回调） |

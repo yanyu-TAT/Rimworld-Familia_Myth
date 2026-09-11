@@ -9,6 +9,11 @@ namespace FamiliaMyth.Patch
     [HarmonyPatch(typeof(Pawn_SkillTracker), nameof(Pawn_SkillTracker.Learn))]
     public static class Patch_Pawn_SkillTracker
     {
+        //技能经验 -> 能力值 转化率（每点 XP）
+        private const float StrengthPerXpMelee = 0.02f;
+        private const float StrengthPerXpMining = 0.05f;
+        private const float DexterityPerXp = 0.02f;
+
         public static void Postfix(Pawn ___pawn, RimWorld.SkillDef sDef, float xp)
         {
             try
@@ -18,37 +23,29 @@ namespace FamiliaMyth.Patch
                 Hediff_Pharna pharna = ___pawn.GetPharna();
                 if (pharna == null) return;
 
-                //每次攻击1点
                 if (sDef == SkillDefOf.Melee)
-                    pharna.GainStatus(PharnaStatusType.Strength, xp / 300f);
+                    pharna.GainStatus(PharnaStatusType.Strength, xp * StrengthPerXpMelee);
 
-                //每次射击1点
-                if (sDef == SkillDefOf.Shooting)
-                    pharna.GainStatus(PharnaStatusType.Dexterity, xp / 300f);
-
-                //建筑工作时0.3点/秒
-                if (sDef == SkillDefOf.Construction)
-                    pharna.GainStatus(PharnaStatusType.Dexterity, xp / 50f);
-
-                //采矿工作室0.3点/秒
                 if (sDef == SkillDefOf.Mining)
-                    pharna.GainStatus(PharnaStatusType.Strength, xp / 12f);
+                    pharna.GainStatus(PharnaStatusType.Strength, xp * StrengthPerXpMining);
 
-                //烹饪工作每800点工作量（奢侈食物）1点
+                if (sDef == SkillDefOf.Shooting)
+                    pharna.GainStatus(PharnaStatusType.Dexterity, xp * DexterityPerXp);
+
+                if (sDef == SkillDefOf.Construction)
+                    pharna.GainStatus(PharnaStatusType.Dexterity, xp * DexterityPerXp);
+
                 if (sDef == SkillDefOf.Cooking)
-                    pharna.GainStatus(PharnaStatusType.Dexterity, xp / 800f);
+                    pharna.GainStatus(PharnaStatusType.Dexterity, xp * DexterityPerXp);
 
-                //种植工作0.3点/秒
                 if (sDef == SkillDefOf.Plants)
-                    pharna.GainStatus(PharnaStatusType.Dexterity, xp / 15f);
+                    pharna.GainStatus(PharnaStatusType.Dexterity, xp * DexterityPerXp);
 
-                //艺术工作0.5点/秒
                 if (sDef == SkillDefOf.Artistic)
-                    pharna.GainStatus(PharnaStatusType.Dexterity, xp / 12f);
+                    pharna.GainStatus(PharnaStatusType.Dexterity, xp * DexterityPerXp);
 
-                //普通制作工作0.3点/秒
                 if (sDef == SkillDefOf.Crafting)
-                    pharna.GainStatus(PharnaStatusType.Dexterity, xp / 20f);
+                    pharna.GainStatus(PharnaStatusType.Dexterity, xp * DexterityPerXp);
 
                 if (sDef == SkillDefOf.Medicine)
                     pharna.developableAbilities.FirstOrDefault(d => d is DevelopableAbility_Healing)?.GainProficiency(xp * DevelopableAbility_Healing.ProfGainPerXp);

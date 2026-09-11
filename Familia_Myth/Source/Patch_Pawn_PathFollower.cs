@@ -8,6 +8,8 @@ namespace FamiliaMyth.Patch
     [HarmonyPatch(typeof(Pawn_PathFollower), "TryEnterNextPathCell")]
     public static class Patch_Pawn_PathFollower
     {
+        //移动每格的能力值增长
+        private const float AgilityPerCell = 0.01f;
         public static void Prefix(Pawn ___pawn, ref IntVec3 __state)
         {
             try
@@ -29,8 +31,8 @@ namespace FamiliaMyth.Patch
                 if (!__state.IsValid) return;
                 if (__state != ___pawn.Position)
                 {
-                    //移动每格0.25点
-                    ___pawn.GetPharna()?.GainStatus(PharnaStatusType.Agility, 0.25f);
+                    //移动每格
+                    ___pawn.GetPharna()?.GainStatus(PharnaStatusType.Agility, AgilityPerCell);
                 }
             }
             catch (Exception ex)

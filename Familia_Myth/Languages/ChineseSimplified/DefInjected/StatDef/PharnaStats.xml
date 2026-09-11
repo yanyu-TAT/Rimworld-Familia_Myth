@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
 	<PharnaStrength.label>力量</PharnaStrength.label>
-	<PharnaStrength.description>提升近战伤害系数和利器/钝器穿甲，提升负重能力。</PharnaStrength.description>
+	<PharnaStrength.description>提升近战伤害系数和负重能力。</PharnaStrength.description>
 	<PharnaEndurance.label>耐久</PharnaEndurance.label>
-	<PharnaEndurance.description>提升锐器/钝器/热能护甲，提高愈合系数，降低受伤系数、硬直时间和疼痛阈值，减缓休息值下降。</PharnaEndurance.description>
+	<PharnaEndurance.description>提升锐器/钝器/热能护甲，提高愈合系数，降低受伤系数和硬直时间，提升疼痛阈值，减缓休息值下降。</PharnaEndurance.description>
 	<PharnaDexterity.label>灵巧</PharnaDexterity.label>
 	<PharnaDexterity.description>提升全局工作速度，降低近战冷却和瞄准时间，缩短远程冷却，提升射击精度。</PharnaDexterity.description>
 	<PharnaAgility.label>敏捷</PharnaAgility.label>

@@ -8,6 +8,9 @@ namespace FamiliaMyth.Patch
     [HarmonyPatch(typeof(Thing), nameof(Thing.Ingested))]
     public static class Patch_Thing
     {
+        //每点摄入营养值的能力值增长
+        private const float EndurancePerNutrition = 2f;
+
         public static void Postfix(Pawn ingester, float __result)
         {
             try
@@ -16,8 +19,8 @@ namespace FamiliaMyth.Patch
                 var pharna = ingester.GetPharna();
                 if (pharna == null) return;
 
-                //每点摄入的营养值1点
-                pharna.GainStatus(PharnaStatusType.Endurance, __result);
+                //每点摄入的营养值
+                pharna.GainStatus(PharnaStatusType.Endurance, __result * EndurancePerNutrition);
 
                 if (pharna.developableAbilities.FirstOrDefault(d => d is DevelopableAbility_EfficientCirculation)
                     is not DevelopableAbility_EfficientCirculation ability) return;
