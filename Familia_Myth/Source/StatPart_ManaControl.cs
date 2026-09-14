@@ -5,10 +5,8 @@ using Verse;
 
 namespace FamiliaMyth.Abilities
 {
-    public class StatPart_SpellPower : StatPart
+    public class StatPart_ManaControl : StatPart
     {
-        private const float ManaFactor = 0.001f;
-
         public SpellType type = SpellType.None;
 
         public override void TransformValue(StatRequest req, ref float val)
@@ -22,8 +20,6 @@ namespace FamiliaMyth.Abilities
                 var pharna = pawn.GetPharna();
                 if (pharna == null) return;
 
-                val += pharna.GetFinalStatus(PharnaStatusType.Mana) * ManaFactor;
-
                 ApplyModifiers(pharna, ref val);
             }
         }
@@ -32,20 +28,20 @@ namespace FamiliaMyth.Abilities
         {
             if (pharna.skills != null)
                 foreach (var s in pharna.skills)
-                    if (s is ISpellPowerModifier m && m.ShouldApplySpellPower(type)) 
-                        m.ApplySpellPowerModifier(ref power);
+                    if (s is IManaControlModifier m && m.ShouldApplyManaControl(type)) 
+                        m.ApplyManaControlModifier(ref power);
 
             if (pharna.developableAbilities != null)
                 foreach (var a in pharna.developableAbilities)
-                    if (a is ISpellPowerModifier m && m.ShouldApplySpellPower(type)) 
-                        m.ApplySpellPowerModifier(ref power);
+                    if (a is IManaControlModifier m && m.ShouldApplyManaControl(type)) 
+                        m.ApplyManaControlModifier(ref power);
 
             if (pharna.pawn?.health?.hediffSet?.hediffs != null)
                 foreach (var h in pharna.pawn.health.hediffSet.hediffs)
                     if (h is HediffWithComps hc)
                         foreach(var c in hc.comps)
-                            if (c is ISpellPowerModifier m && m.ShouldApplySpellPower(type))
-                                m.ApplySpellPowerModifier(ref power);
+                            if (c is IManaControlModifier m && m.ShouldApplyManaControl(type))
+                                m.ApplyManaControlModifier(ref power);
         }
 
         public override string ExplanationPart(StatRequest req)
@@ -61,14 +57,7 @@ namespace FamiliaMyth.Abilities
 
                 var sb = new StringBuilder();
 
-                //名称+评级+数值: +XX%
-                float mana = pharna.GetFinalStatus(PharnaStatusType.Mana);
-                string rank = Hediff_Pharna.GetRank(mana);
-                sb.AppendLine(
-                    $"Lv.{pharna.level} {Hediff_Pharna.GetStatusName(PharnaStatusType.Mana)}{rank}{(int)mana}: " +
-                    $"+{(mana * ManaFactor).ToStringPercent()}");
-
-                //其余法强来源
+                //法强来源
                 foreach (var line in GetModifierExplanationLines(pharna))
                     sb.AppendLine(line);
 
@@ -79,29 +68,29 @@ namespace FamiliaMyth.Abilities
         private IEnumerable<string> GetModifierExplanationLines(Hediff_Pharna pharna)
         {
             float power = 1f;
-            var sources = new List<(string label, ISpellPowerModifier mod)>();
+            var sources = new List<(string label, IManaControlModifier mod)>();
 
             if (pharna.skills != null)
                 foreach (var s in pharna.skills)
-                    if (s is ISpellPowerModifier m && m.ShouldApplySpellPower(type)) 
+                    if (s is IManaControlModifier m && m.ShouldApplyManaControl(type)) 
                         sources.Add((s.Label, m));
 
             if (pharna.developableAbilities != null)
                 foreach (var a in pharna.developableAbilities)
-                    if (a is ISpellPowerModifier m && m.ShouldApplySpellPower(type)) 
+                    if (a is IManaControlModifier m && m.ShouldApplyManaControl(type)) 
                         sources.Add((a.Label, m));
 
             if (pharna.pawn?.health?.hediffSet?.hediffs != null)
                 foreach (var h in pharna.pawn.health.hediffSet.hediffs)
                     if (h is HediffWithComps hc)
                         foreach (var c in hc.comps)
-                            if (c is ISpellPowerModifier m && m.ShouldApplySpellPower(type))
+                            if (c is IManaControlModifier m && m.ShouldApplyManaControl(type))
                                 sources.Add((h.LabelBase, m));
 
             foreach (var (label, mod) in sources)
             {
                 float before = power;
-                mod.ApplySpellPowerModifier(ref power);
+                mod.ApplyManaControlModifier(ref power);
                 float delta = power - before;
                 yield return $"\t{label}: +{delta.ToStringPercent()}";
             }

@@ -3,7 +3,7 @@ using Verse;
 
 namespace FamiliaMyth.Abilities
 {
-    public class DevelopableAbility_Healing : DevelopableAbility, ISpellPowerModifier
+    public class DevelopableAbility_Healing : DevelopableAbility, IManaControlModifier
     {
         private static StatDef medicalOperationSpeedDef;
         private static StatDef MedicalOperationSpeedDef =>
@@ -12,7 +12,7 @@ namespace FamiliaMyth.Abilities
         private const float TendQualityPerProf = 0.002f;
         private const float TendSpeedPerProf = 0.005f;
         private const float SurgeryChancePerProf = 0.003f;
-        private const float SpellPowerPerProf = 0.0025f;
+        private const float ManaControlPerProf = 0.0025f;
         public const float ProfGainPerXp = 0.005f;
 
         public override bool ApplyModifiers(StatDef stat, ref float value)
@@ -37,12 +37,12 @@ namespace FamiliaMyth.Abilities
             return false;
         }
 
-        public bool ShouldApplySpellPower(SpellType type)
+        public bool ShouldApplyManaControl(SpellType type)
             => type == SpellType.Heal;
 
-        public void ApplySpellPowerModifier(ref float power)
+        public void ApplyManaControlModifier(ref float power)
         {
-            power += proficiency * SpellPowerPerProf;
+            power += proficiency * ManaControlPerProf;
         }
 
         public override string GetExplanation(StatDef stat)

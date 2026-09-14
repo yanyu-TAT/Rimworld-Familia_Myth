@@ -1,4 +1,5 @@
-﻿using RimWorld;
+using FamiliaMyth.Pharna;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -16,8 +17,8 @@ namespace FamiliaMyth.Abilities
         private const int HealIntervalTicks = 90;
         //自动治愈治疗量
         private const int AutoHealBudget = 25;
-        //自动治愈单次精神力消耗
-        private const float AutoHealPsyCost = 0.02f;
+        //自动治愈单次魔力消耗
+        private const float AutoHealManaCost = 20f;
         //法阵范围
         public const float Radius = 10f;
         //离开法阵的效果持续时间
@@ -85,7 +86,7 @@ namespace FamiliaMyth.Abilities
             if (!castDone || targetMap == null || !targetPos.InBounds(targetMap))
                 return;
 
-            float power = GetCurrentSpellPower();
+            float power = GetCurrentManaControl();
             healBudget = BasicHealBudget * power;
             remainingTicks = (int)(BasicDuration * power);
 
@@ -190,17 +191,17 @@ namespace FamiliaMyth.Abilities
                 return;
             }
 
-            var tracker = pawn?.psychicEntropy;
-            if (tracker == null) return;
+            var pharna = pawn?.GetPharna();
+            if (pharna == null) return;
 
-            if (tracker.CurrentPsyfocus <= AutoHealPsyCost)
+            if (pharna.manaPool < AutoHealManaCost)
             {
                 isAutoHealing = false;
-                Messages.Message("FamiliaMyth.Ability.ZeoGullveigNoPsy".Translate(pawn.Name.ToStringShort), MessageTypeDefOf.NeutralEvent);
+                Messages.Message("FamiliaMyth.Ability.ZeoGullveigNoMana".Translate(pawn.Name.ToStringShort), MessageTypeDefOf.NeutralEvent);
                 return;
             }
 
-            tracker.OffsetPsyfocusDirectly(-AutoHealPsyCost);
+            pharna.SpendMana(AutoHealManaCost);
             pawn.RestoreParts(1);
             pawn.TendInjuries(3);
             pawn.HealInjuries(AutoHealBudget);

@@ -43,8 +43,6 @@
 	<!-- Experience -->
 	<FamiliaMyth.Experience>Experience</FamiliaMyth.Experience>
 
-	<!-- Familia rank page: culture icon card title -->
-	<FamiliaMyth.FamiliaCulture>Familia Culture</FamiliaMyth.FamiliaCulture>
 	<!-- Familia rank page: unknown culture placeholder -->
 	<FamiliaMyth.UnknownCulture>Unknown Culture</FamiliaMyth.UnknownCulture>
 

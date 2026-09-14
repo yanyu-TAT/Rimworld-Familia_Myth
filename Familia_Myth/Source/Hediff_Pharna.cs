@@ -25,6 +25,15 @@ namespace FamiliaMyth.Pharna
         private const float StatDecayScale = 500f;
         private const float TotalStatDecayThreshold = 2000f;
         private const float TotalStatDecayScale = 2500f;
+
+        //魔力转化：每秒投入的精神力比例（1%）
+        private const float PsyfocusPerSecond = 0.0025f;
+        //魔力转化：每1%精神力折算的魔力
+        private const float ManaPerPsyfocus = 1000f;
+        //魔力转化：每1%精神力产生的心灵熵
+        private const float EntropyPerPercent = 1f;
+        //转化结算间隔（每秒一次）
+        private const int ConvertIntervalTicks = 60;
         private static readonly List<string> ranks = new();
 
         public float strength;      //力量
@@ -55,7 +64,12 @@ namespace FamiliaMyth.Pharna
         //能力值上限
         public float maxStatus = 999f;
 
-        // 本周期累积经验：六项当前值之和（升华时随当前值一并归零）
+        //魔力池当前值（由精神力转化而来）
+        public float manaPool;
+        //自动转化开关
+        public bool autoConvert = true;
+
+        //六项当前值之和
         public float TotalStatus => strength + endurance + dexterity + agility + mana + will;
 
         //美德触发间隔（10-0.001x）天
@@ -249,6 +263,10 @@ namespace FamiliaMyth.Pharna
             {
                 GainStatus(PharnaStatusType.Will, 0.002f * pawn.health.hediffSet.PainTotal);
             }
+
+            //常态转化：精神力 → 魔力
+            if (pawn != null && pawn.IsHashIntervalTick(ConvertIntervalTicks))
+                ConvertPsyfocusToMana();
         }
 
         public void Update()
@@ -257,6 +275,57 @@ namespace FamiliaMyth.Pharna
             {
                 skill.Update();
             }
+        }
+
+        private static StatDef cachedManaMaxDef;
+        private static StatDef ManaMaxDef => cachedManaMaxDef ??= DefDatabase<StatDef>.GetNamed("ManaMax");
+        private static StatDef cachedManaConversionDef;
+        private static StatDef ManaConversionDef => cachedManaConversionDef ??= DefDatabase<StatDef>.GetNamed("ManaConversion");
+
+        //魔力储量上限
+        public float MaxMana => pawn?.GetStatValue(ManaMaxDef) ?? 0f;
+
+        //消耗魔力，返回实际消耗量
+        public float SpendMana(float amount)
+        {
+            float spent = Mathf.Min(amount, manaPool);
+            if (spent <= 0f) return 0f;
+            manaPool -= spent;
+
+            //魔导熟练度：每点消耗的魔力
+            foreach (var ability in developableAbilities)
+                if (ability is DevelopableAbility_Magic magic)
+                    magic.GainProficiency(spent * DevelopableAbility_Magic.ProfGainPerMana);
+
+            return spent;
+        }
+
+        //返还魔力，不超过储量上限
+        public void GainMana(float amount)
+        {
+            if (amount <= 0f) return;
+            manaPool = Mathf.Min(manaPool + amount, MaxMana);
+        }
+
+        //常态转化：把精神力转化为魔力，并产生副产物心灵熵
+        private void ConvertPsyfocusToMana()
+        {
+            if (!autoConvert) return;
+            var tracker = pawn?.psychicEntropy;
+            if (tracker == null) return;
+            if (manaPool >= MaxMana) return;
+
+            float spend = Mathf.Min(PsyfocusPerSecond, tracker.CurrentPsyfocus);
+            if (spend <= 0f) return;
+
+            tracker.OffsetPsyfocusDirectly(-spend);
+            //副产物
+            tracker.TryAddEntropy(spend * 100f * EntropyPerPercent);
+
+            float efficiency = pawn.GetStatValue(ManaConversionDef);
+            float consciousness = pawn.health?.capacities?.GetLevel(PawnCapacityDefOf.Consciousness) ?? 1f;
+            float final = manaPool + spend * ManaPerPsyfocus * efficiency * consciousness;
+            GainMana(final);
         }
 
         public void Ascend()
@@ -325,6 +394,10 @@ namespace FamiliaMyth.Pharna
         public override IEnumerable<Gizmo> GetGizmos()
         {
             base.GetGizmos();
+
+            if (!spells.Empty())
+                yield return new UI.Gizmo_ManaPool(this);
+
             foreach (var spell in spells)
             {
                 var gizmos = spell?.GetGizmos();
@@ -428,6 +501,9 @@ namespace FamiliaMyth.Pharna
 
             Scribe_Values.Look(ref experience, "experience", 0f);
             Scribe_Values.Look(ref exploits, "exploits", 0f);
+
+            Scribe_Values.Look(ref manaPool, "manaPool", 0f);
+            Scribe_Values.Look(ref autoConvert, "autoConvert", true);
 
             Scribe_Values.Look(ref lastVirtueTriggeredTick, "lastVirtueTriggeredTick", 99999);
             Scribe_Values.Look(ref currentVirtue, "currentVirtue", null);

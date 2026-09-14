@@ -9,11 +9,36 @@
 	<PharnaAgility.label>敏捷</PharnaAgility.label>
 	<PharnaAgility.description>提升移动速度，提升近战闪避和远程闪避。</PharnaAgility.description>
 	<PharnaMana.label>魔力</PharnaMana.label>
-	<PharnaMana.description>提升心灵熵阈值和冥想精神力获取，提升魔法强度。</PharnaMana.description>
+	<PharnaMana.description>提升魔力转化效率与魔力储量上限。</PharnaMana.description>
 	<PharnaWill.label>意志</PharnaWill.label>
-	<PharnaWill.description>提升美德触发概率，缩短美德冷却间隔。</PharnaWill.description>
+	<PharnaWill.description>提升心灵熵阈值与冥想精神力获取，提升美德触发概率，缩短美德冷却间隔。</PharnaWill.description>
 	<PharnaExperience.label>经验值</PharnaExperience.label>
 	<PharnaExperience.description>通过日常练习和学习获取的总经验值，每获得1点能力值同时获得1点经验值。</PharnaExperience.description>
 	<PharnaExploits.label>伟业值</PharnaExploits.label>
 	<PharnaExploits.description>通过完成远征任务和公会委托获取的伟业值，达到999点即可升华恩惠等级。</PharnaExploits.description>
+	<ManaMax.label>魔力储量</ManaMax.label>
+	<ManaMax.description>能够储存的魔力上限。</ManaMax.description>
+	<ManaConversion.label>魔力转化效率</ManaConversion.label>
+	<ManaConversion.description>将精神力转化为魔力时的转换效率。</ManaConversion.description>
+
+	<!-- 魔力操控（StatDef）：受魔法种类、魔导熟练度与意识共同影响 -->
+	<ManaControl.label>魔力操控</ManaControl.label>
+	<ManaControl.description>该角色操纵魔力的精度，由魔法种类、魔导熟练度与意识共同决定，影响部分魔法的效果。</ManaControl.description>
+
+	<ManaControl_Attack.label>魔力操控·攻击</ManaControl_Attack.label>
+	<ManaControl_Attack.description>释放攻击魔法时的魔力操控。</ManaControl_Attack.description>
+	<ManaControl_Heal.label>魔力操控·治疗</ManaControl_Heal.label>
+	<ManaControl_Heal.description>释放治疗魔法时的魔力操控。</ManaControl_Heal.description>
+	<ManaControl_Defense.label>魔力操控·防御</ManaControl_Defense.label>
+	<ManaControl_Defense.description>释放防御魔法时的魔力操控。</ManaControl_Defense.description>
+	<ManaControl_Buff.label>魔力操控·增益</ManaControl_Buff.label>
+	<ManaControl_Buff.description>释放增益魔法时的魔力操控。</ManaControl_Buff.description>
+	<ManaControl_Debuff.label>魔力操控·减益</ManaControl_Debuff.label>
+	<ManaControl_Debuff.description>释放减益魔法时的魔力操控。</ManaControl_Debuff.description>
+	<ManaControl_Enchant.label>魔力操控·赋予</ManaControl_Enchant.label>
+	<ManaControl_Enchant.description>释放赋予魔法时的魔力操控。</ManaControl_Enchant.description>
+	<ManaControl_Field.label>魔力操控·领域</ManaControl_Field.label>
+	<ManaControl_Field.description>释放领域魔法时的魔力操控。</ManaControl_Field.description>
+	<ManaControl_Summon.label>魔力操控·召唤</ManaControl_Summon.label>
+	<ManaControl_Summon.description>释放召唤魔法时的魔力操控。</ManaControl_Summon.description>
 </LanguageData>

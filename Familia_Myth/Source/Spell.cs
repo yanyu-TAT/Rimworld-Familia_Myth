@@ -15,9 +15,9 @@ namespace FamiliaMyth.Abilities
         private static ThingDef MagicCircleDef =>
             magicCircleDef ??= DefDatabase<ThingDef>.GetNamed("Mote_MagicCircleLayer");
 
-        private static StatDef spellPowerDef;
-        private static StatDef SpellPowerDef =>
-            spellPowerDef ??= DefDatabase<StatDef>.GetNamed("SpellPower");
+        private static StatDef manaControlDef;
+        private static StatDef ManaControlDef =>
+            manaControlDef ??= DefDatabase<StatDef>.GetNamed("ManaControl");
 
         private static ThingDef incantationTextDef;
         private static ThingDef IncantationDef =>
@@ -39,7 +39,7 @@ namespace FamiliaMyth.Abilities
         public string Label => Def.label;
         public string Description => Def.description;
 
-        protected float PsyfocusCost => (def?.PsyfocusCost / (Def.WarmupTime * 60f)) ?? 0f;
+        protected float ManaCostPerTick => (Def?.manaCost / (Def.WarmupTime * 60f)) ?? 0f;
         protected float EntropyGainPerTick => (def?.EntropyGain / (Def.WarmupTime * 60f)) ?? 0f;
 
         public List<Projectile_MagicMissileBase> activeProjectiles = new();
@@ -53,7 +53,7 @@ namespace FamiliaMyth.Abilities
         public bool IsWarmingUp => isWarmingUp;
         protected int lineIndex = 0;
 
-        protected float actualPsy;
+        protected float actualMana;
         protected float actualEnt;
 
         public bool stunning = false;
@@ -87,9 +87,9 @@ namespace FamiliaMyth.Abilities
                 if (tracker.WouldOverflowEntropy(gain))
                     return "FamiliaMyth.Ability.EntropyOverflow".Translate(pawn.Name.ToStringShort);
 
-                float cost = def.PsyfocusCost;
-                if (cost > float.Epsilon && cost > tracker.CurrentPsyfocus + 0.0005f)
-                    return "FamiliaMyth.Ability.NotEnoughPsyfocus".Translate(pawn.Name.ToStringShort);
+                var pharna = pawn.GetPharna();
+                if (pharna == null || Def.manaCost > pharna.manaPool)
+                    return "FamiliaMyth.Ability.NotEnoughMana".Translate(pawn.Name.ToStringShort);
 
                 return true;
             }
@@ -115,7 +115,7 @@ namespace FamiliaMyth.Abilities
                     isWarmingUp = true;
                     stunning = true;
                     actualEnt = 0;
-                    actualPsy = 0;
+                    actualMana = 0;
                     WarmUpStart();
                     MagicCircleStart();
                 }
@@ -157,16 +157,15 @@ namespace FamiliaMyth.Abilities
             TickWarmUp();
             TickMagicCircle();
 
-            //咏唱时每tick消耗精神力和增加心灵熵
+            //咏唱时每tick消耗魔力并增加心灵熵
             var tracker = pawn?.psychicEntropy;
-            if (tracker == null) return;
-            float prePsy = tracker.CurrentPsyfocus;
+            var pharna = pawn?.GetPharna();
+            if (tracker == null || pharna == null) return;
             float preEnt = tracker.EntropyValue;
-            tracker.OffsetPsyfocusDirectly(-PsyfocusCost);
+            actualMana += pharna.SpendMana(ManaCostPerTick);
             tracker.TryAddEntropy(EntropyGainPerTick);
 
             //记录实际值
-            actualPsy += Mathf.Max(0, prePsy - tracker.CurrentPsyfocus);
             actualEnt += Mathf.Max(0, tracker.EntropyValue - preEnt);
         }
 
@@ -294,25 +293,25 @@ namespace FamiliaMyth.Abilities
             pharna.spells.Add(this);
         }
 
-        private static readonly Dictionary<SpellType, StatDef> SpellPowerStatDefs = new();
+        private static readonly Dictionary<SpellType, StatDef> ManaControlStatDefs = new();
 
-        private static StatDef GetSpellPowerStat(SpellType type)
+        private static StatDef GetManaControlStat(SpellType type)
         {
             if (type == SpellType.None || type == SpellType.Special)
-                return SpellPowerDef;
+                return ManaControlDef;
 
-            if (!SpellPowerStatDefs.TryGetValue(type, out var stat))
+            if (!ManaControlStatDefs.TryGetValue(type, out var stat))
             {
-                stat = DefDatabase<StatDef>.GetNamed("SpellPower_" + type.ToString());
-                SpellPowerStatDefs[type] = stat;
+                stat = DefDatabase<StatDef>.GetNamed("ManaControl_" + type.ToString());
+                ManaControlStatDefs[type] = stat;
             }
             return stat;
         }
 
-        public virtual float GetCurrentSpellPower()
+        public virtual float GetCurrentManaControl()
         {
             if (pawn == null) return 1f;
-            return pawn.GetStatValue(GetSpellPowerStat(Def.spellType));
+            return pawn.GetStatValue(GetManaControlStat(Def.spellType));
         }
 
         public override IEnumerable<Command> GetGizmos()
@@ -356,7 +355,7 @@ namespace FamiliaMyth.Abilities
             Scribe_Values.Look(ref lineIndex, "lineIndex");
             Scribe_Values.Look(ref isWarmingUp, "isWarmingUp");
             Scribe_Values.Look(ref actualEnt, "actualEnt");
-            Scribe_Values.Look(ref actualPsy, "actualPsy");
+            Scribe_Values.Look(ref actualMana, "actualMana");
             Scribe_Values.Look(ref wasWarmingUp, "wasWarmingUp");
             Scribe_Collections.Look(ref activeProjectiles, "activeProjectiles", LookMode.Reference);
             Scribe_Collections.Look(ref activeMotes, "activeMotes", LookMode.Reference);
@@ -369,9 +368,9 @@ namespace FamiliaMyth.Abilities
         }
     }
 
-    public interface ISpellPowerModifier
+    public interface IManaControlModifier
     {
-        bool ShouldApplySpellPower(SpellType type) => true;
-        void ApplySpellPowerModifier(ref float power);
+        bool ShouldApplyManaControl(SpellType type) => true;
+        void ApplyManaControlModifier(ref float power);
     }
 }

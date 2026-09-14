@@ -390,6 +390,9 @@
 		<!-- 魔法实现类 -->
 		<spellClass>FamiliaMyth.Abilities.Spell_Explosion</spellClass>
 
+		<!-- 魔力消耗：满值一发清空全池 -->
+		<manaCost>2500</manaCost>
+
 		<!-- 稀有度 -->
 		<rarity>Rare</rarity>
 

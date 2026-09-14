@@ -25,7 +25,7 @@ namespace FamiliaMyth.Abilities
         private static FleckDef ChargeFleckDef =>
             chargeFleckDef ??= DefDatabase<FleckDef>.GetNamed("ArcsRayChargeSpark");
 
-        public int Pentration => Math.Max(1, (int)(BasicPenetration * GetCurrentSpellPower()));
+        public int Pentration => Math.Max(1, (int)(BasicPenetration * GetCurrentManaControl()));
 
         public Pawn mainTarget;
 

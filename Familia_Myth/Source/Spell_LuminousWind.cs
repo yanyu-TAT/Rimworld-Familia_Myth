@@ -9,7 +9,7 @@ namespace FamiliaMyth.Abilities
 
         private const float SpawnRadius = 5f;
 
-        private int MissileCount => (int)(BasicMissileCount * GetCurrentSpellPower());
+        private int MissileCount => (int)(BasicMissileCount * GetCurrentManaControl());
 
         private int MissileSummonTickInterval => (int)(Def.WarmupTime / (MissileCount + 1) * 60);
 

@@ -60,7 +60,7 @@ namespace FamiliaMyth.Abilities
             base.WarmUpStart();
 
             //计算锁定间隔
-            lockOnIntervalTicks = (int)(BasicLockOnIntervalTicks / GetCurrentSpellPower());
+            lockOnIntervalTicks = (int)(BasicLockOnIntervalTicks / GetCurrentManaControl());
 
             //开始锁定
             lastLockOnTick = CurrentTick;

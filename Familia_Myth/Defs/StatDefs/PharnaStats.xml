@@ -155,7 +155,7 @@
   <!-- ============== 魔法强度 ============== -->
 
   <StatDef>
-    <defName>SpellPower</defName>
+    <defName>ManaControl</defName>
     <label>魔力输出</label>
     <description>该角色输出魔力的功率，影响释放魔法时的部分效果</description>
     <category>Pharna</category>
@@ -172,13 +172,19 @@
     </showIfHediffsPresent>
     <displayPriorityInCategory>80</displayPriorityInCategory>
     <parts>
-      <li Class="FamiliaMyth.Abilities.StatPart_SpellPower" />
+      <li Class="FamiliaMyth.Abilities.StatPart_ManaControl" />
     </parts>
     <forInformationOnly>true</forInformationOnly>
+    <capacityFactors>
+      <li>
+        <capacity>Consciousness</capacity>
+        <weight>1</weight>
+      </li>
+    </capacityFactors>
   </StatDef>
 
   <StatDef>
-    <defName>SpellPower_Attack</defName>
+    <defName>ManaControl_Attack</defName>
     <label>魔力输出·攻击</label>
     <description>释放攻击魔法时的魔力输出。</description>
     <category>Pharna</category>
@@ -195,15 +201,21 @@
     </showIfHediffsPresent>
     <displayPriorityInCategory>79</displayPriorityInCategory>
     <parts>
-      <li Class="FamiliaMyth.Abilities.StatPart_SpellPower">
+      <li Class="FamiliaMyth.Abilities.StatPart_ManaControl">
         <type>Attack</type>
       </li>
     </parts>
     <forInformationOnly>true</forInformationOnly>
+    <capacityFactors>
+      <li>
+        <capacity>Consciousness</capacity>
+        <weight>1</weight>
+      </li>
+    </capacityFactors>
   </StatDef>
 
   <StatDef>
-    <defName>SpellPower_Heal</defName>
+    <defName>ManaControl_Heal</defName>
     <label>魔力输出·治疗</label>
     <description>释放治疗魔法时的魔力输出。</description>
     <category>Pharna</category>
@@ -220,15 +232,21 @@
     </showIfHediffsPresent>
     <displayPriorityInCategory>78</displayPriorityInCategory>
     <parts>
-      <li Class="FamiliaMyth.Abilities.StatPart_SpellPower">
+      <li Class="FamiliaMyth.Abilities.StatPart_ManaControl">
         <type>Heal</type>
       </li>
     </parts>
     <forInformationOnly>true</forInformationOnly>
+    <capacityFactors>
+      <li>
+        <capacity>Consciousness</capacity>
+        <weight>1</weight>
+      </li>
+    </capacityFactors>
   </StatDef>
 
   <StatDef>
-    <defName>SpellPower_Defense</defName>
+    <defName>ManaControl_Defense</defName>
     <label>防御魔力输出</label>
     <description>释放防御魔法时使用的魔力输出。</description>
     <category>Pharna</category>
@@ -245,15 +263,21 @@
     </showIfHediffsPresent>
     <displayPriorityInCategory>77</displayPriorityInCategory>
     <parts>
-      <li Class="FamiliaMyth.Abilities.StatPart_SpellPower">
+      <li Class="FamiliaMyth.Abilities.StatPart_ManaControl">
         <type>Defense</type>
       </li>
     </parts>
     <forInformationOnly>true</forInformationOnly>
+    <capacityFactors>
+      <li>
+        <capacity>Consciousness</capacity>
+        <weight>1</weight>
+      </li>
+    </capacityFactors>
   </StatDef>
 
   <StatDef>
-    <defName>SpellPower_Buff</defName>
+    <defName>ManaControl_Buff</defName>
     <label>魔力输出·增益</label>
     <description>释放增益魔法时的魔力输出。</description>
     <category>Pharna</category>
@@ -270,15 +294,21 @@
     </showIfHediffsPresent>
     <displayPriorityInCategory>76</displayPriorityInCategory>
     <parts>
-      <li Class="FamiliaMyth.Abilities.StatPart_SpellPower">
+      <li Class="FamiliaMyth.Abilities.StatPart_ManaControl">
         <type>Buff</type>
       </li>
     </parts>
     <forInformationOnly>true</forInformationOnly>
+    <capacityFactors>
+      <li>
+        <capacity>Consciousness</capacity>
+        <weight>1</weight>
+      </li>
+    </capacityFactors>
   </StatDef>
 
   <StatDef>
-    <defName>SpellPower_Debuff</defName>
+    <defName>ManaControl_Debuff</defName>
     <label>减益魔力输出</label>
     <description>释放减益魔法时使用的魔力输出。</description>
     <category>Pharna</category>
@@ -295,15 +325,21 @@
     </showIfHediffsPresent>
     <displayPriorityInCategory>75</displayPriorityInCategory>
     <parts>
-      <li Class="FamiliaMyth.Abilities.StatPart_SpellPower">
+      <li Class="FamiliaMyth.Abilities.StatPart_ManaControl">
         <type>Debuff</type>
       </li>
     </parts>
     <forInformationOnly>true</forInformationOnly>
+    <capacityFactors>
+      <li>
+        <capacity>Consciousness</capacity>
+        <weight>1</weight>
+      </li>
+    </capacityFactors>
   </StatDef>
 
   <StatDef>
-    <defName>SpellPower_Enchant</defName>
+    <defName>ManaControl_Enchant</defName>
     <label>魔力输出·赋予</label>
     <description>释放赋予魔法时的魔力输出。</description>
     <category>Pharna</category>
@@ -320,15 +356,21 @@
     </showIfHediffsPresent>
     <displayPriorityInCategory>74</displayPriorityInCategory>
     <parts>
-      <li Class="FamiliaMyth.Abilities.StatPart_SpellPower">
+      <li Class="FamiliaMyth.Abilities.StatPart_ManaControl">
         <type>Enchant</type>
       </li>
     </parts>
     <forInformationOnly>true</forInformationOnly>
+    <capacityFactors>
+      <li>
+        <capacity>Consciousness</capacity>
+        <weight>1</weight>
+      </li>
+    </capacityFactors>
   </StatDef>
 
   <StatDef>
-    <defName>SpellPower_Field</defName>
+    <defName>ManaControl_Field</defName>
     <label>领域魔力输出</label>
     <description>释放领域魔法时使用的魔力输出。</description>
     <category>Pharna</category>
@@ -345,15 +387,21 @@
     </showIfHediffsPresent>
     <displayPriorityInCategory>73</displayPriorityInCategory>
     <parts>
-      <li Class="FamiliaMyth.Abilities.StatPart_SpellPower">
+      <li Class="FamiliaMyth.Abilities.StatPart_ManaControl">
         <type>Field</type>
       </li>
     </parts>
     <forInformationOnly>true</forInformationOnly>
+    <capacityFactors>
+      <li>
+        <capacity>Consciousness</capacity>
+        <weight>1</weight>
+      </li>
+    </capacityFactors>
   </StatDef>
 
   <StatDef>
-    <defName>SpellPower_Summon</defName>
+    <defName>ManaControl_Summon</defName>
     <label>魔力输出·召唤</label>
     <description>释放召唤魔法时的魔力输出。</description>
     <category>Pharna</category>
@@ -370,8 +418,70 @@
     </showIfHediffsPresent>
     <displayPriorityInCategory>72</displayPriorityInCategory>
     <parts>
-      <li Class="FamiliaMyth.Abilities.StatPart_SpellPower">
+      <li Class="FamiliaMyth.Abilities.StatPart_ManaControl">
         <type>Summon</type>
+      </li>
+    </parts>
+    <forInformationOnly>true</forInformationOnly>
+    <capacityFactors>
+      <li>
+        <capacity>Consciousness</capacity>
+        <weight>1</weight>
+      </li>
+    </capacityFactors>
+  </StatDef>
+
+  <!-- ============== 魔力资源 ============== -->
+
+  <StatDef>
+    <defName>ManaMax</defName>
+    <label>魔力储量</label>
+    <description>该角色能够储存的魔力上限。</description>
+    <category>Pharna</category>
+    <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
+    <defaultBaseValue>100</defaultBaseValue>
+    <minValue>1</minValue>
+    <toStringStyle>Integer</toStringStyle>
+    <showOnPawns>true</showOnPawns>
+    <showOnHumanlikes>true</showOnHumanlikes>
+    <showIfUndefined>true</showIfUndefined>
+    <showIfHediffsPresent>
+      <li>Hediff_Pharna</li>
+    </showIfHediffsPresent>
+    <displayPriorityInCategory>70</displayPriorityInCategory>
+    <parts>
+      <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+        <statusType>Mana</statusType>
+        <mode>Offset</mode>
+        <a>0.75</a>
+        <displayAsPercent>false</displayAsPercent>
+      </li>
+    </parts>
+    <forInformationOnly>true</forInformationOnly>
+  </StatDef>
+
+  <StatDef>
+    <defName>ManaConversion</defName>
+    <label>魔力转化效率</label>
+    <description>将精神力转化为魔力时的转换效率。</description>
+    <category>Pharna</category>
+    <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
+    <defaultBaseValue>1</defaultBaseValue>
+    <minValue>0</minValue>
+    <toStringStyle>PercentZero</toStringStyle>
+    <showOnPawns>true</showOnPawns>
+    <showOnHumanlikes>true</showOnHumanlikes>
+    <showIfUndefined>true</showIfUndefined>
+    <showIfHediffsPresent>
+      <li>Hediff_Pharna</li>
+    </showIfHediffsPresent>
+    <displayPriorityInCategory>71</displayPriorityInCategory>
+    <parts>
+      <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
+        <statusType>Mana</statusType>
+        <mode>Offset</mode>
+        <a>0.001</a>
+        <displayAsPercent>true</displayAsPercent>
       </li>
     </parts>
     <forInformationOnly>true</forInformationOnly>

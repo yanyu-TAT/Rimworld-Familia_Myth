@@ -30,8 +30,8 @@ namespace FamiliaMyth.Abilities
         private static WeatherDef ThunderstormDef =>
                 thunderstormDef ??= DefDatabase<WeatherDef>.GetNamed("RainyThunderstorm");
 
-        private int TotalStrikeCount => (int)(BasicStrikeCount * GetCurrentSpellPower());
-        private float StrikeRadius => BasicStrikeRadius * GetCurrentSpellPower();
+        private int TotalStrikeCount => (int)(BasicStrikeCount * GetCurrentManaControl());
+        private float StrikeRadius => BasicStrikeRadius * GetCurrentManaControl();
 
         protected override void WarmUpStart()
         {

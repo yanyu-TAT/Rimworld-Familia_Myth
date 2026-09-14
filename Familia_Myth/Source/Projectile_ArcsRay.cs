@@ -82,7 +82,7 @@ namespace FamiliaMyth.Abilities
         public override void Init(Spell spell)
         {
             base.Init(spell);
-            damageAmount = (int)(base.DamageAmount * spell.GetCurrentSpellPower());
+            damageAmount = (int)(base.DamageAmount * spell.GetCurrentManaControl());
             if (spell is Spell_ArcsRay spell_ArcsRay)
             {
                 curTarget = spell_ArcsRay.mainTarget;

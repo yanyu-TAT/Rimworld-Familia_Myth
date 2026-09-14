@@ -52,27 +52,6 @@ namespace FamiliaMyth.Patch
         }
 
 
-        [HarmonyPatch(typeof(Pawn_PsychicEntropyTracker), nameof(Pawn_PsychicEntropyTracker.OffsetPsyfocusDirectly))]
-        public static class Patch_ManaGain_Psyfocus
-        {
-            public static void Postfix(Pawn_PsychicEntropyTracker __instance, float offset)
-            {
-                try
-                {
-                    if (offset >= 0f) return;                       //只统计消耗
-                    if (DevelopableAbility_Magic.IsAutoStoring) return; //排除自动存储转移
-                    var pharna = __instance.Pawn.GetPharna();
-                    //魔导
-                    var magic = pharna?.developableAbilities.FirstOrDefault(a => a is DevelopableAbility_Magic) as DevelopableAbility_Magic;
-                    magic?.GainProficiency(Math.Abs(offset) * DevelopableAbility_Magic.ProfGainPerPsyfocus);
-                }
-                catch (Exception ex)
-                {
-                    Log.Error($"[FamiliaMyth] {nameof(Patch_ManaGain_Psyfocus)} error: {ex}");
-                }
-            }
-        }
-
         [HarmonyPostfix]
         [HarmonyPatch(typeof(Pawn_PsychicEntropyTracker), nameof(Pawn_PsychicEntropyTracker.NeedToShowGizmo))]
         public static void Postfix_NeedToShowGizmo(ref bool __result, Pawn_PsychicEntropyTracker __instance)

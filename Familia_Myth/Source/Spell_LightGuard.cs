@@ -45,8 +45,8 @@ namespace FamiliaMyth.Abilities
             if (!castDone || pawn?.Map == null || !pawn.Spawned || pawn.DeadOrDowned)
                 return;
 
-            int totalTicks = (int)(BasicDurationTicks * GetCurrentSpellPower());
-            int cnt = Mathf.RoundToInt(BasicOrbCount * GetCurrentSpellPower());
+            int totalTicks = (int)(BasicDurationTicks * GetCurrentManaControl());
+            int cnt = Mathf.RoundToInt(BasicOrbCount * GetCurrentManaControl());
             if (IsActive)
             {
                 //叠加时间并补齐光球

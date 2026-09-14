@@ -9,11 +9,36 @@
 	<PharnaAgility.label>Agility</PharnaAgility.label>
 	<PharnaAgility.description>Increases movement speed, melee dodge, and ranged dodge.</PharnaAgility.description>
 	<PharnaMana.label>Magic</PharnaMana.label>
-	<PharnaMana.description>Increases psychic entropy threshold, meditation psyfocus gain, and spell power.</PharnaMana.description>
+	<PharnaMana.description>Increases mana conversion efficiency and maximum mana capacity.</PharnaMana.description>
 	<PharnaWill.label>Will</PharnaWill.label>
-	<PharnaWill.description>Increases virtue trigger chance and reduces virtue cooldown.</PharnaWill.description>
+	<PharnaWill.description>Increases psychic entropy threshold, meditation psyfocus gain, and virtue trigger chance. Reduces virtue cooldown.</PharnaWill.description>
 	<PharnaExperience.label>Experience</PharnaExperience.label>
 	<PharnaExperience.description>Total experience gained through daily practice and learning. Each ability point gained also grants 1 experience.</PharnaExperience.description>
 	<PharnaExploits.label>Exploits</PharnaExploits.label>
 	<PharnaExploits.description>Exploits earned by completing expeditions and guild quests. Reach 999 to ascend the Blessing level.</PharnaExploits.description>
+	<ManaMax.label>Mana Capacity</ManaMax.label>
+	<ManaMax.description>Maximum mana this person can store.</ManaMax.description>
+	<ManaConversion.label>Mana Conversion</ManaConversion.label>
+	<ManaConversion.description>The efficiency of converting psyfocus into mana.</ManaConversion.description>
+
+	<!-- Mana Control (StatDef): governed by spell type, Magic Arts proficiency and consciousness -->
+	<ManaControl.label>Mana Control</ManaControl.label>
+	<ManaControl.description>How precisely this person manipulates mana. Determined by spell type, Magic Arts proficiency and consciousness; affects the power of certain spells.</ManaControl.description>
+
+	<ManaControl_Attack.label>Mana Control - Attack</ManaControl_Attack.label>
+	<ManaControl_Attack.description>The mana control used when casting attack spells.</ManaControl_Attack.description>
+	<ManaControl_Heal.label>Mana Control - Heal</ManaControl_Heal.label>
+	<ManaControl_Heal.description>The mana control used when casting healing spells.</ManaControl_Heal.description>
+	<ManaControl_Defense.label>Mana Control - Defense</ManaControl_Defense.label>
+	<ManaControl_Defense.description>The mana control used when casting defense spells.</ManaControl_Defense.description>
+	<ManaControl_Buff.label>Mana Control - Buff</ManaControl_Buff.label>
+	<ManaControl_Buff.description>The mana control used when casting buff spells.</ManaControl_Buff.description>
+	<ManaControl_Debuff.label>Mana Control - Debuff</ManaControl_Debuff.label>
+	<ManaControl_Debuff.description>The mana control used when casting debuff spells.</ManaControl_Debuff.description>
+	<ManaControl_Enchant.label>Mana Control - Enchant</ManaControl_Enchant.label>
+	<ManaControl_Enchant.description>The mana control used when casting enchant spells.</ManaControl_Enchant.description>
+	<ManaControl_Field.label>Mana Control - Field</ManaControl_Field.label>
+	<ManaControl_Field.description>The mana control used when casting field spells.</ManaControl_Field.description>
+	<ManaControl_Summon.label>Mana Control - Summon</ManaControl_Summon.label>
+	<ManaControl_Summon.description>The mana control used when casting summon spells.</ManaControl_Summon.description>
 </LanguageData>

@@ -66,7 +66,7 @@ namespace FamiliaMyth.Abilities
             if (!castDone || pawn?.Map == null || !pawn.Spawned || pawn.DeadOrDowned)
                 return;
 
-            int totalTicks = (int)(BasicSwordDuration * GetCurrentSpellPower());
+            int totalTicks = (int)(BasicSwordDuration * GetCurrentManaControl());
             //大剑已在场
             if (IsActive)
             {

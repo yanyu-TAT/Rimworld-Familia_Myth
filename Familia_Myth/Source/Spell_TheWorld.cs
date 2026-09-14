@@ -1,4 +1,5 @@
-﻿using RimWorld;
+using FamiliaMyth.Pharna;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -57,7 +58,7 @@ namespace FamiliaMyth.Abilities
         protected override void WarmUpFinish(bool castDone)
         {
             if (!castDone || pawn?.Map == null || !pawn.Spawned || pawn.DeadOrDowned) return;
-            totalTicks = (int)(BasicDurationTicks * GetCurrentSpellPower());
+            totalTicks = (int)(BasicDurationTicks * GetCurrentManaControl());
             remainingTicks = totalTicks;
             fieldCenter = pawn.Position;
             Fields[pawn] = pawn.Position;
@@ -110,7 +111,7 @@ namespace FamiliaMyth.Abilities
                 if (tracker != null)
                 {
                     //按比例恢复/消除
-                    tracker.OffsetPsyfocusDirectly(r * actualPsy);
+                    pawn.GetPharna()?.GainMana(r * actualMana);
                     tracker.TryAddEntropy(-r * actualEnt);
                 }
             }

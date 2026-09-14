@@ -9,6 +9,11 @@ namespace FamiliaMyth.Abilities
     {
         public Type spellClass;
 
+        /// <summary>
+        /// 施放消耗的魔力
+        /// </summary>
+        public float manaCost = 100f;
+
         public RewardRarity rarity;
         public SpellType spellType = SpellType.Special;
 

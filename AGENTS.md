@@ -163,6 +163,19 @@
 ✅ 本地化完整性用根目录 `12-本地化检查.ps1` 校验
 ```
 
+### 7. 注释
+
+```
+✅ 注释只描述**当前状态** —— 这个类型 / 成员现在是什么、做什么
+✅ 力求简短，一两句话概括即可
+✅ 仅在逻辑不自明处、或需说明接口契约与约束时才写注释
+✅ 实现发生变化时同步更新注释 —— 与实现不符的注释比冗长的注释更糟
+❌ 不写历史状态（"此前…"、"原本…"、"已由…改为…"）
+❌ 不写设计理由与推导（"为了…"、"因此…"、"之所以…"、"为什么不直接用…"）
+❌ 不写方案对比与前后变化（"而不再需要…"、"比…更…"）
+❌ 不写改动过程与决策记录 —— 改动缘由属于 `docs/`、`plans/` 与提交信息
+```
+
 ***
 
 ## 六、Git 规范
@@ -199,7 +212,7 @@
 
 | #  | 易错点                                | 正确做法                                                          |
 | -- | ---------------------------------- | ------------------------------------------------------------- |
-| 1  | 凭记忆写 RimWorld/Harmony API，方法/字段不存在 | 先 ilspycmd 反编译核对（如 `SetDuration` 不存在，应直接设 `ticksToDisappear`） |
+| 1  | 凭记忆写 RimWorld/Harmony API，方法/字段不存在 | 先 ilspycmd 反编译核对 |
 | 2  | Harmony 补丁方法非 static / 签名不匹配       | 保持 static，重载写明参数类型                                            |
 | 3  | 补丁无 try-catch，一处异常拖垮游戏             | 包裹 try-catch + Log.Error                                      |
 | 4  | Mote/特效资源泄漏（纹理/相机/材质）              | try/finally 销毁；DrawAt 中重查贴图占位                                 |
@@ -221,7 +234,7 @@
 | 目录/前缀                                       | 职责                      |
 | ------------------------------------------- | ----------------------- |
 | `Patch_*.cs`                                | Harmony 补丁（**以相关功能命名**：技能/魔法名、`<能力值>Gain_来源`、系统名；类名与文件名对应、命名空间统一 `FamiliaMyth.Patch`、方法体必包 try-catch，细则见 C-03） |
-| `Hediff_Pharna.cs`（恩惠状态与成长）              | 成长入口 `GainStatus`（含**阈值式双衰减**：单项 400 / 总量 2000 起衰减，参数为文件顶部 4 个 const）；`CycleExp` = 六项当前值之和；`Ascend()` 把当前值累入潜在值并清零、消耗伟业值升级；等级上限由 `HediffDef.maxSeverity` 决定（细则见 C-03） |
+| `Hediff_Pharna.cs`（恩惠状态与成长）              | 成长入口 `GainStatus`（含**阈值式双衰减**：单项 400 / 总量 2000 起衰减，参数为文件顶部 4 个 const）；`CycleExp` = 六项当前值之和；`Ascend()` 把当前值累入潜在值并清零、消耗伟业值升级；等级上限由 `HediffDef.maxSeverity` 决定；**魔力池**（`manaPool` / `MaxMana` / `SpendMana` / `RefundMana` / 常态转化 `ConvertPsyfocusToMana`；注意 `mana` 是六维属性「魔力」，勿与 `manaPool` 混用）（细则见 C-03） |
 | `Spell*.cs` + `SpellDef.cs`                 | 魔法框架与具体魔法（继承原版 Ability） |
 | `Skill*.cs` + `SkillDef.cs`                 | 技能（主动/被动/触发；charge 充能 + active 效果生命周期） |
 | `HediffComp_SkillState`（override CompLabelInBracketsExtra）/ `HediffComp_SkillInEffect` | 技能状态指示（Def 用 HediffWithComps，comp 反查 skillDef 的 StateText 展示括号标签；effect 生命周期间回调） |
@@ -230,6 +243,7 @@
 | `WeaponHelper.cs`（扩展 GetMeleeSharpWeapon/GetUnarmedMeleeVerb/GetRangedEquippedVerb + `RangeUtilities` 直线路径索敌/射线工具） | 武器/路径查询工具（直线沿线地格采样、敌对索敌、带 validator 的射线终点 GetDest；居合/夹枪/超电磁炮共用） |
 | `Hediff_Pharna.cs` 内 `PharnaUtility`（`GetPharna` / `GetActiveSkill<T>`） | 恩惠获取；GetActiveSkill 取 pawn 自身 active 的指定技能实例（区别于嘲讽 Provokers 静态集合语义） |
 | `Mote_*.cs`                                 | 地图特效（咏唱词/魔法阵/光环/斩击等）    |
+| `Gizmo_ManaPool.cs`（`FamiliaMyth.UI`）      | 魔力池状态条：显示 `manaPool / ManaMax`，右上角角标开关自动转化；由 `Hediff_Pharna.GetGizmos` 挂出 |
 | `Projectile_*` + `MagicMissileStates.cs`    | 魔法弹与运动状态机               |
 | `Ritual*`                                   | 仪式（给予/升华恩惠）及结果处理        |
 | `GuildQuestDef` / `GuildQuestGenerator*`        | 公会任务定义与生成（日常 = 使者对话接取指定接取者；强制 = 使者出场自动接取、不可拒绝；Slate 传参 → GenerateQuestAndMakeAvailable）。**实例一律经静态工厂 `GuildQuestGenerator.Create(def)` 构造**（绑定 def；漏绑会导致 Category/Type 静默为 null，见 B-04 BUG-017），发布前由 `Available()` 预筛 |
@@ -246,7 +260,7 @@
 | `MentalState_*` / `Hediff_*` / `Verb_*`     | 精神状态（`MentalState_Virtue`：美德状态 + 触发当拍随机飘出独白/祷告心声）、词缀、咏唱 verb         |
 | `FamiliaMythMod.cs`（模组主类） | HugsLib `ModBase` 子类：`Initialize()` 里经 `Settings.GetHandle` 注册模组设置（神名）；持有神名三件套 `DefaultGodName1`（玩家视角）/ `DefaultGodName2` + `Honorific`（眷族视角）与 `GodAddress`（接口签名与陷阱见 C-03） |
 | `UI_*.cs`                                   | 界面（眷族页、升级奖励弹窗、雷达图）      |
-| `StatPart_*`                                | StatDef 注入修正            |
+| `StatPart_*`                                | StatDef 注入修正（`StatPart_ManaControl`：魔力操控按 SpellType 过滤技能 / 发展能力 / hediff comp 的 `IManaControlModifier` 加成）            |
 | `Defs/` + `Patches/`                        | XML 定义与条件补丁             |
 | `Languages/`（`Keyed/` + `DefInjected/`）    | 本地化文本（中英逐键对称，`12-本地化检查.ps1` 7 项全绿）；`Keyed/` 放代码内文本、`DefInjected/` 放 Def 文本且文件名与 `Defs/` 一一对应；四条文本路径与命名规范见 C-03，术语基准见 C-06 |
 

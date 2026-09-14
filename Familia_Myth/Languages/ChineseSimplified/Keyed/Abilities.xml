@@ -9,15 +9,15 @@
   <FamiliaMyth.Ability.SkillCooldown>冷却剩余:{0}</FamiliaMyth.Ability.SkillCooldown>
   <!-- ==================== Spell ==================== -->
   <FamiliaMyth.Ability.EntropyOverflow>{0}的心灵熵将会超出阈值</FamiliaMyth.Ability.EntropyOverflow>
-  <FamiliaMyth.Ability.NotEnoughPsyfocus>{0}的精神力不足</FamiliaMyth.Ability.NotEnoughPsyfocus>
+  <FamiliaMyth.Ability.NotEnoughMana>{0}的魔力不足</FamiliaMyth.Ability.NotEnoughMana>
   <FamiliaMyth.Ability.CancelCastLabel>取消释放{0}</FamiliaMyth.Ability.CancelCastLabel>
   <FamiliaMyth.Ability.CancelCastDesc>取消正在释放的{0}</FamiliaMyth.Ability.CancelCastDesc>
   <FamiliaMyth.Ability.SpellKeyLabel>引爆咒：{0}</FamiliaMyth.Ability.SpellKeyLabel>
   <!-- ==================== 重生女神之礼赞（Spell_ZeoGullveig） ==================== -->
   <FamiliaMyth.Ability.ZeoGullveig>重生女神之礼赞</FamiliaMyth.Ability.ZeoGullveig>
   <FamiliaMyth.Ability.ZeoGullveigAutoLabel>重生女神之礼赞：自动治愈</FamiliaMyth.Ability.ZeoGullveigAutoLabel>
-  <FamiliaMyth.Ability.ZeoGullveigAutoDesc>持续消耗精神力自动进行自我治愈，精神力不足时自动关闭</FamiliaMyth.Ability.ZeoGullveigAutoDesc>
-  <FamiliaMyth.Ability.ZeoGullveigNoPsy>{0}精神力不足，自动治愈已关闭。</FamiliaMyth.Ability.ZeoGullveigNoPsy>
+  <FamiliaMyth.Ability.ZeoGullveigAutoDesc>持续消耗魔力自动进行自我治愈，魔力不足时自动关闭</FamiliaMyth.Ability.ZeoGullveigAutoDesc>
+  <FamiliaMyth.Ability.ZeoGullveigNoMana>{0}魔力不足，自动治愈已关闭。</FamiliaMyth.Ability.ZeoGullveigNoMana>
   <FamiliaMyth.Ability.PawnDead>{0}已死亡</FamiliaMyth.Ability.PawnDead>
   <!-- ==================== 时间停止（Spell_TheWorld） ==================== -->
   <FamiliaMyth.Ability.TimeStop>时间停止</FamiliaMyth.Ability.TimeStop>
@@ -55,13 +55,9 @@
 	<FamiliaMyth.DevelopableAbility.LuckOfTheSeaLabel>海之眷顾</FamiliaMyth.DevelopableAbility.LuckOfTheSeaLabel>
 	<FamiliaMyth.DevelopableAbility.MagicLabel>魔导</FamiliaMyth.DevelopableAbility.MagicLabel>
 	<FamiliaMyth.DevelopableAbility.AbnormalResistanceLabel>异常抗性</FamiliaMyth.DevelopableAbility.AbnormalResistanceLabel>
-	<FamiliaMyth.DevelopableAbility.MagicAutoStoreOffMessage>使用了存储的精神力，自动存储已关闭。</FamiliaMyth.DevelopableAbility.MagicAutoStoreOffMessage>
-	<FamiliaMyth.DevelopableAbility.MagicRestorePsyfocus>恢复精神力</FamiliaMyth.DevelopableAbility.MagicRestorePsyfocus>
-	<FamiliaMyth.DevelopableAbility.MagicRestorePsyfocusDesc>消耗已存储的精神力进行恢复</FamiliaMyth.DevelopableAbility.MagicRestorePsyfocusDesc>
-	<FamiliaMyth.DevelopableAbility.MagicRestorePsyfocusDisabled>存储的精神力不足</FamiliaMyth.DevelopableAbility.MagicRestorePsyfocusDisabled>
-	<FamiliaMyth.DevelopableAbility.MagicAutoStoreLabel>自动存储精神力</FamiliaMyth.DevelopableAbility.MagicAutoStoreLabel>
-	<FamiliaMyth.DevelopableAbility.MagicAutoStoreDesc>自动存储超过50%的现有精神力，使用 恢复精神力 时自动关闭</FamiliaMyth.DevelopableAbility.MagicAutoStoreDesc>
-	<FamiliaMyth.DevelopableAbility.MagicStoreBarTitle>精神力存储</FamiliaMyth.DevelopableAbility.MagicStoreBarTitle>
-	<FamiliaMyth.DevelopableAbility.MagicStoreTooltip>已存储{0}/{1}</FamiliaMyth.DevelopableAbility.MagicStoreTooltip>
 
+  <!-- ==================== 魔力（Hediff_Pharna） ==================== -->
+  <FamiliaMyth.Mana.PoolTitle>魔力</FamiliaMyth.Mana.PoolTitle>
+  <FamiliaMyth.Mana.PoolTooltip>当前魔力：{0} / {1}</FamiliaMyth.Mana.PoolTooltip>
+  <FamiliaMyth.Mana.AutoConvertTooltip>自动转化：开启时持续把精神力转化为魔力（同时产生心灵熵）</FamiliaMyth.Mana.AutoConvertTooltip>
 </LanguageData>

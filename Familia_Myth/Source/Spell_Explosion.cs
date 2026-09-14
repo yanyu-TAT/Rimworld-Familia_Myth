@@ -1,4 +1,4 @@
-﻿using RimWorld;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -100,7 +100,7 @@ namespace FamiliaMyth.Abilities
         {
             if (!castDone) return;
 
-            float power = GetCurrentSpellPower();
+            float power = GetCurrentManaControl();
             damage = power * BasicDamage;
             radius = power * BasicRadius;
 
@@ -182,7 +182,7 @@ namespace FamiliaMyth.Abilities
         public IEnumerable<IntVec3> GetCells(LocalTargetInfo localTarget)
         {
             if (radiusForHighlight < 0 || Find.TickManager.TicksGame % 30 == 0)
-                radiusForHighlight = GetCurrentSpellPower() * BasicRadius;
+                radiusForHighlight = GetCurrentManaControl() * BasicRadius;
 
             if (!localTarget.IsValid)
                 return null;
