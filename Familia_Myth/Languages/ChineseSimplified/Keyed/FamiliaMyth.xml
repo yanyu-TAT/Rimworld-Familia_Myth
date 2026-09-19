@@ -34,6 +34,8 @@
 	<FamiliaMyth.HaveNoPharnaRefusion>没有恩惠</FamiliaMyth.HaveNoPharnaRefusion>
 	<!-- 拒绝理由：该殖民者未满足升华条件（能力≥D且伟业值足够） -->
 	<FamiliaMyth.NotMeetAscendRequirementRefusion>没有足够的伟业值或基础能力值不足</FamiliaMyth.NotMeetAscendRequirementRefusion>
+	<!-- 拒绝理由：该殖民者恩惠等级已达上限，无法继续升华 -->
+	<FamiliaMyth.MaxLevelRefusion>恩惠等级已达上限</FamiliaMyth.MaxLevelRefusion>
 	
 	<!-- 经验值 -->
 	<FamiliaMyth.Experience>经验值</FamiliaMyth.Experience>

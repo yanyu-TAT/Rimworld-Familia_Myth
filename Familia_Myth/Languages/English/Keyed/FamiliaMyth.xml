@@ -37,6 +37,8 @@
 	<FamiliaMyth.HaveNoPharnaRefusion>Does not have Pharna</FamiliaMyth.HaveNoPharnaRefusion>
 	<!-- Refusal: colonist does not meet ascend requirements (ability>=D and enough exploits) -->
 	<FamiliaMyth.NotMeetAscendRequirementRefusion>Insufficient exploits or basic ability too low</FamiliaMyth.NotMeetAscendRequirementRefusion>
+	<!-- Refusal: colonist's Pharna level is already at maximum, cannot ascend further -->
+	<FamiliaMyth.MaxLevelRefusion>Pharna level is already at maximum</FamiliaMyth.MaxLevelRefusion>
 
 	<!-- Exploits -->
 	<FamiliaMyth.Exploits>Exploits</FamiliaMyth.Exploits>

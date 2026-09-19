@@ -4,6 +4,10 @@
     <!-- ==================== 诺亚治愈 (Noah Heal) ===================== -->
     <FamiliaMyth.Abilities.SpellDef>
         <defName>Spell_NoahHeal</defName>
+		<manaCost>25</manaCost>
+		<statBases>
+			<Ability_EntropyGain>45</Ability_EntropyGain>
+		</statBases>
         <label>诺亚治愈</label>
         <description>包扎所有伤口在一段时间内加速愈合</description>
 
@@ -55,6 +59,10 @@
 	<!-- ==================== 光明之风 (Luminous Wind) ===================== -->
 	<FamiliaMyth.Abilities.SpellDef>
 		<defName>Spell_LuminousWind</defName>
+		<manaCost>100</manaCost>
+		<statBases>
+			<Ability_EntropyGain>30</Ability_EntropyGain>
+		</statBases>
 		<label>光明之风</label>
 		<description>咏唱过程中召唤数个风弹，结束时自动追踪附近敌人</description>
 
@@ -114,6 +122,10 @@
 	<!-- ==================== 齐射火标枪 (Fusillade Flame Spears) ===================== -->
 	<FamiliaMyth.Abilities.SpellDef>
 		<defName>Spell_FusilladeFlameSpears</defName>
+		<manaCost>500</manaCost>
+		<statBases>
+			<Ability_EntropyGain>90</Ability_EntropyGain>
+		</statBases>
 		<label>齐射火标枪</label>
 		<description>咏唱过程中锁定扇形范围内敌人，结束时发射火标枪轰炸目标附近区域</description>
 
@@ -170,6 +182,10 @@
 	<!-- ==================== 灵弓光箭 (Arcs Ray) ===================== -->
 	<FamiliaMyth.Abilities.SpellDef>
 		<defName>Spell_ArcsRay</defName>
+		<manaCost>300</manaCost>
+		<statBases>
+			<Ability_EntropyGain>60</Ability_EntropyGain>
+		</statBases>
 		<label>灵弓光箭</label>
 		<description>咏唱时凝聚一支必中的光箭，结束时发射追踪选定的敌人，贯穿路径上的敌人和建筑直到命中（无视护甲与承伤系数）</description>
 
@@ -229,6 +245,10 @@
 	<!-- ==================== The World ===================== -->
 	<FamiliaMyth.Abilities.SpellDef>
 		<defName>Spell_TheWorld</defName>
+		<manaCost>1000</manaCost>
+		<statBases>
+			<Ability_EntropyGain>150</Ability_EntropyGain>
+		</statBases>
 		<label>The World</label>
 		<description>展开时滞领域，范围内除发动者以外的事物的时间将被停止</description>
 
@@ -282,6 +302,10 @@
 <!-- ==================== 豪雷积雨云 (Thunder Storm) ===================== -->
 	<FamiliaMyth.Abilities.SpellDef>
 		<defName>Spell_ThunderStorm</defName>
+		<manaCost>1200</manaCost>
+		<statBases>
+			<Ability_EntropyGain>100</Ability_EntropyGain>
+		</statBases>
 		<label>豪雷积雨云</label>
 		<description>将天气变为暴风雨，向地图上的随机敌人降下数次大范围雷击</description>
 
@@ -336,6 +360,10 @@
 	<!-- ==================== 君王之剑 (Kings Sword) ===================== -->
 	<FamiliaMyth.Abilities.SpellDef>
 		<defName>Spell_KingsSword</defName>
+		<manaCost>500</manaCost>
+		<statBases>
+			<Ability_EntropyGain>80</Ability_EntropyGain>
+		</statBases>
 		<label>君王之剑</label>
 		<description>召唤一把悬浮环绕的巨剑，自动攻击靠近施法者的敌人。在场期间重复施法可叠加持续时间，并使攻击范围与伤害大幅提升</description>
 
@@ -384,14 +412,16 @@
 	<!-- ==================== 爆裂魔法 (Explosion) ===================== -->
 	<FamiliaMyth.Abilities.SpellDef>
 		<defName>Spell_Explosion</defName>
+		<manaCost>2500</manaCost>
+		<statBases>
+			<Ability_EntropyGain>180</Ability_EntropyGain>
+		</statBases>
 		<label>爆裂魔法</label>
 		<description>咏唱结束后在目标点引发一场巨大爆炸，伤害与范围随法强提升；施法结束后施法者将因魔力枯竭瘫痪数小时</description>
 
 		<!-- 魔法实现类 -->
 		<spellClass>FamiliaMyth.Abilities.Spell_Explosion</spellClass>
 
-		<!-- 魔力消耗：满值一发清空全池 -->
-		<manaCost>2500</manaCost>
 
 		<!-- 稀有度 -->
 		<rarity>Rare</rarity>
@@ -441,6 +471,10 @@
 	<!-- ==================== 光灵守护 (Light Guard) ===================== -->
 	<FamiliaMyth.Abilities.SpellDef>
 		<defName>Spell_LightGuard</defName>
+		<manaCost>50</manaCost>
+		<statBases>
+			<Ability_EntropyGain>50</Ability_EntropyGain>
+		</statBases>
 		<label>光灵守护</label>
 		<description>咏唱结束后召唤数个环绕施法者的光灵，吸收来袭弹射物并灼烧靠近的敌人；光灵数量与持续时间受法强影响</description>
 
@@ -494,6 +528,10 @@
 	<!-- ==================== 重生女神之礼赞 (Zeo Gullveig) ===================== -->
 	<FamiliaMyth.Abilities.SpellDef>
 		<defName>Spell_ZeoGullveig</defName>
+		<manaCost>1200</manaCost>
+		<statBases>
+			<Ability_EntropyGain>180</Ability_EntropyGain>
+		</statBases>
 		<label>重生女神之礼赞</label>
 		<description>咏唱结束后在目标点展开治愈法阵，为范围内友方包扎伤口、恢复伤势并附加疼痛抑制</description>
 

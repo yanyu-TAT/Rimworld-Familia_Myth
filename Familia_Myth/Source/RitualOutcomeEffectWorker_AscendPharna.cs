@@ -37,7 +37,7 @@ namespace FamiliaMyth.Ritual
             if (!pharna.CanAscend())
             {
                 extraOutcomeDesc = string.Empty;
-                Log.Warning("[FamiliaMyth] The recipent doesn't meet the acesnd requirement"); 
+                Log.Warning("[FamiliaMyth] The recipent can't get ascend"); 
                 return;
             }
 

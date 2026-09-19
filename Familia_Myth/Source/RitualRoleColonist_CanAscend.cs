@@ -23,10 +23,11 @@ namespace FamiliaMyth.Ritual
                 return false;
             }
 
-            if (!pharna.CanAscend())
+            var acceptance = pharna.CanAscend();
+            if (!acceptance)
             {
                 if (!skipReason)
-                    reason = "FamiliaMyth.NotMeetAscendRequirementRefusion".Translate();
+                    reason = acceptance.Reason;
                 return false;
             }
 

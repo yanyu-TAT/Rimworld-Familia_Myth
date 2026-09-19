@@ -18,7 +18,7 @@ namespace FamiliaMyth.Pharna
 
     public class Hediff_Pharna : Hediff_Level
     {
-        private static readonly float MaxExploit = 999f;
+        private const float MaxExploit = 999f;
 
         // 成长衰减：单项当前值 / 本周期六项总和 超过阈值后开始反比衰减
         private const float StatDecayThreshold = 400f;
@@ -227,15 +227,18 @@ namespace FamiliaMyth.Pharna
             return val;
         }
 
-        public bool CanAscend()
+        public AcceptanceReport CanAscend()
         {
+            if (level >= def.maxSeverity) return "FamiliaMyth.MaxLevelRefusion".Translate();
             bool status = false;
             for (int i = 0; i < 6; i++)
             {
                 PharnaStatusType type = (PharnaStatusType)i;
                 status = status || GetCurrentStatus(type) >= 500;
             }
-            return status && exploits >= MaxExploit;
+            if (!status || exploits < MaxExploit)
+                return "FamiliaMyth.NotMeetAscendRequirementRefusion".Translate();
+            return true;
         }
 
         public override void PostTick()

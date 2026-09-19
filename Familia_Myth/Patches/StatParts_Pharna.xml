@@ -509,7 +509,7 @@
                 <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                     <statusType>Will</statusType>
                     <mode>Offset</mode>
-                    <a>0.01000</a>
+                    <a>0.05000</a>
                     <displayAsPercent>false</displayAsPercent>
                 </li>
             </value>
@@ -521,7 +521,7 @@
                     <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                         <statusType>Will</statusType>
                         <mode>Offset</mode>
-                        <a>0.01000</a>
+                        <a>0.05000</a>
                         <displayAsPercent>false</displayAsPercent>
                     </li>
                 </parts>
