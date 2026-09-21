@@ -20,6 +20,9 @@
 	<ManaMax.description>能够储存的魔力上限。</ManaMax.description>
 	<ManaConversion.label>魔力转化效率</ManaConversion.label>
 	<ManaConversion.description>将精神力转化为魔力时的转换效率。</ManaConversion.description>
+	<ManaConversionSpeed.label>魔力转化速度</ManaConversionSpeed.label>
+	<ManaConversionSpeed.description>精神力充足时每秒能够转化的魔力量。</ManaConversionSpeed.description>
+	<ManaConversionSpeed.formatString>{0} /秒</ManaConversionSpeed.formatString>
 
 	<!-- 魔力操控（StatDef）：受魔法种类、魔导熟练度与意识共同影响 -->
 	<ManaControl.label>魔力操控</ManaControl.label>

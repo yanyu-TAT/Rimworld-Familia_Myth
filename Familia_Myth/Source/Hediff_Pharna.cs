@@ -26,7 +26,7 @@ namespace FamiliaMyth.Pharna
         private const float TotalStatDecayThreshold = 2000f;
         private const float TotalStatDecayScale = 2500f;
 
-        //魔力转化：每秒投入的精神力比例（1%）
+        //魔力转化：每秒投入的精神力
         private const float PsyfocusPerSecond = 0.0025f;
         //魔力转化：每1%精神力折算的魔力
         private const float ManaPerPsyfocus = 1000f;
@@ -310,6 +310,21 @@ namespace FamiliaMyth.Pharna
             manaPool = Mathf.Min(manaPool + amount, MaxMana);
         }
 
+        //魔力转化速率
+        public float ManaConversionSpeed => ManaConversionRate * PsyfocusPerSecond;
+
+        //每100%精神力转化的魔力
+        private float ManaConversionRate
+        {
+            get
+            {
+                float efficiency = pawn.GetStatValue(ManaConversionDef);
+                float consciousness = pawn.health?.capacities?.GetLevel(PawnCapacityDefOf.Consciousness) ?? 1f;
+                float final = ManaPerPsyfocus * efficiency * consciousness;
+                return final;
+            }
+        }
+
         //常态转化：把精神力转化为魔力，并产生副产物心灵熵
         private void ConvertPsyfocusToMana()
         {
@@ -321,14 +336,12 @@ namespace FamiliaMyth.Pharna
             float spend = Mathf.Min(PsyfocusPerSecond, tracker.CurrentPsyfocus);
             if (spend <= 0f) return;
 
+            //消耗精神力
             tracker.OffsetPsyfocusDirectly(-spend);
-            //副产物
+            //产生心灵熵
             tracker.TryAddEntropy(spend * 100f * EntropyPerPercent);
-
-            float efficiency = pawn.GetStatValue(ManaConversionDef);
-            float consciousness = pawn.health?.capacities?.GetLevel(PawnCapacityDefOf.Consciousness) ?? 1f;
-            float final = manaPool + spend * ManaPerPsyfocus * efficiency * consciousness;
-            GainMana(final);
+            //产出魔力
+            GainMana(spend * ManaConversionRate);
         }
 
         public void Ascend()

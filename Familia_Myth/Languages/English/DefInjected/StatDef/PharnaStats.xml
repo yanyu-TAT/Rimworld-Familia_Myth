@@ -20,6 +20,9 @@
 	<ManaMax.description>Maximum mana this person can store.</ManaMax.description>
 	<ManaConversion.label>Mana Conversion</ManaConversion.label>
 	<ManaConversion.description>The efficiency of converting psyfocus into mana.</ManaConversion.description>
+	<ManaConversionSpeed.label>Mana Conversion Rate</ManaConversionSpeed.label>
+	<ManaConversionSpeed.description>Mana converted per second when psyfocus is plentiful.</ManaConversionSpeed.description>
+	<ManaConversionSpeed.formatString>{0} /s</ManaConversionSpeed.formatString>
 
 	<!-- Mana Control (StatDef): governed by spell type, Magic Arts proficiency and consciousness -->
 	<ManaControl.label>Mana Control</ManaControl.label>

@@ -24,6 +24,7 @@
 	<FamiliaMyth.Stat.PharnaExploits>当前伟业值: {0} / 999\n恩惠等级: Lv.{1}</FamiliaMyth.Stat.PharnaExploits>
 	<FamiliaMyth.Stat.PharnaExperience>当前经验值 =\n{0}</FamiliaMyth.Stat.PharnaExperience>
 	<FamiliaMyth.Stat.PharnaStatus>当前: {0} | 潜在: {1}\n合计: {2}\n</FamiliaMyth.Stat.PharnaStatus>
+	<FamiliaMyth.Stat.ManaConversionSpeed>魔力转化效率 {0} × 当前意识 {1}\n转化速度 = {2} /秒</FamiliaMyth.Stat.ManaConversionSpeed>
 	<FamiliaMyth.Stat.FlameAffinityPrefix>技能 火焰亲和: </FamiliaMyth.Stat.FlameAffinityPrefix>
 
 </LanguageData>

@@ -7,6 +7,9 @@ namespace FamiliaMyth.Abilities
 {
     public class StatPart_PharnaDisplay : StatPart
     {
+        private static StatDef cachedManaConversionDef;
+        private static StatDef ManaConversionDef => cachedManaConversionDef ??= DefDatabase<StatDef>.GetNamed("ManaConversion");
+
         public PharnaDisplayMode mode;
         public PharnaStatusType statusType;
 
@@ -21,8 +24,20 @@ namespace FamiliaMyth.Abilities
                 PharnaDisplayMode.Status => GetStatusExplanation(pharna),
                 PharnaDisplayMode.Experience => GetExperienceExplanation(pharna),
                 PharnaDisplayMode.Exploits => GetExploitsExplanation(pharna),
+                PharnaDisplayMode.ManaConversionSpeed => GetManaConversionSpeedExplanation(pharna),
                 _ => ""
             };
+        }
+
+        private string GetManaConversionSpeedExplanation(Hediff_Pharna pharna)
+        {
+            var pawn = pharna.pawn;
+            float efficiency = pawn.GetStatValue(ManaConversionDef);
+            float consciousness = pawn.health?.capacities?.GetLevel(PawnCapacityDefOf.Consciousness) ?? 1f;
+            return "FamiliaMyth.Stat.ManaConversionSpeed".Translate(
+                efficiency.ToStringPercent(), 
+                consciousness.ToStringPercent(), 
+                pharna.ManaConversionSpeed.ToString("F1"));
         }
 
         private string GetExploitsExplanation(Hediff_Pharna pharna)
@@ -77,6 +92,7 @@ namespace FamiliaMyth.Abilities
                 PharnaDisplayMode.Status => pharna.GetFinalStatus(statusType),
                 PharnaDisplayMode.Experience => pharna.experience,
                 PharnaDisplayMode.Exploits => pharna.exploits,
+                PharnaDisplayMode.ManaConversionSpeed => pharna.ManaConversionSpeed,
                 _ => -1f
             };
         }
@@ -91,6 +107,7 @@ namespace FamiliaMyth.Abilities
     {
         Status,
         Experience,
-        Exploits
+        Exploits,
+        ManaConversionSpeed
     }
 }

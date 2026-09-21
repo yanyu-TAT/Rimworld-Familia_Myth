@@ -105,7 +105,7 @@
   <StatDef>
     <defName>PharnaMana</defName>
     <label>魔力</label>
-    <description>提升心灵熵阈值和冥想精神力获取，提升魔法强度。\n\n心灵熵阈值：+k × 0.01000\n冥想精神力获取：+k × 0.00001</description>
+    <description>提升魔力转化效率与魔力储量上限。\n\n魔力转化效率：+k × 0.00100\n魔力储量：+k × 0.75000</description>
     <category>Pharna</category>
     <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <defaultBaseValue>0</defaultBaseValue>
@@ -156,8 +156,8 @@
 
   <StatDef>
     <defName>ManaControl</defName>
-    <label>魔力输出</label>
-    <description>该角色输出魔力的功率，影响释放魔法时的部分效果</description>
+    <label>魔力操控</label>
+    <description>该角色操纵魔力的精度，由魔法种类、魔导熟练度与意识共同决定，影响部分魔法的效果。</description>
     <category>Pharna</category>
     <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <toStringStyle>PercentZero</toStringStyle>
@@ -185,8 +185,8 @@
 
   <StatDef>
     <defName>ManaControl_Attack</defName>
-    <label>魔力输出·攻击</label>
-    <description>释放攻击魔法时的魔力输出。</description>
+    <label>魔力操控·攻击</label>
+    <description>释放攻击魔法时的魔力操控。</description>
     <category>Pharna</category>
     <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <toStringStyle>PercentZero</toStringStyle>
@@ -216,8 +216,8 @@
 
   <StatDef>
     <defName>ManaControl_Heal</defName>
-    <label>魔力输出·治疗</label>
-    <description>释放治疗魔法时的魔力输出。</description>
+    <label>魔力操控·治疗</label>
+    <description>释放治疗魔法时的魔力操控。</description>
     <category>Pharna</category>
     <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <toStringStyle>PercentZero</toStringStyle>
@@ -247,8 +247,8 @@
 
   <StatDef>
     <defName>ManaControl_Defense</defName>
-    <label>防御魔力输出</label>
-    <description>释放防御魔法时使用的魔力输出。</description>
+    <label>魔力操控·防御</label>
+    <description>释放防御魔法时的魔力操控。</description>
     <category>Pharna</category>
     <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <toStringStyle>PercentZero</toStringStyle>
@@ -278,8 +278,8 @@
 
   <StatDef>
     <defName>ManaControl_Buff</defName>
-    <label>魔力输出·增益</label>
-    <description>释放增益魔法时的魔力输出。</description>
+    <label>魔力操控·增益</label>
+    <description>释放增益魔法时的魔力操控。</description>
     <category>Pharna</category>
     <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <toStringStyle>PercentZero</toStringStyle>
@@ -309,8 +309,8 @@
 
   <StatDef>
     <defName>ManaControl_Debuff</defName>
-    <label>减益魔力输出</label>
-    <description>释放减益魔法时使用的魔力输出。</description>
+    <label>魔力操控·减益</label>
+    <description>释放减益魔法时的魔力操控。</description>
     <category>Pharna</category>
     <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <toStringStyle>PercentZero</toStringStyle>
@@ -340,8 +340,8 @@
 
   <StatDef>
     <defName>ManaControl_Enchant</defName>
-    <label>魔力输出·赋予</label>
-    <description>释放赋予魔法时的魔力输出。</description>
+    <label>魔力操控·赋予</label>
+    <description>释放赋予魔法时的魔力操控。</description>
     <category>Pharna</category>
     <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <toStringStyle>PercentZero</toStringStyle>
@@ -371,8 +371,8 @@
 
   <StatDef>
     <defName>ManaControl_Field</defName>
-    <label>领域魔力输出</label>
-    <description>释放领域魔法时使用的魔力输出。</description>
+    <label>魔力操控·领域</label>
+    <description>释放领域魔法时的魔力操控。</description>
     <category>Pharna</category>
     <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <toStringStyle>PercentZero</toStringStyle>
@@ -402,8 +402,8 @@
 
   <StatDef>
     <defName>ManaControl_Summon</defName>
-    <label>魔力输出·召唤</label>
-    <description>释放召唤魔法时的魔力输出。</description>
+    <label>魔力操控·召唤</label>
+    <description>释放召唤魔法时的魔力操控。</description>
     <category>Pharna</category>
     <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <toStringStyle>PercentZero</toStringStyle>
@@ -482,6 +482,31 @@
         <mode>Offset</mode>
         <a>0.001</a>
         <displayAsPercent>true</displayAsPercent>
+      </li>
+    </parts>
+    <forInformationOnly>true</forInformationOnly>
+  </StatDef>
+
+  <StatDef>
+    <defName>ManaConversionSpeed</defName>
+    <label>魔力转化速度</label>
+    <description>精神力充足时每秒能够转化的魔力量。\n\n魔力转化速度 = 基础转化量 × 魔力转化效率 × 当前意识。</description>
+    <category>Pharna</category>
+    <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
+    <defaultBaseValue>0</defaultBaseValue>
+    <minValue>0</minValue>
+    <toStringStyle>FloatOne</toStringStyle>
+    <formatString>{0} /秒</formatString>
+    <showOnPawns>true</showOnPawns>
+    <showOnHumanlikes>true</showOnHumanlikes>
+    <showIfUndefined>true</showIfUndefined>
+    <showIfHediffsPresent>
+      <li>Hediff_Pharna</li>
+    </showIfHediffsPresent>
+    <displayPriorityInCategory>69</displayPriorityInCategory>
+    <parts>
+      <li Class="FamiliaMyth.Abilities.StatPart_PharnaDisplay">
+        <mode>ManaConversionSpeed</mode>
       </li>
     </parts>
     <forInformationOnly>true</forInformationOnly>

@@ -251,7 +251,7 @@ GenerateShuttle(Faction owningFaction = null, IEnumerable<Pawn> requiredPawns = 
 - 但 5 个 Target 角色的 `allowedConditions` 均为 `Default, Downed, Prisoner, Sleeping, IdeoUnwilling`（`Data/Anomaly/Defs/PsychicRitualDefs/PsychicRitualRoles.xml:41/50/59/68/77`），**无一声明 `TemporaryFactionMember`**；而 `PsychicRitualRoleDef.PawnCanDo` 规定 `!ConditionAllowed(Condition.TemporaryFactionMember) && pawn.IsQuestLodger()` → 拒绝（`ConditionAllowed` 是位掩码「豁免清单」，L209-212 / L439）→ **lodger 不可能被选为这些仪式的目标**（即便已被逮捕，lodger 标记仍在）。
 - 出处：`decompiledFiles/Verse.AI.Group/PsychicRitualToil_TargetCleanup.cs`、`RimWorld/PsychicRitualRoleDef.cs`、`Data/Anomaly/Defs/PsychicRitualDefs/PsychicRitualRoles.xml`。
 
-## 二、成长与数值系统
+## 九、成长与数值系统
 
 ### Hediff_Level（等级型 Hediff 基类）
 - `ChangeLevel(int levelOffset)`：`level = (int)Mathf.Clamp(level + levelOffset, def.minSeverity, def.maxSeverity)` → **等级上下限由 HediffDef 的 min/maxSeverity 决定**；本项目「恩惠」即以此把等级封在 Lv1~Lv10（`Hediff_Pharna.xml` 的 `<maxSeverity>10</maxSeverity>`）。
@@ -270,5 +270,16 @@ GenerateShuttle(Faction owningFaction = null, IEnumerable<Pawn> requiredPawns = 
 - **全库唯一使用点**：`RimWorld/ScenPart_StatFactor.cs:31` —— `if (!allDef.forInformationOnly && allDef.CanShowWithLoadedMods())`，即**剧本编辑器**在列出「可设系数的 Stat」时将其过滤掉。
 - **不影响**运行时取值、`StatPart` 的应用、信息卡显示。Stat 取值流程为：`StatWorker.GetValue` → `GetValueUnfinalized`（**子类可 override**，如 `StatWorker_MeleeArmorPenetration` 在此反算武器穿甲）→ `FinalizeValue`（**在此统一应用 `stat.parts`**）→ `PostProcessValue`/`postProcessCurve`。
 - 原版惯例：用于「值由其他数据派生、玩家与剧本无法直接设定」的展示型 Stat —— `MeleeWeapon_AverageDPS`、`MeleeWeapon_AverageArmorPenetration`（`Stats_Weapons_Melee.xml`）、`MaxInstallCount`（`Stats_Misc.xml`）。
-- 本项目用法：`Defs/StatDefs/PharnaStats.xml` 的 **17 个恩惠展示 Stat**（六项能力值 + `SpellPower` 系列 + 经验/伟业值）全部标注 —— 它们的值均由 `StatPart_PharnaDisplay` 从恩惠 Hediff 派生，玩家与剧本都不应直接设定。
+- 本项目用法：`Defs/StatDefs/PharnaStats.xml` 的 **20 个恩惠展示 Stat**（六项能力值、`ManaControl` 系列 9 个、`ManaMax` / `ManaConversion` / `ManaConversionSpeed`、经验值 / 伟业值）全部标注 —— 它们的值由 `StatPart_PharnaDisplay`（展示项）/ `StatPart_Pharna`（系数注入）/ `StatPart_ManaControl`（魔力操控）从恩惠 Hediff 派生，玩家与剧本都不应直接设定。
 - 出处：`decompiledFiles/Verse/StatDef.cs`、`RimWorld/ScenPart_StatFactor.cs`、`RimWorld/StatWorker.cs`、`RimWorld/StatWorker_MeleeArmorPenetration.cs`。
+
+## 十、文本与本地化
+
+### `"Key".Translate(args)` 的占位符格式化器（GrammarResolverSimple）
+- 入口链：`TranslatorFormattedStringExtensions.Translate(key, params NamedArgument[])`（`Verse/TranslatorFormattedStringExtensions.cs:45`）→ `TaggedString.Formatted` → `GrammarResolverSimple.Formatted`（`Verse/GrammarResolverSimple.cs:42`）。注意 `Verse/Translator.cs:68` 那个 `params object[]` 旧重载已标 `[Obsolete]`，**实际不会被调用**，所以不能按 `string.Format` 的心智模型理解参数语法。
+- 占位符解析（`GrammarResolverSimple.TryResolveInner`，line 91-305）：读 `{` 之后按字符分流 —— 遇 `_` 记子符号、遇 `?` 记条件分支、**遇 `:` 则整段切为函数调用** `{func:args}`；闭合后按索引（`int.TryParse`）或具名（`argsLabels`）取参。
+- `{0}` / `{name}`：走 `TryResolveSymbol`（line 306），最终落到 `resolvedStr = obj.ToString()`（line 1061-1073）；`obj` 为 null 则输出空串。传值前先格式化好，是本项目的既有惯例。
+- `{func:args}`：只支持 `lookup` 与 `replace`（`Verse/LanguageWorker.cs:254-264`），**其余函数名一律 `return ""`** —— 不 Log、不 Warning。
+- 因此 **.NET 的 `{0:P0}` / `{0:F1}` 格式说明符不可用**：`:` 会让解析器把 `0` 当作函数名，最终静默替换为空串（现象与排查见 B-04 BUG-024）。需要格式化时在参数侧先 `ToStringPercent()` / `ToString("F1")`，再作为裸 `{0}` 传入。
+- 无参 `.Translate()`（`Verse/Translator.cs:53`）直接查表返回原文、**不做符号解析**，故文本中含 `{BASETEXT}` 等二次占位符是安全的。
+- 出处：`decompiledFiles/Verse/TranslatorFormattedStringExtensions.cs`、`Verse/GrammarResolverSimple.cs`、`Verse/LanguageWorker.cs`、`Verse/Translator.cs`。

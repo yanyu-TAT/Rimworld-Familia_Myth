@@ -15,7 +15,7 @@
 | 魔法弹 | `Projectile_MagicMissileBase.cs` + `MagicMissileStates.cs` |
 | 技能框架 | `Skill.cs` + `SkillDef.cs` |
 | 发展能力 | `DevelopableAbility.cs` + `DevelopableAbilityDef.cs` + `StatPart_DevelopableAbility.cs` |
-| 魔力系统（精神力→魔力→魔法） | `Hediff_Pharna.cs`（`manaPool` / 常态转化 / `SpendMana`）+ `Defs/StatDefs/PharnaStats.xml`（`ManaMax` / `ManaConversion` / `ManaControl`）+ `StatPart_ManaControl.cs` + `Gizmo_ManaPool.cs`（池条与自动转化角标） |
+| 魔力系统（精神力→魔力→魔法） | `Hediff_Pharna.cs`（`manaPool` / 常态转化 / `SpendMana`）+ `Defs/StatDefs/PharnaStats.xml`（`ManaMax` / `ManaConversion` / `ManaConversionSpeed` / `ManaControl`）+ `StatPart_ManaControl.cs` + `Gizmo_ManaPool.cs`（池条与自动转化角标） |
 | 意志/美德 | `MentalState_Virtue.cs`（含触发当拍的心声飘字）+ `Defs/HediffDefs/Hediff_Virtues.xml`（五种 Buff 与范围光环）+ `Patch_MentalBreaker.cs`（崩溃前拦截）+ `Hediff_Pharna.TryTriggerVirtue`（概率/冷却/类型抽取） |
 | 公会 | `GameComponent_FamiliaRankTracker.cs` + `GameComponent_GuildEnvoyTracker.cs`（单槽使者）+ `GuildQuestDef/Generator*`（统一工厂 `GuildQuestGenerator.Create(def)` + `Available()` 发布预筛）+ `QuestUtilities.cs` + 任务三件套（`QuestNode_Root_*` / `QuestPart_*` / `ExploitsReward`，细节见 C-02）+ 世界对象交互 comp（`WorldObjectComp_*`，如物资押运的定居点按钮）+ 任务脚本（`Defs/QuestScriptDefs/`） |
 | 眷族 UI | `UI_FamiliaPage.cs` + `UI_RadarChart.cs` |

@@ -158,6 +158,7 @@
 ✅ Def 内文本一律保留作默认/兜底，由语言文件覆盖（原版模式 `<label TKey="Xxx">Default</label>`）
 ✅ `description` 只写**客观定性**描述（大量 / 数次 / 大范围 / 片刻），精确数值与叙事留给图鉴——运行时精确值已由 UI 承担（充能数 / 状态标签 / 剩余次数）
 ❌ 把 Keyed 键填进 Def 字段——Def 字段不会自动 Translate，只会把键原样显示（细则见 C-03）
+❌ 在语言文件里写 `{0:P0}` / `{0:F1}` 等 .NET 格式说明符——`Translate(...)` 走 RimWorld 的 `GrammarResolverSimple`，`:` 会被当作 `{func:args}` 函数语法，未知函数**静默返回空串**（无红字、检查脚本也不报），表现为该参数位置显示为空；格式化请在参数侧做完再传（`ToStringPercent()` / `ToString("F1")`，见 B-04 BUG-024）
 ❌ 清空 Def 内文本（语言键缺失时会退化成 defName）
 ❌ 将纯展示文本硬编码散落在逻辑代码里（例外：运行时动态拼接）
 ✅ 本地化完整性用根目录 `12-本地化检查.ps1` 校验
@@ -234,7 +235,7 @@
 | 目录/前缀                                       | 职责                      |
 | ------------------------------------------- | ----------------------- |
 | `Patch_*.cs`                                | Harmony 补丁（**以相关功能命名**：技能/魔法名、`<能力值>Gain_来源`、系统名；类名与文件名对应、命名空间统一 `FamiliaMyth.Patch`、方法体必包 try-catch，细则见 C-03） |
-| `Hediff_Pharna.cs`（恩惠状态与成长）              | 成长入口 `GainStatus`（含**阈值式双衰减**：单项 400 / 总量 2000 起衰减，参数为文件顶部 4 个 const）；`CycleExp` = 六项当前值之和；`Ascend()` 把当前值累入潜在值并清零、消耗伟业值升级；等级上限由 `HediffDef.maxSeverity` 决定；**魔力池**（`manaPool` / `MaxMana` / `SpendMana` / `RefundMana` / 常态转化 `ConvertPsyfocusToMana`；注意 `mana` 是六维属性「魔力」，勿与 `manaPool` 混用）（细则见 C-03） |
+| `Hediff_Pharna.cs`（恩惠状态与成长）              | 成长入口 `GainStatus`（含**阈值式双衰减**：单项 400 / 总量 2000 起衰减，参数为文件顶部 4 个 const）；`CycleExp` = 六项当前值之和；`Ascend()` 把当前值累入潜在值并清零、消耗伟业值升级；等级上限由 `HediffDef.maxSeverity` 决定，`CanAscend()` 返回 `AcceptanceReport`（满级 / 条件不足各给拒绝理由）；**魔力池**（`manaPool` / `MaxMana` / `SpendMana` / `GainMana` / 常态转化 `ConvertPsyfocusToMana`；`ManaConversionSpeed` = 每秒产出（= 私有 `ManaConversionRate`「每 100% 精神力产出」× 每秒投入比例），同名 StatDef 即由它派生；注意 `mana` 是六维属性「魔力」，勿与 `manaPool` 混用）（细则见 C-03） |
 | `Spell*.cs` + `SpellDef.cs`                 | 魔法框架与具体魔法（继承原版 Ability） |
 | `Skill*.cs` + `SkillDef.cs`                 | 技能（主动/被动/触发；charge 充能 + active 效果生命周期） |
 | `HediffComp_SkillState`（override CompLabelInBracketsExtra）/ `HediffComp_SkillInEffect` | 技能状态指示（Def 用 HediffWithComps，comp 反查 skillDef 的 StateText 展示括号标签；effect 生命周期间回调） |
@@ -260,7 +261,7 @@
 | `MentalState_*` / `Hediff_*` / `Verb_*`     | 精神状态（`MentalState_Virtue`：美德状态 + 触发当拍随机飘出独白/祷告心声）、词缀、咏唱 verb         |
 | `FamiliaMythMod.cs`（模组主类） | HugsLib `ModBase` 子类：`Initialize()` 里经 `Settings.GetHandle` 注册模组设置（神名）；持有神名三件套 `DefaultGodName1`（玩家视角）/ `DefaultGodName2` + `Honorific`（眷族视角）与 `GodAddress`（接口签名与陷阱见 C-03） |
 | `UI_*.cs`                                   | 界面（眷族页、升级奖励弹窗、雷达图）      |
-| `StatPart_*`                                | StatDef 注入修正（`StatPart_ManaControl`：魔力操控按 SpellType 过滤技能 / 发展能力 / hediff comp 的 `IManaControlModifier` 加成）            |
+| `StatPart_*`                                | StatDef 注入修正（`StatPart_ManaControl`：魔力操控按 SpellType 过滤技能 / 发展能力 / hediff comp 的 `IManaControlModifier` 加成；`StatPart_PharnaDisplay`：信息卡**展示项**注入，`PharnaDisplayMode` 枚举决定取值——六维 / 经验值 / 伟业值 / 魔力转化速度，配 `StatWorker_Pharna` 拦掉非 Pawn）            |
 | `Defs/` + `Patches/`                        | XML 定义与条件补丁             |
 | `Languages/`（`Keyed/` + `DefInjected/`）    | 本地化文本（中英逐键对称，`12-本地化检查.ps1` 7 项全绿）；`Keyed/` 放代码内文本、`DefInjected/` 放 Def 文本且文件名与 `Defs/` 一一对应；四条文本路径与命名规范见 C-03，术语基准见 C-06 |
 

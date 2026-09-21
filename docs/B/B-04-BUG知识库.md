@@ -211,3 +211,11 @@
 - 是否规范缺失: 是（"先写共享状态、再执行可能失败的动作"必须在失败路径回滚，否则残留值会被其他系统误读）
 - 规范反哺: AGENTS.md「四、强制规范 · 核心开发原则」新增一条 ✅；`docs/C/C-02` 意志/美德段与 `C-03` 约定同步记录。
 - 关联: 次数 1
+
+## BUG-024 | Keyed 文本用 `{0:P0}` 等格式说明符 → 参数位置静默显示为空
+- 现象: 新增的信息卡展示项 `ManaConversionSpeed`（魔力转化速度），其解释文本中三个参数位置**全部为空**（显示成 `魔力转化效率  × 当前意识 `）。而键本身中英对称、`12-本地化检查.ps1` 七项全绿、游戏日志也没有任何红字，极易误判为「键没生效」或「参数没传进去」。
+- 根因: `"Key".Translate(args)` **不走 `string.Format`**，而是 `TranslatorFormattedStringExtensions.Translate(key, params NamedArgument[])` → `TaggedString.Formatted` → `Verse/GrammarResolverSimple.cs`。该解析器（`TryResolveInner`，line 155-168）**一遇到 `:` 就切进「函数调用」模式**并停止读占位符名，于是 `{0:P0}` 被拆成「函数名 `0` + 参数 `P0`」；再经 `Verse/LanguageWorker.cs` 的 `ResolveFunction`（line 254-264）判定——它只认 `lookup` / `replace`，其余分支**直接 `return ""`**，既不 Log 也不 Warning。三个占位符因此同时变成空串。（`Verse/Translator.cs` 里那个 `params object[]` 的旧重载已标 `[Obsolete]`，根本没被调用。）
+- 修复方案: 语言文件只写裸 `{0}` `{1}` `{2}`；格式化前移到参数侧，如 `efficiency.ToStringPercent()`、`speed.ToString("F1")`。项目既有键（`FamiliaMyth.Stat.PharnaStatus` 等）一直传的就是已格式化好的 `int`，正好印证此惯例。
+- 是否规范缺失: 是（AGENTS.md / B-01 只约束了「四条文本路径」，未约束占位符语法；坑点静默无日志，本地化检查脚本也抓不到）
+- 规范反哺: AGENTS.md「五、基础代码规范 · 本地化」新增一条 ❌；`docs/B/B-01-开发规范.md`「七 · 本地化文本」新建小节；`docs/C/C-03-项目长期记忆.md` 该条补齐「未知函数静默返回空串、无日志」与反编译行号。
+- 关联: 次数 1（同一处文本内 3 个占位符同时失效）
