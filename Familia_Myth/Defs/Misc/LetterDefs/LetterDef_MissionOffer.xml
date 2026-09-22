@@ -13,7 +13,7 @@
   <!-- 强制升级考核 -->
   <LetterDef ParentName="CustomChoiceLetterBase">
     <defName>AcceptRankUpQuestFromEnvoy</defName>
-    <letterClass>Familia_Myth.Source.ChoiceLetter_RankUpQuest</letterClass>
+    <letterClass>FamiliaMyth.Quest.ChoiceLetter_RankUpQuest</letterClass>
   </LetterDef>
 
 </Defs>

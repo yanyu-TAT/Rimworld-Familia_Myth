@@ -5,7 +5,7 @@
     <!-- Familia Myth - 火焰亲和 StatPart 注入补丁                      -->
     <!-- 将 StatPart_FlameAffinity 注入原版 StatDef 的 <parts> 列表    -->
     <!-- 持有火焰亲和技能时：                                          -->
-    <!--   ArmorRating_Heat     热能护甲 +2                            -->
+    <!--   ArmorRating_Heat     热能护甲 +1.6（期望减伤 90%）              -->
     <!--   ComfyTemperatureMax  最高舒适温度 +1000                     -->
     <!--   Flammability         易燃性 +1                              -->
     <!-- ============================================================ -->

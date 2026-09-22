@@ -12,13 +12,13 @@ namespace FamiliaMyth.Abilities
         //基础持续时间
         private const int BasicDuration = 600;
         //基础单次治疗量
-        private const int BasicHealBudget = 500;
+        private const int BasicHealBudget = 250;
         //治疗间隔
         private const int HealIntervalTicks = 90;
         //自动治愈治疗量
-        private const int AutoHealBudget = 25;
+        private const int AutoHealBudget = 8;
         //自动治愈单次魔力消耗
-        private const float AutoHealManaCost = 20f;
+        private const float AutoHealManaCost = 40f;
         //法阵范围
         public const float Radius = 10f;
         //离开法阵的效果持续时间

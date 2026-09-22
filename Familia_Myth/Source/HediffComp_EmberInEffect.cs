@@ -1,11 +1,11 @@
-﻿using RimWorld;
+using RimWorld;
 using Verse;
 
 namespace FamiliaMyth.Abilities
 {
     public class HediffComp_EmberInEffect : HediffComp_SkillInEffect
     {
-        private const float InjuryHealPerTick = 20f;
+        private const float InjuryHealPerTick = 0.1f;
         public override void CompPostTick(ref float severityAdjustment)
         {
             base.CompPostTick(ref severityAdjustment);

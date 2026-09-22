@@ -249,7 +249,7 @@
 | `Ritual*`                                   | 仪式（给予/升华恩惠）及结果处理        |
 | `GuildQuestDef` / `GuildQuestGenerator*`        | 公会任务定义与生成（日常 = 使者对话接取指定接取者；强制 = 使者出场自动接取、不可拒绝；Slate 传参 → GenerateQuestAndMakeAvailable）。**实例一律经静态工厂 `GuildQuestGenerator.Create(def)` 构造**（绑定 def；漏绑会导致 Category/Type 静默为 null，见 B-04 BUG-017），发布前由 `Available()` 预筛 |
 | `QuestUtilities` | 任务静态工具（点数统一计算 + 伟业值名单化发放，签名与规则见 C-02） |
-| `QuestNode_ExploitsReward` / `QuestPart_ExploitsReward` + `QuestNode_RankUpComplete/Failed` / `QuestPart_RankUp*` | 统一奖励结算（伟业值/升级点）与评级晋升、失败重发部件（节点只生成 QuestPart、信号触发，机制见 C-02） |
+| `QuestNode_SiteClearanceReward` / `QuestPart_SiteClearanceReward` + `QuestNode_RankUpComplete/Failed` / `QuestPart_RankUp*` | 据点清剿的奖励部件（威胁清除当拍快照名单 → 伟业值；并发放眷族升级点数）与评级晋升、失败重发部件（节点只生成 QuestPart、信号触发）。**奖励一律由各任务自己的 part 发放，统一出口为 `QuestUtilities.DistributeExploits` 与 `GameComponent_FamiliaRankTracker.GainPoints`，不设通用奖励 part**（机制见 C-02） |
 | `QuestNode_Root_{Daily/RankUp}_{任务名}`（如 `QuestNode_Root_Daily_SiteClearance` / `QuestNode_Root_RankUp_SiteClearance` / `QuestNode_Root_Daily_Rescue`） | 任务三件套之「根节点」：生成期统一点数/参数、准备任务专属对象、装配过程 part（每任务自实现，规格相似，见 C-02） |
 | `QuestNode_RescueSetup` + `QuestPart_Rescue` / `QuestPart_RescueSpawn` + `QuestPart_ExtraFaction` | 「紧急救援」过程 part（QuestPartActivable 状态机）：威胁清除当拍幸存者难民式临时加入玩家派系（`SetFaction` 玩家 + HomeFaction「原派系」标记 → 上头像栏可指挥、lodger 限制自动生效、守点 lord 当拍释放不再发放），结算一律归还原派系（就地接送流程见 C-02） |
 | `QuestNode_Root_Daily_CriminalHunt` / `QuestNode_CriminalHuntSetup` + `QuestPart_CriminalHunt` / `QuestPart_CriminalHuntSpawn` | 「罪犯追捕」过程 part：Outpost 守卫 + 1 名同派系通缉犯同场（守点迎战）；威胁清除分流（击毙 → 普通结算；存活 → 打包带离窝点、离图计时 1~3 天 → 公会押解穿梭机 2 天窗口）；活犯上船起飞 → ×2 结算（囚犯 despawn discard、不改派系）；死亡任意原因 → 普通结算；招募/奴役或活着失踪 → 失败（流程见 C-02） |

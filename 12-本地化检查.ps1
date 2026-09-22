@@ -172,8 +172,15 @@ Write-Host ''
 Write-Host '[6] Source 内 .Translate() 键 -> Keyed 覆盖' -ForegroundColor Yellow
 $usedKeys = @()
 if (Test-Path $srcRoot) {
-    $hits = Select-String -Path (Join-Path $srcRoot '*.cs') -Pattern '"([\w\.]+)"\s*\.Translate' -AllMatches -ErrorAction SilentlyContinue
-    foreach ($h in $hits) { foreach ($m in $h.Matches) { $usedKeys += $m.Groups[1].Value } }
+    # 两种引用形式都要抓：① "Key".Translate(...)   ② TranslateHelper.Translate("Key") / Translate("Key")
+    $keyPatterns = @(
+        '"([\w\.]+)"\s*\.Translate',
+        'Translate\w*\s*\(\s*"([\w\.]+)"'
+    )
+    foreach ($p in $keyPatterns) {
+        $hits = Select-String -Path (Join-Path $srcRoot '*.cs') -Pattern $p -AllMatches -ErrorAction SilentlyContinue
+        foreach ($h in $hits) { foreach ($m in $h.Matches) { $usedKeys += $m.Groups[1].Value } }
+    }
 }
 $usedKeys = @($usedKeys | Sort-Object -Unique)
 "    代码引用 key 数: $($usedKeys.Count)"

@@ -1,10 +1,9 @@
-﻿using Verse;
+using Verse;
 
 namespace FamiliaMyth.Abilities
 {
     public class Skill_Railgun : Skill
     {
-        private const int MaxCount = 5;
         public const int StunTicks = 120;
 
         private static HediffDef inEffectDef;

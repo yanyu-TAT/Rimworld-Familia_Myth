@@ -1,10 +1,9 @@
 using FamiliaMyth.Familia;
 using FamiliaMyth.Incidents;
-using FamiliaMyth.Quest;
 using RimWorld;
 using Verse;
 
-namespace Familia_Myth.Source
+namespace FamiliaMyth.Quest
 {
     public class ChoiceLetter_RankUpQuest : ChoiceLetter, IQuestProvider
     {

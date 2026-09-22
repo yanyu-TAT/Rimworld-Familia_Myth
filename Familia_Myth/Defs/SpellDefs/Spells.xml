@@ -528,7 +528,7 @@
 	<!-- ==================== 重生女神之礼赞 (Zeo Gullveig) ===================== -->
 	<FamiliaMyth.Abilities.SpellDef>
 		<defName>Spell_ZeoGullveig</defName>
-		<manaCost>1200</manaCost>
+		<manaCost>1800</manaCost>
 		<statBases>
 			<Ability_EntropyGain>180</Ability_EntropyGain>
 		</statBases>

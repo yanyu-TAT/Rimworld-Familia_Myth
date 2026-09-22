@@ -36,6 +36,8 @@
   <!-- ==================== 哀兵必胜（Skill_DesperateArmyWin） ==================== -->
   <FamiliaMyth.Ability.DesperateArmyWinStatus>  哀兵必胜: +{0}</FamiliaMyth.Ability.DesperateArmyWinStatus>
   <FamiliaMyth.Ability.DesperateArmyWinWill>  哀兵必胜: +{0}</FamiliaMyth.Ability.DesperateArmyWinWill>
+  <!-- ==================== 狂化招乱（Skill_BerserkerChaos） ==================== -->
+  <FamiliaMyth.BerserkerChaosLabel>  狂化招乱</FamiliaMyth.BerserkerChaosLabel>
   <!-- ==================== 余烬（Skill_Ember） ==================== -->
   <FamiliaMyth.Ability.EmberTriggered>由于被击倒，{0} 的技能：余烬 已触发</FamiliaMyth.Ability.EmberTriggered>
   <!-- ==================== 嘲讽（Skill_Provoke） ==================== -->

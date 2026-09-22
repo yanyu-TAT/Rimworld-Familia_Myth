@@ -4,7 +4,7 @@
   <!-- 强制升级考核任务脚本 -->
   <!-- 由 GuildQuestGenerator_RankUP_SiteClearance.QuestScriptDefName 引用 -->
   <!-- 流程：达标 → 使者出场（自动接取）→ 生成强化站点 → 清剿 → 晋升评级 + 伟业值 -->
-  <!-- 失败/超时 → QuestNode_RankUpFailed 通知 tracker → 3~5 天后自动重发 -->
+  <!-- 失败/超时 → QuestNode_RankUpFailed 通知 tracker → 1~5 天后自动重发 -->
   <QuestScriptDef>
     <defName>Quest_RankUp_SiteClearance</defName>
     <autoAccept>true</autoAccept>
@@ -64,10 +64,12 @@
                     <categoryDef>$category</categoryDef>
                   </li>
                   <!-- 发放伟业值（威胁清除时点按站点在场人员快照；无接取者 → 全员均分） -->
-                  <li Class="FamiliaMyth.Quest.QuestNode_ExploitsReward">
+                  <li Class="FamiliaMyth.Quest.QuestNode_SiteClearanceReward">
                     <site>$site</site>
                     <totalExploits>$totalExploits</totalExploits>
                     <letterLabel TKey="LetterLabelRankUpCompleted">强制任务完成</letterLabel>
+                    <category>$category</category>
+                    <upgradePoints>10</upgradePoints>
                   </li>
                   <!-- 触发奖励结算 -->
                   <li Class="QuestNode_SendSignals">
@@ -94,7 +96,7 @@
                     <label TKey="LetterLabelRankUpFailed">强制任务失败</label>
                     <text TKey="LetterTextRankUpFailed">强制任务[resolvedQuestName]已超时，眷族晋升暂时搁置。数日后公会使者将再次前来发布考核任务。</text>
                   </li>
-                  <!-- 通知 tracker 记录失败，进入 3~5 天冷却后自动重发 -->
+                  <!-- 通知 tracker 记录失败，进入 1~5 天冷却后自动重发 -->
                   <li Class="FamiliaMyth.Quest.QuestNode_RankUpFailed">
                     <categoryDef>$category</categoryDef>
                   </li>

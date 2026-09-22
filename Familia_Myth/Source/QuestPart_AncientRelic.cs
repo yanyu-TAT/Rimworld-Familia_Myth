@@ -305,13 +305,9 @@ namespace FamiliaMyth.Quest
         {
             if (participants.Count > 0)
                 return;
+            //机关箱可能与站点不同图，优先取箱子所在地图
             Map map = crate != null && !crate.Destroyed ? crate.Map : site?.Map;
-            if (map != null)
-            {
-                foreach (var p in map.mapPawns.AllPawnsSpawned)
-                    if (p.IsColonist && p.Faction == Faction.OfPlayer && p.GetPharna() != null)
-                        participants.Add(p);
-            }
+            QuestUtilities.SnapshotParticipants(map, participants);
             if (participants.Count == 0 && acceptor != null)
                 participants.Add(acceptor);
         }

@@ -205,10 +205,8 @@ namespace FamiliaMyth.Quest
 
         private void SnapshotParticipants()
         {
-            if (participants.Count > 0 || site?.Map is not Map map) return;
-            foreach (var p in map.mapPawns.AllPawnsSpawned)
-                if (p.IsColonist && p.Faction == Faction.OfPlayer && p.GetPharna() != null)
-                    participants.Add(p);
+            if (participants.Count > 0) return;
+            QuestUtilities.SnapshotSiteParticipants(site, participants);
         }
 
         //成功押解（×2）：通缉犯在机舱内随船起飞 → despawn discard（不改派系），双倍结算

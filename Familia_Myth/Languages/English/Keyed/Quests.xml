@@ -105,7 +105,9 @@
   <FamiliaMyth.QuestMisc.SupplyEscortNotReadyReason>Supplies have not yet been received from the pickup point</FamiliaMyth.QuestMisc.SupplyEscortNotReadyReason>
   <!-- ==================== Familia rank tracking (GameComponent_FamiliaRankTracker) ==================== -->
   <FamiliaMyth.QuestMisc.RankUpPointsLetterLabel>Familia growth</FamiliaMyth.QuestMisc.RankUpPointsLetterLabel>
-  <FamiliaMyth.QuestMisc.RankUpPointsLetterText>For outstanding contributions in "{0}",\nyour Familia has gained {1} upgrade points.\n\nCurrent: {2} / {3}</FamiliaMyth.QuestMisc.RankUpPointsLetterText>
+  <FamiliaMyth.QuestMisc.RankUpPointsLetterText>For outstanding contributions in "{0}",\nyour Familia has gained {1} upgrade points.\n\nCurrent: {3}</FamiliaMyth.QuestMisc.RankUpPointsLetterText>
+  <!-- Placeholder replacing {3} once the highest rank has been reached -->
+  <FamiliaMyth.QuestMisc.LevelMax>Already at maximum rank</FamiliaMyth.QuestMisc.LevelMax>
   <FamiliaMyth.QuestMisc.EnvoyArrivalLetterLabel>Guild envoy arrived</FamiliaMyth.QuestMisc.EnvoyArrivalLetterLabel>
   <FamiliaMyth.QuestMisc.EnvoyArrivalLetterText>An envoy of the Adventurers' Guild, {0}, has arrived at your settlement.\n\nSend a colonist to speak with the envoy and learn the details of the commission.</FamiliaMyth.QuestMisc.EnvoyArrivalLetterText>
   <FamiliaMyth.QuestMisc.RankUpPromotionLetterLabel>Familia rank up</FamiliaMyth.QuestMisc.RankUpPromotionLetterLabel>

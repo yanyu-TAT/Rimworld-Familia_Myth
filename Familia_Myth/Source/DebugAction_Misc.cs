@@ -1,4 +1,4 @@
-﻿namespace Familia_Myth.Source
+namespace FamiliaMyth.Debug
 {
     public static class DebugAction_Misc
     {

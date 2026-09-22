@@ -29,7 +29,7 @@ namespace FamiliaMyth.Abilities
                 switch (statType)
                 {
                     case FlameAffinityStatType.ArmorHeat:
-                        s += "+200%";
+                        s += "+160%";
                         break;
                     case FlameAffinityStatType.ComfyTemp:
                         s += "1000℃";
@@ -54,7 +54,7 @@ namespace FamiliaMyth.Abilities
                 switch (statType)
                 {
                     case FlameAffinityStatType.ArmorHeat:
-                        val += 2f;      //热能护甲+200%
+                        val += 1.6f;    //热能护甲+160%，期望减伤 90%
                         break;
                     case FlameAffinityStatType.ComfyTemp:
                         val += 1000f;   //最高舒适温度+1000℃

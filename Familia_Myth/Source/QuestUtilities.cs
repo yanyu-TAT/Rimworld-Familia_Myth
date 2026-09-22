@@ -1,5 +1,6 @@
 using FamiliaMyth.Pharna;
 using RimWorld;
+using RimWorld.Planet;
 using Verse;
 
 namespace FamiliaMyth.Quest
@@ -57,6 +58,19 @@ namespace FamiliaMyth.Quest
                 expSum += pharna.experience;
             }
         }
+
+        //快照「地图在场的受恩惠玩家成员」到 into（任务关键节点当拍调用，供各任务 part 共用）
+        public static void SnapshotParticipants(Map map, List<Pawn> into)
+        {
+            if (map == null) return;
+            foreach (var p in map.mapPawns.AllPawnsSpawned)
+                if (p.IsColonist && p.Faction == Faction.OfPlayer && p.GetPharna() != null)
+                    into.Add(p);
+        }
+
+        //快照「站点在场的受恩惠玩家成员」到 into
+        public static void SnapshotSiteParticipants(MapParent site, List<Pawn> into)
+            => SnapshotParticipants(site?.Map, into);
 
         //按参与者名单分配伟业值并发送结算信。
         //规则：acceptor 在名单且多人 → acceptor 得 50%，名单其余均分；否则名单全员均分（acceptor 可为 null）

@@ -1,4 +1,4 @@
-﻿using JetBrains.Annotations;
+using JetBrains.Annotations;
 using Verse;
 
 namespace FamiliaMyth.Familia
@@ -8,7 +8,7 @@ namespace FamiliaMyth.Familia
         public FamiliaCategoryDef categoryDef;
 
         public int seniority; //评级序号
-        public int upgradePointsRequired; //升级所需的升级点数
+        public int upgradePointsRequired; //晋升到本级所需的新增升级点数（晋升时从累计值中扣减）
 
         public override IEnumerable<string> ConfigErrors()
         {

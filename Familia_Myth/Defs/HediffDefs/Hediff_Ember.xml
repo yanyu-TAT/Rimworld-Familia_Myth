@@ -19,7 +19,7 @@
         <compClass>FamiliaMyth.Abilities.HediffComp_EmberInEffect</compClass>
       </li>
       <li Class="HediffCompProperties_Disappears">
-        <disappearsAfterTicks>9000</disappearsAfterTicks>
+        <disappearsAfterTicks>900</disappearsAfterTicks>
         <showRemainingTime>true</showRemainingTime>
       </li>
     </comps>

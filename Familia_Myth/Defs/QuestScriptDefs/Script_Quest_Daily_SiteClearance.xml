@@ -66,16 +66,13 @@
               <node Class="QuestNode_Sequence">
                 <nodes>
                   <!-- 发放伟业值奖励（威胁清除时点按站点在场人员快照；接取者在场 50% + 名单均分） -->
-                  <li Class="FamiliaMyth.Quest.QuestNode_ExploitsReward">
+                  <li Class="FamiliaMyth.Quest.QuestNode_SiteClearanceReward">
                     <site>$site</site>
                     <acceptor>$acceptor</acceptor>
                     <totalExploits>$totalExploits</totalExploits>
                     <letterLabel TKey="LetterLabelQuestCompleted">委托完成</letterLabel>
-                  </li>
-                  <!-- 发放眷族升级点数（供评级升级） -->
-                  <li Class="FamiliaMyth.Quest.QuestNode_GainUpgradePoints">
                     <category>$category</category>
-                    <amount>10</amount>
+                    <upgradePoints>10</upgradePoints>
                   </li>
                   <!-- 发送 rewardsReady 信号触发奖励发放 -->
                   <li Class="QuestNode_SendSignals">

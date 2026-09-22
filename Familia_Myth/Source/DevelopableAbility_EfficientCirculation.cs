@@ -13,7 +13,7 @@ namespace FamiliaMyth.Abilities
 
         private const float RestFactorBasePerProf = 0.998f;
         private const float NutritionFactorBasePerProf = 0.999f;
-        public const float ProfGainPerNutrition = 0.05f;
+        public const float ProfGainPerNutrition = 1.5f;
 
         public override bool ApplyModifiers(StatDef stat, ref float value)
         {

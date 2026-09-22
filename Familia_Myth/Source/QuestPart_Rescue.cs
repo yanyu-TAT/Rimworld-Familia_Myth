@@ -98,10 +98,8 @@ namespace FamiliaMyth.Quest
 
         private void SnapshotParticipants()
         {
-            if (participants.Count > 0 || site?.Map is not Map map) return;
-            foreach (var p in map.mapPawns.AllPawnsSpawned)
-                if (p.IsColonist && p.Faction == Faction.OfPlayer && p.GetPharna() != null)
-                    participants.Add(p);
+            if (participants.Count > 0) return;
+            QuestUtilities.SnapshotSiteParticipants(site, participants);
         }
 
         //威胁清除当拍：幸存者难民式加入玩家派系（真实加入 → 上头像栏/可指挥），

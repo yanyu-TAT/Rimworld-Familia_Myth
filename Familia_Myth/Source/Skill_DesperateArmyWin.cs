@@ -1,8 +1,8 @@
-﻿using FamiliaMyth.Abilities;
+using FamiliaMyth.Abilities;
 using FamiliaMyth.Pharna;
 using Verse;
 
-namespace Familia_Myth.Source
+namespace FamiliaMyth.Abilities
 {
     public class Skill_DesperateArmyWin : Skill, IStatusModifier
     {
@@ -30,10 +30,10 @@ namespace Familia_Myth.Source
             switch (type)
             {
                 case PharnaStatusType.Strength or PharnaStatusType.Endurance or PharnaStatusType.Agility:
-                    val += 200f * Ratio + 100f;
+                    val += 600f * Ratio + 300f;
                     break;
                 case PharnaStatusType.Will:
-                    val += 300f * Ratio + 150f;
+                    val += 900f * Ratio + 450f;
                     break;
             }
         }
@@ -44,9 +44,9 @@ namespace Familia_Myth.Source
             string s = type switch
             {
                 PharnaStatusType.Endurance or PharnaStatusType.Strength or PharnaStatusType.Agility
-                    => "FamiliaMyth.Ability.DesperateArmyWinStatus".Translate((int)(200f * Ratio + 100f)),
+                    => "FamiliaMyth.Ability.DesperateArmyWinStatus".Translate((int)(600f * Ratio + 300f)),
                 PharnaStatusType.Will
-                    => "FamiliaMyth.Ability.DesperateArmyWinWill".Translate((int)(300f * Ratio + 150f)),
+                    => "FamiliaMyth.Ability.DesperateArmyWinWill".Translate((int)(900f * Ratio + 450f)),
                 _ => ""
             };
             return s;

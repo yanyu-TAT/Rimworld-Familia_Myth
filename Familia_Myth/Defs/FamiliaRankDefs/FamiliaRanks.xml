@@ -2,7 +2,7 @@
 <Defs>
 
   <!-- 探索类评级链（seniority 递增） -->
-  <!-- upgradePointsRequired：升到本级所需累计升级点数 -->
+  <!-- upgradePointsRequired：晋升到本级所需的【新增】升级点数（晋升时从累计值中扣减，不是累计门槛） -->
 
   <FamiliaMyth.Familia.FamiliaRankDef>
     <defName>ExplorerRank_I</defName>

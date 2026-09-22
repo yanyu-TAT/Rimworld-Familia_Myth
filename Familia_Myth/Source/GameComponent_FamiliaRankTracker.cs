@@ -95,7 +95,7 @@ namespace FamiliaMyth.Familia
                 var parms = StorytellerUtility.DefaultParmsNow(IncidentDef.category, map);
                 Find.Storyteller?.incidentQueue?.Add(IncidentDef, GenDate.TicksPerDay, parms, GenDate.TicksPerDay * 3);
 
-                nextIncidentTick = CurrentTick + Rand.RangeInclusive(1, 5) * GenDate.TicksPerDay;
+                nextIncidentTick = CurrentTick + Rand.RangeInclusive(0, 4) * GenDate.TicksPerDay;
             }
         }
 
@@ -124,11 +124,12 @@ namespace FamiliaMyth.Familia
             return null;
         }
 
-        public int GetUpgradePointsRequired(FamiliaCategoryDef category) => GetNextRank(category)?.upgradePointsRequired ?? 0;
+        public int GetUpgradePointsRequired(FamiliaCategoryDef category) => GetNextRank(category)?.upgradePointsRequired ?? -1;
 
         public bool CanRankUp(FamiliaCategoryDef category)
         {
             var next = GetUpgradePointsRequired(category);
+            if (next <= 0) return false; 
             var cur = GetOrAddState(category)?.curRankUpPoints;
             if (cur == null) return false;
             return cur >= next;
@@ -142,8 +143,9 @@ namespace FamiliaMyth.Familia
             state.curRankUpPoints += amount;
 
             string pointsLabel = "FamiliaMyth.QuestMisc.RankUpPointsLetterLabel".Translate();
+            var next = GetUpgradePointsRequired(category);
             string pointsText = "FamiliaMyth.QuestMisc.RankUpPointsLetterText".Translate(
-                category.LabelCap, amount, state.curRankUpPoints, GetUpgradePointsRequired(category));
+                category.LabelCap, amount, next > 0 ? $"{state.curRankUpPoints}/{next}" : "FamiliaMyth.QuestMisc.LevelMax".Translate());
             var letter = LetterMaker.MakeLetter(pointsLabel, pointsText, LetterDefOf.PositiveEvent);
             Find.LetterStack.ReceiveLetter(letter);
         }

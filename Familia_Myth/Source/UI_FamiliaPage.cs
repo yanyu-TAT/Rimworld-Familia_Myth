@@ -147,13 +147,14 @@ namespace FamiliaMyth.UI
             Text.Anchor = TextAnchor.UpperLeft;
             GUI.color = Color.white;
 
-            //进度条
+            //进度条（满级判定统一走 tracker：返回 <=0 即无更高评级）
             Rect row2 = new(c.x, row1.yMax + 4f, c.width, 20f);
             int cur = state?.curRankUpPoints ?? 0;
-            int req = nxRank?.upgradePointsRequired ?? 0;
-            float frac = req > 0 ? Mathf.Clamp01((float)cur / req) : 0f;
+            int req = tracker.GetUpgradePointsRequired(cat);
+            bool maxed = req <= 0;
+            float frac = maxed ? 1f : Mathf.Clamp01((float)cur / req);
             Text.Font = GameFont.Tiny;
-            string numStr = $"{cur} / {req}";
+            string numStr = maxed ? "—" : $"{cur} / {req}";
             Vector2 numSz = Text.CalcSize(numStr);
             float numW = Mathf.Max(56f, numSz.x + 8f);
             Rect barR = new(row2.x, row2.y, row2.width - numW - 6f, 20f);

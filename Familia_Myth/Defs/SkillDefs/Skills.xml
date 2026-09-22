@@ -10,7 +10,7 @@
     <skillType>Triggered</skillType>
     <cooldown>1000</cooldown>
     <warmup>0</warmup>
-    <duration>150</duration>
+    <duration>15</duration>
     <checkInterval>20</checkInterval>
   </FamiliaMyth.Abilities.SkillDef>
 
@@ -89,7 +89,7 @@
     <defName>Skill_DesperateArmyWin</defName>
     <label>哀兵必胜</label>
     <description>心情低落时常态生效：根据心情低落的程度，获得大幅的力量、耐久、敏捷与意志补正。</description>
-    <skillClass>Familia_Myth.Source.Skill_DesperateArmyWin</skillClass>
+    <skillClass>FamiliaMyth.Abilities.Skill_DesperateArmyWin</skillClass>
     <rarity>Common</rarity>
     <skillType>Passive</skillType>
     <cooldown>0</cooldown>
@@ -133,7 +133,7 @@
   <FamiliaMyth.Abilities.SkillDef>
     <defName>Skill_Railgun</defName>
     <label>超电磁炮</label>
-    <description>持有远程枪械时可释放：向武器注入电磁能量，此后数次射击将贯穿弹道，对路径上所有敌人造成大量伤害并使其短暂麻痹，遇墙则贯穿墙体。</description>
+    <description>持有远程枪械时可释放：向武器注入电磁能量，此后数次射击将贯穿弹道，对路径上所有敌人造成大量伤害并使其短暂麻痹，遇墙则弹道被截停，并对墙体造成额外伤害。</description>
     <skillClass>FamiliaMyth.Abilities.Skill_Railgun</skillClass>
     <rarity>Rare</rarity>
     <skillType>Active</skillType>

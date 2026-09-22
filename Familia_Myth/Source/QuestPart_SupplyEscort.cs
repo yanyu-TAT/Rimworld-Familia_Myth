@@ -194,6 +194,10 @@ namespace FamiliaMyth.Quest
                     "FamiliaMyth.QuestPart.ForcedQuestComplete".Translate(),
                     "FamiliaMyth.QuestPart.RewardReasonSupplyEscort".Translate());
 
+                //升级点数（眷族共享，不随参与者名单分摊）
+                if (category != null)
+                    GameComponent_FamiliaRankTracker.Instance?.GainPoints(category, 10);
+
                 Find.SignalManager.SendSignal(new Signal(outSignalRewardsReady));
                 return;
             }

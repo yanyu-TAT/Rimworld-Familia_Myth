@@ -10,7 +10,7 @@ namespace FamiliaMyth.Abilities
         //魔力操控（经魔法强度体现）
         private const float ManaControlPerProf = 0.0025f;
         //每点产生的心灵熵
-        public const float ProfGainPerEntropy = 0.05f;
+        public const float ProfGainPerEntropy = 0.03f;
         //每点消耗的魔力
         public const float ProfGainPerMana = 0.0005f;
 

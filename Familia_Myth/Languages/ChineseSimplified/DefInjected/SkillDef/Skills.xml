@@ -5,7 +5,7 @@
 	<Skill_DesperateArmyWin.description>心情低落时常态生效：根据心情低落的程度，获得大幅的力量、耐久、敏捷与意志补正。</Skill_DesperateArmyWin.description>
 
 	<Skill_Railgun.label>超电磁炮</Skill_Railgun.label>
-	<Skill_Railgun.description>持有远程枪械时可释放：向武器注入电磁能量，此后数次射击将贯穿弹道，对路径上所有敌人造成大量伤害并使其短暂麻痹，遇墙则贯穿墙体。</Skill_Railgun.description>
+	<Skill_Railgun.description>持有远程枪械时可释放：向武器注入电磁能量，此后数次射击将贯穿弹道，对路径上所有敌人造成大量伤害并使其短暂麻痹，遇墙则弹道被截停，并对墙体造成额外伤害。</Skill_Railgun.description>
 
   <!-- 自 Defs 迁移补充 -->
   <Skill_BerserkerChaos.description>常态生效：受伤越重，近战伤害越高。</Skill_BerserkerChaos.description>

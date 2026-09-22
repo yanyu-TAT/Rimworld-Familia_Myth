@@ -1,7 +1,6 @@
-using FamiliaMyth.Pharna;
 using Verse;
 
-namespace Familia_Myth.Source
+namespace FamiliaMyth.Pharna
 {
     /// <summary>
     /// 用于提供渲染帧的绘制入口

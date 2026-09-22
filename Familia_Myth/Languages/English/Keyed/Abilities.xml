@@ -45,6 +45,9 @@
   <FamiliaMyth.Ability.DesperateArmyWinStatus>  Desperate Army Win: +{0}</FamiliaMyth.Ability.DesperateArmyWinStatus>
   <FamiliaMyth.Ability.DesperateArmyWinWill>  Desperate Army Win: +{0}</FamiliaMyth.Ability.DesperateArmyWinWill>
 
+  <!-- ==================== Berserker Chaos ==================== -->
+  <FamiliaMyth.BerserkerChaosLabel>  Berserker Chaos</FamiliaMyth.BerserkerChaosLabel>
+
   <!-- ==================== Ember ==================== -->
   <FamiliaMyth.Ability.EmberTriggered>Knocked down, so {0}'s skill Ember has triggered</FamiliaMyth.Ability.EmberTriggered>
 

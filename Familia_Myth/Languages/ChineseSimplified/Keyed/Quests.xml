@@ -105,7 +105,9 @@
   <FamiliaMyth.QuestMisc.SupplyEscortNotReadyReason>尚未从领取点接收押运物资</FamiliaMyth.QuestMisc.SupplyEscortNotReadyReason>
   <!-- ==================== 眷族评级追踪（GameComponent_FamiliaRankTracker） ==================== -->
   <FamiliaMyth.QuestMisc.RankUpPointsLetterLabel>眷族成长</FamiliaMyth.QuestMisc.RankUpPointsLetterLabel>
-  <FamiliaMyth.QuestMisc.RankUpPointsLetterText>由于在「{0}」方面的卓越贡献\n您的眷族获得了 {1} 点升级点数。\n\n当前：{2} / {3}</FamiliaMyth.QuestMisc.RankUpPointsLetterText>
+  <FamiliaMyth.QuestMisc.RankUpPointsLetterText>由于在「{0}」方面的卓越贡献\n您的眷族获得了 {1} 点升级点数。\n\n当前：{3}</FamiliaMyth.QuestMisc.RankUpPointsLetterText>
+  <!-- 已达最高评级时替换 {3} 的进度占位 -->
+  <FamiliaMyth.QuestMisc.LevelMax>已达最高评级</FamiliaMyth.QuestMisc.LevelMax>
   <FamiliaMyth.QuestMisc.EnvoyArrivalLetterLabel>公会使者到访</FamiliaMyth.QuestMisc.EnvoyArrivalLetterLabel>
   <FamiliaMyth.QuestMisc.EnvoyArrivalLetterText>来自冒险者公会的使者 {0} 已到达你的据点。\n\n请派遣殖民者前往与使者对话，了解委托的详情。</FamiliaMyth.QuestMisc.EnvoyArrivalLetterText>
   <FamiliaMyth.QuestMisc.RankUpPromotionLetterLabel>眷族评级晋升</FamiliaMyth.QuestMisc.RankUpPromotionLetterLabel>
