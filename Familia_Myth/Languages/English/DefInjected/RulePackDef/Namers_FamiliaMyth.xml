@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<!-- Familia Myth culture naming rules: full-list replacement, must match the Def's rulesStrings in order and count.
+	     priority=1 suppresses every vanilla rule with the same keyword, so whatever is written here is what the game generates.
+	     Deity names and titles are not here: they come in pairs from <Structure_FamiliaMyth.fixedDeityNameTypes.N.*>. -->
+	<NamerFamiliaMyth.rulePack.rulesStrings>
+		<!-- ==================== Culture name (r_ideoName) ==================== -->
+		<li>r_ideoName(priority=1)->[keyDeity] Familia</li>
+		<li>r_ideoName(priority=0)->Familia</li>
+
+		<!-- ==================== Culture adjective / member name (r_ideoAdjective / r_memberName) ==================== -->
+		<li>r_ideoAdjective(priority=1)->Familia</li>
+		<li>r_memberName(priority=1)->Familia member</li>
+
+		<!-- ==================== Leader title (r_leaderTitle) ==================== -->
+		<li>r_leaderTitle(priority=1)->Captain</li>
+
+		<!-- ==================== Moralist role name (r_roleName) ==================== -->
+		<li>r_roleName(priority=1)->Vice-Captain</li>
+	</NamerFamiliaMyth.rulePack.rulesStrings>
+
+</LanguageData>

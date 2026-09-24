@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<!-- 眷族信仰的文化命名规则：整表替换，「须与 Def 内 rulesStrings 同序同条数」
+	     priority=1 会把原版同名规则全部压制，因此这里写什么，游戏里就生成什么
+	     神灵的名字与称号不在此处：由 <Structure_FamiliaMyth.fixedDeityNameTypes.N.*> 成对提供 -->
+	<NamerFamiliaMyth.rulePack.rulesStrings>
+		<!-- ==================== 文化名（r_ideoName） ==================== -->
+		<li>r_ideoName(priority=1)->[keyDeity]眷族</li>
+		<li>r_ideoName(priority=0)->眷族</li>
+
+		<!-- ==================== 文化形容词 / 成员名（r_ideoAdjective / r_memberName） ==================== -->
+		<li>r_ideoAdjective(priority=1)->眷族</li>
+		<li>r_memberName(priority=1)->眷族成员</li>
+
+		<!-- ==================== 领袖头衔（r_leaderTitle） ==================== -->
+		<li>r_leaderTitle(priority=1)->团长</li>
+
+		<!-- ==================== 道德家角色名（r_roleName） ==================== -->
+		<li>r_roleName(priority=1)->副团长</li>
+	</NamerFamiliaMyth.rulePack.rulesStrings>
+
+</LanguageData>

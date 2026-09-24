@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<!-- Familia Myth: mod-exclusive structure meme -->
+	<Structure_FamiliaMyth.label>Familia Myth</Structure_FamiliaMyth.label>
+	<Structure_FamiliaMyth.description>The gods are no distant legend. They descend to the mortal world, bestow Pharna with their own hands, and watch over their Familia as it grows.\nYou play an Archotech who has sealed away its power to join the gods' game, guiding your colonists as the patron deity of their Familia.</Structure_FamiliaMyth.description>
+	<Structure_FamiliaMyth.worshipRoomLabel>sanctum</Structure_FamiliaMyth.worshipRoomLabel>
+
+	<!-- Deity name/title pairs; fixedDeityNameTypes is an object list, so each entry needs its own index -->
+	<Structure_FamiliaMyth.fixedDeityNameTypes.0.name>Hestia</Structure_FamiliaMyth.fixedDeityNameTypes.0.name>
+	<Structure_FamiliaMyth.fixedDeityNameTypes.0.type>Goddess of the Hearth</Structure_FamiliaMyth.fixedDeityNameTypes.0.type>
+	<Structure_FamiliaMyth.fixedDeityNameTypes.1.name>Astraea</Structure_FamiliaMyth.fixedDeityNameTypes.1.name>
+	<Structure_FamiliaMyth.fixedDeityNameTypes.1.type>Goddess of Justice</Structure_FamiliaMyth.fixedDeityNameTypes.1.type>
+	<Structure_FamiliaMyth.fixedDeityNameTypes.2.name>Loki</Structure_FamiliaMyth.fixedDeityNameTypes.2.name>
+	<Structure_FamiliaMyth.fixedDeityNameTypes.2.type>Goddess of Trickery</Structure_FamiliaMyth.fixedDeityNameTypes.2.type>
+	<Structure_FamiliaMyth.fixedDeityNameTypes.3.name>Hephaestus</Structure_FamiliaMyth.fixedDeityNameTypes.3.name>
+	<Structure_FamiliaMyth.fixedDeityNameTypes.3.type>Goddess of Forging</Structure_FamiliaMyth.fixedDeityNameTypes.3.type>
+	<Structure_FamiliaMyth.fixedDeityNameTypes.4.name>Freya</Structure_FamiliaMyth.fixedDeityNameTypes.4.name>
+	<Structure_FamiliaMyth.fixedDeityNameTypes.4.type>Goddess of Love</Structure_FamiliaMyth.fixedDeityNameTypes.4.type>
+	<Structure_FamiliaMyth.fixedDeityNameTypes.5.name>Hermes</Structure_FamiliaMyth.fixedDeityNameTypes.5.name>
+	<Structure_FamiliaMyth.fixedDeityNameTypes.5.type>God of Travel</Structure_FamiliaMyth.fixedDeityNameTypes.5.type>
+	<Structure_FamiliaMyth.fixedDeityNameTypes.6.name>Artemis</Structure_FamiliaMyth.fixedDeityNameTypes.6.name>
+	<Structure_FamiliaMyth.fixedDeityNameTypes.6.type>Goddess of Chastity</Structure_FamiliaMyth.fixedDeityNameTypes.6.type>
+
+</LanguageData>

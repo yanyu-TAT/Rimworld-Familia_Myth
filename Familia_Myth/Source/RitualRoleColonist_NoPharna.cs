@@ -1,4 +1,4 @@
-﻿using RimWorld;
+using RimWorld;
 using Verse;
 
 namespace FamiliaMyth.Ritual
@@ -14,6 +14,9 @@ namespace FamiliaMyth.Ritual
                 return false;
 
             if (p == null || p.health == null || p.health.hediffSet == null) 
+                return false;
+
+            if (!RitualCandidateUtility.IsPlayerIdeoMember(p, out reason, skipReason))
                 return false;
 
             if (p.health.hediffSet.GetFirstHediffOfDef(PharnaDef) != null){

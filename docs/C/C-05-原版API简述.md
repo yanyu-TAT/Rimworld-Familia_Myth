@@ -283,3 +283,48 @@ GenerateShuttle(Faction owningFaction = null, IEnumerable<Pawn> requiredPawns = 
 - 因此 **.NET 的 `{0:P0}` / `{0:F1}` 格式说明符不可用**：`:` 会让解析器把 `0` 当作函数名，最终静默替换为空串（现象与排查见 B-04 BUG-024）。需要格式化时在参数侧先 `ToStringPercent()` / `ToString("F1")`，再作为裸 `{0}` 传入。
 - 无参 `.Translate()`（`Verse/Translator.cs:53`）直接查表返回原文、**不做符号解析**，故文本中含 `{BASETEXT}` 等二次占位符是安全的。
 - 出处：`decompiledFiles/Verse/TranslatorFormattedStringExtensions.cs`、`Verse/GrammarResolverSimple.cs`、`Verse/LanguageWorker.cs`、`Verse/Translator.cs`。
+
+## 十一、理想文化（Ideo）系统
+
+### 结构 / 模因 / 戒律三层，而结构与模因**共用** `MemeDef`
+- `MemeCategory { Normal, Structure }`（`Verse/MemeCategory.cs`）：`category=Structure` 是「结构」——文化创建时必选且**恰好 1 个**（`Dialog_ChooseMemes` 点选结构时移除其余结构），决定神灵数量与命名、崇拜厅名称、文化描述生成；`Normal` 是「模因」——选 1~4 个（`IdeoFoundation.MemeCountRangeAbsolute`），主要作用是把戒律放进可选池。
+- 戒律是 `PreceptDef` → `Precept` 实例，**仪式 = `issue=Ritual` 的 `Precept_Ritual`**（该 issue 的 `allowMultiplePrecepts=true`，定义在 `Data/Core/Defs/PreceptDefs/Precepts_Ritual.xml`）。
+- 不存在独立的 `StructureDef`；`IdeoFoundationDef` 全库仅 `Deity` 一条，只是「文化基石实现类」的注册表（`foundationClass`）。
+
+### 仪式随 meme 自动带出：两条通道，都不占 impact 配额
+- `MemeDef.requiredRituals`（`RequiredRitualAndBuilding`：`precept` / `pattern` / `building`）→ `IdeoFoundation.AddRequiredPreceptsForMemes`（仅在 `!parms.classicExtra` 时执行）。
+- `PreceptDef.requiredMemes` → `IdeoFoundation.AddRitualsForMemes`；**附带移除语义**：文化不再含任一 `requiredMemes` 时该 precept 会被 `GetPreceptsToRemoveFromMemeChanges` 移除。
+- 两者都在文化生成、改模因（`EnsurePreceptsCompatibleWithMemes`）、随机化戒律时自动执行——这正是「不靠代码注入」的基础。
+
+### 戒律生成期的两个开关
+- `countsTowardsPreceptLimit`：只有 `true` 才进入按 impact 的随机填充池（High 0~2 / Medium 5 / Low 5）。
+- `canGenerateAsSpecialPrecept`：`countsTowardsPreceptLimit=false` **且** 此值为 `true` 时，`AddSpecialPrecepts` 会把它**无条件加进每个文化**（原版 Odyssey `GravshipLaunch` 即此用法）。
+- `PreceptDef.maxCount` / `ignoreLimitsInEditMode` 只约束文化编辑界面（`IdeoUIUtility.AddPrecept`）。
+- 全库 `IdeoFoundation.MaxRituals = 6` **无任何引用**，原版并没有「仪式数量上限」这类机制。
+
+### 文化命名链路（`IdeoFoundation_Deity.GenerateTextSymbols`）
+- 先二选一取源：`Pack`（meme 的 `symbolPacks`，权重 1）或 `Deity`（文化神灵，权重 0.5）；随后用**同一个 request**依次生成 `ideo.name`（`r_ideoName`）、`ideo.adjective`（`r_ideoAdjective`）、`ideo.memberName`（`r_memberName`）。
+- `symbolPacks` 的 `ideoName`（结构 meme 走 `packIdeoNameStructure`）/ `theme` / `adjective` / `member` 被注入为 `pack*` token；`prefix=true` 时统一加 `[hyphenPrefix]-` 前缀并置常量 `forcePrefix`（规则可写 `forcePrefix==False` 做条件）。
+- Deity 侧：`deityNameMakerOverride` / `deityTypeMakerOverride` 可**整体替换**命名包（只读结构 meme 的该字段）；`fixedDeityNameTypes` 把「名字 + 称号」**成对固定**（此时两条 `GenerateName` 全部跳过，只对 `name` 做跨文化重名校验）。
+- 角色名走 `Precept.AddIdeoRulesTo`（会把 meme 的 `generalRules` 与 `chosenIdeoName` / `chosenTheme` 注入请求），`chosen*` 由 `TryGuessChosenSymbolPack` **反查**文化名/成员名命中了哪个 pack 才提供。
+
+### `GrammarResolver` 的抽取语义（写规则包必知）
+- 只从 **最高 `priority` 层**按 `SelectionWeight`（`p=`，`Rule_String` 的 `p` 参数）加权随机抽取（`GrammarResolver.RandomPossiblyResolvableEntry`）。
+- 抽中的规则若解析失败（子符号缺失等）会被 `MarkKnownUnresolvable` 排除，然后**重新抽取**；整层耗尽后 `maxPriority` 重算，自动降级到下一层。
+- 因此「`priority=1` 主规则 + `priority=0` 兜底」是原版既有的降级写法（如 `r_ideoAdjective(priority=1)->[packAdjective]` + `->[keyDeity]的`），**不改原版数据即可压制同名规则**。
+- 规则右侧 `->` 之后是 anything-goes：可写 token、可写死文本，也**可以留空**（生成空串；原版 `episode(priority=-1)->` 即此用法）。缺 `->` 会 `Log.Error("Bad string pass when reading rule …")`。
+
+### 玩家文化的唯一性与编辑入口
+- 正常玩法只有世界创建（`Page_ConfigureIdeo`）与文化改革（`Dialog_ReformIdeo`）两条路；会新增文化的 `Dialog_ConfigureIdeo`（→ `IdeoManager.Add`）仅由 Anomaly「新殖民地 / Archonexus 重启」链路调用（`QuestPart_NewColony`）。
+- 神灵的**名字、称号、性别**都可在文化界面右键 → `Dialog_EditDeity` 手动修改（写回 `deity.name` / `deity.type` / `deity.gender`）。
+- `AllExistingDeities` 会跨**所有文化**做重名校验；`NameGenerator.GenerateName` 重试 150 次仍失败则 `Log.Error("Could not get new name …")` 并返回最后结果（不返回 null）。`FillDeity` 传的 `appendNumberIfNameUsed=false`，所以不会自动加编号避让。
+
+### 角色候选的文化门会被短路
+`Precept_Ritual.GetRitualBeginWindow` 的候选 filter 为
+`!ritualOnlyForIdeoMembers || def.allowSpectatorsFromOtherIdeos || pawn.Ideo == ideo || !voluntary || allowOtherIdeos || pawn.IsPrisonerOfColony || …`，
+其中 `PreceptDef.allowSpectatorsFromOtherIdeos` **默认 true** → 整个表达式恒真，`RitualRole.allowOtherIdeos` 形同虚设。要限制候选文化，只能在 `RitualRole.AppliesToPawn` 里自行校验。
+
+### 语言包与 `.tar`
+- `Data/<DLC>/Languages/` 下除 `English/` 是目录外，其余语言均为 `<英文名> (<本地名>).tar`（Core 28 种、Ideology 20 种、Anomaly/Biotech/Odyssey 各 18 种），内部即标准布局：`DefInjected/<DefType>/<与 Defs 源文件同名>.xml`。
+- `RulePack.rulesStrings` 带 `[MustTranslate] [TranslationCanChangeCount]`，故**整表替换（`<li>` 列表）与逐条索引（`.0` / `.1`）都合法，但同一列表不可混用**（`DefInjectionPackage.CheckErrors` 会判定冲突）；`List<对象>`（如 `fixedDeityNameTypes`）没有该特性，只能逐条索引。
+- 出处：`decompiledFiles/RimWorld/MemeDef.cs`、`PreceptDef.cs`、`IdeoFoundation.cs`、`IdeoFoundation_Deity.cs`、`Ideo.cs`、`Dialog_ChooseMemes.cs`、`Precept.cs`、`Precept_Ritual.cs`、`NameGenerator.cs`、`Verse.Grammar/RulePack.cs`、`Rule_String.cs`、`GrammarResolver.cs`、`Verse/DefInjectionPackage.cs`。

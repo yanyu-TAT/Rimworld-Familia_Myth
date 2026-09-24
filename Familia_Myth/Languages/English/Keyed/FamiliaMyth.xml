@@ -24,10 +24,6 @@
 	<!-- Honorific appended to the Familia's address (none in English) -->
 	<FamiliaMyth.Honorific></FamiliaMyth.Honorific>
 
-	<!-- Mod setting: custom god name -->
-	<FamiliaMyth.Setting.GodName.Label>God Name</FamiliaMyth.Setting.GodName.Label>
-	<FamiliaMyth.Setting.GodName.Desc>The name your Familia addresses you by. Leave empty to use the default.</FamiliaMyth.Setting.GodName.Desc>
-
 	<!-- Letter description after Grant Pharna ritual completes. {god}=god name, {pawn}=pawn name -->
 	<FamiliaMyth.GrantPharnaRitualDone>{god} bestowed Pharna upon {pawn}. {pawn} is now a member of Familia.</FamiliaMyth.GrantPharnaRitualDone>
 
@@ -39,6 +35,8 @@
 	<FamiliaMyth.NotMeetAscendRequirementRefusion>Insufficient exploits or basic ability too low</FamiliaMyth.NotMeetAscendRequirementRefusion>
 	<!-- Refusal: colonist's Pharna level is already at maximum, cannot ascend further -->
 	<FamiliaMyth.MaxLevelRefusion>Pharna level is already at maximum</FamiliaMyth.MaxLevelRefusion>
+	<!-- Refusal: colonist does not belong to the player's current ideoligion -->
+	<FamiliaMyth.NotFamiliaMemberRefusion>Not a Familia member</FamiliaMyth.NotFamiliaMemberRefusion>
 
 	<!-- Exploits -->
 	<FamiliaMyth.Exploits>Exploits</FamiliaMyth.Exploits>

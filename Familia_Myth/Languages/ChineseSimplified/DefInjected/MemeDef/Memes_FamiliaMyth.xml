@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<!-- 眷族信仰：本模组专属文化结构 -->
+	<Structure_FamiliaMyth.label>眷族信仰</Structure_FamiliaMyth.label>
+	<Structure_FamiliaMyth.description>神明并非遥不可及的传说，而是降临下界，亲自赋予恩惠、注视着眷族成长的存在。\n你将会扮演封印了权能参与到神明游戏中的超凡智能，作为眷族主神引导你的殖民者们。</Structure_FamiliaMyth.description>
+	<Structure_FamiliaMyth.worshipRoomLabel>神室</Structure_FamiliaMyth.worshipRoomLabel>
+
+	<!-- 神灵「名字 + 称号」成对绑定；fixedDeityNameTypes 是对象列表，只能用索引覆盖，不能整表替换 -->
+	<Structure_FamiliaMyth.fixedDeityNameTypes.0.name>赫斯缇雅</Structure_FamiliaMyth.fixedDeityNameTypes.0.name>
+	<Structure_FamiliaMyth.fixedDeityNameTypes.0.type>灶火之神</Structure_FamiliaMyth.fixedDeityNameTypes.0.type>
+	
+	<Structure_FamiliaMyth.fixedDeityNameTypes.1.name>阿斯特莉亚</Structure_FamiliaMyth.fixedDeityNameTypes.1.name>
+	<Structure_FamiliaMyth.fixedDeityNameTypes.1.type>正义之神</Structure_FamiliaMyth.fixedDeityNameTypes.1.type>
+	
+	<Structure_FamiliaMyth.fixedDeityNameTypes.2.name>洛基</Structure_FamiliaMyth.fixedDeityNameTypes.2.name>
+	<Structure_FamiliaMyth.fixedDeityNameTypes.2.type>诡计之神</Structure_FamiliaMyth.fixedDeityNameTypes.2.type>
+	
+	<Structure_FamiliaMyth.fixedDeityNameTypes.3.name>赫菲斯托丝</Structure_FamiliaMyth.fixedDeityNameTypes.3.name>
+	<Structure_FamiliaMyth.fixedDeityNameTypes.3.type>锻造之神</Structure_FamiliaMyth.fixedDeityNameTypes.3.type>
+	
+	<Structure_FamiliaMyth.fixedDeityNameTypes.4.name>芙蕾雅</Structure_FamiliaMyth.fixedDeityNameTypes.4.name>
+	<Structure_FamiliaMyth.fixedDeityNameTypes.4.type>爱之神</Structure_FamiliaMyth.fixedDeityNameTypes.4.type>
+	
+	<Structure_FamiliaMyth.fixedDeityNameTypes.5.name>赫尔墨斯</Structure_FamiliaMyth.fixedDeityNameTypes.5.name>
+	<Structure_FamiliaMyth.fixedDeityNameTypes.5.type>旅行之神</Structure_FamiliaMyth.fixedDeityNameTypes.5.type>
+	
+	<Structure_FamiliaMyth.fixedDeityNameTypes.6.name>阿尔特弥斯</Structure_FamiliaMyth.fixedDeityNameTypes.6.name>
+	<Structure_FamiliaMyth.fixedDeityNameTypes.6.type>贞洁之神</Structure_FamiliaMyth.fixedDeityNameTypes.6.type>
+
+</LanguageData>

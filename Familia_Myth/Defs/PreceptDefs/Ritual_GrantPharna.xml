@@ -15,6 +15,6 @@
 		<canRemoveInUI>false</canRemoveInUI>
 		<visible>true</visible>
 		<countsTowardsPreceptLimit>false</countsTowardsPreceptLimit>
-		<isNonIdeoRitual>true</isNonIdeoRitual>
+		<useRepeatPenalty>false</useRepeatPenalty>
 	</PreceptDef>
 </Defs>

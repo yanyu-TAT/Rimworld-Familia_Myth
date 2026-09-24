@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<!-- 本模组的专属文化结构：玩家选择后，由原版经 requiredRituals 自动带出两个恩惠仪式 -->
+	<MemeDef MayRequire="Ludeon.RimWorld.Ideology">
+		<defName>Structure_FamiliaMyth</defName>
+		<label>眷族信仰</label>
+		<description>神明并非遥不可及的传说，而是降临下界，亲自赋予恩惠、注视着眷族成长的存在。\n你将会扮演封印了权能参与到神明游戏中的超凡智能，作为眷族主神引导你的殖民者们。</description>
+		<category>Structure</category>
+		<iconPath>Familia_Myth/UI/Structures/Structure_FamiliaMyth</iconPath>
+		<impact>0</impact>
+		<renderOrder>100</renderOrder>
+		<worshipRoomLabel>神室</worshipRoomLabel>
+		<deityCount>1~1</deityCount>
+		<fixedDeityNameTypes>
+			<li><name>赫斯缇雅</name><type>灶火之神</type></li>
+			<li><name>阿斯特莉亚</name><type>正义之神</type></li>
+			<li><name>洛基</name><type>诡计之神</type></li>
+			<li><name>赫菲斯托丝</name><type>锻造之神</type></li>
+			<li><name>芙蕾雅</name><type>爱之神</type></li>
+			<li><name>赫尔墨斯</name><type>旅行之神</type></li>
+			<li><name>阿尔特弥斯</name><type>贞洁之神</type></li>
+		</fixedDeityNameTypes>
+		<generalRules>
+			<include>
+				<li>NamerFamiliaMyth</li>
+			</include>
+		</generalRules>
+		<descriptionMaker>
+			<patterns>
+				<li><def>TheistMyth</def></li>
+				<li><def>TheistFounder</def></li>
+			</patterns>
+			<constants>
+				<li><key>structure_theist</key><value>true</value></li>
+				<li><key>structure_theistAbstract</key><value>true</value></li>
+			</constants>
+		</descriptionMaker>
+		<factionWhitelist>
+			<li>PlayerColony</li>
+			<li>PlayerTribe</li>
+			<li MayRequire="Ludeon.RimWorld.Anomaly">ResearchExpedition</li>
+			<li MayRequire="Ludeon.RimWorld.Odyssey">GravshipCrew</li>
+		</factionWhitelist>
+		<requiredRituals>
+			<li>
+				<precept>Ritual_GrantPharna</precept>
+				<pattern>RitualPattern_GrantPharna</pattern>
+			</li>
+			<li>
+				<precept>Ritual_AscendPharna</precept>
+				<pattern>RitualPattern_AscendPharna</pattern>
+			</li>
+		</requiredRituals>
+	</MemeDef>
+</Defs>

@@ -21,10 +21,6 @@
 	<FamiliaMyth.DefaultGodName2>神明</FamiliaMyth.DefaultGodName2>
 	<FamiliaMyth.Honorific>大人</FamiliaMyth.Honorific>
 
-	<!-- 模组设置：自定义神名 -->
-	<FamiliaMyth.Setting.GodName.Label>神名</FamiliaMyth.Setting.GodName.Label>
-	<FamiliaMyth.Setting.GodName.Desc>眷族对你的称呼。留空则使用默认称呼。</FamiliaMyth.Setting.GodName.Desc>
-
 	<!-- 赋予恩惠仪式完成后的信件描述文本 -->
 	<FamiliaMyth.GrantPharnaRitualDone>{god} 向 {pawn} 降下了神之恩惠。现在 {pawn} 是 {god} 眷族的一员了。</FamiliaMyth.GrantPharnaRitualDone>
 
@@ -36,6 +32,8 @@
 	<FamiliaMyth.NotMeetAscendRequirementRefusion>没有足够的伟业值或基础能力值不足</FamiliaMyth.NotMeetAscendRequirementRefusion>
 	<!-- 拒绝理由：该殖民者恩惠等级已达上限，无法继续升华 -->
 	<FamiliaMyth.MaxLevelRefusion>恩惠等级已达上限</FamiliaMyth.MaxLevelRefusion>
+	<!-- 拒绝理由：该殖民者不属于玩家当前文化，不能担任恩惠仪式的接受者 -->
+	<FamiliaMyth.NotFamiliaMemberRefusion>非本眷族成员</FamiliaMyth.NotFamiliaMemberRefusion>
 	
 	<!-- 经验值 -->
 	<FamiliaMyth.Experience>经验值</FamiliaMyth.Experience>

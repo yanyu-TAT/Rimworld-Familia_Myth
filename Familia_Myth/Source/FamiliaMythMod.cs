@@ -1,5 +1,4 @@
 using HugsLib;
-using HugsLib.Settings;
 using Verse;
 
 namespace FamiliaMyth.Core
@@ -18,12 +17,9 @@ namespace FamiliaMyth.Core
         /// </summary>
         public static string DefaultGodName2 = "FamiliaMyth.DefaultGodName2".Translate();
         /// <summary>
-        /// 玩家自定义的神名，为空则应使用默认名称
+        /// 玩家当前文化的主神名，无文化或文化无神灵时为 null
         /// </summary>
-        //神名长度上限：过长的名字会让美德飘字溢出屏幕
-        private const int MaxGodNameLength = 16;
-        private static SettingHandle<string> godNameHandle;
-        public static string godName => godNameHandle.Value.NullOrEmpty() ? null : godNameHandle.Value;
+        public static string godName => Find.FactionManager?.OfPlayer?.ideos?.PrimaryIdeo?.KeyDeityName;
         /// <summary>
         /// 眷族对神明的称呼
         /// </summary>
@@ -38,17 +34,6 @@ namespace FamiliaMyth.Core
         }
 
         public override string ModIdentifier => "FamiliaMyth";
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            godNameHandle = Settings.GetHandle(
-                "godName",
-                "FamiliaMyth.Setting.GodName.Label".Translate(),
-                "FamiliaMyth.Setting.GodName.Desc".Translate(),
-                string.Empty,
-                v => v.NullOrEmpty() || v.Length <= MaxGodNameLength);
-        }
     }
 
     /// <summary>
@@ -107,9 +92,11 @@ namespace FamiliaMyth.Core
  * - [-] 添加更多升级奖励
  * - [-] 添加更多探索类任务
  * - [x] 完整添加本地化
+ * - [x] 将仪式改为更有代入感的注入方式
+ * - [ ] 修改升华奖励的抽取逻辑
  * - [ ] 试玩，调整数值
  * - [ ] 添加眷族评级对应的奖励
- * - [-] 调整部分设定问题
+ * - [-] 调整部分设定及文本问题
  * - [ ] 添加更多提示和消息（如成长反馈），以及战斗日志
  * - [ ] 添加适当的教程和引导
  * - [ ] 添加升华奖励图鉴
@@ -209,4 +196,5 @@ namespace FamiliaMyth.Core
  * 09/20 02:12 调整了魔法的消耗以及意志对于心灵熵的加成；修复了升级恩惠相关的边界问题
  * 09/22 02:40 为魔力转化速度添加了展示用stat，计划添加魔力消耗预览
  * 09/23 03:02 进行了大规模的数值平衡和bug修复
+ * 09/25 01:38 修改了仪式的注入方式，添加了文化结构和对应的文案，部分文案可能需要调整，结构对应的贴图尚未绘制 
  */
