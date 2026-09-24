@@ -13,7 +13,7 @@
 | 包 ID | `yanyu.familiamyth`                                                          |
 | 语言   | C# 10 / .NET Framework 4.7.2（`net472`，`LangVersion 10.0`）                    |
 | 游戏   | RimWorld 1.6（`Assembly-CSharp`）+ Unity（IMGUI / TextMeshPro / CoreModule）     |
-| 依赖库  | HugsLib（`ModBase` + `ModSettings` 模组设置）、Harmony 2.x（`[HarmonyPatch]`）、Royalty / Ideology DLC      |
+| 依赖库  | HugsLib（`ModBase` 模组基类；本项目不注册模组设置项）、Harmony 2.x（`[HarmonyPatch]`）、Royalty / Ideology DLC      |
 | 可选依赖 | Odyssey（海之眷顾等部分能力需要）                                                         |
 | 输出   | SDK 风格 csproj，`BaseOutputPath` 直出 `Familia_Myth/Assemblies/Familia_Myth.dll` |
 | 远程仓库 | GitHub `yanyu-TAT/Rimworld-Familia_Myth`（main）                               |
@@ -21,7 +21,8 @@
 ### 设计文档（只读参考，改动需先对齐）
 
 - `Familia Myth rim.txt` — 主设计文档（恩惠/魔法/技能/意志/公会/版本计划）
-- `能力值效果.txt` / `能力值增长.txt` / `技能.txt` / `发展能力.txt` / `魔法.txt` / `魔法.xlsx`
+- `能力值效果.txt` / `能力值增长.txt` / `技能.txt` / `发展能力.txt` / `魔法.txt` / `魔法.xlsx` / `pointPreview.xlsx`
+- `任务.txt` — 公会任务细节（主设计文档第 7 节指向的配套文档）
 - 已实现清单 / 版本进度 / 美术本地化 — `docs/C/C-04-已实现内容清单.md`
 
 ***
@@ -30,7 +31,7 @@
 
 | 操作     | 命令                                                               |
 | ------ | ---------------------------------------------------------------- |
-| 并行调用工具 | run_code                                                      |
+| 并行调用工具 | 同一批次内并发发起多个互相独立的工具调用（如多个 `pwsh` / `read`） |
 | 编译     | `dotnet build Familia_Myth/Familia_Myth.csproj`（输出直写 Assemblies） |
 | 清理构建产物 | 运行 `11.bat`（清除 Assemblies 中非本模组 DLL 与 obj/）                      |
 | 反编译原版  | 通过ilspycmd输出到decompiledFiles\，详见decompiledFiles\ilspy_help.txt             |
@@ -232,40 +233,44 @@
 
 ## 九、模块速查表
 
-| 目录/前缀                                       | 职责                      |
-| ------------------------------------------- | ----------------------- |
-| `Patch_*.cs`                                | Harmony 补丁（**以相关功能命名**：技能/魔法名、`<能力值>Gain_来源`、系统名；类名与文件名对应、命名空间统一 `FamiliaMyth.Patch`、方法体必包 try-catch，细则见 C-03） |
-| `Hediff_Pharna.cs`（恩惠状态与成长）              | 成长入口 `GainStatus`（含**阈值式双衰减**：单项 400 / 总量 2000 起衰减，参数为文件顶部 4 个 const）；`CycleExp` = 六项当前值之和；`Ascend()` 把当前值累入潜在值并清零、消耗伟业值升级；等级上限由 `HediffDef.maxSeverity` 决定，`CanAscend()` 返回 `AcceptanceReport`（满级 / 条件不足各给拒绝理由）；**魔力池**（`manaPool` / `MaxMana` / `SpendMana` / `GainMana` / 常态转化 `ConvertPsyfocusToMana`；`ManaConversionSpeed` = 每秒产出（= 私有 `ManaConversionRate`「每 100% 精神力产出」× 每秒投入比例），同名 StatDef 即由它派生；注意 `mana` 是六维属性「魔力」，勿与 `manaPool` 混用）（细则见 C-03） |
-| `Spell*.cs` + `SpellDef.cs`                 | 魔法框架与具体魔法（继承原版 Ability） |
-| `Skill*.cs` + `SkillDef.cs`                 | 技能（主动/被动/触发；charge 充能 + active 效果生命周期） |
-| `HediffComp_SkillState`（override CompLabelInBracketsExtra）/ `HediffComp_SkillInEffect` | 技能状态指示（Def 用 HediffWithComps，comp 反查 skillDef 的 StateText 展示括号标签；effect 生命周期间回调） |
-| `HediffComp_DisappearsWithCounter`           | 效果按剩余次数结束的计数 comp（归零 CompShouldRemove 移除，配合 SkillInEffect 驱动 active；超电磁炮等按次数强化技能用） |
-| `DevelopableAbility*.cs`                    | 发展能力（熟练度 + StatPart 注入） |
-| `WeaponHelper.cs`（扩展 GetMeleeSharpWeapon/GetUnarmedMeleeVerb/GetRangedEquippedVerb + `RangeUtilities` 直线路径索敌/射线工具） | 武器/路径查询工具（直线沿线地格采样、敌对索敌、带 validator 的射线终点 GetDest；居合/夹枪/超电磁炮共用） |
-| `Hediff_Pharna.cs` 内 `PharnaUtility`（`GetPharna` / `GetActiveSkill<T>`） | 恩惠获取；GetActiveSkill 取 pawn 自身 active 的指定技能实例（区别于嘲讽 Provokers 静态集合语义） |
-| `Mote_*.cs`                                 | 地图特效（咏唱词/魔法阵/光环/斩击等）    |
-| `Gizmo_ManaPool.cs`（`FamiliaMyth.UI`）      | 魔力池状态条：显示 `manaPool / ManaMax`，右上角角标开关自动转化；由 `Hediff_Pharna.GetGizmos` 挂出 |
-| `Projectile_*` + `MagicMissileStates.cs`    | 魔法弹与运动状态机               |
-| `Ritual*` + `Defs/MemeDefs/Meme_FamiliaMyth.xml` | 仪式（给予/升华恩惠）及结果处理；两个仪式由**文化结构 `Structure_FamiliaMyth`** 经 `requiredRituals` 由原版自动带出（`factionWhitelist` 仅玩家派系，NPC 文化不含），**不代码注入**；命名与神灵配套 = `Defs/RulePackDefs/Namers_FamiliaMyth.xml`（文化名/领袖头衔/角色名，全部 `priority=1`）+ `fixedDeityNameTypes`（神灵名与称号成对）+ `Patch_DeityGender`（按序绑定性别）；接受者候选须为**玩家当前文化成员**（`RitualCandidateUtility.IsPlayerIdeoMember`，两个 `RitualRoleColonist_*` 共用） |
-| `GuildQuestDef` / `GuildQuestGenerator*`        | 公会任务定义与生成（日常 = 使者对话接取指定接取者；强制 = 使者出场自动接取、不可拒绝；Slate 传参 → GenerateQuestAndMakeAvailable）。**实例一律经静态工厂 `GuildQuestGenerator.Create(def)` 构造**（绑定 def；漏绑会导致 Category/Type 静默为 null，见 B-04 BUG-017），发布前由 `Available()` 预筛 |
-| `QuestUtilities` | 任务静态工具（点数统一计算 + 伟业值名单化发放，签名与规则见 C-02） |
-| `QuestNode_SiteClearanceReward` / `QuestPart_SiteClearanceReward` + `QuestNode_RankUpComplete/Failed` / `QuestPart_RankUp*` | 据点清剿的奖励部件（威胁清除当拍快照名单 → 伟业值；并发放眷族升级点数）与评级晋升、失败重发部件（节点只生成 QuestPart、信号触发）。**奖励一律由各任务自己的 part 发放，统一出口为 `QuestUtilities.DistributeExploits` 与 `GameComponent_FamiliaRankTracker.GainPoints`，不设通用奖励 part**（机制见 C-02） |
-| `QuestNode_Root_{Daily/RankUp}_{任务名}`（如 `QuestNode_Root_Daily_SiteClearance` / `QuestNode_Root_RankUp_SiteClearance` / `QuestNode_Root_Daily_Rescue`） | 任务三件套之「根节点」：生成期统一点数/参数、准备任务专属对象、装配过程 part（每任务自实现，规格相似，见 C-02） |
-| `QuestNode_RescueSetup` + `QuestPart_Rescue` / `QuestPart_RescueSpawn` + `QuestPart_ExtraFaction` | 「紧急救援」过程 part（QuestPartActivable 状态机）：威胁清除当拍幸存者难民式临时加入玩家派系（`SetFaction` 玩家 + HomeFaction「原派系」标记 → 上头像栏可指挥、lodger 限制自动生效、守点 lord 当拍释放不再发放），结算一律归还原派系（就地接送流程见 C-02） |
-| `QuestNode_Root_Daily_CriminalHunt` / `QuestNode_CriminalHuntSetup` + `QuestPart_CriminalHunt` / `QuestPart_CriminalHuntSpawn` | 「罪犯追捕」过程 part：Outpost 守卫 + 1 名同派系通缉犯同场（守点迎战）；威胁清除分流（击毙 → 普通结算；存活 → 打包带离窝点、离图计时 1~3 天 → 公会押解穿梭机 2 天窗口）；活犯上船起飞 → ×2 结算（囚犯 despawn discard、不改派系）；死亡任意原因 → 普通结算；招募/奴役或活着失踪 → 失败（流程见 C-02） |
-| `QuestNode_Root_Daily_AncientRelic` / `QuestNode_AncientRelicSetup` + `QuestPart_AncientRelic`（圣物匣 `Thing_AncientRelic` + 命名 `AncientRelicNamer`） | 「遗迹探索」过程 part：生成原版 AncientComplex 遗迹（2~10 格、12 天时限）；图内唯一任务机关箱（HermeticCrate）室内落位装圣物匣（随机异教文化现造名）→ 开箱 = 发现（唤醒房内沉睡守卫 + 双计时：1~3 天 0.5× 袭击打据点 / 3~5 天公会穿梭机 2 天窗口）；圣物装船起飞 → 结算；窗口未装 / 圣物被毁或失踪 → 失败（详见 `plans/遗迹探索任务开发计划.md`） |
-| `QuestNode_Root_RankUp_SupplyEscort` / `QuestNode_SupplyEscortSetup` + `QuestPart_SupplyEscort` / `QuestPart_SupplyEscortAmbush` + `WorldObjectComp_SupplyEscort`（props 经 Patch 注入 `SettlementDef.comps`） | 「物资押运」过程 part：世界中既有定居点选 A/B（中立/友好 + 与据点三边 ≤8 格，`GuildQuestGenerator.Available()` 预筛、根节点兜底红字）→ 远行队停在 A/B 格经 comp 按钮领取/交付（清单由 A 的 `TraderKind` 现生成：单价 ≤100、不腐烂、无需材质且无品质，总重 300~600kg 随机）→ 12 天限时 → 途中以 A/B 为圆心、AB 距离为半径的双圆内伏击（≤2 次，原版 `IncidentDef Ambush`，`forced` 下须自行校验 tile 可生成伏击图）→ 交付按**领取清单逐项相等**（def + 数量）核验，**支持分批交付**（每次只收现有部分、未交齐发信提示缺口），只扣清单内物品、不追踪实例来源（详见 `plans/物资押运任务开发计划.md`） |
-| `QuestNode_Root_RankUp_RefugeeResettle` / `QuestNode_RefugeeResettleSetup` + `QuestPart_RefugeeResettle` + `QuestPart_AddQuestRefugeeDelayedRewardSafe` | 「难民安置」过程 part：强制任务；难民**地图边缘到访并临时加入玩家派系**（`quest.PawnsArrive(joinPlayer:true)` 边缘走入 + `MiniFaction` 标记 = lodger，临时隐藏难民派系由 `FactionGenerator` 现生成、与原版难民事件一致）→ 到场当拍随机受伤（部分倒地）→ 停留 15 天：**点数×1.2 的袭击 2 次**（首发 3~5 天、间隔 3~5 天，关「大威胁」难度则本次作废）+ 心情驱动劝加入（`PawnJoinOffer`，加入即转正并从 `CompShuttle.requiredPawns` 移除、全员加入则直接结算不召船）→ 第 15 天公会穿梭机（`Util_TransportShip_Pickup`，2 天窗口，仅落地发信）；失败线 = 囚禁/奴役、二次有害手术（`victims.SurgeryViolation`）、全灭、无人生还 → 存活难民转中立后自行离图（被囚禁/奴役的受害者本人留下）；伟业值按存活率（登机 + 加入）结算（见 C-02） |
-| `GameComponent_*.cs`                            | 存档级追踪（`FamiliaRankTracker`：多分类评级/升级点数/强制任务与重发冷却、统一发布轮询、公会派系补建；`GuildEnvoyTracker`：全局单槽待对话使者）+ 位移/击退引擎（LanceCharge/RoundhouseKick）；`GameComponent_FamiliaMyth`：Ideology DLC 活动检查 + 定时动作队列（`Schedule` / `pendingActions`） |
-| `JobDriver_*`                               | 工作驱动（对话使者等）             |
-| `MentalState_*` / `Hediff_*` / `Verb_*`     | 精神状态（`MentalState_Virtue`：美德状态 + 触发当拍随机飘出独白/祷告心声）、词缀、咏唱 verb         |
-| `FamiliaMythMod.cs`（模组主类） | HugsLib `ModBase` 子类：神名 = **当前文化主神名**（`godName` ← `Ideo.KeyDeityName`，无文化时为 null）；默认称呼两件套 `DefaultGodName1`（玩家视角）/ `DefaultGodName2` + `Honorific`（眷族视角）与 `GodAddress`（回落链与接口签名见 C-03）；**不设模组设置项** |
-| `UI_*.cs`                                   | 界面（眷族页、升级奖励弹窗、雷达图）      |
-| `StatPart_*`                                | StatDef 注入修正（`StatPart_ManaControl`：魔力操控按 SpellType 过滤技能 / 发展能力 / hediff comp 的 `IManaControlModifier` 加成；`StatPart_PharnaDisplay`：信息卡**展示项**注入，`PharnaDisplayMode` 枚举决定取值——六维 / 经验值 / 伟业值 / 魔力转化速度，配 `StatWorker_Pharna` 拦掉非 Pawn）            |
-| `Defs/` + `Patches/`                        | XML 定义与条件补丁             |
-| `Languages/`（`Keyed/` + `DefInjected/`）    | 本地化文本（中英逐键对称，`12-本地化检查.ps1` 7 项全绿）；`Keyed/` 放代码内文本、`DefInjected/` 放 Def 文本且文件名与 `Defs/` 一一对应；四条文本路径与命名规范见 C-03，术语基准见 C-06 |
+| 系统 | 文件 / 前缀 | 职责 |
+| --- | --- | --- |
+| **恩惠与成长** | `Hediff_Pharna.cs` | 恩惠状态：六维能力值 / 经验 / 伟业值、成长与升华、魔力池 |
+| | `PharnaUtility`（同文件内） | 恩惠与生效中技能的查询扩展 |
+| | `StatPart_*.cs` + `Patches/StatParts_*.xml` | StatDef 注入修正（恩惠系数 / 信息卡展示项 / 魔力操控） |
+| | `DevelopableAbility*.cs` | 发展能力（熟练度 + StatPart 注入） |
+| | `Patch_<能力值>Gain_<来源>.cs` | 各能力值的经验获取补丁 |
+| **魔法** | `Spell*.cs` + `SpellDef.cs` | 魔法框架与具体魔法（继承原版 Ability） |
+| | `Hediff_SpellState.cs` + `Verb_CastSpell*.cs` | 魔法效果状态与咏唱 verb |
+| | `Projectile_*` + `MagicMissileStates.cs` | 魔法弹与运动状态机 |
+| | `Gizmo_ManaPool.cs` | 魔力池状态条与自动转化开关 |
+| **技能** | `Skill*.cs` + `SkillDef.cs` | 技能框架与具体技能（主动 / 被动 / 触发） |
+| | `HediffComp_SkillState.cs` / `HediffComp_SkillInEffect.cs` | 技能状态标签与效果生命周期 |
+| | `HediffComp_DisappearsWithCounter.cs` | 按剩余次数结束效果的计数 comp |
+| | `Hediff_*.cs`（效果类） | 技能 / 魔法的常驻效果 Hediff（配套 `Defs/HediffDefs/`） |
+| **意志与美德** | `MentalState_Virtue.cs` | 美德精神状态与触发当拍的心声飘字 |
+| | `Patch_Virtue*.cs` | 崩溃前拦截与美德可控性补丁 |
+| | `Defs/HediffDefs/Hediff_Virtues.xml` | 五种美德 Buff 与范围光环 |
+| **公会与任务** | `GuildQuestDef.cs` / `GuildQuestGenerator*.cs` | 公会任务定义与生成（统一工厂 `Create(def)` + `Available()` 预筛） |
+| | `IncidentWorker_GuildEnvoy.cs` / `JobDriver_TalkGuildEnvoy.cs` / `GameComponent_GuildEnvoyTracker.cs` | 使者到访、对话接取与全局单槽登记 |
+| | `QuestNode_Root_{Daily/RankUp}_{任务名}` / `QuestNode_*Setup` / `QuestPart_*` | 任务三件套：根节点、过程 part、奖励与评级 part |
+| | `QuestUtilities.cs` | 任务点数计算与伟业值 / 升级点发放 |
+| | `WorldObjectComp_*.cs` | 世界对象交互 comp（定居点领取 / 交付按钮） |
+| | `Defs/GuildQuestDefs/` + `Defs/QuestScriptDefs/` | 任务定义与任务脚本 |
+| **仪式与文化** | `Ritual*.cs`（含 `RitualRoleColonist_*` / `RitualCandidateUtility`） | 给予 / 升华恩惠仪式及其接受者校验 |
+| | `Defs/PreceptDefs/` + `Defs/RitualBehaviorDefs/` + `Defs/RitualOutcomeEffectDefs/` + `Defs/RitualPatternDefs/` | 仪式的 Precept、行为、结果与图案定义 |
+| | `Defs/MemeDefs/` + `Defs/RulePackDefs/` + `Patch_DeityGender.cs` | 文化结构、文化命名规则包与神灵性别绑定 |
+| **存档级与场地** | `GameComponent_*.cs` | 存档级追踪与引擎（评级 / 使者 / 位移击退 / 定时动作） |
+| | `MapComponent_*.cs` | 地图级状态（恩惠特效管理） |
+| **表现层** | `Mote_*.cs` | 地图特效（咏唱词 / 魔法阵 / 光环 / 斩击等） |
+| | `UI_*.cs` + `HistoryTabHelper.cs` | 眷族页、升级奖励弹窗、雷达图、历史页标签 |
+| **工具与基础设施** | `WeaponHelper.cs` | 武器查询与直线索敌 / 射线工具 |
+| | `HealHelper.cs` | 伤口与断肢治疗工具 |
+| | `FamiliaMythMod.cs` | 模组主类，包含开发日志和计划 |
+| | `Patch_*.cs` | Harmony 补丁（命名与异常防护细则见 C-03） |
+| | `Defs/` + `Patches/` + `Languages/` | XML 定义、条件补丁与中英本地化 |
 
-> 新增模块/文件时同步更新本表。
+> 本表只做**定位索引**：每行一句话说明该文件 / 前缀负责什么。机制细节、常量与信号约定见 `docs/C/C-02-架构详解.md`，长期约定见 `docs/C/C-03-项目长期记忆.md`，任务与内容明细见 `docs/C/C-04-已实现内容清单.md`。新增模块/文件时同步更新本表。
 
 ***
 
@@ -311,5 +316,5 @@
   - 边界：该目录不提交 git、不参与构建、不得当作作品代码改动；整理属受控维护，动作须按本规范执行
 - **不改代码文件**：除非被直接要求，不修改代码文件（XML 文件除外）。
 - **中文思考链**：始终使用中文输出思考链（reasoning / chain-of-thought），便于与用户协作审阅。
-- **集中工具调用**：将 Shell/命令等工具调用集中在同一批中调用工具run_code执行，减少往返，以节约 token。
+- **集中工具调用**：把互相独立的 Shell/命令等工具调用集中在同一批次内并发发起（一次 `pwsh` 调用内可串联多条命令），减少往返，以节约 token。
 

@@ -6,9 +6,9 @@
 
 | 想了解 | 入口 |
 |---|---|
-| 模组入口与初始化 / 模组设置 | `FamiliaMythMod.cs`（HugsLib `ModBase`；`Initialize()` 里注册设置项「神名」；神名三件套 `DefaultGodName1`/`DefaultGodName2`/`Honorific` 与 `GodAddress` 见 C-03） |
+| 模组入口与神名 | `FamiliaMythMod.cs`（HugsLib `ModBase` 子类，**不注册模组设置项**；神名 = 当前文化主神名 `godName` ← `Ideo.KeyDeityName`；默认称呼 `DefaultGodName1`/`DefaultGodName2` + `Honorific` 与 `GodAddress` 见 C-03） |
 | 恩惠/能力值 | `Hediff_Pharna.cs` + `StatPart_Pharna.cs` + `Patches/StatParts_Pharna.xml` |
-| 成长/经验 | `Patch_Pawn.cs`、`Patch_WillGain.cs`、`Patch_Pawn_SkillTracker.cs` |
+| 成长/经验 | `Patch_SkillGrowth.cs`、`Patch_WillGain.cs`、各 `<能力值>Gain_<来源>.cs`（力量/耐久/灵巧/敏捷/魔力） |
 | 升华/升级奖励 | `AscendHelper.cs` + `Dialog_AscendReward.cs` + 仪式类 |
 | 魔法框架 | `Spell.cs`（继承原版 Ability）+ `SpellDef.cs` |
 | 咏唱 | `Verb_CastSpell.cs` / `Mote_Incantation.cs` / `Mote_MagicCircle.cs` |
@@ -16,11 +16,11 @@
 | 技能框架 | `Skill.cs` + `SkillDef.cs` |
 | 发展能力 | `DevelopableAbility.cs` + `DevelopableAbilityDef.cs` + `StatPart_DevelopableAbility.cs` |
 | 魔力系统（精神力→魔力→魔法） | `Hediff_Pharna.cs`（`manaPool` / 常态转化 / `SpendMana`）+ `Defs/StatDefs/PharnaStats.xml`（`ManaMax` / `ManaConversion` / `ManaConversionSpeed` / `ManaControl`）+ `StatPart_ManaControl.cs` + `Gizmo_ManaPool.cs`（池条与自动转化角标） |
-| 意志/美德 | `MentalState_Virtue.cs`（含触发当拍的心声飘字）+ `Defs/HediffDefs/Hediff_Virtues.xml`（五种 Buff 与范围光环）+ `Patch_MentalBreaker.cs`（崩溃前拦截）+ `Hediff_Pharna.TryTriggerVirtue`（概率/冷却/类型抽取） |
+| 意志/美德 | `MentalState_Virtue.cs`（含触发当拍的心声飘字）+ `Defs/HediffDefs/Hediff_Virtues.xml`（五种 Buff 与范围光环）+ `Patch_Virtue_Trigger.cs`（崩溃前拦截）+ `Hediff_Pharna.TryTriggerVirtue`（概率/冷却/类型抽取） |
 | 公会 | `GameComponent_FamiliaRankTracker.cs` + `GameComponent_GuildEnvoyTracker.cs`（单槽使者）+ `GuildQuestDef/Generator*`（统一工厂 `GuildQuestGenerator.Create(def)` + `Available()` 发布预筛）+ `QuestUtilities.cs` + 任务三件套（`QuestNode_Root_*` / `QuestPart_*` / `SiteClearanceReward`，细节见 C-02）+ 世界对象交互 comp（`WorldObjectComp_*`，如物资押运的定居点按钮）+ 任务脚本（`Defs/QuestScriptDefs/`） |
 | 眷族 UI | `UI_FamiliaPage.cs` + `UI_RadarChart.cs` |
 | 特效 | `Mote_*.cs` + `Textures/` + `Materials/` |
-| 本地化 | `Languages/` —— `Keyed/`（代码内文本 4 个文件）+ `DefInjected/`（Def 文本，文件名与 `Defs/` 一一对应）；中英逐键对称（`12-本地化检查.ps1` 7 项全绿）。机制与四条文本路径见 C-03，术语基准见 C-06 |
+| 本地化 | `Languages/` —— `Keyed/`（代码内文本 4 个文件）+ `DefInjected/`（Def 文本，文件名与 `Defs/` 一一对应）；中英逐键对称（`12-本地化检查.ps1` 第 [2]~[7] 项全绿；第 [1] 项 230 键中仅缺已知取舍的 `Spell_TheWorld.label`）。机制与四条文本路径见 C-03，术语基准见 C-06 |
 
 ## 内容索引
 

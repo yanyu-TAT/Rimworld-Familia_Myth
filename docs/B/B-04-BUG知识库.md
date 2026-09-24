@@ -183,7 +183,7 @@
 ## BUG-020 | 类名重命名未同步 XML 引用 → 加载期 `Could not find a type named ...`
 - 现象: 游戏加载时报红字 `Could not find a type named FamiliaMyth.Abilities.DevelopableAbiility_AbnormalResistance`，导致「异常抗性」发展能力 Def 加载失败（该能力无法获得）。
 - 根因: 提交 `cf9545d`（"修复了部分命名错误"）把源码类名由错拼的 `DevelopableAbiility_AbnormalResistance` 修正为 `DevelopableAbility_AbnormalResistance`，但**漏改** `Defs/DevelopableAbilityDefs/DevelopableAbilities.xml` 里的 `<abilityClass>` 引用；且源文件名一直带着同一处错拼，掩盖了不一致。
-- 修复方案: XML 引用改为正确类名；源文件重命名为 `DevelopableAbility_AbnormalResistance.cs`；并全库扫描 `Defs`/`Patches` 内全部 `FamiliaMyth.*` 类型引用与源码类型定义比对（104 处引用、222 个类型，其余均可解析）。
+- 修复方案: XML 引用改为正确类名；源文件重命名为 `DevelopableAbility_AbnormalResistance.cs`；并全库扫描 `Defs`/`Patches` 内全部 `FamiliaMyth.*` 类型引用与源码类型定义比对（当时为 104 处引用 / 222 个类型，其余均可解析；后续实现已增至 105 处 / 223 个类型）。
 - 是否规范缺失: 是（重命名类型后必须**全库同步 XML 类型引用**，且该同步不能只靠人工记忆）
 - 规范反哺: `12-本地化检查.ps1` 新增第 7 项「XML 类型引用 → 源码类型可解析性」自动兜底（自动跳过 XML 注释；`Type.Method` 形式的方法引用视为合法）；`docs/C/C-03-项目长期记忆.md` 记录脚本 7 项。
 - 关联: 次数 1

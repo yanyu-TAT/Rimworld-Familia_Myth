@@ -50,4 +50,5 @@
 
 - 主设计: `Familia Myth rim.txt`
 - 数值: `能力值效果.txt` / `能力值增长.txt` / `技能.txt` / `发展能力.txt` / `魔法.txt` / `魔法.xlsx` / `pointPreview.xlsx`
+- 任务: `任务.txt`
 - 实现现状: `docs/C/C-04-已实现内容清单.md`
