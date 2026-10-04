@@ -219,3 +219,11 @@
 - 是否规范缺失: 是（AGENTS.md / B-01 只约束了「四条文本路径」，未约束占位符语法；坑点静默无日志，本地化检查脚本也抓不到）
 - 规范反哺: AGENTS.md「五、基础代码规范 · 本地化」新增一条 ❌；`docs/B/B-01-开发规范.md`「七 · 本地化文本」新建小节；`docs/C/C-03-项目长期记忆.md` 该条补齐「未知函数静默返回空串、无日志」与反编译行号。
 - 关联: 次数 1（同一处文本内 3 个占位符同时失效）
+
+## BUG-025 | 删除枚举成员未同步 XML 字面值 → Def 加载抛 `'X' is not a valid value for ...`
+- 现象: 伟业系统落地时 `PharnaDisplayMode` 的 `Feats` 成员被删除（信息卡不再展示「伟业值」），但 `Defs/StatDefs/PharnaStats.xml` 的 `StatDef "PharnaFeats"` 仍写着 `<mode>Feats</mode>`。若照原样保留，加载期该 Def 会直接抛枚举解析错误、**整个 Def 加载失败**（不是静默降级）。本次在清理展示项时同步发现，连同该 StatDef 一并删除，未流入实机。
+- 根因: `Verse/ParseHelper.cs` 的 `FromString<T>`（line 418-436）对枚举类型走 `Enum.Parse`，失败时抛 `ArgumentException`，消息形如 `'Feats' is not a valid value for FamiliaMyth.Abilities.PharnaDisplayMode. Valid values are: ...`。XML 里的枚举字面值与 C# 枚举定义**没有编译期关联**——删成员不会让 `dotnet build` 出任何错。
+- 修复方案: 删除或重命名枚举成员前，全库检索 XML 中该成员的**裸字面值**（如 `<mode>X</mode>`），确认无引用后再动代码，或同步清理引用处。
+- 是否规范缺失: 是（BUG-020 覆盖了「类名/类型引用」，未覆盖「枚举与数值这类无命名空间前缀的 XML 字面值」）
+- 规范反哺: 与 BUG-020 合并理解为同一条自查项——「改动 C# 侧标识符（类型名、枚举成员名）后必须全库检索 XML 同步」；`12-本地化检查.ps1` 第 7 项只能兜住带命名空间的类型引用，裸字面值仍须人工检索。
+- 关联: 次数 1（`PharnaFeats` 一处）

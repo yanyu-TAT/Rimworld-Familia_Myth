@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- ==================== Pharna tab (ITab_Pawn_Pharna) ==================== -->
+  <!-- Numeric formatting is done on the code side; never use {0:P0} / {0:F1} specifiers here -->
+
+  <FamiliaMyth.TabPharna>Pharna</FamiliaMyth.TabPharna>
+
+  <!-- Section titles -->
+  <FamiliaMyth.Panel.SectionAbility>Ability</FamiliaMyth.Panel.SectionAbility>
+  <FamiliaMyth.Panel.SectionDevelopable>Developable Ability</FamiliaMyth.Panel.SectionDevelopable>
+  <FamiliaMyth.Panel.SectionSkills>Skills</FamiliaMyth.Panel.SectionSkills>
+  <FamiliaMyth.Panel.SectionSpells>Spells</FamiliaMyth.Panel.SectionSpells>
+  <FamiliaMyth.Panel.SectionFeats>Feats</FamiliaMyth.Panel.SectionFeats>
+  <FamiliaMyth.Panel.Empty>None</FamiliaMyth.Panel.Empty>
+
+  <!-- Ability header: {0}=Pharna level {1}=experience -->
+  <FamiliaMyth.Panel.Header>Lv.{0}　Experience {1}</FamiliaMyth.Panel.Header>
+  <!-- Ability row: {0}=rank label {1}=current {2}=cap -->
+  <FamiliaMyth.Panel.StatusNumber>{0} {1} / {2}</FamiliaMyth.Panel.StatusNumber>
+  <!-- Potential: {0}=signed value -->
+  <FamiliaMyth.Panel.Potential>Potential {0}</FamiliaMyth.Panel.Potential>
+
+  <!-- Developable ability proficiency: {0}=current {1}=cap -->
+  <FamiliaMyth.Panel.DevelopableProficiency>Proficiency {0} / {1}</FamiliaMyth.Panel.DevelopableProficiency>
+
+  <!-- Feat card lines: {0}=tier {1}=traits {2}=battle score {3}=personal share {4}=time {5}=location -->
+  <FamiliaMyth.Panel.FeatTitle>Tier {0} · {1}</FamiliaMyth.Panel.FeatTitle>
+  <FamiliaMyth.Panel.FeatScore>Battle score {0}　Personal share {1}</FamiliaMyth.Panel.FeatScore>
+  <FamiliaMyth.Panel.FeatWhen>{0} · {1}</FamiliaMyth.Panel.FeatWhen>
+  <FamiliaMyth.FeatUnknownPlace>Unknown location</FamiliaMyth.FeatUnknownPlace>
+
+</LanguageData>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- ==================== 恩惠页签（ITab_Pawn_Pharna） ==================== -->
+  <!-- 数值格式一律在代码侧完成，此文件不写 {0:P0} / {0:F1} 之类说明符 -->
+
+  <FamiliaMyth.TabPharna>恩惠</FamiliaMyth.TabPharna>
+
+  <!-- 分区标题 -->
+  <FamiliaMyth.Panel.SectionAbility>能力</FamiliaMyth.Panel.SectionAbility>
+  <FamiliaMyth.Panel.SectionDevelopable>发展能力</FamiliaMyth.Panel.SectionDevelopable>
+  <FamiliaMyth.Panel.SectionSkills>技能</FamiliaMyth.Panel.SectionSkills>
+  <FamiliaMyth.Panel.SectionSpells>魔法</FamiliaMyth.Panel.SectionSpells>
+  <FamiliaMyth.Panel.SectionFeats>伟业</FamiliaMyth.Panel.SectionFeats>
+  <FamiliaMyth.Panel.Empty>暂无</FamiliaMyth.Panel.Empty>
+
+  <!-- 能力区抬头：{0}=恩惠等级 {1}=经验值 -->
+  <FamiliaMyth.Panel.Header>Lv.{0}　经验 {1}</FamiliaMyth.Panel.Header>
+  <!-- 能力行数值：{0}=等级标签 {1}=当前值 {2}=上限 -->
+  <FamiliaMyth.Panel.StatusNumber>{0} {1} / {2}</FamiliaMyth.Panel.StatusNumber>
+  <!-- 潜在值：{0}=带符号数值 -->
+  <FamiliaMyth.Panel.Potential>潜在 {0}</FamiliaMyth.Panel.Potential>
+
+  <!-- 发展能力熟练度：{0}=当前熟练度 {1}=熟练度上限 -->
+  <FamiliaMyth.Panel.DevelopableProficiency>熟练度 {0} / {1}</FamiliaMyth.Panel.DevelopableProficiency>
+
+  <!-- 伟业卡三行：{0}=档位 {1}=性质 {2}=战斗总得分 {3}=个人贡献 {4}=时间 {5}=地点 -->
+  <FamiliaMyth.Panel.FeatTitle>{0} 级 · {1}</FamiliaMyth.Panel.FeatTitle>
+  <FamiliaMyth.Panel.FeatScore>战斗总得分 {0}　个人贡献 {1}</FamiliaMyth.Panel.FeatScore>
+  <FamiliaMyth.Panel.FeatWhen>{0} · {1}</FamiliaMyth.Panel.FeatWhen>
+  <FamiliaMyth.FeatUnknownPlace>未知地点</FamiliaMyth.FeatUnknownPlace>
+
+</LanguageData>

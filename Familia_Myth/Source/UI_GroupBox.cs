@@ -29,16 +29,41 @@ namespace FamiliaMyth.UI
             VGradientHighlight(highlight, 1f, color);
         }
 
+        //四边描边（空心卡与分区卡共用）
+        public static void DrawOutlinedBox(Rect r, Color borderColor, float thickness = 3f)
+        {
+            Widgets.DrawBoxSolid(new Rect(r.x, r.y, r.width, thickness), borderColor);
+            Widgets.DrawBoxSolid(new Rect(r.x, r.yMax - thickness, r.width, thickness), borderColor);
+            Widgets.DrawBoxSolid(new Rect(r.x, r.y, thickness, r.height), borderColor);
+            Widgets.DrawBoxSolid(new Rect(r.xMax - thickness, r.y, thickness, r.height), borderColor);
+        }
+
+        //带描边与标题栏的卡片：内容区与标题栏沿用既有填充色，强调色仅用于描边、标题文字与顶部高光
+        public static void DrawOutlinedCardBg(Rect r, string title, Color borderColor)
+        {
+            Widgets.DrawBoxSolid(r, ColorContent);
+            if (!string.IsNullOrEmpty(title))
+            {
+                Rect titleR = new(r.x, r.y, r.width, TitleHeight);
+                Widgets.DrawBoxSolid(titleR, ColorTitleBar);
+                Text.Font = GameFont.Small;
+                GUI.color = borderColor;
+                Text.Anchor = TextAnchor.MiddleCenter;
+                Widgets.Label(titleR, title);
+                Text.Anchor = TextAnchor.UpperLeft;
+                GUI.color = Color.white;
+            }
+            DrawOutlinedBox(r, borderColor);
+            Rect highlight = new(r.x + 3f, r.y + 3f, r.width - 6f, 4f);
+            VGradientHighlight(highlight, 0.6f, borderColor);
+        }
+
         //纯色背景 + 横向渐变高光 + 左侧色条 + 浅色细边框
         public static void DrawPlainBg(Rect r, Color? bgColor = null, Color? accentColor = null, float highlightIntensity = 1f)
         {
             Widgets.DrawBoxSolid(r, bgColor ?? ColorContent);
             //浅色细边框
-            var color = Color.gray.WithAlpha(0.5f);
-            Widgets.DrawBoxSolid(new Rect(r.x, r.y, r.width, 3f), color);
-            Widgets.DrawBoxSolid(new Rect(r.x, r.yMax - 3f, r.width, 3f), color);
-            Widgets.DrawBoxSolid(new Rect(r.x, r.y, 3f, r.height), color);
-            Widgets.DrawBoxSolid(new Rect(r.xMax - 3f, r.y, 3f, r.height), color);
+            DrawOutlinedBox(r, Color.gray.WithAlpha(0.5f));
             //顶部横向渐变高光
             Rect highlight = new(r.x, r.y, r.width, 4f);
             VGradientHighlight(highlight, highlightIntensity, accentColor ?? Color.white);

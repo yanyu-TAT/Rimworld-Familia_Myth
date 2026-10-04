@@ -371,16 +371,21 @@ namespace FamiliaMyth.Pharna
             ChangeLevel(1);
         }
 
+        //成长衰减系数：1 = 无衰减，越接近 0 衰减越重（受单项与六项总量双重影响）
+        public float GetGrowthDecay(PharnaStatusType type)
+        {
+            float current = GetCurrentStatus(type);
+            float statExcess = Mathf.Max(0f, current - StatDecayThreshold);
+            float totalExcess = Mathf.Max(0f, TotalStatus - TotalStatDecayThreshold);
+            return 1f / (1f + statExcess / StatDecayScale) / (1f + totalExcess / TotalStatDecayScale);
+        }
+
         public bool GainStatus(PharnaStatusType type, float amount)
         {
             if (amount <= 0f) return false;
             float current = GetCurrentStatus(type);
             if (current >= maxStatus) return false;
-            //双衰减：单项与总量各自超过阈值后开始反比衰减，未超阈值时为正常线性增长
-            float statExcess = Mathf.Max(0f, current - StatDecayThreshold);
-            float totalExcess = Mathf.Max(0f, TotalStatus - TotalStatDecayThreshold);
-            float decay = 1f / (1f + statExcess / StatDecayScale) / (1f + totalExcess / TotalStatDecayScale);
-            float capped = Math.Min(amount * decay, maxStatus - current);
+            float capped = Math.Min(amount * GetGrowthDecay(type), maxStatus - current);
             switch(type)
             {
                 case PharnaStatusType.Strength: strength += capped; break;
@@ -481,6 +486,9 @@ namespace FamiliaMyth.Pharna
             t = t >= 12 ? 11 : t;
             return ranks[t];
         }
+
+        //发展能力品质档位标签（按 Degree 取，与能力值等级共用同一张档位表）
+        public static string GetDegreeRank(int degree) => ranks[Mathf.Clamp(degree, 0, ranks.Count - 1)];
 
         public override void ExposeData()
         {

@@ -64,7 +64,7 @@
   <!-- {0}=remaining count -->
   <FamiliaMyth.Ability.RemainingCount>{0} left</FamiliaMyth.Ability.RemainingCount>
 
-  <!-- ==================== Developmental Abilities ==================== -->
+  <!-- ==================== Developable Abilities ==================== -->
   <FamiliaMyth.DevelopableAbility.HealingLabel>Healing</FamiliaMyth.DevelopableAbility.HealingLabel>
   <FamiliaMyth.DevelopableAbility.MineralogyLabel>Mineralogy</FamiliaMyth.DevelopableAbility.MineralogyLabel>
   <FamiliaMyth.DevelopableAbility.BotanyLabel>Botany</FamiliaMyth.DevelopableAbility.BotanyLabel>

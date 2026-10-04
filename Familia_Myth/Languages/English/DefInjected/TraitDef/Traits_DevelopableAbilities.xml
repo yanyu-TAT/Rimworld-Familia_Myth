@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
 
-  <!-- Developmental ability traits (TraitDef) migrated from Defs/TraitDefs/Traits_DevelopableAbilities.xml -->
+  <!-- Developable ability traits (TraitDef) migrated from Defs/TraitDefs/Traits_DevelopableAbilities.xml -->
   <!-- Key format: DefName path (list indices, e.g. degreeDatas.0.label) -->
 
   <!-- Trait_DevelopableAbility_Magic -->
@@ -29,7 +29,7 @@
   <Trait_DevelopableAbility_Magic.degreeDatas.8.label>Magic Arts A</Trait_DevelopableAbility_Magic.degreeDatas.8.label>
   <Trait_DevelopableAbility_Magic.degreeDatas.9.description>[PAWN_nameDef]'s magic arts ability has transcended the mundane.</Trait_DevelopableAbility_Magic.degreeDatas.9.description>
   <Trait_DevelopableAbility_Magic.degreeDatas.9.label>Magic Arts S</Trait_DevelopableAbility_Magic.degreeDatas.9.label>
-  <Trait_DevelopableAbility_Magic.description>A magic arts developmental ability granted by Pharna. Increases the rate at which neural heat dissipates.</Trait_DevelopableAbility_Magic.description>
+  <Trait_DevelopableAbility_Magic.description>A magic arts developable ability granted by Pharna. Increases the rate at which neural heat dissipates.</Trait_DevelopableAbility_Magic.description>
   <Trait_DevelopableAbility_Magic.label>Magic Arts</Trait_DevelopableAbility_Magic.label>
 
   <!-- Trait_DevelopableAbility_AbnormalResistance -->
@@ -57,7 +57,7 @@
   <Trait_DevelopableAbility_AbnormalResistance.degreeDatas.8.label>Abnormal Resistance A</Trait_DevelopableAbility_AbnormalResistance.degreeDatas.8.label>
   <Trait_DevelopableAbility_AbnormalResistance.degreeDatas.9.description>[PAWN_nameDef]'s abnormal resistance ability has transcended the mundane.</Trait_DevelopableAbility_AbnormalResistance.degreeDatas.9.description>
   <Trait_DevelopableAbility_AbnormalResistance.degreeDatas.9.label>Abnormal Resistance S</Trait_DevelopableAbility_AbnormalResistance.degreeDatas.9.label>
-  <Trait_DevelopableAbility_AbnormalResistance.description>An abnormal resistance developmental ability granted by Pharna. Increases immunity gain speed and toxin resistance.</Trait_DevelopableAbility_AbnormalResistance.description>
+  <Trait_DevelopableAbility_AbnormalResistance.description>An abnormal resistance developable ability granted by Pharna. Increases immunity gain speed and toxin resistance.</Trait_DevelopableAbility_AbnormalResistance.description>
   <Trait_DevelopableAbility_AbnormalResistance.label>Abnormal Resistance</Trait_DevelopableAbility_AbnormalResistance.label>
 
   <!-- Trait_DevelopableAbility_EfficientCirculation -->
@@ -85,7 +85,7 @@
   <Trait_DevelopableAbility_EfficientCirculation.degreeDatas.8.label>Efficient Circulation A</Trait_DevelopableAbility_EfficientCirculation.degreeDatas.8.label>
   <Trait_DevelopableAbility_EfficientCirculation.degreeDatas.9.description>[PAWN_nameDef]'s efficient circulation ability has transcended the mundane.</Trait_DevelopableAbility_EfficientCirculation.degreeDatas.9.description>
   <Trait_DevelopableAbility_EfficientCirculation.degreeDatas.9.label>Efficient Circulation S</Trait_DevelopableAbility_EfficientCirculation.degreeDatas.9.label>
-  <Trait_DevelopableAbility_EfficientCirculation.description>An efficient circulation developmental ability granted by Pharna. Reduces nutrition consumption and increases the rest restored by eating.</Trait_DevelopableAbility_EfficientCirculation.description>
+  <Trait_DevelopableAbility_EfficientCirculation.description>An efficient circulation developable ability granted by Pharna. Reduces nutrition consumption and increases the rest restored by eating.</Trait_DevelopableAbility_EfficientCirculation.description>
   <Trait_DevelopableAbility_EfficientCirculation.label>Efficient Circulation</Trait_DevelopableAbility_EfficientCirculation.label>
 
   <!-- Trait_DevelopableAbility_Healing -->
@@ -113,7 +113,7 @@
   <Trait_DevelopableAbility_Healing.degreeDatas.8.label>Healing A</Trait_DevelopableAbility_Healing.degreeDatas.8.label>
   <Trait_DevelopableAbility_Healing.degreeDatas.9.description>[PAWN_nameDef]'s healing ability has transcended the mundane.</Trait_DevelopableAbility_Healing.degreeDatas.9.description>
   <Trait_DevelopableAbility_Healing.degreeDatas.9.label>Healing S</Trait_DevelopableAbility_Healing.degreeDatas.9.label>
-  <Trait_DevelopableAbility_Healing.description>A healing developmental ability granted by Pharna. Increases tend quality, medical and surgery speed, and surgery success chance.</Trait_DevelopableAbility_Healing.description>
+  <Trait_DevelopableAbility_Healing.description>A healing developable ability granted by Pharna. Increases tend quality, medical and surgery speed, and surgery success chance.</Trait_DevelopableAbility_Healing.description>
   <Trait_DevelopableAbility_Healing.label>Healing</Trait_DevelopableAbility_Healing.label>
 
   <!-- Trait_DevelopableAbility_LuckOfTheSea -->
@@ -141,7 +141,7 @@
   <Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.8.label>Luck of the Sea A</Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.8.label>
   <Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.9.description>[PAWN_nameDef]'s luck of the sea has transcended the mundane.</Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.9.description>
   <Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.9.label>Luck of the Sea S</Trait_DevelopableAbility_LuckOfTheSea.degreeDatas.9.label>
-  <Trait_DevelopableAbility_LuckOfTheSea.description>A luck of the sea developmental ability granted by Pharna. Increases fishing speed and yield, and may bring in extra rare catches while fishing.</Trait_DevelopableAbility_LuckOfTheSea.description>
+  <Trait_DevelopableAbility_LuckOfTheSea.description>A luck of the sea developable ability granted by Pharna. Increases fishing speed and yield, and may bring in extra rare catches while fishing.</Trait_DevelopableAbility_LuckOfTheSea.description>
   <Trait_DevelopableAbility_LuckOfTheSea.label>Luck of the Sea</Trait_DevelopableAbility_LuckOfTheSea.label>
 
   <!-- Trait_DevelopableAbility_Botany -->
@@ -169,7 +169,7 @@
   <Trait_DevelopableAbility_Botany.degreeDatas.8.label>Botany A</Trait_DevelopableAbility_Botany.degreeDatas.8.label>
   <Trait_DevelopableAbility_Botany.degreeDatas.9.description>[PAWN_nameDef]'s botany ability has transcended the mundane.</Trait_DevelopableAbility_Botany.degreeDatas.9.description>
   <Trait_DevelopableAbility_Botany.degreeDatas.9.label>Botany S</Trait_DevelopableAbility_Botany.degreeDatas.9.label>
-  <Trait_DevelopableAbility_Botany.description>A botany developmental ability granted by Pharna. Increases sowing and harvesting speed, harvest yield, and foraging efficiency.</Trait_DevelopableAbility_Botany.description>
+  <Trait_DevelopableAbility_Botany.description>A botany developable ability granted by Pharna. Increases sowing and harvesting speed, harvest yield, and foraging efficiency.</Trait_DevelopableAbility_Botany.description>
   <Trait_DevelopableAbility_Botany.label>Botany</Trait_DevelopableAbility_Botany.label>
 
   <!-- Trait_DevelopableAbility_Mineralogy -->
@@ -197,7 +197,7 @@
   <Trait_DevelopableAbility_Mineralogy.degreeDatas.8.label>Mineralogy A</Trait_DevelopableAbility_Mineralogy.degreeDatas.8.label>
   <Trait_DevelopableAbility_Mineralogy.degreeDatas.9.description>[PAWN_nameDef]'s mineralogy ability has transcended the mundane.</Trait_DevelopableAbility_Mineralogy.degreeDatas.9.description>
   <Trait_DevelopableAbility_Mineralogy.degreeDatas.9.label>Mineralogy S</Trait_DevelopableAbility_Mineralogy.degreeDatas.9.label>
-  <Trait_DevelopableAbility_Mineralogy.description>A mineralogy developmental ability granted by Pharna. Increases mining and deep drilling speed, and mining yield.</Trait_DevelopableAbility_Mineralogy.description>
+  <Trait_DevelopableAbility_Mineralogy.description>A mineralogy developable ability granted by Pharna. Increases mining and deep drilling speed, and mining yield.</Trait_DevelopableAbility_Mineralogy.description>
   <Trait_DevelopableAbility_Mineralogy.label>Mineralogy</Trait_DevelopableAbility_Mineralogy.label>
 
 </LanguageData>

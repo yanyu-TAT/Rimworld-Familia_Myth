@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Patch>
 
-  <!-- 往所有 Pawn 基类（BasePawn，抽象父 Def，自身已定义 inspectorTabs）的检视页签列表末尾追加「伟业」页签。
+  <!-- 往所有 Pawn 基类（BasePawn，抽象父 Def，自身已定义 inspectorTabs）的检视页签列表末尾追加「恩惠」页签。
        直接追加到既有列表，避免依赖 XML 继承的列表合并语义；非受恩惠者由 ITab.IsVisible 自动隐藏。 -->
   <Operation Class="PatchOperationAdd">
     <xpath>Defs/ThingDef[@Name="BasePawn"]/inspectorTabs</xpath>
     <value>
-      <li>FamiliaMyth.UI.ITab_Pawn_Feats</li>
+      <li>FamiliaMyth.UI.ITab_Pawn_Pharna</li>
     </value>
   </Operation>
 

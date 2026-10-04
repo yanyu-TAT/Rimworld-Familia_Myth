@@ -6,7 +6,7 @@
 
 ## 一、项目身份
 
-**Familia Myth** — 基于《在地下城期待邂逅是否搞错了什么》设定的 RimWorld 1.6 模组。玩家扮演神明，通过仪式给予殖民者「神之恩惠」，让殖民者积累能力值/经验/伟业值并升华升级，成长为拥有技能、魔法、发展能力的眷族冒险者。
+**Familia Myth** — 基于《在地下城期待邂逅是否搞错了什么》设定的 RimWorld 1.6 模组。玩家扮演神明，通过仪式给予殖民者「神之恩惠」，让殖民者积累能力值/经验/伟业（Feat）并升华升级，成长为拥有技能、魔法、发展能力的眷族冒险者。
 
 | 项    | 值                                                                            |
 | ---- | ---------------------------------------------------------------------------- |
@@ -235,7 +235,7 @@
 
 | 系统 | 文件 / 前缀 | 职责 |
 | --- | --- | --- |
-| **恩惠与成长** | `Hediff_Pharna.cs` | 恩惠状态：六维能力值 / 经验 / 伟业值、成长与升华、魔力池 |
+| **恩惠与成长** | `Hediff_Pharna.cs` | 恩惠状态：六维能力值 / 经验 / 伟业记录、成长与升华、魔力池 |
 | | `PharnaUtility`（同文件内） | 恩惠与生效中技能的查询扩展 |
 | | `StatPart_*.cs` + `Patches/StatParts_*.xml` | StatDef 注入修正（恩惠系数 / 信息卡展示项 / 魔力操控） |
 | | `DevelopableAbility*.cs` | 发展能力（熟练度 + StatPart 注入） |
@@ -251,12 +251,18 @@
 | **意志与美德** | `MentalState_Virtue.cs` | 美德精神状态与触发当拍的心声飘字 |
 | | `Patch_Virtue*.cs` | 崩溃前拦截与美德可控性补丁 |
 | | `Defs/HediffDefs/Hediff_Virtues.xml` | 五种美德 Buff 与范围光环 |
-| **公会与任务** | `GuildQuestDef.cs` / `GuildQuestGenerator*.cs` | 公会任务定义与生成（统一工厂 `Create(def)` + `Available()` 预筛） |
+| **公会与任务** | `GuildQuestDef.cs` / `GuildQuestGenerator*.cs` | 公会任务定义与生成（统一工厂 `Create(def)` + `Available()` 预筛）；任务侧只发评级升级点数，**不发放伟业** |
 | | `IncidentWorker_GuildEnvoy.cs` / `JobDriver_TalkGuildEnvoy.cs` / `GameComponent_GuildEnvoyTracker.cs` | 使者到访、对话接取与全局单槽登记 |
 | | `QuestNode_Root_{Daily/RankUp}_{任务名}` / `QuestNode_*Setup` / `QuestPart_*` | 任务三件套：根节点、过程 part、奖励与评级 part |
-| | `QuestUtilities.cs` | 任务点数计算与伟业值 / 升级点发放 |
+| | `QuestUtilities.cs` | 任务点数计算（升级点由各任务 part 发放） |
 | | `WorldObjectComp_*.cs` | 世界对象交互 comp（定居点领取 / 交付按钮） |
 | | `Defs/GuildQuestDefs/` + `Defs/QuestScriptDefs/` | 任务定义与任务脚本 |
+| **伟业（Feat）** | `FeatTraitDef.cs`（内含 `FeatContext` / `FeatTraitJudger` / `FeatRecord`） | 伟业数据层：性质定义（`judgerClass` + 系数）、战斗数据包、判定器基类与统一工厂、记录 |
+| | `FeatTraitJudgers.cs` | 各性质判定器（阈值集中在类内；判定只看战斗事实，不看来源） |
+| | `FeatUtility.cs` | 结算流水线：取战斗事实 → 逐 Def 判定性质 → 系数累乘 → 按贡献分摊 → 阈值分割档位 |
+| | `GameComponent_FeatTracker.cs` | 战斗扫描器：合并归属修正、结算去重、贡献表与清理 |
+| | `Patch_FeatContribution.cs` | 伤害归因补丁（`Pawn.PostApplyDamage` 记输出 / 承受） |
+| | `Defs/FeatTraitDefs/` | 伟业性质定义（`<judgerClass>` 指向判定器） |
 | **仪式与文化** | `Ritual*.cs`（含 `RitualRoleColonist_*` / `RitualCandidateUtility`） | 给予 / 升华恩惠仪式及其接受者校验 |
 | | `Defs/PreceptDefs/` + `Defs/RitualBehaviorDefs/` + `Defs/RitualOutcomeEffectDefs/` + `Defs/RitualPatternDefs/` | 仪式的 Precept、行为、结果与图案定义 |
 | | `Defs/MemeDefs/` + `Defs/RulePackDefs/` + `Patch_DeityGender.cs` | 文化结构、文化命名规则包与神灵性别绑定 |
@@ -264,6 +270,7 @@
 | | `MapComponent_*.cs` | 地图级状态（恩惠特效管理） |
 | **表现层** | `Mote_*.cs` | 地图特效（咏唱词 / 魔法阵 / 光环 / 斩击等） |
 | | `UI_*.cs` + `HistoryTabHelper.cs` | 眷族页、升级奖励弹窗、雷达图、历史页标签 |
+| | `ITab_Pawn_Pharna.cs` | Pawn 级「恩惠」页签：能力 / 发展能力 / 技能·魔法 / 伟业 四分区（仅受恩惠者可见） |
 | **工具与基础设施** | `WeaponHelper.cs` | 武器查询与直线索敌 / 射线工具 |
 | | `HealHelper.cs` | 伤口与断肢治疗工具 |
 | | `FamiliaMythMod.cs` | 模组主类，包含开发日志和计划 |
@@ -290,7 +297,7 @@
   | ---------------------- | --------------------------------------- |
   | 新增模块/文件                | 更新「模块速查表」                               |
   | 新增/迁移玩家可见文本            | 按 C-03「四条文本路径」处理；新术语先补 `docs/C/C-06-本地化术语表.md`；跑 `12-本地化检查.ps1` 确认对称 |
-  | 重命名类名 / 文件              | 同步 `Defs`/`Patches` 内相关类型引用；跑 `12-本地化检查.ps1` 第 [7] 项（见 B-04 BUG-020） |
+  | 重命名类名 / 文件；增删枚举成员 | 同步 `Defs`/`Patches` 内相关引用——枚举/数值这类**裸字面值**（如 `<mode>X</mode>`）脚本抓不到，须人工全库检索；类型引用跑 `12-本地化检查.ps1` 第 [7] 项（见 B-04 BUG-020 / BUG-025） |
   | 新增依赖/工具                | 更新「项目身份」技术栈行                            |
   | 发现代码与现有规范明显偏离（或新的代码规范） | 先提出偏离点并询问是否为新的规范，确认后追加「强制规范 / 基础代码规范」   |
   | 做出架构决策                 | 追加到关键决策记录（可写 docs/C/C-02）               |

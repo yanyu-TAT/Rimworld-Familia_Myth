@@ -3,7 +3,7 @@
 
   <!-- Hediff_AbnormalResistanceImmunity player-visible text (migrated from Defs; Def text kept as default/fallback) -->
 
-  <Hediff_AbnormalResistanceImmunity.description>A hidden immunity marker that briefly takes effect while the Developmental Ability 'Abnormal Resistance' resists a disease or infection.</Hediff_AbnormalResistanceImmunity.description>
+  <Hediff_AbnormalResistanceImmunity.description>A hidden immunity marker that briefly takes effect while the Developable Ability 'Abnormal Resistance' resists a disease or infection.</Hediff_AbnormalResistanceImmunity.description>
   <Hediff_AbnormalResistanceImmunity.label>Abnormal Resistance</Hediff_AbnormalResistanceImmunity.label>
 
 </LanguageData>

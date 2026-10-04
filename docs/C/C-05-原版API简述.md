@@ -328,3 +328,68 @@ GenerateShuttle(Faction owningFaction = null, IEnumerable<Pawn> requiredPawns = 
 - `Data/<DLC>/Languages/` 下除 `English/` 是目录外，其余语言均为 `<英文名> (<本地名>).tar`（Core 28 种、Ideology 20 种、Anomaly/Biotech/Odyssey 各 18 种），内部即标准布局：`DefInjected/<DefType>/<与 Defs 源文件同名>.xml`。
 - `RulePack.rulesStrings` 带 `[MustTranslate] [TranslationCanChangeCount]`，故**整表替换（`<li>` 列表）与逐条索引（`.0` / `.1`）都合法，但同一列表不可混用**（`DefInjectionPackage.CheckErrors` 会判定冲突）；`List<对象>`（如 `fixedDeityNameTypes`）没有该特性，只能逐条索引。
 - 出处：`decompiledFiles/RimWorld/MemeDef.cs`、`PreceptDef.cs`、`IdeoFoundation.cs`、`IdeoFoundation_Deity.cs`、`Ideo.cs`、`Dialog_ChooseMemes.cs`、`Precept.cs`、`Precept_Ritual.cs`、`NameGenerator.cs`、`Verse.Grammar/RulePack.cs`、`Rule_String.cs`、`GrammarResolver.cs`、`Verse/DefInjectionPackage.cs`。
+
+## 十二、战斗日志（Battle 系统）
+
+### 组件与数据流
+
+| 组件 | 位置 | 职责 |
+| --- | --- | --- |
+| `LogEntry`（抽象基类） | `Verse/LogEntry.cs` | 一条战斗日志。公开成员：`def`、`Age` / `Tick` / `Timestamp`、`Concerns(Thing)` / `GetConcerns()`、`ToGameStringFromPOV`、`IconFromPOV`、`ShowInCompactView` |
+| `LogEntry_DamageResult` | `Verse/LogEntry_DamageResult.cs` | 伤害类条目的中间层。成员只有 `damagedParts` / `damagedPartsDestroyed` / `deflected`（**protected**）与 `FillTargets(...)` |
+| `BattleLogEntry_*` | `Verse/` | 具体条目：`MeleeCombat` / `RangedFire` / `RangedImpact` / `DamageTaken` / `ExplosionImpact` / `AbilityUsed` / `ItemUsed` / `StateTransition` / `Event` |
+| `Battle` | `Verse/Battle.cs` | 一场战斗：聚合条目与参与者；`GetUniqueLoadID()` = `"Battle_" + loadID`（实现 `ILoadReferenceable`） |
+| `BattleLog` | `Verse/BattleLog.cs` | 战斗集合与归并；`Find.BattleLog => Current.Game.battleLog`（`Verse/Find.cs:146`），随存档持久化 |
+| `Pawn_RecordsTracker` | `RimWorld/Pawn_RecordsTracker.cs` | 每个 Pawn 的"当前战斗"引用与退出计时 |
+
+```
+战斗行为（近战/远程/爆炸/能力/状态转换） → 生成 BattleLogEntry_*
+      ↓ BattleLog.Add(entry)  归并 + 参与者登记
+Battle{ entries[], concerns{Pawn} }
+      ↓ records.EnterBattle(battle)
+battleActive / battleExitTick（超时未刷新即视为战斗结束）
+```
+
+`BattleLog.Add` 的归并逻辑：遍历条目涉及的每个 Pawn，取各自 `records.BattleActive`（已归一化到 `AbsorbedBy` 链末端），以 `Importance`（= `Entries.Count`）最大者作为归属战斗；若该 Pawn 尚属另一场战斗，把那一场 `Absorb` 合并进来并从列表移除；最后对每个参与者 `EnterBattle(battle)` 并 `battle.Add(entry)`。
+
+### 参与者集合（concerns）
+
+- `Battle.concerns` 是 **private** `HashSet<Pawn>`，公开查询只有 `Concerns(Pawn)`；**枚举参与者只能从公开的 `Battle.Entries` 逐条 `GetConcerns()` 重建**（原版 `ExposeData` 在 PostLoadInit 阶段也是这么做）。
+- 参与者 = 所有出现在日志条目 `GetConcerns()` 中的 Pawn。**在场却没有任何战斗日志的 Pawn 不算参与者**。
+- `BattleLog.Add` 只收集 `concern is Pawn`，**非 Pawn（炮塔、机械建筑）永远不会进入 concerns**。
+
+### 生命周期与时序
+
+| 机制 | 数值 | 出处 |
+| --- | --- | --- |
+| 单场战斗退出窗口 | 5000 tick | `Battle.TicksForBattleExit`；`Pawn_RecordsTracker.EnterBattle` 内 `battleExitTick = TicksGame + 5000` |
+| 记录刷新 | 每 80 tick | `Pawn_RecordsTracker.RecordsTickInterval` |
+| 战斗列表容量 | 最多 20 场（`BattleHistoryLength`） | `BattleLog.cs` |
+| 陈旧战斗清理 | 非吸收态战斗数 > 20 **且** 最末一场 `LastEntryTimestamp + max(420000, 5000) < now` | `BattleLog.ReduceToCapacity` |
+| 战斗合并 | 同一 Pawn 同时关联两场时保留 `Importance` 大者，另一场置 `absorbedBy` 并清空自身 entries | `Battle.Absorb` |
+
+### 原版在何时自动写战斗日志（关键）
+
+**只有两个时机是原版自动写的**：
+
+| 时机 | 位置 | initiator 取值 |
+| --- | --- | --- |
+| 倒地 | `Verse/Pawn_HealthTracker.cs:869` | `dinfo?.Instigator as Pawn` |
+| 死亡 | `Verse/Pawn.cs:2028` | `dinfo?.Instigator as Pawn` |
+
+`DamageWorker_AddInjury.Apply`（`Verse/DamageWorker_AddInjury.cs:9`）**不创建任何日志** → **战斗过程日志必须由攻击方显式创建**（原版近战/远程由 Verb / Projectile 自己建，自建投射物要照 `Projectile_ArcsRay` 的写法补 `Find.BattleLog.Add` + `AssociateWithLog`）。两处自动日志在 `Instigator` 非 Pawn（炮塔 / 陷阱 / 召唤物）时归因会断。
+
+### 三个陷阱
+
+1. **`Battle.LastEntryTimestamp` 返回的是最旧条目**：`Battle.Add` 用 `entries.Insert(0, entry)`（`Absorb` 后 `OrderBy(e => e.Age)` 重排，同样最新在前），而该属性取 `entries[entries.Count - 1]` → 名字与行为相反。判"战斗是否结束"应自行求 `Entries` 的最大 `Timestamp`。
+2. **时间基准**：`LogEntry.Timestamp` 是 `TicksAbs`，比较须用 `Find.TickManager.TicksAbs`；`battleExitTick` 用的却是 `TicksGame`，两者不可混用。
+3. **列表顺序是隐式契约**：`Entries[0]` 才是最新条目——依赖它等于依赖插入顺序，宜用 `Max` 之类显式表达。
+
+### 覆盖面与限制
+
+- 战斗日志与"是任务 / 袭击 / 随机遭遇"无关 → 任何来源的战斗都进同一套 Battle；**远行队遭遇伏击会生成临时地图打常规战斗**（`RimWorld.Planet/CaravanIncidentUtility.cs:41` `SetupCaravanAttackMap` → `GetOrGenerateMapForIncident(..., WorldObjectDefOf.Ambush)`）。
+- 日志条目内部字段多为 private（`initiatorPawn` / `recipientPawn` 等）→ **无法从日志区分攻守双方**；例外：`BattleLogEntry_MeleeCombat.RuleDef`（public，可判命中/闪避）、`BattleLogEntry_AbilityUsed.abilityUsed`（public，知所用能力）。
+- **日志里没有伤害数值**（`RangedImpact` 只有 initiator / recipient / originalTarget / weaponDef / projectileDef / coverDef）→ 伤害量须另取，本项目走 `Pawn.PostApplyDamage(dinfo, totalDamageDealt)` 补丁。
+- 原版 `Ability` 是否写战斗日志由 `AbilityDef.writeCombatLog` 决定（默认 false），开启后原版会在能力使用时 `Add(new BattleLogEntry_AbilityUsed(...))`。
+
+- 出处：`decompiledFiles/Verse/Battle.cs`、`BattleLog.cs`、`LogEntry.cs`、`LogEntry_DamageResult.cs`、`BattleLogEntry_*.cs`、`Pawn.cs`、`Pawn_HealthTracker.cs`、`PawnKindDef.cs`、`DamageWorker.cs`、`DamageWorker_AddInjury.cs`、`Find.cs`、`RimWorld/Pawn_RecordsTracker.cs`、`RimWorld/Ability.cs`、`RimWorld/AbilityDef.cs`、`RimWorld/GenDate.cs`、`RimWorld.Planet/WorldGrid.cs`、`RimWorld.Planet/Tile.cs`、`RimWorld.Planet/PlanetTile.cs`、`RimWorld.Planet/CaravanIncidentUtility.cs`。

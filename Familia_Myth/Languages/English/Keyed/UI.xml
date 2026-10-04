@@ -10,7 +10,7 @@
   <!-- ==================== Ascension reward type prefix ==================== -->
   <FamiliaMyth.UI.RewardTypeSpell>Spell</FamiliaMyth.UI.RewardTypeSpell>
   <FamiliaMyth.UI.RewardTypeSkill>Skill</FamiliaMyth.UI.RewardTypeSkill>
-  <FamiliaMyth.UI.RewardTypeDevelopableAbility>Developmental Ability</FamiliaMyth.UI.RewardTypeDevelopableAbility>
+  <FamiliaMyth.UI.RewardTypeDevelopableAbility>Developable Ability</FamiliaMyth.UI.RewardTypeDevelopableAbility>
 
   <!-- ==================== Familia rank page ==================== -->
   <FamiliaMyth.UI.FamiliaTab>Familia</FamiliaMyth.UI.FamiliaTab>
