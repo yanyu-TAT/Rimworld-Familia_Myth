@@ -9,7 +9,7 @@
     <generatorClass>FamiliaMyth.Quest.GuildQuestGenerator_Daily_Rescue</generatorClass>
     <category>Explorer</category>
     <type>Daily</type>
-    <letterText>使者带来了遇难信号。\n\n一支受困的旅队在殖民地附近遭到狂暴兽群（或异象）袭击，成员倒地被围，急需救援。\n\n前往标记地点，清除威胁并营救伤员，将他们带回据点后，他们所属的派系会派穿梭机接走伤员。\n\n酬劳随成功获救并登船的人数结算。是否接受？</letterText>
+    <letterText>使者带来了遇难信号。\n\n一支商队队在殖民地附近遭到魔物袭击，成员下落不明，急需救援。\n\n前往标记地点，清除威胁并营救伤员，等待一段时间后，他们所属的派系会派穿梭机接走伤员。\n请在等待期间保护他们并尽量让更多人活着离开。\n\n是否接受？</letterText>
   </FamiliaMyth.Quest.GuildQuestDef>
 
 </Defs>

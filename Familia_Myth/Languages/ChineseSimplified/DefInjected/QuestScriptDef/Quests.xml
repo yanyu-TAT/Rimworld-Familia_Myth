@@ -19,7 +19,6 @@
     <li>questDescription->公会使者带来了一份委托。[enemyDesc]正在[label]附近聚集，威胁着周边地区的安全。请指派受恩惠的冒险者前去消除威胁。</li>
     <li>enemyDesc->[enemiesCount]个[enemiesLabel]</li>
   </Quest_Daily_SiteClearance.questDescriptionRules.rulesStrings>
-  <Quest_Daily_SiteClearance.LetterLabelQuestCompleted.slateRef>委托完成</Quest_Daily_SiteClearance.LetterLabelQuestCompleted.slateRef>
   <Quest_Daily_SiteClearance.LetterLabelQuestExpired.slateRef>任务过期</Quest_Daily_SiteClearance.LetterLabelQuestExpired.slateRef>
   <Quest_Daily_SiteClearance.LetterTextQuestExpired.slateRef>敌人已经撤退，任务[resolvedQuestName]已过期。</Quest_Daily_SiteClearance.LetterTextQuestExpired.slateRef>
 
@@ -31,7 +30,6 @@
     <li>questDescription->公会使者带来了强制任务。[enemyDesc]正在[label]已在附近集结，正在威胁着周边地区。请倾全部战力，前去消除威胁。</li>
 	  <li>enemyDesc->[enemiesCount]个[enemiesLabel]</li>
   </Quest_RankUp_SiteClearance.questDescriptionRules.rulesStrings>
-  <Quest_RankUp_SiteClearance.LetterLabelRankUpCompleted.slateRef>强制任务完成</Quest_RankUp_SiteClearance.LetterLabelRankUpCompleted.slateRef>
   <Quest_RankUp_SiteClearance.LetterLabelRankUpFailed.slateRef>强制任务失败</Quest_RankUp_SiteClearance.LetterLabelRankUpFailed.slateRef>
   <Quest_RankUp_SiteClearance.LetterTextRankUpFailed.slateRef>强制任务[resolvedQuestName]已超时，眷族晋升暂时搁置。数日后公会使者将再次发布强制任务。</Quest_RankUp_SiteClearance.LetterTextRankUpFailed.slateRef>
 

@@ -19,7 +19,6 @@ namespace FamiliaMyth.Quest
             slate.Set("map", map);
             slate.Set("envoy", envoy);
             slate.Set("acceptor", acceptor);
-            slate.Set("initialAcceptor", acceptor);
             slate.Set("category", Category);
             return QuestUtility.GenerateQuestAndMakeAvailable(QuestScriptDef, slate);
         }

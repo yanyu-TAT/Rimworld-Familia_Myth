@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using FamiliaMyth.Familia;
 using RimWorld;
-using RimWorld.Planet;
 using RimWorld.QuestGen;
 using Verse;
 
@@ -23,7 +21,6 @@ namespace FamiliaMyth.Quest
             var map = slate.Get<Map>("map");
             var acceptor = slate.Get<Pawn>("acceptor");
             var category = slate.Get<FamiliaCategoryDef>("category");
-            float baseExploits = slate.Get<float>("totalExploits");
             float raidPoints = slate.Get<float>("raidPoints");
             var shipThing = slate.Get<Thing>("pickupShipThing");
             if (victims.NullOrEmpty() || refugeeFaction == null || map == null) return;
@@ -90,13 +87,11 @@ namespace FamiliaMyth.Quest
             {
                 victims = victims,
                 refugees = new List<Pawn>(victims),
-                acceptor = acceptor,
                 category = category,
                 refugeeFaction = refugeeFaction,
                 raiderFaction = raider,
                 mapParent = map.Parent,
                 shipThing = shipThing,
-                baseExploits = baseExploits,
                 raidPoints = raidPoints,
                 totalCount = victims.Count,
                 inSignalEnable = initiate,

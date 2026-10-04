@@ -19,7 +19,6 @@
     <li>questDescription->A Guild envoy has brought a commission. [enemyDesc] have gathered near [label], threatening the safety of the surrounding region. Assign adventurers bearing Pharna to eliminate the threat.</li>
     <li>enemyDesc->[enemiesCount] [enemiesLabel]</li>
   </Quest_Daily_SiteClearance.questDescriptionRules.rulesStrings>
-  <Quest_Daily_SiteClearance.LetterLabelQuestCompleted.slateRef>Commission complete</Quest_Daily_SiteClearance.LetterLabelQuestCompleted.slateRef>
   <Quest_Daily_SiteClearance.LetterLabelQuestExpired.slateRef>Quest expired</Quest_Daily_SiteClearance.LetterLabelQuestExpired.slateRef>
   <Quest_Daily_SiteClearance.LetterTextQuestExpired.slateRef>The enemies have withdrawn. The quest [resolvedQuestName] has expired.</Quest_Daily_SiteClearance.LetterTextQuestExpired.slateRef>
 
@@ -31,7 +30,6 @@
     <li>questDescription->A Guild envoy has brought a Rank-Up Quest. [enemyDesc] have already massed near [label], threatening the surrounding region. Commit every able fighter and eliminate the threat.</li>
     <li>enemyDesc->[enemiesCount] [enemiesLabel]</li>
   </Quest_RankUp_SiteClearance.questDescriptionRules.rulesStrings>
-  <Quest_RankUp_SiteClearance.LetterLabelRankUpCompleted.slateRef>Rank-Up Quest complete</Quest_RankUp_SiteClearance.LetterLabelRankUpCompleted.slateRef>
   <Quest_RankUp_SiteClearance.LetterLabelRankUpFailed.slateRef>Rank-Up Quest failed</Quest_RankUp_SiteClearance.LetterLabelRankUpFailed.slateRef>
   <Quest_RankUp_SiteClearance.LetterTextRankUpFailed.slateRef>The Rank-Up Quest [resolvedQuestName] has timed out. The Familia's promotion is postponed for now. A Guild envoy will issue a Rank-Up Quest again in a few days.</Quest_RankUp_SiteClearance.LetterTextRankUpFailed.slateRef>
 

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using FamiliaMyth.Familia;
 using FamiliaMyth.Pharna;
 using RimWorld;
@@ -11,7 +10,7 @@ namespace FamiliaMyth.Quest
     //  接取（12 天计时启动）→ 远行队停在 A 领货（comp 按钮 → 信号）：按 A 的交易清单现生成「押运清单」并发放
     //  → 押运途中由 QuestPart_SupplyEscortAmbush 伏击 → 远行队停在 B 交付（comp 按钮 → 信号）
     //  → **分批交付**：每拍只收背包里现有且属于待交清单的部分，未交齐则发信提示剩余缺口
-    //  → 待交清单清空 → 快照参与者 → 伟业值 + rewardsReady（晋升评级）；
+    //  → 待交清单清空 → 快照参与者 → rewardsReady（晋升评级）；
     //  12 天未交付 → 发 timeout 信号（XML 侧信件 + RankUpFailed + End Fail）。
     //  达标口径 = 清单相等（非按重量）：不追踪物资实例来源，玩家可用自备的同种同量物资补齐。
     public class QuestPart_SupplyEscort : QuestPartActivable
@@ -24,9 +23,7 @@ namespace FamiliaMyth.Quest
 
         public Settlement settlementA;        //领取点
         public Settlement settlementB;        //交付点
-        public Pawn acceptor;                 //接取者（强制任务恒为 null）
         public FamiliaCategoryDef category;   //分类（晋升评级）
-        public float baseExploits;            //基础伟业值
 
         //押运清单（领取当拍生成并持久化；交付须与之逐项一致）
         public List<ThingDefCountClass> manifest = new();
@@ -42,7 +39,6 @@ namespace FamiliaMyth.Quest
         public string outSignalRewardsReady;  //结算广播（XML 的 RankUpComplete 监听）
 
         //交付当拍快照的参与者名单
-        public List<Pawn> participants = new();
 
         private enum Stage { WaitingPickup, Escorting, Done }
 
@@ -183,16 +179,12 @@ namespace FamiliaMyth.Quest
 
             if (pending.NullOrEmpty())
             {
-                SnapshotParticipants(caravan);
                 stage = Stage.Done;
                 ClearComps();
 
                 SendLetter("FamiliaMyth.QuestPart.SupplyEscortDelivered".Translate(),
                     "FamiliaMyth.QuestPart.SupplyEscortDeliveredText".Translate(settlementB?.Label));
 
-                QuestUtilities.DistributeExploits(participants, acceptor, baseExploits,
-                    "FamiliaMyth.QuestPart.ForcedQuestComplete".Translate(),
-                    "FamiliaMyth.QuestPart.RewardReasonSupplyEscort".Translate());
 
                 //升级点数（眷族共享，不随参与者名单分摊）
                 if (category != null)
@@ -210,20 +202,6 @@ namespace FamiliaMyth.Quest
             SendLetter("FamiliaMyth.QuestPart.SupplyEscortIncomplete".Translate(),
                 "FamiliaMyth.QuestPart.SupplyEscortIncompleteText".Translate(
                     deliveredText, SupplyEscortUtility.ManifestSummary(pending), settlementB?.Label));
-        }
-
-        private void SnapshotParticipants(Caravan caravan)
-        {
-            participants.Clear();
-            if (caravan == null) return;
-
-            foreach (var pawn in caravan.PawnsListForReading)
-            {
-                if (pawn == null || pawn.Dead) continue;
-                if (pawn.Faction != Faction.OfPlayer) continue;
-                if (pawn.GetPharna() == null) continue;
-                participants.Add(pawn);
-            }
         }
 
         //==================== 定居点 comp 装配 ====================
@@ -274,10 +252,8 @@ namespace FamiliaMyth.Quest
             base.ExposeData();
             Scribe_References.Look(ref settlementA, "settlementA");
             Scribe_References.Look(ref settlementB, "settlementB");
-            Scribe_References.Look(ref acceptor, "acceptor");
             Scribe_References.Look(ref cargoCaravan, "cargoCaravan");
             Scribe_Defs.Look(ref category, "category");
-            Scribe_Values.Look(ref baseExploits, "baseExploits");
             Scribe_Values.Look(ref inSignalPickup, "inSignalPickup");
             Scribe_Values.Look(ref inSignalDeliver, "inSignalDeliver");
             Scribe_Values.Look(ref inSignalPickedUp, "inSignalPickedUp");
@@ -285,7 +261,6 @@ namespace FamiliaMyth.Quest
             Scribe_Values.Look(ref outSignalRewardsReady, "outSignalRewardsReady");
             Scribe_Collections.Look(ref manifest, "manifest", LookMode.Deep);
             Scribe_Collections.Look(ref pending, "pending", LookMode.Deep);
-            Scribe_Collections.Look(ref participants, "participants", LookMode.Reference);
             Scribe_Values.Look(ref stage, "stage", Stage.WaitingPickup);
             Scribe_Values.Look(ref pickedUp, "pickedUp");
             Scribe_Values.Look(ref deadlineTick, "deadlineTick", -1);

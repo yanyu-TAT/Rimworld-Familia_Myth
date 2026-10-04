@@ -10,12 +10,11 @@
   <FamiliaMyth.QuestLetter.Reject>Reject the commission</FamiliaMyth.QuestLetter.Reject>
   <FamiliaMyth.QuestLetter.LearnMore>Learn more</FamiliaMyth.QuestLetter.LearnMore>
   <FamiliaMyth.QuestLetter.NoPharnaColonist>No colonist with Pharna found</FamiliaMyth.QuestLetter.NoPharnaColonist>
-  <FamiliaMyth.QuestLetter.InfoText>The Adventurers' Guild was founded by the first Archotech to descend, and it handles the forwarding and issuing of commissions.\n\nNote:\nCompleting commissions earns the Exploits needed to ascend Pharna.\nThe acceptor receives 50% of the Exploits,\nand the rest is divided evenly among the other Adventurers in the party.</FamiliaMyth.QuestLetter.InfoText>
+  <FamiliaMyth.QuestLetter.InfoText>The Adventurers' Guild was founded by the first Archotech to descend, and it handles the forwarding and issuing of commissions.</FamiliaMyth.QuestLetter.InfoText>
 
   <!-- ===== Quest parts (QuestPart_*) ===== -->
   <!-- ==================== Shared (used by several quests) ==================== -->
   <FamiliaMyth.QuestPart.QuestComplete>Commission complete</FamiliaMyth.QuestPart.QuestComplete>
-  <FamiliaMyth.QuestPart.RewardReasonOutstanding>For outstanding performance during the commission:\n\n</FamiliaMyth.QuestPart.RewardReasonOutstanding>
   <!-- ==================== Refugee resettlement (QuestPart_RefugeeResettle) ==================== -->
   <FamiliaMyth.QuestPart.RefugeeResettleFailed>Refugee resettlement failed</FamiliaMyth.QuestPart.RefugeeResettleFailed>
   <FamiliaMyth.QuestPart.RefugeeResettleFailedAllDead>All the refugees have died. The Rank-Up Quest has failed.</FamiliaMyth.QuestPart.RefugeeResettleFailedAllDead>
@@ -35,7 +34,6 @@
   <FamiliaMyth.QuestPart.RefugeeNoneBoarded>none boarded</FamiliaMyth.QuestPart.RefugeeNoneBoarded>
   <FamiliaMyth.QuestPart.RefugeeAdoptedCount>, {0} joined the colony.</FamiliaMyth.QuestPart.RefugeeAdoptedCount>
   <FamiliaMyth.QuestPart.RefugeeAdoptedNone>.</FamiliaMyth.QuestPart.RefugeeAdoptedNone>
-  <FamiliaMyth.QuestPart.RewardReasonRefugeeResettle>For the proper resettlement of the refugees:\n\n</FamiliaMyth.QuestPart.RewardReasonRefugeeResettle>
   <!-- ==================== Criminal hunt (QuestPart_CriminalHunt / QuestPart_CriminalHuntSpawn) ==================== -->
   <FamiliaMyth.QuestPart.CriminalSpotted>Wanted criminal spotted</FamiliaMyth.QuestPart.CriminalSpotted>
   <FamiliaMyth.QuestPart.CriminalSpottedText>{0} is the wanted criminal you are hunting, hiding among the outpost guards.\n\nKill them to complete the commission. If you capture them, bring them back to your settlement and put them on the Guild's extradition shuttle to earn double the reward.</FamiliaMyth.QuestPart.CriminalSpottedText>
@@ -53,8 +51,6 @@
   <FamiliaMyth.QuestPart.ExtraditionCompleteText>The Guild's extradition shuttle has left your settlement with the wanted criminal aboard.</FamiliaMyth.QuestPart.ExtraditionCompleteText>
   <FamiliaMyth.QuestPart.ExtraditionFailed>Extradition failed</FamiliaMyth.QuestPart.ExtraditionFailed>
   <FamiliaMyth.QuestPart.ExtraditionFailedText>The extradition shuttle has departed, and the wanted criminal was not aboard. Commission failed.</FamiliaMyth.QuestPart.ExtraditionFailedText>
-  <FamiliaMyth.QuestPart.QuestCompleteDoubleReward>Commission complete: double reward</FamiliaMyth.QuestPart.QuestCompleteDoubleReward>
-  <FamiliaMyth.QuestPart.RewardReasonExtradition>For the successful extradition of the wanted criminal:\n\n</FamiliaMyth.QuestPart.RewardReasonExtradition>
   <!-- ==================== Supply escort (QuestPart_SupplyEscort / QuestPart_SupplyEscortAmbush) ==================== -->
   <FamiliaMyth.QuestPart.SupplyEscortTimeout>Supply escort timed out</FamiliaMyth.QuestPart.SupplyEscortTimeout>
   <FamiliaMyth.QuestPart.SupplyEscortTimeoutText>The 12-day time limit for the commission "{0}" has expired, and the supplies were not delivered to {1} in time.\n\nCommission failed.</FamiliaMyth.QuestPart.SupplyEscortTimeoutText>
@@ -66,8 +62,6 @@
   <FamiliaMyth.QuestPart.SupplyEscortIncomplete>Delivery incomplete</FamiliaMyth.QuestPart.SupplyEscortIncomplete>
   <FamiliaMyth.QuestPart.SupplyEscortIncompleteText>Delivered this time: {0}\n\nStill missing: {1}\n\nPlease keep bringing the remaining supplies to {2} and deliver them in batches.</FamiliaMyth.QuestPart.SupplyEscortIncompleteText>
   <FamiliaMyth.QuestPart.SupplyEscortNothingCarried>(The caravan is not carrying any supplies on the delivery manifest)</FamiliaMyth.QuestPart.SupplyEscortNothingCarried>
-  <FamiliaMyth.QuestPart.ForcedQuestComplete>Rank-Up Quest complete</FamiliaMyth.QuestPart.ForcedQuestComplete>
-  <FamiliaMyth.QuestPart.RewardReasonSupplyEscort>For completing the supply escort:\n\n</FamiliaMyth.QuestPart.RewardReasonSupplyEscort>
   <FamiliaMyth.QuestPart.SupplyEscortAmbush>Escort ambushed</FamiliaMyth.QuestPart.SupplyEscortAmbush>
   <FamiliaMyth.QuestPart.SupplyEscortAmbushText>The escort caravan has been ambushed on the road!\n\nDark Faction members have blocked the way. It seems the only way forward is to cut them down.\n\n{BASETEXT}</FamiliaMyth.QuestPart.SupplyEscortAmbushText>
   <!-- ==================== Ancient relic (QuestPart_AncientRelic) ==================== -->
@@ -82,7 +76,6 @@
   <FamiliaMyth.QuestPart.RelicDeliveryFailed>Delivery failed</FamiliaMyth.QuestPart.RelicDeliveryFailed>
   <FamiliaMyth.QuestPart.RelicDeliveryFailedText>The target item was not delivered in time and the shuttle has departed. Commission failed.</FamiliaMyth.QuestPart.RelicDeliveryFailedText>
   <FamiliaMyth.QuestPart.AncientRelicShuttleLeft>The Guild's shuttle has departed with the target item.</FamiliaMyth.QuestPart.AncientRelicShuttleLeft>
-  <FamiliaMyth.QuestPart.RewardReasonAncientRelic>For outstanding performance during the ruins exploration:\n\n</FamiliaMyth.QuestPart.RewardReasonAncientRelic>
   <!-- ==================== Rescue (QuestPart_Rescue) ==================== -->
   <FamiliaMyth.QuestPart.RescueSearchComplete>Search and rescue complete</FamiliaMyth.QuestPart.RescueSearchComplete>
   <FamiliaMyth.QuestPart.RescueSearchCompleteText>The threat has been cleared, and the wounded will follow your orders.\nThe shuttle of their original faction will arrive in a few hours.</FamiliaMyth.QuestPart.RescueSearchCompleteText>
@@ -91,7 +84,6 @@
   <FamiliaMyth.QuestPart.RescueFailed>Rescue failed</FamiliaMyth.QuestPart.RescueFailed>
   <FamiliaMyth.QuestPart.RescueFailedAllDeadText>All the wounded died before they could be rescued.</FamiliaMyth.QuestPart.RescueFailedAllDeadText>
   <FamiliaMyth.QuestPart.RescueFailedShuttleLeftText>The shuttle could not take all the wounded aboard and has departed ahead of time.\nThe victims left behind will leave on their own.</FamiliaMyth.QuestPart.RescueFailedShuttleLeftText>
-  <FamiliaMyth.QuestPart.RewardReasonRescue>Reward for the rescue mission:\n\n</FamiliaMyth.QuestPart.RewardReasonRescue>
 
   <!-- ===== Letters, components, world object interactions (QuestMisc) ===== -->
   <!-- ==================== Supply escort: settlement interaction (WorldObjectComp_SupplyEscort) ==================== -->
@@ -121,14 +113,13 @@
   <!-- ==================== Rank-Up Quest letter (ChoiceLetter_RankUpQuest) ==================== -->
   <FamiliaMyth.QuestMisc.RankUpQuestConfirm>Confirm</FamiliaMyth.QuestMisc.RankUpQuestConfirm>
   <FamiliaMyth.QuestMisc.RankUpQuestLearnMore>Learn more</FamiliaMyth.QuestMisc.RankUpQuestLearnMore>
-  <FamiliaMyth.QuestMisc.RankUpQuestLearnMoreText>For a Familia that has distinguished itself in a certain field, the Guild issues a Rank-Up Quest, demanding the contribution that is owed.\nThis quest cannot be refused. If it times out or fails, it will be reissued after some time.\n\nNote that this quest is highly dangerous, so send as much of your fighting strength as you can.\nCompleting it will raise your Familia's rank in "{0}".\nIt also grants a large amount of Exploits, distributed evenly among all Familia members.</FamiliaMyth.QuestMisc.RankUpQuestLearnMoreText>
+  <FamiliaMyth.QuestMisc.RankUpQuestLearnMoreText>For a Familia that has distinguished itself in a certain field, the Guild issues a Rank-Up Quest, demanding the contribution that is owed.\nThis quest cannot be refused. If it times out or fails, it will be reissued after some time.\n\nNote that this quest is highly dangerous, so send as much of your fighting strength as you can.\nCompleting it will raise your Familia's rank in "{0}".</FamiliaMyth.QuestMisc.RankUpQuestLearnMoreText>
   <!-- ==================== Envoy on-map interaction (Patch_Pawn_FloatMenu / JobDriver_TalkGuildEnvoy) ==================== -->
   <FamiliaMyth.QuestMisc.CannotTalkPathUnreachable>Cannot talk: path unreachable</FamiliaMyth.QuestMisc.CannotTalkPathUnreachable>
   <FamiliaMyth.QuestMisc.CannotTalkNoSpeech>Cannot talk: no capacity for speech</FamiliaMyth.QuestMisc.CannotTalkNoSpeech>
   <FamiliaMyth.QuestMisc.TalkToEnvoy>Talk to Guild envoy</FamiliaMyth.QuestMisc.TalkToEnvoy>
   <FamiliaMyth.QuestMisc.EnvoyFallbackLabel>Guild envoy</FamiliaMyth.QuestMisc.EnvoyFallbackLabel>
   <FamiliaMyth.QuestMisc.EnvoyLetterFallbackText>The envoy explains the details of the commission to you.</FamiliaMyth.QuestMisc.EnvoyLetterFallbackText>
-  <!-- ==================== Exploit distribution (QuestUtilities) ==================== -->
-  <FamiliaMyth.QuestMisc.ExploitsGainedLine>{0} gained {1} Exploits\n</FamiliaMyth.QuestMisc.ExploitsGainedLine>
+  <!-- ==================== Feat distribution (QuestUtilities) ==================== -->
 
 </LanguageData>

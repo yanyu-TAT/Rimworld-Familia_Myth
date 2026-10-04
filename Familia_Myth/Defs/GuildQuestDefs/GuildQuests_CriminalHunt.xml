@@ -9,7 +9,7 @@
     <generatorClass>FamiliaMyth.Quest.GuildQuestGenerator_Daily_CriminalHunt</generatorClass>
     <category>Explorer</category>
     <type>Daily</type>
-    <letterText>使者带来了公会发布的通缉令。\n\n一名被悬赏的通缉犯正藏身于殖民地附近的罪犯窝点中，\n窝点内有武装匪徒看守。公会请求你派出冒险者将其捉拿归案。\n\n可将通缉犯当场击毙，亦可将制服的囚犯交由公会的押解穿梭机运走——\n若能将囚犯活着送上穿梭机，将获得双倍酬劳。\n\n是否接受？</letterText>
+    <letterText>使者带来了公会发布的通缉令。\n\n一名被悬赏的通缉犯正藏身于殖民地附近的罪犯窝点中，\n窝点内有武装匪徒看守。公会请求你派出冒险者将其捉拿归案。\n\n当场击毙通缉犯，或将其俘虏后带回殖民地转交给公会的押解穿梭机即可完成任务——\n若能将囚犯活着送上穿梭机，将获得双倍酬劳。\n\n是否接受？</letterText>
   </FamiliaMyth.Quest.GuildQuestDef>
 
 </Defs>

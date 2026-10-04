@@ -9,7 +9,7 @@
     <generatorClass>FamiliaMyth.Quest.GuildQuestGenerator_Daily_AncientRelic</generatorClass>
     <category>Explorer</category>
     <type>Daily</type>
-    <letterText>使者带来了遗迹的传闻。\n\n殖民地附近的远古遗迹中沉睡着一件失落文明的圣物匣。遗迹内机关重重，仍有古代守卫徘徊。\n\n前往遗迹取回圣物匣并带回据点，公会的穿梭机会在数日后抵达接应，将其装上穿梭机即可完成委托。\n\n圣物匣被取走后，遗迹的守护力量会派出追兵袭击据点，务必小心。是否接受？</letterText>
+    <letterText>使者带来了新发现遗迹的相关信息。\n\n据传殖民地附近新发现的遗迹中有古代仙精留下的重要宝物。\n\n前往遗迹取回圣物匣并带回据点，公会的穿梭机会在数日后抵达，交付给穿梭机即可完成委托。\n宝物被取走后，觊觎其力量的黑暗派阀可能会前来争夺，务必小心。\n\n是否接受？</letterText>
   </FamiliaMyth.Quest.GuildQuestDef>
 
 </Defs>

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using RimWorld;
 using RimWorld.Planet;
 using RimWorld.QuestGen;
@@ -13,8 +12,8 @@ namespace FamiliaMyth.Quest
         {
             var slate = QuestGen.slate;
 
-            //统一计算：威胁点数 + 伟业值（点数已含原版财富基准 × 全殖民地恩惠成长）
-            QuestUtilities.CalculateTaskParams(isRankUp: false, out float threatPoints, out float totalExploits);
+            //统一计算：威胁点数 + 伟业（点数已含原版财富基准 × 全殖民地恩惠成长）
+            QuestUtilities.CalculateTaskParams(isRankUp: false, out float threatPoints);
 
             //生成站点参数（威胁点直接供原版生成敌人）
             var outpostDef = DefDatabase<SitePartDef>.GetNamed("Outpost");
@@ -29,7 +28,6 @@ namespace FamiliaMyth.Quest
                 allowHidden: false, allowNonHumanlike: true, allowDefeated: false);
 
             slate.Set("difficulty", threatPoints);
-            slate.Set("totalExploits", totalExploits);
             slate.Set("sitePartsParams", sitePartsParams);
             slate.Set("siteFaction", enemy);
         }

@@ -18,7 +18,7 @@ namespace FamiliaMyth.Quest
             if (cat == null) return;
 
             //统一任务点数计算（强制任务内部自动 ×1.5）
-            QuestUtilities.CalculateTaskParams(isRankUp: true, out float threatPoints, out float totalExploits);
+            QuestUtilities.CalculateTaskParams(isRankUp: true, out float threatPoints);
 
             //生成站点
             var outpostDef = DefDatabase<SitePartDef>.GetNamed("Outpost");
@@ -33,7 +33,6 @@ namespace FamiliaMyth.Quest
                 allowHidden: false, allowNonHumanlike: true, allowDefeated: false);
 
             slate.Set("difficulty", threatPoints);
-            slate.Set("totalExploits", totalExploits);
             slate.Set("sitePartsParams", sitePartsParams);
             slate.Set("siteFaction", faction);
         }

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using FamiliaMyth.Familia;
 using RimWorld;
 using RimWorld.Planet;
@@ -15,10 +14,8 @@ namespace FamiliaMyth.Quest
             var slate = QuestGen.slate;
             var site = slate.Get<Site>("site");
             var victims = slate.Get<List<Pawn>>("victims");
-            var acceptor = slate.Get<Pawn>("acceptor");
             var category = slate.Get<FamiliaCategoryDef>("category");
             int count = slate.Get<int>("rescueCount");
-            float baseExploits = slate.Get<float>("totalExploits");
             var shipThing = slate.Get<Thing>("pickupShipThing");
             var original = slate.Get<Faction>("rescueFaction");
             if (site == null || victims == null) return;
@@ -37,12 +34,10 @@ namespace FamiliaMyth.Quest
             QuestGen.quest.AddPart(new QuestPart_Rescue
             {
                 site = site,
-                acceptor = acceptor,
                 category = category,
                 victims = victims,
                 originalFaction = original,
                 totalCount = count,
-                baseExploits = baseExploits,
                 shipThing = shipThing,
                 inSignalEnable = threatClear,
                 inSignalRescueDone = QuestGenUtility.HardcodedSignalWithQuestID("rescueDone"),

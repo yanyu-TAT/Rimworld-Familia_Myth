@@ -537,28 +537,4 @@
     </parts>
     <forInformationOnly>true</forInformationOnly>
   </StatDef>
-
-  <StatDef>
-    <defName>PharnaExploits</defName>
-    <label>伟业值</label>
-    <description>通过完成远征任务和公会委托获取的伟业值。\n\n升级条件：至少一个能力项目达到等级D（500点），并且拥有足够的伟业值（999点）。\n达到999点即可升华恩惠，将所有现有能力值叠加至潜在能力值。</description>
-    <category>Pharna</category>
-    <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
-    <defaultBaseValue>0</defaultBaseValue>
-    <hideAtValue>-1</hideAtValue>
-    <showOnPawns>true</showOnPawns>
-    <showOnHumanlikes>true</showOnHumanlikes>
-    <showIfUndefined>true</showIfUndefined>
-    <showIfHediffsPresent>
-      <li>Hediff_Pharna</li>
-    </showIfHediffsPresent>
-    <displayPriorityInCategory>9</displayPriorityInCategory>
-    <toStringStyle>Integer</toStringStyle>
-    <parts>
-      <li Class="FamiliaMyth.Abilities.StatPart_PharnaDisplay">
-        <mode>Exploits</mode>
-      </li>
-    </parts>
-    <forInformationOnly>true</forInformationOnly>
-  </StatDef>
 </Defs>

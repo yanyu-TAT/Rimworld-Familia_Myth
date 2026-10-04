@@ -10,7 +10,7 @@
     <generatorClass>FamiliaMyth.Quest.GuildQuestGenerator_RankUp_RefugeeResettle</generatorClass>
     <category>Explorer</category>
     <type>RankUp</type>
-    <letterText>使者向你介绍了强制任务的详情，并提醒你做好准备。\n\n公会将一批避难者临时安置到你的殖民地，\n他们将在殖民地停留 15 天，之后由公会穿梭机接走。\n\n这批难民身上带着伤，追杀他们的人也会找上门来。\n请保护他们，并尽量让更多人活着登上穿梭机。\n\n该任务不可拒绝。完成任务即可提升眷族在「探索类」方面的评级。</letterText>
+    <letterText>使者向你介绍了强制任务的详情，并提醒你做好准备。\n\n一批受到黑暗派阀追杀的避难者希望临时安置在你的殖民地，\n他们将在殖民地停留 15 天，之后由公会穿梭机接走安置于其他地方。\n请保护他们免于黑暗派阀的追杀，并尽量让更多人活着离开。</letterText>
   </FamiliaMyth.Quest.GuildQuestDef>
 
 </Defs>

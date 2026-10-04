@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using FamiliaMyth.Familia;
 using RimWorld;
 using RimWorld.Planet;
@@ -18,7 +17,7 @@ namespace FamiliaMyth.Quest
         {
             var slate = QuestGen.slate;
 
-            QuestUtilities.CalculateTaskParams(isRankUp: false, out float points, out float baseExploits);
+            QuestUtilities.CalculateTaskParams(isRankUp: false, out float points);
             float guardPoints = points * GuardFactor;
 
             //守卫敌人：罪犯窝点本体（原版 Outpost 营地）
@@ -53,7 +52,6 @@ namespace FamiliaMyth.Quest
             }
 
             slate.Set("difficulty", points);
-            slate.Set("totalExploits", baseExploits);
             slate.Set("sitePartsParams", sitePartsParams);
             slate.Set("siteFaction", criminalFaction);
             slate.Set("wanted", wanted);

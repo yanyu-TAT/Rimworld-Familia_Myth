@@ -17,10 +17,9 @@
   <FamiliaMyth.UI.CategoryRankUpHint>◆ Complete a Rank-Up Quest to raise this rank</FamiliaMyth.UI.CategoryRankUpHint>
   <FamiliaMyth.UI.CategoryMaxRank>No higher rank in this category</FamiliaMyth.UI.CategoryMaxRank>
   <FamiliaMyth.UI.CategoryProgress>Progress {0}%</FamiliaMyth.UI.CategoryProgress>
-  <FamiliaMyth.UI.MemberBio>Lv.{0}\nExploits: {1}</FamiliaMyth.UI.MemberBio>
+  <FamiliaMyth.UI.MemberBio>Lv.{0}</FamiliaMyth.UI.MemberBio>
 
   <!-- ==================== Stat panel explanation fragments ==================== -->
-  <FamiliaMyth.Stat.PharnaExploits>Current exploits: {0} / 999\nPharna level: Lv.{1}</FamiliaMyth.Stat.PharnaExploits>
   <FamiliaMyth.Stat.PharnaExperience>Current experience =\n{0}</FamiliaMyth.Stat.PharnaExperience>
   <FamiliaMyth.Stat.PharnaStatus>Current: {0} | Potential: {1}\nTotal: {2}\n</FamiliaMyth.Stat.PharnaStatus>
   <FamiliaMyth.Stat.ManaConversionSpeed>Mana conversion efficiency {0} × consciousness {1}\nConversion rate = {2} /s</FamiliaMyth.Stat.ManaConversionSpeed>

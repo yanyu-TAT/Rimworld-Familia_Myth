@@ -1,7 +1,4 @@
-using System.Collections.Generic;
-using System.Linq;
 using FamiliaMyth.Familia;
-using FamiliaMyth.Pharna;
 using RimWorld;
 using RimWorld.Planet;
 using Verse;
@@ -22,13 +19,10 @@ namespace FamiliaMyth.Quest
 
         public Site site;                    //罪犯窝点
         public Pawn wanted;                  //通缉犯（唯一目标）
-        public Pawn acceptor;                //接取者（奖励规则用）
         public FamiliaCategoryDef category;  //分类（升级点）
-        public float baseExploits;           //基础伟业值（押解线 ×2）
         public Thing shipThing;              //押解穿梭机（登机判定）
 
         //威胁清除时点快照的参与者名单，结算按此发放
-        public List<Pawn> participants = new();
 
         //生成期 hardcode 的同串信号
         public string inSignalCleared;       //解除站点清剿超时表
@@ -65,7 +59,6 @@ namespace FamiliaMyth.Quest
             //威胁清除：快照参与者、停站点超时表、按通缉犯存活分流
             if (stage == Stage.WaitingThreatClear)
             {
-                SnapshotParticipants();
                 if (wanted == null || wanted.Dead || wanted.Destroyed)
                 {
                     SettleNormal("FamiliaMyth.QuestPart.CriminalKilledInOutpost".Translate(),
@@ -203,12 +196,6 @@ namespace FamiliaMyth.Quest
             return null;
         }
 
-        private void SnapshotParticipants()
-        {
-            if (participants.Count > 0) return;
-            QuestUtilities.SnapshotSiteParticipants(site, participants);
-        }
-
         //成功押解（×2）：通缉犯在机舱内随船起飞 → despawn discard（不改派系），双倍结算
         private void SettleDouble()
         {
@@ -218,9 +205,6 @@ namespace FamiliaMyth.Quest
             RemoveWantedFromWorld();
             SendLetter("FamiliaMyth.QuestPart.ExtraditionComplete".Translate(),
                 "FamiliaMyth.QuestPart.ExtraditionCompleteText".Translate());
-            QuestUtilities.DistributeExploits(participants, acceptor, baseExploits * 2f,
-                "FamiliaMyth.QuestPart.QuestCompleteDoubleReward".Translate(),
-                "FamiliaMyth.QuestPart.RewardReasonExtradition".Translate());
             GameComponent_FamiliaRankTracker.Instance?.GainPoints(category, 20);
             quest.End(QuestEndOutcome.Success);
         }
@@ -232,9 +216,6 @@ namespace FamiliaMyth.Quest
             stage = Stage.Done;
 
             SendLetter(label, text);
-            QuestUtilities.DistributeExploits(participants, acceptor, baseExploits,
-                "FamiliaMyth.QuestPart.QuestComplete".Translate(),
-                "FamiliaMyth.QuestPart.RewardReasonOutstanding".Translate());
             GameComponent_FamiliaRankTracker.Instance?.GainPoints(category, 10);
             quest.End(QuestEndOutcome.Success);
         }
@@ -274,11 +255,8 @@ namespace FamiliaMyth.Quest
             base.ExposeData();
             Scribe_References.Look(ref site, "site");
             Scribe_References.Look(ref wanted, "wanted");
-            Scribe_References.Look(ref acceptor, "acceptor");
             Scribe_Defs.Look(ref category, "category");
-            Scribe_Values.Look(ref baseExploits, "baseExploits");
             Scribe_References.Look(ref shipThing, "shipThing");
-            Scribe_Collections.Look(ref participants, "participants", LookMode.Reference);
             Scribe_Values.Look(ref inSignalCleared, "inSignalCleared");
             Scribe_Values.Look(ref inSignalExtradite, "inSignalExtradite");
             Scribe_Values.Look(ref inSignalSatisfied, "inSignalSatisfied");

@@ -11,7 +11,7 @@
     <generatorClass>FamiliaMyth.Quest.GuildQuestGenerator_RankUp_SupplyEscort</generatorClass>
     <category>Explorer</category>
     <type>RankUp</type>
-    <letterText>使者向你介绍了强制任务的详情，并提醒你做好准备。\n\n公会有一批物资需要从一处定居点押运至另一处，\n限 12 天内完成交付，途中可能有劫匪。\n\n该任务不可拒绝，请派出可靠的远行队。\n完成任务即可提升眷族在「探索类」方面的评级。</letterText>
+    <letterText>使者向你介绍了强制任务的详情，并提醒你做好准备。\n\n公会有一批物资急需运输\n在12天内前往接受物资并完成交付，即可完成任务。\n途中可能会有黑暗派阀成员前来抢夺物资，请做好准备。</letterText>
   </FamiliaMyth.Quest.GuildQuestDef>
 
 </Defs>

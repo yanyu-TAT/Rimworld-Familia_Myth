@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using RimWorld;
 using RimWorld.Planet;
 using RimWorld.QuestGen;
@@ -20,7 +18,7 @@ namespace FamiliaMyth.Quest
         {
             var slate = QuestGen.slate;
 
-            QuestUtilities.CalculateTaskParams(isRankUp: false, out float points, out float baseExploits);
+            QuestUtilities.CalculateTaskParams(isRankUp: false, out float points);
             float threat = points * ThreatFactor;
             int count = Mathf.Clamp(1 + Mathf.FloorToInt(points / VictimPerPoints), 1, MaxVictims);
 
@@ -59,7 +57,6 @@ namespace FamiliaMyth.Quest
                 allowHidden: false, allowNonHumanlike: true, allowDefeated: false);
 
             slate.Set("difficulty", points);
-            slate.Set("totalExploits", baseExploits);
             slate.Set("sitePartsParams", sitePartsParams);
             slate.Set("siteFaction", enemy);
             slate.Set("rescueFaction", rescueFaction);

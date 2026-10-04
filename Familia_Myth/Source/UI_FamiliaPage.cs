@@ -261,7 +261,7 @@ namespace FamiliaMyth.UI
                 Text.Font = GameFont.Tiny;
                 Text.Anchor = TextAnchor.UpperLeft;
                 GUI.color = UI_GroupBox.ColorAccent;
-                Widgets.Label(bioR, "FamiliaMyth.UI.MemberBio".Translate(pharna.level, (int)pharna.exploits));
+                Widgets.Label(bioR, "FamiliaMyth.UI.MemberBio".Translate(pharna.level));
                 GUI.color = Color.white;
                 Text.Anchor = TextAnchor.UpperLeft;
 

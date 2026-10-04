@@ -23,7 +23,7 @@
 
     <questDescriptionRules>
       <rulesStrings>
-        <li>questDescription->公会发布了一份通缉令：通缉犯 [wanted_nameDef] 正藏身于殖民地附近由匪徒把守的窝点中，悬赏其归案。\n\n前往标记地点肃清窝点。通缉犯可就地击毙，也可将其击倒后带回据点——若将其活着送上公会的押解穿梭机，酬劳将翻倍。\n\n注意：通缉犯若被招募、奴役或在押解前失踪，委托将视为失败。</li>
+        <li>questDescription->公会发布了一份通缉令：通缉犯 [wanted_nameDef] 正藏身于殖民地附近由匪徒把守的窝点中，悬赏其归案。\n前往标记地点肃清窝点。\n击毙通缉犯或将其俘虏后带回据点转交给公会的押解穿梭机，即可获得双倍酬劳。\n\n注意：通缉犯若被招募、奴役或在押解前失踪，委托将视为失败。</li>
       </rulesStrings>
     </questDescriptionRules>
 

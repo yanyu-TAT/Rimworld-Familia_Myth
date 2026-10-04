@@ -52,20 +52,6 @@ namespace FamiliaMyth.Debug
         }
 
         /// <summary>
-        /// 调试指令：增加伟业值
-        /// </summary>
-        /// <param name="pawn">选中的殖民者</param>
-        [DebugAction("Familia Myth", "Pharna +100 Eploits",
-            actionType = DebugActionType.ToolMapForPawns,
-            allowedGameStates = AllowedGameStates.PlayingOnMap)]
-        public static void AddExploits(Pawn pawn)
-        {
-            var pharna = pawn.GetPharna();
-            pharna?.GainExploits(DefaultAmount);
-            MoteMaker.ThrowText(pawn.DrawPos, pawn.Map, $"{pharna?.exploits}");
-        }
-
-        /// <summary>
         /// 调试指令：添加升华奖励
         /// </summary>
         [DebugAction("Familia Myth", "Add Acsend Reward",

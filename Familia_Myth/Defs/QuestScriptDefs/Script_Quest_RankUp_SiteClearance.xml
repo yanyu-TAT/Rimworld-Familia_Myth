@@ -3,7 +3,7 @@
 
   <!-- 强制升级考核任务脚本 -->
   <!-- 由 GuildQuestGenerator_RankUP_SiteClearance.QuestScriptDefName 引用 -->
-  <!-- 流程：达标 → 使者出场（自动接取）→ 生成强化站点 → 清剿 → 晋升评级 + 伟业值 -->
+  <!-- 流程：达标 → 使者出场（自动接取）→ 生成强化站点 → 清剿 → 晋升评级 -->
   <!-- 失败/超时 → QuestNode_RankUpFailed 通知 tracker → 1~5 天后自动重发 -->
   <QuestScriptDef>
     <defName>Quest_RankUp_SiteClearance</defName>
@@ -23,7 +23,7 @@
 
     <questDescriptionRules>
       <rulesStrings>
-        <li>questDescription->公会使者带来了强制任务。敌人已在附近集结，正在威胁着周边地区。请倾全部战力，证明眷族的实力。\n\n完成任务即可提升眷族评级，并获得大量伟业值。</li>
+        <li>questDescription->公会使者带来了强制任务。[enemyDesc]正在[label]已在附近集结，正在威胁着周边地区。请倾全部战力，前去消除威胁。</li>
       </rulesStrings>
     </questDescriptionRules>
 
@@ -54,7 +54,7 @@
               <worldObjects>$site</worldObjects>
             </li>
 
-            <!-- 清剿所有敌人后完成考核：晋升评级 + 发放伟业值（奖励部件均监听 rewardsReady） -->
+            <!-- 清剿所有敌人后完成考核：晋升评级（奖励部件均监听 rewardsReady） -->
             <li Class="QuestNode_Signal">
               <inSignal>site.AllEnemiesDefeated</inSignal>
               <node Class="QuestNode_Sequence">
@@ -63,11 +63,8 @@
                   <li Class="FamiliaMyth.Quest.QuestNode_RankUpComplete">
                     <categoryDef>$category</categoryDef>
                   </li>
-                  <!-- 发放伟业值（威胁清除时点按站点在场人员快照；无接取者 → 全员均分） -->
+                  
                   <li Class="FamiliaMyth.Quest.QuestNode_SiteClearanceReward">
-                    <site>$site</site>
-                    <totalExploits>$totalExploits</totalExploits>
-                    <letterLabel TKey="LetterLabelRankUpCompleted">强制任务完成</letterLabel>
                     <category>$category</category>
                     <upgradePoints>10</upgradePoints>
                   </li>

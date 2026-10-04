@@ -1,7 +1,7 @@
 using FamiliaMyth.Familia;
-using FamiliaMyth.Pharna;
 using RimWorld;
 using RimWorld.Planet;
+using UnityEngine;
 using Verse;
 using Verse.AI.Group;
 
@@ -16,19 +16,19 @@ namespace FamiliaMyth.Quest
     //  全程无人口白送（死亡/离图时 QuestPart_ExtraFaction 的原版行为也会自动归还原派系）。
     public class QuestPart_Rescue : QuestPartActivable
     {
+        // 基础升级点数（按登机存活比例结算）
+        private const int BaseUpgradePoints = 15;
+
         public enum Stage { WaitingThreatClear, WaitingShuttleArrive, WaitingBoarding, Done }
 
         public Site site;
         public Faction originalFaction;          //遇难者所属原派系（临时加入玩家后作 HomeFaction"原派系"标记；结算归还于此）
-        public Pawn acceptor;                    //接取者（奖励规则用）
-        public FamiliaCategoryDef category;      //分类（升级点 +10）
+        public FamiliaCategoryDef category;      //分类（升级点 = 基础 15 × 登机存活比）
         public List<Pawn> victims = new();       //遇难者（威胁清除后临时加入玩家派系）
         public int totalCount;                   //生成总数（奖励分母）
-        public float baseExploits;               //基础伟业值（× 登船存活/总数）
         public Thing shipThing;                  //穿梭机载具（登船判定）
 
         //搜救完成（威胁清除）时点快照的参与者名单，结算按此发放
-        public List<Pawn> participants = new();
 
         //生成期 hardcode 的同串信号
         public string inSignalRescueDone;        //解除站点 2 天搜救超时表
@@ -54,7 +54,6 @@ namespace FamiliaMyth.Quest
             {
                 if (victims.All(p => p == null || p.Dead)) return;   //全灭由 Notify_PawnKilled 结算，不再召穿梭机
 
-                SnapshotParticipants();
                 stage = Stage.WaitingShuttleArrive;
                 evacuateTick = Find.TickManager.TicksGame
                     + Rand.RangeInclusive(ShuttleDelayMinTicks, ShuttleDelayMaxTicks);
@@ -96,12 +95,6 @@ namespace FamiliaMyth.Quest
             }
         }
 
-        private void SnapshotParticipants()
-        {
-            if (participants.Count > 0) return;
-            QuestUtilities.SnapshotSiteParticipants(site, participants);
-        }
-
         //威胁清除当拍：幸存者难民式加入玩家派系（真实加入 → 上头像栏/可指挥），
         //同时释放守点 lord（守点周期到加入为止，之后不再发放）
         private void JoinVictimsToPlayer()
@@ -136,7 +129,6 @@ namespace FamiliaMyth.Quest
             {
                 //满载起飞：舱内伤员此时仍在内容器中，先归还原派系，随后由穿梭机带回其派系；任务成功
                 stage = Stage.Done;
-                if (participants.Count == 0) SnapshotParticipants();
 
                 RestoreOriginalFactions();
                 int boarded = CountBoarded();
@@ -144,11 +136,7 @@ namespace FamiliaMyth.Quest
 
                 SendLetter("FamiliaMyth.QuestPart.RescueComplete".Translate(),
                     "FamiliaMyth.QuestPart.RescueCompleteText".Translate(boarded, totalCount));
-                QuestUtilities.DistributeExploits(participants, acceptor,
-                    baseExploits * ratio,
-                    "FamiliaMyth.QuestPart.QuestComplete".Translate(),
-                    "FamiliaMyth.QuestPart.RewardReasonRescue".Translate());
-                GameComponent_FamiliaRankTracker.Instance?.GainPoints(category, 10);
+                GameComponent_FamiliaRankTracker.Instance?.GainPoints(category, Mathf.RoundToInt(BaseUpgradePoints * ratio));
                 quest.End(QuestEndOutcome.Success);
                 return;
             }
@@ -193,13 +181,10 @@ namespace FamiliaMyth.Quest
             base.ExposeData();
             Scribe_References.Look(ref site, "site");
             Scribe_References.Look(ref originalFaction, "originalFaction");
-            Scribe_References.Look(ref acceptor, "acceptor");
             Scribe_Defs.Look(ref category, "category");
             Scribe_Collections.Look(ref victims, "victims", LookMode.Reference);
             Scribe_Values.Look(ref totalCount, "totalCount");
-            Scribe_Values.Look(ref baseExploits, "baseExploits");
             Scribe_References.Look(ref shipThing, "shipThing");
-            Scribe_Collections.Look(ref participants, "participants", LookMode.Reference);
             Scribe_Values.Look(ref inSignalRescueDone, "inSignalRescueDone");
             Scribe_Values.Look(ref inSignalEvacuate, "inSignalEvacuate");
             Scribe_Values.Look(ref inSignalSatisfied, "inSignalSatisfied");

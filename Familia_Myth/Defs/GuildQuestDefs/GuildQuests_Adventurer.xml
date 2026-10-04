@@ -10,7 +10,7 @@
     <generatorClass>FamiliaMyth.Quest.GuildQuestGenerator_Daily_SiteClearance</generatorClass>
     <category>Explorer</category>
     <type>Daily</type>
-    <letterText>使者向你介绍了委托的详情。\n\n公会在附近发现了一处邪恶派阀据点，\n放任不管会严重危害周边治安。\n现请求派出冒险者前去肃清。\n\n完成后将获得伟业值，并提升眷族在「冒险者向」方面的评级。\n\n是否接受？</letterText>
+    <letterText>使者向你介绍了剿灭委托的详情。\n\n公会在附近发现了一处邪恶派阀据点，\n放任不管会严重危害周边治安。现请求派出冒险者前去肃清。\n\n是否接受？</letterText>
   </FamiliaMyth.Quest.GuildQuestDef>
 
   <!-- 探索类 · （强制任务）据点清剿 -->
@@ -21,7 +21,7 @@
     <generatorClass>FamiliaMyth.Quest.GuildQuestGenerator_RankUP_SiteClearance</generatorClass>
     <category>Explorer</category>
     <type>RankUp</type>
-    <letterText>使者向你介绍了强制任务的详情，并提醒你做好准备。\n\n该任务不可拒绝，难度较高，请尽量派出全部战力。\n完成任务即可提升眷族在「探索类」方面的评级。</letterText>
+    <letterText>使者向你介绍了强制任务的详情，并提醒你做好准备。\n\n公会在附近发现了一处邪恶派阀据点，\n放任不管会严重危害周边治安。现请求派出冒险者前去肃清。</letterText>
   </FamiliaMyth.Quest.GuildQuestDef>
 
 </Defs>

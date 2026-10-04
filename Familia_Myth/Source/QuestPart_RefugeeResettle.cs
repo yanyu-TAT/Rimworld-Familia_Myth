@@ -1,9 +1,8 @@
-using System.Collections.Generic;
-using System.Linq;
 using FamiliaMyth.Familia;
 using FamiliaMyth.Pharna;
 using RimWorld;
 using RimWorld.Planet;
+using UnityEngine;
 using Verse;
 
 namespace FamiliaMyth.Quest
@@ -12,7 +11,7 @@ namespace FamiliaMyth.Quest
     //  接取 → 难民边缘到访并临时加入玩家派系（PawnsArrive joinPlayer + MiniFaction 标记，由装配节点负责）
     //  → 停留 15 天：到场当拍施加随机受伤；按点数×1.2 发 2 次袭击（首发 3~5 天，之后间隔 3~5 天）
     //  → 到点叫公会穿梭机（util，停留 2 天）：登机者随船离场；未登机者视为失踪，转中立后自行离图
-    //  → 结算：伟业值 = 基础 × 存活率（登机数 + 已转正数）/ 生成总数
+    //  → 结算：升级点数 = 基础 15 × 存活率（登机数 + 已转正数）/ 生成总数
     //  失败线（囚禁/奴役、二次有害手术、全灭、无人生还）：图上的存活难民（含已转正者）转中立后自行离场。
     public class QuestPart_RefugeeResettle : QuestPartActivable
     {
@@ -22,13 +21,11 @@ namespace FamiliaMyth.Quest
         public List<Pawn> victims = new();      //全部难民（奖励分母、死亡监控）
         public List<Pawn> refugees = new();     //仍需登机者（被劝加入者移出）
         public List<Pawn> adopted = new();      //已转正（视为存活）
-        public Pawn acceptor;
         public FamiliaCategoryDef category;
         public Faction refugeeFaction;          //临时难民派系（离场时转为此派系＝中立）
         public Faction raiderFaction;           //生成期选定的袭击派系
         public MapParent mapParent;
         public Thing shipThing;                 //公会穿梭机（util 生成）
-        public float baseExploits;
         public float raidPoints;
         public int totalCount;
 
@@ -47,6 +44,9 @@ namespace FamiliaMyth.Quest
         public const int BoardingWindowDays = 2;
 
         private const int CheckIntervalTicks = 250;
+
+        //基础升级点数（按存活比例结算）
+        private const int BaseUpgradePoints = 15;
 
         //袭击排程
         private const int MaxRaids = 2;
@@ -74,8 +74,6 @@ namespace FamiliaMyth.Quest
         private int stayEndTick = -1;
         private int surgeryViolations;
         private bool shipCalled;
-
-        private List<Pawn> participants = new();
 
         //任务启动即启用（接取信号）：停留期与袭击表从任务接取起算
         protected override void Enable(SignalArgs receivedArgs)
@@ -329,7 +327,6 @@ namespace FamiliaMyth.Quest
             Dismiss(OnMapAlive().Where(p => !IsBoarded(p) && !adopted.Contains(p)).ToList());
             RestoreBoardedFaction();
 
-            SnapshotParticipants();
             string boardedText = boarded > 0
                 ? "FamiliaMyth.QuestPart.RefugeeBoardedCount".Translate(boarded)
                 : "FamiliaMyth.QuestPart.RefugeeNoneBoarded".Translate();
@@ -340,10 +337,7 @@ namespace FamiliaMyth.Quest
                 "FamiliaMyth.QuestPart.RefugeeResettleCompleteText".Translate(
                     survived, totalCount, ratio.ToStringPercent(), boardedText, adoptedText));
 
-            QuestUtilities.DistributeExploits(participants, acceptor, baseExploits * ratio,
-                "FamiliaMyth.QuestPart.QuestComplete".Translate(),
-                "FamiliaMyth.QuestPart.RewardReasonRefugeeResettle".Translate());
-            GameComponent_FamiliaRankTracker.Instance?.GainPoints(category, 10);
+            GameComponent_FamiliaRankTracker.Instance?.GainPoints(category, Mathf.RoundToInt(BaseUpgradePoints * ratio));
 
             if (!outSignalRewardsReady.NullOrEmpty())
                 Find.SignalManager.SendSignal(new Signal(outSignalRewardsReady));
@@ -418,16 +412,6 @@ namespace FamiliaMyth.Quest
         private int CountBoarded() =>
             victims.Count(p => p != null && !p.Dead && IsBoarded(p));
 
-        private void SnapshotParticipants()
-        {
-            participants.Clear();
-            if (mapParent?.Map is not Map map) return;
-
-            foreach (var pawn in map.mapPawns.AllPawnsSpawned)
-                if (pawn.IsColonist && pawn.Faction == Faction.OfPlayer && pawn.GetPharna() != null)
-                    participants.Add(pawn);
-        }
-
         private void SendLetter(string label, string text) =>
             Find.LetterStack.ReceiveLetter(LetterMaker.MakeLetter(label, text, LetterDefOf.NeutralEvent));
 
@@ -437,13 +421,11 @@ namespace FamiliaMyth.Quest
             Scribe_Collections.Look(ref victims, "victims", LookMode.Reference);
             Scribe_Collections.Look(ref refugees, "refugees", LookMode.Reference);
             Scribe_Collections.Look(ref adopted, "adopted", LookMode.Reference);
-            Scribe_References.Look(ref acceptor, "acceptor");
             Scribe_Defs.Look(ref category, "category");
             Scribe_References.Look(ref refugeeFaction, "refugeeFaction");
             Scribe_References.Look(ref raiderFaction, "raiderFaction");
             Scribe_References.Look(ref mapParent, "mapParent");
             Scribe_References.Look(ref shipThing, "shipThing");
-            Scribe_Values.Look(ref baseExploits, "baseExploits");
             Scribe_Values.Look(ref raidPoints, "raidPoints");
             Scribe_Values.Look(ref totalCount, "totalCount");
             Scribe_Collections.Look(ref inSignalsJoinAccepted, "inSignalsJoinAccepted", LookMode.Value);
@@ -454,7 +436,6 @@ namespace FamiliaMyth.Quest
             Scribe_Values.Look(ref outSignalVictimDied, "outSignalVictimDied");
             Scribe_Values.Look(ref outSignalRewardsReady, "outSignalRewardsReady");
             Scribe_Values.Look(ref outSignalFailed, "outSignalFailed");
-            Scribe_Collections.Look(ref participants, "participants", LookMode.Reference);
             Scribe_Values.Look(ref stage, "stage");
             Scribe_Values.Look(ref injuriesApplied, "injuriesApplied");
             Scribe_Values.Look(ref raidsFired, "raidsFired");

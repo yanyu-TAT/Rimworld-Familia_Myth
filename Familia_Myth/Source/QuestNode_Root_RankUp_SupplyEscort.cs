@@ -1,6 +1,4 @@
 using FamiliaMyth.Familia;
-using RimWorld;
-using RimWorld.Planet;
 using RimWorld.QuestGen;
 using Verse;
 
@@ -19,7 +17,7 @@ namespace FamiliaMyth.Quest
         {
             var slate = QuestGen.slate;
 
-            QuestUtilities.CalculateTaskParams(isRankUp: true, out float points, out float totalExploits);
+            QuestUtilities.CalculateTaskParams(isRankUp: true, out float points);
 
             var homeMap = ResolveHomeMap(slate);
             if (homeMap == null) return;
@@ -30,7 +28,6 @@ namespace FamiliaMyth.Quest
             slate.Set("settlementA", settlementA);
             slate.Set("settlementB", settlementB);
             slate.Set("difficulty", points);
-            slate.Set("totalExploits", totalExploits);
             slate.Set("ambushPoints", points * AmbushPointsFactor);
             slate.Set("category", category.GetValue(slate));
         }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <FeatTrait_RepelledAssault.label>Repelled Assault</FeatTrait_RepelledAssault.label>
+  <FeatTrait_RepelledAssault.description>Repelled a sizeable attacking force.</FeatTrait_RepelledAssault.description>
+
+  <FeatTrait_AgainstTheOdds.label>Against the Odds</FeatTrait_AgainstTheOdds.label>
+  <FeatTrait_AgainstTheOdds.description>Repelled a far larger force with only a handful of defenders.</FeatTrait_AgainstTheOdds.description>
+
+  <FeatTrait_FlawlessVictory.label>Flawless Victory</FeatTrait_FlawlessVictory.label>
+  <FeatTrait_FlawlessVictory.description>Won the battle without a single ally going down.</FeatTrait_FlawlessVictory.description>
+
+  <FeatTrait_SlayTheMighty.label>Slay the Mighty</FeatTrait_SlayTheMighty.label>
+  <FeatTrait_SlayTheMighty.description>Felled a formidable foe against overwhelming odds.</FeatTrait_SlayTheMighty.description>
+
+</LanguageData>

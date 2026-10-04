@@ -1,5 +1,4 @@
 using FamiliaMyth.Familia;
-using RimWorld;
 using RimWorld.Planet;
 using RimWorld.QuestGen;
 using Verse;
@@ -18,8 +17,6 @@ namespace FamiliaMyth.Quest
             if (settlementA == null || settlementB == null) return;
 
             var category = slate.Get<FamiliaCategoryDef>("category");
-            var acceptor = slate.Get<Pawn>("acceptor");
-            float baseExploits = slate.Get<float>("totalExploits");
             float ambushPoints = slate.Get<float>("ambushPoints");
 
             string signalPickedUp = QuestGenUtility.HardcodedSignalWithQuestID("escortPickedUp");
@@ -29,9 +26,7 @@ namespace FamiliaMyth.Quest
             {
                 settlementA = settlementA,
                 settlementB = settlementB,
-                acceptor = acceptor,
                 category = category,
-                baseExploits = baseExploits,
                 inSignalEnable = QuestGen.quest.InitiateSignal,
                 inSignalPickup = QuestGenUtility.HardcodedSignalWithQuestID("escortPickup"),
                 inSignalDeliver = QuestGenUtility.HardcodedSignalWithQuestID("escortDeliver"),

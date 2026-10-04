@@ -1,4 +1,5 @@
 using FamiliaMyth.Abilities;
+using FamiliaMyth.Feat;
 using RimWorld;
 using System.Text;
 using UnityEngine;
@@ -17,8 +18,6 @@ namespace FamiliaMyth.Pharna
 
     public class Hediff_Pharna : Hediff_Level
     {
-        private const float MaxExploit = 999f;
-
         // 成长衰减：单项当前值 / 本周期六项总和 超过阈值后开始反比衰减
         private const float StatDecayThreshold = 400f;
         private const float StatDecayScale = 500f;
@@ -57,8 +56,8 @@ namespace FamiliaMyth.Pharna
         //魔法
         public List<Spell> spells = new();
 
-        public float experience;    //经验值
-        public float exploits;      //伟业值
+        public float experience;       //经验值
+        public List<FeatRecord> feats = new(); //伟业
 
         //能力值上限
         public float maxStatus = 999f;
@@ -140,7 +139,6 @@ namespace FamiliaMyth.Pharna
 
                 sb.AppendLine();
                 sb.AppendLine("FamiliaMyth.Experience".Translate() + ": " + ((int)experience).ToString());
-                sb.AppendLine("FamiliaMyth.Exploits".Translate() + ": " + ((int)exploits).ToString() + "/" + ((int)MaxExploit).ToString());
 
                 return sb.ToString().TrimEnd();
             }
@@ -226,6 +224,8 @@ namespace FamiliaMyth.Pharna
             return val;
         }
 
+        public FeatRecord AvailableFeat() => feats?.Where(f => f.usedForLevel < 0).OrderBy(f => f.tier).FirstOrDefault(f => f.tier >= level);
+
         public AcceptanceReport CanAscend()
         {
             if (level >= def.maxSeverity) return "FamiliaMyth.MaxLevelRefusion".Translate();
@@ -235,7 +235,7 @@ namespace FamiliaMyth.Pharna
                 PharnaStatusType type = (PharnaStatusType)i;
                 status = status || GetCurrentStatus(type) >= 500;
             }
-            if (!status || exploits < MaxExploit)
+            if (!status || AvailableFeat() == null)
                 return "FamiliaMyth.NotMeetAscendRequirementRefusion".Translate();
             return true;
         }
@@ -361,8 +361,10 @@ namespace FamiliaMyth.Pharna
             mana = 0f;
             will = 0f;
 
-            //消耗伟业值
-            exploits -= MaxExploit;
+            //消耗伟业
+            var feat = AvailableFeat();
+            if (feat != null)
+                feat.usedForLevel = level;
 
             //升级奖励在仪式奖励中给予
             //升级
@@ -374,7 +376,7 @@ namespace FamiliaMyth.Pharna
             if (amount <= 0f) return false;
             float current = GetCurrentStatus(type);
             if (current >= maxStatus) return false;
-            // 双衰减：单项与总量各自超过阈值后开始反比衰减，未超阈值时为正常线性增长
+            //双衰减：单项与总量各自超过阈值后开始反比衰减，未超阈值时为正常线性增长
             float statExcess = Mathf.Max(0f, current - StatDecayThreshold);
             float totalExcess = Mathf.Max(0f, TotalStatus - TotalStatDecayThreshold);
             float decay = 1f / (1f + statExcess / StatDecayScale) / (1f + totalExcess / TotalStatDecayScale);
@@ -391,19 +393,6 @@ namespace FamiliaMyth.Pharna
             }
             experience += amount;
             return true;
-        }
-
-        /// <summary>
-        /// 伟业值增量与等级成反比
-        /// </summary>
-        /// <param name="amount">预定的伟业值</param>
-        /// <returns>实际增加的伟业值</returns>
-        public float GainExploits(float amount)
-        {
-            if (amount <= 0f) return 0;
-            float capped = Math.Min(amount, (MaxExploit - exploits) * level);
-            exploits += capped / level;
-            return capped;
         }
 
         public override IEnumerable<Gizmo> GetGizmos()
@@ -515,13 +504,16 @@ namespace FamiliaMyth.Pharna
             Scribe_Collections.Look(ref spells, "spells", LookMode.Deep);
 
             Scribe_Values.Look(ref experience, "experience", 0f);
-            Scribe_Values.Look(ref exploits, "exploits", 0f);
+            Scribe_Collections.Look(ref feats, "feats", LookMode.Deep);
 
             Scribe_Values.Look(ref manaPool, "manaPool", 0f);
             Scribe_Values.Look(ref autoConvert, "autoConvert", true);
 
             Scribe_Values.Look(ref lastVirtueTriggeredTick, "lastVirtueTriggeredTick", 99999);
             Scribe_Values.Look(ref currentVirtue, "currentVirtue", null);
+
+            if (Scribe.mode == LoadSaveMode.PostLoadInit && feats == null)
+                feats = new List<FeatRecord>();
         }
 
         private static HediffDef cachedPharnaDef;

@@ -10,12 +10,11 @@
   <FamiliaMyth.QuestLetter.Reject>拒绝委托</FamiliaMyth.QuestLetter.Reject>
   <FamiliaMyth.QuestLetter.LearnMore>了解更多</FamiliaMyth.QuestLetter.LearnMore>
   <FamiliaMyth.QuestLetter.NoPharnaColonist>找不到已有恩惠的殖民者</FamiliaMyth.QuestLetter.NoPharnaColonist>
-  <FamiliaMyth.QuestLetter.InfoText>冒险者公会是最初降临的神明所建立的组织，负责转交和发布委托。\n\n提示：\n完成委托可以获取升华恩惠所需要的伟业值。\n由接取者获得50%的伟业值，\n其余部分将均分给队伍中其他的冒险者。</FamiliaMyth.QuestLetter.InfoText>
+  <FamiliaMyth.QuestLetter.InfoText>冒险者公会是最初降临的神明所建立的组织，负责转交和发布委托。</FamiliaMyth.QuestLetter.InfoText>
 
   <!-- ===== 任务过程部件（QuestPart_*） ===== -->
   <!-- ==================== 通用（多任务共用） ==================== -->
   <FamiliaMyth.QuestPart.QuestComplete>委托完成</FamiliaMyth.QuestPart.QuestComplete>
-  <FamiliaMyth.QuestPart.RewardReasonOutstanding>由于任务中的出色表现：\n\n</FamiliaMyth.QuestPart.RewardReasonOutstanding>
   <!-- ==================== 难民安置（QuestPart_RefugeeResettle） ==================== -->
   <FamiliaMyth.QuestPart.RefugeeResettleFailed>难民安置失败</FamiliaMyth.QuestPart.RefugeeResettleFailed>
   <FamiliaMyth.QuestPart.RefugeeResettleFailedAllDead>全部难民都已丧生。强制任务失败。</FamiliaMyth.QuestPart.RefugeeResettleFailedAllDead>
@@ -35,7 +34,6 @@
   <FamiliaMyth.QuestPart.RefugeeNoneBoarded>无人登机</FamiliaMyth.QuestPart.RefugeeNoneBoarded>
   <FamiliaMyth.QuestPart.RefugeeAdoptedCount>，加入殖民地 {0} 名。</FamiliaMyth.QuestPart.RefugeeAdoptedCount>
   <FamiliaMyth.QuestPart.RefugeeAdoptedNone>。</FamiliaMyth.QuestPart.RefugeeAdoptedNone>
-  <FamiliaMyth.QuestPart.RewardReasonRefugeeResettle>由于妥善安置了难民：\n\n</FamiliaMyth.QuestPart.RewardReasonRefugeeResettle>
   <!-- ==================== 罪犯追捕（QuestPart_CriminalHunt / QuestPart_CriminalHuntSpawn） ==================== -->
   <FamiliaMyth.QuestPart.CriminalSpotted>发现通缉犯</FamiliaMyth.QuestPart.CriminalSpotted>
   <FamiliaMyth.QuestPart.CriminalSpottedText>{0} 正是本次追捕的通缉犯，混在窝点守卫之中。\n\n将其击毙即可完成委托；若将其俘虏并带回据点、送上公会的押解穿梭机，可获得双倍酬劳。</FamiliaMyth.QuestPart.CriminalSpottedText>
@@ -53,8 +51,6 @@
   <FamiliaMyth.QuestPart.ExtraditionCompleteText>公会的押解穿梭机已载着通缉犯离开据点。</FamiliaMyth.QuestPart.ExtraditionCompleteText>
   <FamiliaMyth.QuestPart.ExtraditionFailed>押解失败</FamiliaMyth.QuestPart.ExtraditionFailed>
   <FamiliaMyth.QuestPart.ExtraditionFailedText>押解穿梭机已离开，通缉犯未登机。委托失败。</FamiliaMyth.QuestPart.ExtraditionFailedText>
-  <FamiliaMyth.QuestPart.QuestCompleteDoubleReward>委托完成·双倍酬劳</FamiliaMyth.QuestPart.QuestCompleteDoubleReward>
-  <FamiliaMyth.QuestPart.RewardReasonExtradition>由于顺利押解通缉犯：\n\n</FamiliaMyth.QuestPart.RewardReasonExtradition>
   <!-- ==================== 物资押运（QuestPart_SupplyEscort / QuestPart_SupplyEscortAmbush） ==================== -->
   <FamiliaMyth.QuestPart.SupplyEscortTimeout>押运超时</FamiliaMyth.QuestPart.SupplyEscortTimeout>
   <FamiliaMyth.QuestPart.SupplyEscortTimeoutText>委托「{0}」限时 12 天已到，押运物资未能如期送达 {1}。\n\n委托失败。</FamiliaMyth.QuestPart.SupplyEscortTimeoutText>
@@ -66,8 +62,6 @@
   <FamiliaMyth.QuestPart.SupplyEscortIncomplete>押运物资未交齐</FamiliaMyth.QuestPart.SupplyEscortIncomplete>
   <FamiliaMyth.QuestPart.SupplyEscortIncompleteText>本次交付：{0}\n\n尚缺：{1}\n\n请继续把剩余物资运至 {2} 分批交付。</FamiliaMyth.QuestPart.SupplyEscortIncompleteText>
   <FamiliaMyth.QuestPart.SupplyEscortNothingCarried>（远行队未携带待交清单上的物资）</FamiliaMyth.QuestPart.SupplyEscortNothingCarried>
-  <FamiliaMyth.QuestPart.ForcedQuestComplete>强制任务完成</FamiliaMyth.QuestPart.ForcedQuestComplete>
-  <FamiliaMyth.QuestPart.RewardReasonSupplyEscort>由于完成了物资押运：\n\n</FamiliaMyth.QuestPart.RewardReasonSupplyEscort>
   <FamiliaMyth.QuestPart.SupplyEscortAmbush>押运队遭遇伏击</FamiliaMyth.QuestPart.SupplyEscortAmbush>
   <FamiliaMyth.QuestPart.SupplyEscortAmbushText>押运队在路上遭到伏击！\n\n黑暗派阀的成员们拦住了去路——看来只有打倒他们才能继续前进了。\n\n{BASETEXT}</FamiliaMyth.QuestPart.SupplyEscortAmbushText>
   <!-- ==================== 遗迹探索（QuestPart_AncientRelic） ==================== -->
@@ -82,7 +76,6 @@
   <FamiliaMyth.QuestPart.RelicDeliveryFailed>交付失败</FamiliaMyth.QuestPart.RelicDeliveryFailed>
   <FamiliaMyth.QuestPart.RelicDeliveryFailedText>目标物品未及时交付，穿梭机已离开，委托失败。</FamiliaMyth.QuestPart.RelicDeliveryFailedText>
   <FamiliaMyth.QuestPart.AncientRelicShuttleLeft>公会的穿梭机已携带目标物品离开。</FamiliaMyth.QuestPart.AncientRelicShuttleLeft>
-  <FamiliaMyth.QuestPart.RewardReasonAncientRelic>由于遗迹探索中的出色表现：\n\n</FamiliaMyth.QuestPart.RewardReasonAncientRelic>
   <!-- ==================== 紧急救援（QuestPart_Rescue） ==================== -->
   <FamiliaMyth.QuestPart.RescueSearchComplete>搜救完成</FamiliaMyth.QuestPart.RescueSearchComplete>
   <FamiliaMyth.QuestPart.RescueSearchCompleteText>威胁已清除，伤员将听从你的指挥。\n其原派系的穿梭机将在数小时后抵达。</FamiliaMyth.QuestPart.RescueSearchCompleteText>
@@ -91,7 +84,6 @@
   <FamiliaMyth.QuestPart.RescueFailed>救援失败</FamiliaMyth.QuestPart.RescueFailed>
   <FamiliaMyth.QuestPart.RescueFailedAllDeadText>全部伤员在获救前不幸遇难。</FamiliaMyth.QuestPart.RescueFailedAllDeadText>
   <FamiliaMyth.QuestPart.RescueFailedShuttleLeftText>穿梭机未能接走全部伤员，已先行离开。\n未登机的遇难者将自行离开。</FamiliaMyth.QuestPart.RescueFailedShuttleLeftText>
-  <FamiliaMyth.QuestPart.RewardReasonRescue>救援任务酬劳：\n\n</FamiliaMyth.QuestPart.RewardReasonRescue>
 
   <!-- ===== 信件·组件·世界对象交互（QuestMisc） ===== -->
   <!-- ==================== 物资押运 · 定居点交互（WorldObjectComp_SupplyEscort） ==================== -->
@@ -121,14 +113,13 @@
   <!-- ==================== 强制任务信件（ChoiceLetter_RankUpQuest） ==================== -->
   <FamiliaMyth.QuestMisc.RankUpQuestConfirm>确认</FamiliaMyth.QuestMisc.RankUpQuestConfirm>
   <FamiliaMyth.QuestMisc.RankUpQuestLearnMore>了解更多</FamiliaMyth.QuestMisc.RankUpQuestLearnMore>
-  <FamiliaMyth.QuestMisc.RankUpQuestLearnMoreText>对于在某一方面有所建树的眷族，公会会发布强制任务要求其做出应有的贡献。\n该任务不可拒绝，若超时或失败则会在一段时间后重新发布。\n\n请注意，该任务难度较高，请尽量派出全部战力。\n完成任务即可提升眷族在「{0}」方面的评级。\n当然也能获取大量伟业值，将平均分配给全部眷族成员。</FamiliaMyth.QuestMisc.RankUpQuestLearnMoreText>
+  <FamiliaMyth.QuestMisc.RankUpQuestLearnMoreText>对于在某一方面有所建树的眷族，公会会发布强制任务要求其做出应有的贡献。\n该任务不可拒绝，若超时或失败则会在一段时间后重新发布。\n\n请注意，该任务难度较高，请尽量派出全部战力。\n完成任务即可提升眷族在「{0}」方面的评级。</FamiliaMyth.QuestMisc.RankUpQuestLearnMoreText>
   <!-- ==================== 使者在场交互（Patch_Pawn_FloatMenu / JobDriver_TalkGuildEnvoy） ==================== -->
   <FamiliaMyth.QuestMisc.CannotTalkPathUnreachable>无法对话：路径不可达</FamiliaMyth.QuestMisc.CannotTalkPathUnreachable>
   <FamiliaMyth.QuestMisc.CannotTalkNoSpeech>无法对话：无语言能力</FamiliaMyth.QuestMisc.CannotTalkNoSpeech>
   <FamiliaMyth.QuestMisc.TalkToEnvoy>与公会使者对话</FamiliaMyth.QuestMisc.TalkToEnvoy>
   <FamiliaMyth.QuestMisc.EnvoyFallbackLabel>公会使者</FamiliaMyth.QuestMisc.EnvoyFallbackLabel>
   <FamiliaMyth.QuestMisc.EnvoyLetterFallbackText>使者向你介绍了委托的详情。</FamiliaMyth.QuestMisc.EnvoyLetterFallbackText>
-  <!-- ==================== 伟业值发放（QuestUtilities） ==================== -->
-  <FamiliaMyth.QuestMisc.ExploitsGainedLine>{0} 获得了 {1} 点伟业值\n</FamiliaMyth.QuestMisc.ExploitsGainedLine>
+  <!-- ==================== 伟业发放（QuestUtilities） ==================== -->
 
 </LanguageData>

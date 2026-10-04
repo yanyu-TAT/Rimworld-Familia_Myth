@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using FamiliaMyth.Familia;
 using RimWorld;
 using RimWorld.Planet;
@@ -42,7 +40,7 @@ namespace FamiliaMyth.Quest
             var slate = QuestGen.slate;
             var quest = QuestGen.quest;
 
-            QuestUtilities.CalculateTaskParams(isRankUp: false, out float points, out float baseExploits);
+            QuestUtilities.CalculateTaskParams(isRankUp: false, out float points);
 
             var sitePartDef = DefDatabase<SitePartDef>.GetNamedSilentFail("AncientComplex");
             var layoutDef = DefDatabase<LayoutDef>.GetNamedSilentFail("AncientComplex_Loot");
@@ -98,7 +96,6 @@ namespace FamiliaMyth.Quest
 
             //5. slate 参数（XML 与装配节点消费）
             slate.Set("difficulty", points);
-            slate.Set("totalExploits", baseExploits);
             slate.Set("site", site);
             slate.Set("siteFaction", raidFaction);
             slate.Set("guildFaction", guild);

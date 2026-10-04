@@ -3,7 +3,7 @@
 
   <!-- 强制任务「难民安置」脚本 -->
   <!-- 流程：接取（难民边缘到访、临时加入玩家派系、随机受伤）→ 停留 15 天（2 次袭击，点数×1.2） -->
-  <!--       → 公会穿梭机接走（停留 2 天）→ 伟业值按存活率结算 → 晋升评级 -->
+  <!--       → 公会穿梭机接走（停留 2 天）→ 晋升评级 -->
   <!-- 成功：穿梭机满载起飞 / 窗口满；未登机者视为失踪，转中立后自行离图 -->
   <!-- 失败：囚禁或奴役、二次有害手术、全灭、无人生还 → QuestNode_RankUpFailed 记录冷却，数日后自动重发 -->
   <QuestScriptDef>
@@ -24,7 +24,7 @@
 
     <questDescriptionRules>
       <rulesStrings>
-        <li>questDescription->公会送来了 [refugeeCount] 名避难者，他们将在殖民地停留 15 天。\n\n这批难民身上带着伤，请安排治疗与安置；追杀他们的武装分子会在此期间发动两次袭击。\n\n15 天后公会的穿梭机将抵达据点，停留 2 天接走难民——超时未登机者视为失踪，将自行离开。\n\n停留期间若有人愿意留下，可以被接纳为正式成员（视为存活）。\n\n留意：囚禁或奴役难民、对他们施行有害手术，都会导致委托立即撤销。\n\n酬劳按存活人数（登机 + 加入）占总人数的比例结算。</li>
+        <li>questDescription->公会送来了[refugeeCount]名避难者，他们将在殖民地停留15天左右。\n追杀他们的黑暗派阀可能会在此期间发动袭击，做好准备。\n15天后公会的穿梭机将前来接走难民。\n\n停留期间若有人愿意留下，可以被接纳为正式成员（视为存活）。\n\n注意：囚禁或奴役难民、对他们施行有害手术，都会导致委托立即撤销。\n\n酬劳将按存活人数占总人数的比例结算。</li>
       </rulesStrings>
     </questDescriptionRules>
 
@@ -69,7 +69,7 @@
             <!-- 装配部件（在 util 之后，读取 pickupShipThing） -->
             <li Class="FamiliaMyth.Quest.QuestNode_RefugeeResettleSetup" />
 
-            <!-- 结算成功：伟业值由状态机按存活率发放，这里负责晋升评级并结束任务 -->
+            <!-- 结算成功：这里负责晋升评级并结束任务 -->
             <li Class="QuestNode_Signal">
               <inSignal>rewardsReady</inSignal>
               <node Class="QuestNode_Sequence">

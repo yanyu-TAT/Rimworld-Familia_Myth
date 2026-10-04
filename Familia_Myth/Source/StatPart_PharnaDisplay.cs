@@ -23,7 +23,6 @@ namespace FamiliaMyth.Abilities
             {
                 PharnaDisplayMode.Status => GetStatusExplanation(pharna),
                 PharnaDisplayMode.Experience => GetExperienceExplanation(pharna),
-                PharnaDisplayMode.Exploits => GetExploitsExplanation(pharna),
                 PharnaDisplayMode.ManaConversionSpeed => GetManaConversionSpeedExplanation(pharna),
                 _ => ""
             };
@@ -38,11 +37,6 @@ namespace FamiliaMyth.Abilities
                 efficiency.ToStringPercent(), 
                 consciousness.ToStringPercent(), 
                 pharna.ManaConversionSpeed.ToString("F1"));
-        }
-
-        private string GetExploitsExplanation(Hediff_Pharna pharna)
-        {
-            return "FamiliaMyth.Stat.PharnaExploits".Translate((int)pharna.exploits, pharna.level);
         }
 
         private string GetExperienceExplanation(Hediff_Pharna pharna)
@@ -91,7 +85,6 @@ namespace FamiliaMyth.Abilities
             {
                 PharnaDisplayMode.Status => pharna.GetFinalStatus(statusType),
                 PharnaDisplayMode.Experience => pharna.experience,
-                PharnaDisplayMode.Exploits => pharna.exploits,
                 PharnaDisplayMode.ManaConversionSpeed => pharna.ManaConversionSpeed,
                 _ => -1f
             };
@@ -107,7 +100,6 @@ namespace FamiliaMyth.Abilities
     {
         Status,
         Experience,
-        Exploits,
         ManaConversionSpeed
     }
 }

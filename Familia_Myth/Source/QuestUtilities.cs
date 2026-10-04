@@ -1,6 +1,5 @@
 using FamiliaMyth.Pharna;
 using RimWorld;
-using RimWorld.Planet;
 using Verse;
 
 namespace FamiliaMyth.Quest
@@ -14,19 +13,14 @@ namespace FamiliaMyth.Quest
         public const float LevelWeight = 1f / 80f;
         public const float ExpWeight = 1f / 20000f;
 
-        //伟业值奖励（固定量，不随难度点数变化）
-        public const float DailyExploits = 500f;
-        public const float RankUpExploits = 900f;
-
-        //计算任务威胁点数与伟业值奖励
-        public static void CalculateTaskParams(bool isRankUp, out float threatPoints, out float totalExploits)
+        //计算任务威胁点数
+        public static void CalculateTaskParams(bool isRankUp, out float threatPoints)
         {
             float points = StorytellerUtility.DefaultSiteThreatPointsNow() * PharnaGrowthFactor();
             if (isRankUp)
                 points *= RankUpMultiplier;
 
             threatPoints = points;
-            totalExploits = isRankUp ? RankUpExploits : DailyExploits;
         }
 
         //全殖民地恩惠成长因子：随所有受恩惠殖民者的总等级与总经验平滑增长
@@ -59,59 +53,5 @@ namespace FamiliaMyth.Quest
             }
         }
 
-        //快照「地图在场的受恩惠玩家成员」到 into（任务关键节点当拍调用，供各任务 part 共用）
-        public static void SnapshotParticipants(Map map, List<Pawn> into)
-        {
-            if (map == null) return;
-            foreach (var p in map.mapPawns.AllPawnsSpawned)
-                if (p.IsColonist && p.Faction == Faction.OfPlayer && p.GetPharna() != null)
-                    into.Add(p);
-        }
-
-        //快照「站点在场的受恩惠玩家成员」到 into
-        public static void SnapshotSiteParticipants(MapParent site, List<Pawn> into)
-            => SnapshotParticipants(site?.Map, into);
-
-        //按参与者名单分配伟业值并发送结算信。
-        //规则：acceptor 在名单且多人 → acceptor 得 50%，名单其余均分；否则名单全员均分（acceptor 可为 null）
-        //参与者过滤（存活且有恩惠）在方法内进行；成功发放返回 true。
-        public static bool DistributeExploits(List<Pawn> participants, Pawn acceptor,
-            float totalExploits, string letterLabel, string letterHeader)
-        {
-            if (totalExploits <= 0f || participants == null) return false;
-
-            var list = participants.Where(p => p != null && !p.Dead && p.GetPharna() != null).ToList();
-            if (list.Count == 0) return false;
-
-            bool acceptorPresent = acceptor != null && list.Contains(acceptor);
-            List<(Pawn pawn, float amount)> gains = new();
-            foreach (var p in list)
-            {
-                float share;
-                if (acceptorPresent && list.Count > 1)
-                    share = p == acceptor
-                        ? totalExploits * 0.5f
-                        : totalExploits * 0.5f / (list.Count - 1);
-                else
-                    share = totalExploits / list.Count;
-
-                var pharna = p.GetPharna();
-                var a = pharna?.GainExploits(share);
-                if (a is float f && f > 0)
-                    gains.Add((p, f));
-            }
-            if (gains.Count == 0) return false;
-
-            TaggedString text = letterHeader;
-            foreach (var (pawn, amount) in gains)
-                text += "FamiliaMyth.QuestMisc.ExploitsGainedLine".Translate(
-                    pawn.Name.ToStringShort, amount.ToString("F1"));
-
-            Letter letter = acceptor != null
-                ? LetterMaker.MakeLetter(letterLabel, text, LetterDefOf.PositiveEvent, acceptor)
-                : LetterMaker.MakeLetter(letterLabel, text, LetterDefOf.PositiveEvent);
-            Find.LetterStack.ReceiveLetter(letter);
-            return true;
-        }
     }
 }

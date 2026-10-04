@@ -31,15 +31,15 @@
 	<FamiliaMyth.AlreadyHavePharnaRefusion>Already has Pharna</FamiliaMyth.AlreadyHavePharnaRefusion>
 	<!-- Refusal: colonist has no Pharna, cannot ascend -->
 	<FamiliaMyth.HaveNoPharnaRefusion>Does not have Pharna</FamiliaMyth.HaveNoPharnaRefusion>
-	<!-- Refusal: colonist does not meet ascend requirements (ability>=D and enough exploits) -->
-	<FamiliaMyth.NotMeetAscendRequirementRefusion>Insufficient exploits or basic ability too low</FamiliaMyth.NotMeetAscendRequirementRefusion>
+	<!-- Refusal: colonist does not meet ascend requirements (ability>=D and a qualifying feat) -->
+	<FamiliaMyth.NotMeetAscendRequirementRefusion>Has not achieved a sufficient feat, or basic ability is too low</FamiliaMyth.NotMeetAscendRequirementRefusion>
 	<!-- Refusal: colonist's Pharna level is already at maximum, cannot ascend further -->
 	<FamiliaMyth.MaxLevelRefusion>Pharna level is already at maximum</FamiliaMyth.MaxLevelRefusion>
 	<!-- Refusal: colonist does not belong to the player's current ideoligion -->
 	<FamiliaMyth.NotFamiliaMemberRefusion>Not a Familia member</FamiliaMyth.NotFamiliaMemberRefusion>
 
-	<!-- Exploits -->
-	<FamiliaMyth.Exploits>Exploits</FamiliaMyth.Exploits>
+	<!-- Feats -->
+	<FamiliaMyth.Feats>Feats</FamiliaMyth.Feats>
 	<!-- Experience -->
 	<FamiliaMyth.Experience>Experience</FamiliaMyth.Experience>
 

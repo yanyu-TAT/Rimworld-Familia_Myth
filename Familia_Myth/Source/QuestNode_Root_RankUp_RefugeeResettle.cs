@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using FamiliaMyth.Familia;
 using RimWorld;
 using RimWorld.QuestGen;
@@ -29,7 +27,7 @@ namespace FamiliaMyth.Quest
         {
             var slate = QuestGen.slate;
 
-            QuestUtilities.CalculateTaskParams(isRankUp: true, out float points, out float totalExploits);
+            QuestUtilities.CalculateTaskParams(isRankUp: true, out float points);
 
             var map = slate.Get<Map>("map") ?? Find.AnyPlayerHomeMap ?? Find.CurrentMap;
             if (map == null || !map.IsPlayerHome) return;
@@ -51,7 +49,6 @@ namespace FamiliaMyth.Quest
                 victims.Add(PawnGenerator.GeneratePawn(new PawnGenerationRequest(kindDef, refugeeFaction)));
 
             slate.Set("difficulty", points);
-            slate.Set("totalExploits", totalExploits);
             slate.Set("refugeeCount", count);
             slate.Set("victims", victims);
             slate.Set("refugeeFaction", refugeeFaction);

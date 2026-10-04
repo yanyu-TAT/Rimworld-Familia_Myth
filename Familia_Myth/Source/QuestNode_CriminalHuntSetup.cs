@@ -1,5 +1,4 @@
 using FamiliaMyth.Familia;
-using RimWorld;
 using RimWorld.Planet;
 using RimWorld.QuestGen;
 using Verse;
@@ -14,9 +13,7 @@ namespace FamiliaMyth.Quest
             var slate = QuestGen.slate;
             var site = slate.Get<Site>("site");
             var wanted = slate.Get<Pawn>("wanted");
-            var acceptor = slate.Get<Pawn>("acceptor");
             var category = slate.Get<FamiliaCategoryDef>("category");
-            float baseExploits = slate.Get<float>("totalExploits");
             var shipThing = slate.Get<Thing>("pickupShipThing");
             if (site == null || wanted == null) return;
 
@@ -33,9 +30,7 @@ namespace FamiliaMyth.Quest
             {
                 site = site,
                 wanted = wanted,
-                acceptor = acceptor,
                 category = category,
-                baseExploits = baseExploits,
                 shipThing = shipThing,
                 inSignalEnable = QuestGenUtility.HardcodedSignalWithQuestID("site.AllEnemiesDefeated"),
                 inSignalCleared = QuestGenUtility.HardcodedSignalWithQuestID("huntCleared"),

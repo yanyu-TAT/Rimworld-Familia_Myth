@@ -14,8 +14,6 @@
 	<PharnaWill.description>Increases psychic entropy threshold, meditation psyfocus gain, and virtue trigger chance. Reduces virtue cooldown.</PharnaWill.description>
 	<PharnaExperience.label>Experience</PharnaExperience.label>
 	<PharnaExperience.description>Total experience gained through daily practice and learning. Each ability point gained also grants 1 experience.</PharnaExperience.description>
-	<PharnaExploits.label>Exploits</PharnaExploits.label>
-	<PharnaExploits.description>Exploits earned by completing expeditions and guild quests. Reach 999 to ascend the Blessing level.</PharnaExploits.description>
 	<ManaMax.label>Mana Capacity</ManaMax.label>
 	<ManaMax.description>Maximum mana this person can store.</ManaMax.description>
 	<ManaConversion.label>Mana Conversion</ManaConversion.label>

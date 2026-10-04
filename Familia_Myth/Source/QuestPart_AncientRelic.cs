@@ -1,12 +1,8 @@
-using System.Collections.Generic;
-using System.Linq;
 using FamiliaMyth.Familia;
-using FamiliaMyth.Pharna;
 using RimWorld;
 using RimWorld.Planet;
 using UnityEngine;
 using Verse;
-using Verse.AI.Group;
 
 namespace FamiliaMyth.Quest
 {
@@ -31,9 +27,7 @@ namespace FamiliaMyth.Quest
         private enum Stage { AwaitingMap, Discovering, Guarding, WaitingShip, Done }
 
         public Site site;                    //复杂体站点
-        public Pawn acceptor;                //接取者
         public FamiliaCategoryDef category;  //分类（升级点）
-        public float baseExploits;           //基础伟业值
         public Thing shipThing;              //公会穿梭机（交付判定/清算）
 
         //生成期 hardcode 的同串信号
@@ -48,7 +42,6 @@ namespace FamiliaMyth.Quest
         public Thing targetItem;
 
         //威胁清除时点快照的参与者名单，结算按此发放
-        public List<Pawn> participants = new();
 
         private Stage stage = Stage.AwaitingMap;
         private int discoveredTick = -1;     //开箱发现时刻
@@ -165,7 +158,6 @@ namespace FamiliaMyth.Quest
             raidAtTick = discoveredTick + Rand.RangeInclusive(RaidDelayMinTicks, RaidDelayMaxTicks);
             shuttleAtTick = discoveredTick + Rand.RangeInclusive(ShuttleDelayMinTicks, ShuttleDelayMaxTicks);
 
-            SnapshotParticipants();
             WakeUpRoomGuards();
 
             string itemLabel = targetItem != null && !targetItem.Destroyed
@@ -300,18 +292,6 @@ namespace FamiliaMyth.Quest
             }
         }
 
-        //快照参与者（开箱当拍、站点地图在场；空名单兜底接取者）
-        private void SnapshotParticipants()
-        {
-            if (participants.Count > 0)
-                return;
-            //机关箱可能与站点不同图，优先取箱子所在地图
-            Map map = crate != null && !crate.Destroyed ? crate.Map : site?.Map;
-            QuestUtilities.SnapshotParticipants(map, participants);
-            if (participants.Count == 0 && acceptor != null)
-                participants.Add(acceptor);
-        }
-
         //int cnt = 0;
         //机关箱落位（复杂体室内房间内）+ 装入目标物品 + 设置开箱信号
         private bool TrySpawnCrateAndRelic()
@@ -430,9 +410,6 @@ namespace FamiliaMyth.Quest
                 "FamiliaMyth.QuestPart.QuestComplete".Translate(),
                 "FamiliaMyth.QuestPart.AncientRelicShuttleLeft".Translate(),
                 LetterDefOf.NeutralEvent));
-            QuestUtilities.DistributeExploits(participants, acceptor, baseExploits,
-                "FamiliaMyth.QuestPart.QuestComplete".Translate(),
-                "FamiliaMyth.QuestPart.RewardReasonAncientRelic".Translate());
             GameComponent_FamiliaRankTracker.Instance?.GainPoints(category, 10);
             quest.End(QuestEndOutcome.Success);
         }
@@ -450,9 +427,7 @@ namespace FamiliaMyth.Quest
         {
             base.ExposeData();
             Scribe_References.Look(ref site, "site");
-            Scribe_References.Look(ref acceptor, "acceptor");
             Scribe_Defs.Look(ref category, "category");
-            Scribe_Values.Look(ref baseExploits, "baseExploits");
             Scribe_References.Look(ref shipThing, "shipThing");
             Scribe_Values.Look(ref inSignalFound, "inSignalFound");
             Scribe_Values.Look(ref inSignalRaid, "inSignalRaid");
@@ -461,7 +436,6 @@ namespace FamiliaMyth.Quest
             Scribe_Values.Look(ref inSignalUnsatisfied, "inSignalUnsatisfied");
             Scribe_References.Look(ref crate, "crate");
             Scribe_References.Look(ref targetItem, "relic");
-            Scribe_Collections.Look(ref participants, "participants", LookMode.Reference);
             Scribe_Values.Look(ref stage, "stage");
             Scribe_Values.Look(ref discoveredTick, "discoveredTick", -1);
             Scribe_Values.Look(ref raidAtTick, "raidAtTick", -1);

@@ -2,7 +2,6 @@ using FamiliaMyth.Familia;
 using RimWorld;
 using RimWorld.Planet;
 using RimWorld.QuestGen;
-using UnityEngine;
 using Verse;
 
 namespace FamiliaMyth.Quest
@@ -15,9 +14,7 @@ namespace FamiliaMyth.Quest
         {
             var slate = QuestGen.slate;
             var site = slate.Get<Site>("site");
-            var acceptor = slate.Get<Pawn>("acceptor");
             var category = slate.Get<FamiliaCategoryDef>("category");
-            float baseExploits = slate.Get<float>("totalExploits");
             float difficulty = slate.Get<float>("difficulty");
             var raidFaction = slate.Get<Faction>("siteFaction");
             var shipThing = slate.Get<Thing>("pickupShipThing");
@@ -28,9 +25,7 @@ namespace FamiliaMyth.Quest
             var state = new QuestPart_AncientRelic
             {
                 site = site,
-                acceptor = acceptor,
                 category = category,
-                baseExploits = baseExploits,
                 shipThing = shipThing,
                 inSignalEnable = QuestGenUtility.HardcodedSignalWithQuestID("site.MapGenerated"),
                 inSignalFound = QuestGenUtility.HardcodedSignalWithQuestID(QuestNode_Root_Daily_AncientRelic.CrateOpenedSignal),
