@@ -21,6 +21,7 @@
 	<FamiliaMyth.UI.CategoryMaxRank>此方向已无更高评级</FamiliaMyth.UI.CategoryMaxRank>
 	<FamiliaMyth.UI.CategoryProgress>进度 {0}%</FamiliaMyth.UI.CategoryProgress>
 	<FamiliaMyth.UI.MemberBio>Lv.{0}</FamiliaMyth.UI.MemberBio>
+	<FamiliaMyth.UI.JumpToPawnTip>点击跳转</FamiliaMyth.UI.JumpToPawnTip>
 	<FamiliaMyth.Stat.PharnaExperience>当前经验值 =\n{0}</FamiliaMyth.Stat.PharnaExperience>
 	<FamiliaMyth.Stat.PharnaStatus>当前: {0} | 潜在: {1}\n合计: {2}\n</FamiliaMyth.Stat.PharnaStatus>
 	<FamiliaMyth.Stat.ManaConversionSpeed>魔力转化效率 {0} × 当前意识 {1}\n转化速度 = {2} /秒</FamiliaMyth.Stat.ManaConversionSpeed>

@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using FamiliaMyth.Familia;
 using FamiliaMyth.Pharna;
 using RimWorld;
+using RimWorld.Planet;
 using UnityEngine;
 using Verse;
 
@@ -14,7 +16,8 @@ namespace FamiliaMyth.UI
 
         private const float IconCardSize = 120f;
         private const float IconNameHeight = 24f;
-        private const float IconBlockHeight = IconCardSize + 8f + IconNameHeight;
+        //文化图标卡：上下内边距 + 图标 + 间距 + 名称
+        private const float IconBlockHeight = M * 2f + IconCardSize + 8f + IconNameHeight;
         private const float ColumnGap = 12f;
         private const float CategoryColumnWidth = 360f;
         private const float CategoryCardHeight = 90f;
@@ -28,6 +31,15 @@ namespace FamiliaMyth.UI
         private const float SmallCardH = 28f;
         private const float SmallCardGap = 3f;
         private const float M = 6f;
+
+        //可升级提示的呼吸参数
+        private const float PulseSpeed = 3.2f;
+        private const float PulseFillMinAlpha = 0.05f;
+        private const float PulseFillMaxAlpha = 0.12f;
+        private const float PulseOutlineMinAlpha = 0.30f;
+        private const float PulseOutlineMaxAlpha = 0.85f;
+        //悬停反馈叠白强度
+        private const float HoverOverlayAlpha = 0.04f;
 
         public static void Draw(Rect r)
         {
@@ -55,24 +67,21 @@ namespace FamiliaMyth.UI
             Rect iconR = new(c.x + (c.width - IconCardSize) / 2f, c.y, IconCardSize, IconCardSize);
             if (ideo != null && ideo.Icon != null)
             {
-                GUI.color = Color.white;
                 GUI.DrawTexture(iconR, ideo.Icon);
             }
             else
             {
-                Widgets.DrawBoxSolid(iconR, new Color(0.15f, 0.15f, 0.18f, 0.9f));
+                Widgets.DrawBoxSolid(iconR, UI_Palette.CardBg);
             }
 
             Rect nameR = new(c.x, iconR.yMax + 8f, c.width, IconNameHeight);
-            Text.Font = GameFont.Small;
-            Text.Anchor = TextAnchor.UpperCenter;
-            GUI.color = accent;
-            GUI.BeginGroup(nameR);
-            string cultureName = ideo?.name ?? "FamiliaMyth.UnknownCulture".Translate();
-            Widgets.Label(GenUI.AtZero(nameR), cultureName);
-            GUI.EndGroup();
-            Text.Anchor = TextAnchor.UpperLeft;
-            GUI.color = Color.white;
+            using (UI_Scope.Text(GameFont.Small, TextAnchor.UpperCenter))
+            using (UI_Scope.Color(accent))
+            using (UI_Scope.Group(nameR))
+            {
+                string cultureName = ideo?.name ?? "FamiliaMyth.UnknownCulture".Translate();
+                Widgets.Label(GenUI.AtZero(nameR), cultureName);
+            }
         }
 
         private static void DrawCategories(Rect r)
@@ -86,11 +95,11 @@ namespace FamiliaMyth.UI
             Rect view = new(0f, 0f, r.width, Mathf.Max(total, r.height));
 
             Widgets.BeginScrollView(r, ref categoryScrollPos, view, showScrollbars: false);
-            float y = 0f;
+            UI_Cursor cur = new(0f, 0f, view.width);
             foreach (var cat in cats)
             {
-                DrawCategoryCard(new(0f, y, view.width, CategoryCardHeight), cat, tracker);
-                y += CategoryCardGap + CategoryCardHeight;
+                DrawCategoryCard(cur.Row(CategoryCardHeight), cat, tracker);
+                cur.Gap(CategoryCardGap);
             }
             Widgets.EndScrollView();
         }
@@ -104,48 +113,39 @@ namespace FamiliaMyth.UI
             var state = tracker?.GetOrAddState(cat);
             var curRank = state?.curRankDef;
             var nxRank = tracker.GetNextRank(cat);
+            bool canRankUp = tracker.CanRankUp(cat);
 
             //分类名 + 当前等级 + 下一级
             Rect row1 = new(c.x, c.y, c.width, Text.SmallFontHeight);
 
-            Text.Font = GameFont.Small;
-            Text.Anchor = TextAnchor.MiddleLeft;
-            GUI.color = UI_GroupBox.ColorAccent;
             string catStr = cat.LabelCap;
-            Vector2 catSz = Text.CalcSize(catStr);
-            Rect catRect = new(row1.x, row1.y, Mathf.Min(catSz.x + 2f, row1.width * 0.28f), row1.height);
-            GUI.BeginGroup(catRect);
-            Widgets.Label(GenUI.AtZero(catRect), catStr);
-            GUI.EndGroup();
+            Rect catRect = new(row1.x, row1.y, Mathf.Min(UI_Text.Width(catStr, GameFont.Small) + 2f, row1.width * 0.28f), row1.height);
+            using (UI_Scope.Text(GameFont.Small, TextAnchor.MiddleLeft))
+            using (UI_Scope.Color(UI_GroupBox.ColorAccent))
+            using (UI_Scope.Group(catRect))
+                Widgets.Label(GenUI.AtZero(catRect), catStr);
 
-            GUI.color = Color.white;
             string curStr = curRank?.LabelCap ?? "—";
-            Vector2 curSz = Text.CalcSize(curStr);
-            float curX = catRect.xMax + 6f;
-            Rect curRect = new(curX, row1.y, curSz.x + 2f, row1.height);
-
             string nextStr = nxRank != null ? ("→ " + nxRank.LabelCap) : "";
-            Vector2 nextSz = Text.CalcSize(nextStr);
-            float nextW = Mathf.Min(nextSz.x + 2f, 120f);
-            Rect nextRect = new(row1.xMax - nextW, row1.y, nextW, row1.height);
 
+            float curW = UI_Text.Width(curStr, GameFont.Small) + 2f;
+            float nextW = Mathf.Min(UI_Text.Width(nextStr, GameFont.Small) + 2f, 120f);
+            Rect curRect = new(catRect.xMax + 6f, row1.y, curW, row1.height);
+            Rect nextRect = new(row1.xMax - nextW, row1.y, nextW, row1.height);
             if (curRect.xMax > nextRect.xMin - 4f)
                 curRect.xMax = nextRect.xMin - 4f;
 
-            GUI.BeginGroup(curRect);
-            Widgets.Label(GenUI.AtZero(curRect), curStr);
-            GUI.EndGroup();
+            using (UI_Scope.Text(GameFont.Small, TextAnchor.MiddleLeft))
+            using (UI_Scope.Group(curRect))
+                Widgets.Label(GenUI.AtZero(curRect), UI_Text.Truncate(curStr, curRect.width, GameFont.Small));
 
             if (!string.IsNullOrEmpty(nextStr))
             {
-                GUI.color = new Color(0.82f, 0.82f, 0.9f);
-                Text.Anchor = TextAnchor.MiddleRight;
-                GUI.BeginGroup(nextRect);
-                Widgets.Label(GenUI.AtZero(nextRect), nextStr);
-                GUI.EndGroup();
+                using (UI_Scope.Text(GameFont.Small, TextAnchor.MiddleRight))
+                using (UI_Scope.Color(UI_Palette.TextSubtle))
+                using (UI_Scope.Group(nextRect))
+                    Widgets.Label(GenUI.AtZero(nextRect), UI_Text.Truncate(nextStr, nextRect.width, GameFont.Small));
             }
-            Text.Anchor = TextAnchor.UpperLeft;
-            GUI.color = Color.white;
 
             //进度条（满级判定统一走 tracker：返回 <=0 即无更高评级）
             Rect row2 = new(c.x, row1.yMax + 4f, c.width, 20f);
@@ -153,43 +153,59 @@ namespace FamiliaMyth.UI
             int req = tracker.GetUpgradePointsRequired(cat);
             bool maxed = req <= 0;
             float frac = maxed ? 1f : Mathf.Clamp01((float)cur / req);
-            Text.Font = GameFont.Tiny;
             string numStr = maxed ? "—" : $"{cur} / {req}";
-            Vector2 numSz = Text.CalcSize(numStr);
-            float numW = Mathf.Max(56f, numSz.x + 8f);
-            Rect barR = new(row2.x, row2.y, row2.width - numW - 6f, 20f);
+            float numW = Mathf.Max(56f, UI_Text.Width(numStr) + 8f);
+            Rect barR = new(row2.x, row2.y + 4f, row2.width - numW - 6f, 12f);
             Rect numR = new(barR.xMax + 6f, row2.y, numW, 20f);
-            Widgets.DrawBoxSolid(barR, new Color(0.12f, 0.12f, 0.15f, 0.9f));
-            Widgets.FillableBar(barR, frac);
-            Text.Font = GameFont.Tiny;
-            Text.Anchor = TextAnchor.MiddleRight;
-            GUI.color = new Color(0.9f, 0.9f, 0.95f);
-            GUI.BeginGroup(numR);
-            Widgets.Label(GenUI.AtZero(numR), numStr);
-            GUI.EndGroup();
-            Text.Anchor = TextAnchor.UpperLeft;
-            GUI.color = Color.white;
+
+            UI_Bar.Draw(barR, frac, maxed ? UI_Palette.Ready : UI_Palette.Accent);
+
+            using (UI_Scope.Text(GameFont.Tiny, TextAnchor.MiddleRight))
+            using (UI_Scope.Color(UI_Palette.TextNormal))
+            using (UI_Scope.Group(numR))
+                Widgets.Label(GenUI.AtZero(numR), numStr);
 
             //状态提示
             Rect row3 = new(c.x, row2.yMax + 4f, c.width, 18f);
-            Text.Font = GameFont.Tiny;
-            if (tracker.CanRankUp(cat))
+            using (UI_Scope.Text(GameFont.Tiny, TextAnchor.MiddleLeft))
             {
-                GUI.color = new Color(1f, 0.75f, 0.2f);
-                Widgets.Label(row3, "FamiliaMyth.UI.CategoryRankUpHint".Translate());
+                if (canRankUp)
+                {
+                    using (UI_Scope.Color(UI_Palette.Warning))
+                        Widgets.Label(row3, "FamiliaMyth.UI.CategoryRankUpHint".Translate());
+                }
+                else if (maxed)
+                {
+                    using (UI_Scope.Color(UI_Palette.TextNormal))
+                        Widgets.Label(row3, "FamiliaMyth.UI.CategoryMaxRank".Translate());
+                }
+                else
+                {
+                    using (UI_Scope.Color(UI_Palette.TextNormal))
+                    {
+                        int pct = Mathf.RoundToInt(frac * 100f);
+                        Widgets.Label(row3, "FamiliaMyth.UI.CategoryProgress".Translate(pct));
+                    }
+                }
             }
-            else if (req <= 0)
-            {
-                GUI.color = new Color(0.7f, 0.7f, 0.8f);
-                Widgets.Label(row3, "FamiliaMyth.UI.CategoryMaxRank".Translate());
-            }
-            else
-            {
-                GUI.color = new Color(0.8f, 0.8f, 0.9f);
-                int pct = Mathf.RoundToInt(frac * 100f);
-                Widgets.Label(row3, "FamiliaMyth.UI.CategoryProgress".Translate(pct));
-            }
-            GUI.color = Color.white;
+
+            DrawCardFeedback(r, UI_Palette.Accent, canRankUp);
+        }
+
+        //卡片反馈：悬停叠白；可升级时叠呼吸描边与淡填充（仅 Repaint 绘制）
+        private static void DrawCardFeedback(Rect r, Color accent, bool pulsing)
+        {
+            if (Mouse.IsOver(r))
+                Widgets.DrawBoxSolid(r, new Color(1f, 1f, 1f, HoverOverlayAlpha));
+
+            if (!pulsing || Event.current.type != EventType.Repaint)
+                return;
+
+            float k = (Mathf.Sin(Time.realtimeSinceStartup * PulseSpeed) + 1f) * 0.5f;
+            Widgets.DrawBoxSolid(r, accent.WithAlpha(Mathf.Lerp(PulseFillMinAlpha, PulseFillMaxAlpha, k)));
+            UI_GroupBox.DrawOutlinedBox(r,
+                accent.WithAlpha(Mathf.Lerp(PulseOutlineMinAlpha, PulseOutlineMaxAlpha, k)),
+                UI_GroupBox.SectionBorderThickness);
         }
 
         private static void DrawMembers(Rect r)
@@ -209,14 +225,14 @@ namespace FamiliaMyth.UI
             Rect view = new(0f, 0f, r.width, Mathf.Max(r.height, total));
 
             Widgets.BeginScrollView(r, ref memberScrollPos, view, showScrollbars: false);
-            float y = 0f;
+            UI_Cursor cur = new(0f, 0f, view.width);
             foreach (var p in members)
             {
                 if (!rewardScrollByPawn.TryGetValue(p.thingIDNumber, out var rs))
                     rs = Vector2.zero;
-                DrawMemberCard(new(0f, y, view.width, MemberCardHeight), p.GetPharna(), ref rs);
+                DrawMemberCard(cur.Row(MemberCardHeight), p.GetPharna(), ref rs);
                 rewardScrollByPawn[p.thingIDNumber] = rs;
-                y += MemberCardHeight + MemberCardGap;
+                cur.Gap(MemberCardGap);
             }
             Widgets.EndScrollView();
         }
@@ -227,8 +243,7 @@ namespace FamiliaMyth.UI
             Color accent = pawn.story?.favoriteColor?.color ?? UI_GroupBox.ColorAccent;
             UI_GroupBox.DrawPlainBg(r, accentColor: accent);
 
-            GUI.BeginGroup(r);
-            try
+            using (UI_Scope.Group(r))
             {
                 Rect c = new(M, M, r.width - 2f * M, r.height - 2f * M);
 
@@ -244,26 +259,27 @@ namespace FamiliaMyth.UI
                 {
                     var rt = PortraitsCache.Get(pawn, new Vector2(PortraitW, PortraitH),
                         Rot4.South, Vector3.zero, 1f, true, true, true, true, null, null, false, null);
-                    GUI.color = Color.white;
                     GUI.DrawTexture(pr, rt);
                 }
                 catch { }
 
                 Rect nameR = new(pcR.x, pr.yMax + 6f, pcR.width, Text.SmallFontHeight * 2 + 2f);
-                Text.Font = GameFont.Small;
-                Text.Anchor = TextAnchor.UpperCenter;
-                GUI.color = Color.white;
-                GUI.BeginGroup(nameR);
-                Widgets.Label(GenUI.AtZero(nameR), pawn.NameFullColored);
-                GUI.EndGroup();
+                using (UI_Scope.Text(GameFont.Small, TextAnchor.UpperCenter))
+                using (UI_Scope.Group(nameR))
+                    Widgets.Label(GenUI.AtZero(nameR), UI_Text.Truncate(pawn.NameFullColored, nameR.width, GameFont.Small));
 
                 Rect bioR = new(pcR.x, nameR.yMax + 2f, pcR.width, Text.LineHeightOf(GameFont.Tiny) * 2 + 2f);
-                Text.Font = GameFont.Tiny;
-                Text.Anchor = TextAnchor.UpperLeft;
-                GUI.color = UI_GroupBox.ColorAccent;
-                Widgets.Label(bioR, "FamiliaMyth.UI.MemberBio".Translate(pharna.level));
-                GUI.color = Color.white;
-                Text.Anchor = TextAnchor.UpperLeft;
+                using (UI_Scope.Text(GameFont.Tiny, TextAnchor.UpperLeft))
+                using (UI_Scope.Color(UI_GroupBox.ColorAccent))
+                    Widgets.Label(bioR, "FamiliaMyth.UI.MemberBio".Translate(pharna.level));
+
+                //头像列可点击：跳转并选中该眷族
+                if (Mouse.IsOver(pcR))
+                    Widgets.DrawBoxSolid(pcR, new Color(1f, 1f, 1f, HoverOverlayAlpha));
+                TooltipHandler.TipRegion(pcR, () => "FamiliaMyth.UI.JumpToPawnTip".Translate(),
+                    Gen.HashCombineInt(pawn.thingIDNumber, 197308));
+                if (Widgets.ButtonInvisible(pcR))
+                    JumpToPawn(pawn);
 
                 //雷达图
                 Rect radarInner = new(rcR.x + 10f, rcR.y + Mathf.Max(0f, (rcR.height - RadarColW) / 2f) + 10f,
@@ -285,7 +301,22 @@ namespace FamiliaMyth.UI
                 //奖励卡
                 DrawRewards(rwR, pharna, ref rewardScrollPos);
             }
-            finally { GUI.EndGroup(); }
+
+            DrawCardFeedback(r, accent, false);
+        }
+
+        //跳转并选中该眷族，随后关闭当前主标签页（与原版历史页跳转同一流程）
+        private static void JumpToPawn(Pawn pawn)
+        {
+            if (pawn == null)
+                return;
+
+            GlobalTargetInfo target = new(pawn);
+            if (!CameraJumper.CanJump(target))
+                return;
+
+            CameraJumper.TryJumpAndSelect(target);
+            Find.MainTabsRoot.EscapeCurrentTab();
         }
 
         private static void DrawRewards(Rect r, Hediff_Pharna pharna, ref Vector2 scroll)
@@ -300,18 +331,18 @@ namespace FamiliaMyth.UI
             Rect view = new(0f, 0f, r.width, Mathf.Max(r.height, total));
 
             Widgets.BeginScrollView(r, ref scroll, view, showScrollbars: false);
-            float y = 0f;
+            UI_Cursor cur = new(0f, 0f, view.width);
             foreach (var reward in list)
             {
-                DrawRewardCard(new(0f, y, view.width, SmallCardH), reward);
-                y += SmallCardH + SmallCardGap;
+                DrawRewardCard(cur.Row(SmallCardH), reward);
+                cur.Gap(SmallCardGap);
             }
             Widgets.EndScrollView();
         }
 
         private static void DrawRewardCard(Rect r, IAscendReward reward)
         {
-            Widgets.DrawBoxSolid(r, new Color(20f / 255f, 22f / 255f, 30f / 255f, 0.95f));
+            Widgets.DrawBoxSolid(r, UI_Palette.CardBg);
             Widgets.DrawBoxSolid(new Rect(r.x, r.y, 3f, r.height), reward.RarityColor);
 
             string prefix = reward.RewardType switch
@@ -322,17 +353,17 @@ namespace FamiliaMyth.UI
                 _ => "•"
             };
 
-            Text.Font = GameFont.Tiny;
-            Text.Anchor = TextAnchor.MiddleLeft;
-            GUI.color = reward.RarityColor;
             Rect labelR = new(r.x + 8f, r.y, r.width - 10f, r.height);
-            GUI.BeginGroup(labelR);
-            Widgets.Label(GenUI.AtZero(labelR), $"{prefix} {reward.Label}");
-            GUI.EndGroup();
-            Text.Anchor = TextAnchor.UpperLeft;
-            GUI.color = Color.white;
+            using (UI_Scope.Text(GameFont.Tiny, TextAnchor.MiddleLeft))
+            using (UI_Scope.Color(reward.RarityColor))
+            using (UI_Scope.Group(labelR))
+                Widgets.Label(GenUI.AtZero(labelR), UI_Text.Truncate($"{prefix} {reward.Label}", labelR.width));
 
-            TooltipHandler.TipRegion(r, new TipSignal($"{reward.Label}\n\n{reward.Description}"));
+            TooltipHandler.TipRegion(r, () => $"{reward.Label}\n\n{reward.Description}",
+                Gen.HashCombineInt(reward.GetHashCode(), 197307));
+
+            if (Mouse.IsOver(r))
+                Widgets.DrawBoxSolid(r, new Color(1f, 1f, 1f, HoverOverlayAlpha));
         }
     }
 }

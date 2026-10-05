@@ -5,10 +5,17 @@ namespace FamiliaMyth.UI
 {
     public static class UI_GroupBox
     {
-        public static readonly Color ColorContent = new(47f / 255f, 48f / 255f, 55f / 255f, 0.98f); //内容区背景色
-        public static readonly Color ColorTitleBar = new(14f / 255f, 16f / 255f, 39f / 255f, 1f);   //标题区背景色
-        public const float TitleHeight = 20f;
+        public static readonly Color ColorContent = UI_Palette.ContentBg;      //内容区背景色
+        public static readonly Color ColorTitleBar = UI_Palette.TitleBarBg;    //带标题栏卡片的标题底色
+        public const float TitleHeight = 30f;
         public const float BasicMargin = 4f;
+        //分区卡描边宽度（条目卡不描边）
+        public const float SectionBorderThickness = 2f;
+        //分区标题距左边框的内缩，以及标题前后用于截断边框的留白
+        public const float TitleIndent = 20f;
+        public const float TitlePaddingX = 6f;
+        //分区上边框所在的水平线：标题中线
+        public const float TitleLineOffset = TitleHeight / 2f;
 
         //带标题栏的卡片
         public static void DrawCardBg(Rect r, string title, Color color)
@@ -16,14 +23,11 @@ namespace FamiliaMyth.UI
             Widgets.DrawBoxSolid(r, ColorContent);
             if (!string.IsNullOrEmpty(title))
             {
+                Widgets.DrawBoxSolid(new Rect(r.x, r.y, r.width, TitleHeight), ColorTitleBar);
                 Rect titleR = new(r.x, r.y, r.width, TitleHeight);
-                Widgets.DrawBoxSolid(titleR, ColorTitleBar);
-                Text.Font = GameFont.Small;
-                GUI.color = color;
-                Text.Anchor = TextAnchor.MiddleCenter;
-                Widgets.Label(titleR, title);
-                Text.Anchor = TextAnchor.UpperLeft;
-                GUI.color = Color.white;
+                using (UI_Scope.Text(GameFont.Medium, TextAnchor.MiddleCenter))
+                using (UI_Scope.Color(Color.white))
+                    Widgets.Label(titleR, title);
             }
             Rect highlight = new(r.x, r.y, r.width, 6f);
             VGradientHighlight(highlight, 1f, color);
@@ -38,24 +42,21 @@ namespace FamiliaMyth.UI
             Widgets.DrawBoxSolid(new Rect(r.xMax - thickness, r.y, thickness, r.height), borderColor);
         }
 
-        //带描边与标题栏的卡片：内容区与标题栏沿用既有填充色，强调色仅用于描边、标题文字与顶部高光
+        //分区卡：填充与边框同域（上边框下移至标题中线），标题左内缩并截断该段边框后压在其上
         public static void DrawOutlinedCardBg(Rect r, string title, Color borderColor)
         {
-            Widgets.DrawBoxSolid(r, ColorContent);
-            if (!string.IsNullOrEmpty(title))
+            float lineY = r.y + TitleLineOffset;
+            //填充只在边框围住的区域内
+            Widgets.DrawBoxSolid(new Rect(r.x, lineY, r.width, r.height - TitleLineOffset), ColorContent);
+
+            if (string.IsNullOrEmpty(title))
             {
-                Rect titleR = new(r.x, r.y, r.width, TitleHeight);
-                Widgets.DrawBoxSolid(titleR, ColorTitleBar);
-                Text.Font = GameFont.Small;
-                GUI.color = borderColor;
-                Text.Anchor = TextAnchor.MiddleCenter;
-                Widgets.Label(titleR, title);
-                Text.Anchor = TextAnchor.UpperLeft;
-                GUI.color = Color.white;
+                DrawOutlinedBox(r, borderColor, SectionBorderThickness);
+                return;
             }
-            DrawOutlinedBox(r, borderColor);
-            Rect highlight = new(r.x + 3f, r.y + 3f, r.width - 6f, 4f);
-            VGradientHighlight(highlight, 0.6f, borderColor);
+
+            DrawSectionFrame(r, borderColor);
+            DrawSectionTitle(r, title);
         }
 
         //纯色背景 + 横向渐变高光 + 左侧色条 + 浅色细边框
@@ -84,6 +85,35 @@ namespace FamiliaMyth.UI
         private static Texture2D hgradCache;
         public static Color ColorAccent = Color.white;
 
+        private static void DrawSectionFrame(Rect r, Color borderColor)
+        {
+            float t = SectionBorderThickness;
+            float lineY = r.y + TitleLineOffset;
+            Widgets.DrawBoxSolid(new Rect(r.x, lineY, r.width, t), borderColor);
+            Widgets.DrawBoxSolid(new Rect(r.x, r.yMax - t, r.width, t), borderColor);
+            Widgets.DrawBoxSolid(new Rect(r.x, lineY, t, r.height - TitleLineOffset), borderColor);
+            Widgets.DrawBoxSolid(new Rect(r.xMax - t, lineY, t, r.height - TitleLineOffset), borderColor);
+        }
+
+        private static void DrawSectionTitle(Rect r, string title)
+        {
+            const float TextHeight = 26f;
+            const float MaskHeight = 8f;
+            float lineY = r.y + TitleLineOffset;
+            float textW = UI_Text.Width(title, GameFont.Medium);
+            float x = r.x + TitleIndent;
+            float y = lineY - TextHeight * 0.5f;
+
+            //仅截断边框线本身，不在框外留下底色块
+            Widgets.DrawBoxSolid(new Rect(x - TitlePaddingX, lineY - MaskHeight * 0.5f, textW + TitlePaddingX * 2f, MaskHeight),
+                ColorContent);
+
+            Rect titleR = new(x, y, textW, TextHeight);
+            using (UI_Scope.Text(GameFont.Medium, TextAnchor.MiddleLeft))
+            using (UI_Scope.Color(Color.white))
+                Widgets.Label(titleR, title);
+        }
+
         private static void VGradientHighlight(Rect r, float intensity, Color color)
         {
             if (hgradCache == null)
@@ -100,10 +130,8 @@ namespace FamiliaMyth.UI
                 }
                 hgradCache.Apply();
             }
-            var prev = GUI.color;
-            GUI.color = color;
-            GUI.DrawTexture(r, hgradCache);
-            GUI.color = prev;
+            using (UI_Scope.Color(color))
+                GUI.DrawTexture(r, hgradCache);
         }
     }
 }

@@ -9,39 +9,28 @@ using Verse;
 namespace FamiliaMyth.UI
 {
     //恩惠页签：能力 / 发展能力 / 技能·魔法 / 伟业 四个分区
-    //分区卡统一 浅褐色描边 + 灰黑填充；条目小卡按稀有度（发展能力/技能/魔法）或伟业档位着色
+    //分区卡用淡暖金描边与纯白标题，条目卡不描边、以左侧色条区分类别
     public class ITab_Pawn_Pharna : ITab
     {
-        private const float TabWidth = 630f;
-        private const float TabHeight = 510f;
+        private const float TabWidth = 680f;
+        private const float TabHeight = 560f;
         private const float SectionGap = 8f;
-        private const float RowHeight = 22f;
-        private const float SmallCardH = 20f;
+        private const float RowHeight = 28f;
+        private const float SmallCardH = 26f;
         private const float SmallCardGap = 2f;
-        private const float FeatCardH = 62f;
+        private const float FeatCardH = 58f;
         private const float FeatCardGap = 4f;
 
-        //能力行三段宽度：名称 / 数值 / 潜在
-        private const float W_Name = 52f;
-        private const float W_Num = 96f;
-        private const float W_Pot = 92f;
+        //能力行四段宽度：名称 / 评级 / 数值
+        private const float W_Name = 80f;
+        private const float W_Rank = 24f;
+        private const float W_Value = 96f;
 
-        //分区卡统一描边色 浅棕
-        private static readonly Color SectionBorder = new(196f / 255f, 149f / 255f, 82f / 255f);
-        //增速衰减终点色
-        private static readonly Color DecayPink = new(1f, 0.45f, 0.72f);
-        private static readonly Color TextNormal = new(0.8f, 0.8f, 0.9f);
-        private static readonly Color BarBg = new(0.12f, 0.12f, 0.15f, 0.9f);
-        private static readonly Color CardBg = new(20f / 255f, 22f / 255f, 30f / 255f, 0.95f);
-        private const float PotentialAlpha = 0.55f;
+        //行内段落间距
+        private const float SegmentGap = 6f;
 
-        //伟业档位配色（tier 1~9）
-        private static readonly Color[] TierColors =
-        {
-            new Color(0.78f, 0.80f, 0.86f), new Color(0.55f, 0.80f, 0.90f), new Color(0.45f, 0.87f, 0.67f),
-            new Color(0.60f, 0.90f, 0.42f), new Color(0.92f, 0.88f, 0.40f), new Color(1.00f, 0.75f, 0.20f),
-            new Color(1.00f, 0.55f, 0.15f), new Color(1.00f, 0.32f, 0.28f), new Color(1.00f, 0.15f, 0.55f)
-        };
+        //条目卡左侧色条宽度
+        private const float AccentBarW = 3f;
 
         private Vector2 scroll;
 
@@ -63,11 +52,14 @@ namespace FamiliaMyth.UI
             Rect view = new(0f, 0f, rect.width - 16f, Mathf.Max(MeasureHeight(pharna), rect.height));
 
             Widgets.BeginScrollView(rect, ref scroll, view);
-            float y = 0f;
-            y = DrawAbilitySection(pharna, view.width, y);
-            y = DrawDevelopableSection(pharna, view.width, y);
-            y = DrawSkillSpellSection(pharna, view.width, y);
-            DrawFeatSection(pharna, view.width, y);
+            UI_Cursor cur = new(0f, 0f, view.width);
+            DrawAbilitySection(pharna, ref cur);
+            cur.Gap(SectionGap);
+            DrawDevelopableSection(pharna, ref cur);
+            cur.Gap(SectionGap);
+            DrawSkillSpellSection(pharna, ref cur);
+            cur.Gap(SectionGap);
+            DrawFeatSection(pharna, ref cur);
             Widgets.EndScrollView();
         }
 
@@ -105,280 +97,255 @@ namespace FamiliaMyth.UI
 
         //==================== 能力 ====================
 
-        private static float DrawAbilitySection(Hediff_Pharna pharna, float width, float y)
+        private static void DrawAbilitySection(Hediff_Pharna pharna, ref UI_Cursor cur)
         {
-            Rect card = new(0f, y, width, SectionHeight(AbilityInnerHeight()));
-            UI_GroupBox.DrawOutlinedCardBg(card, "FamiliaMyth.Panel.SectionAbility".Translate(), SectionBorder);
-            Rect inner = UI_GroupBox.ContentRect(card);
+            Rect card = cur.Row(SectionHeight(AbilityInnerHeight()));
+            UI_GroupBox.DrawOutlinedCardBg(card, "FamiliaMyth.Panel.SectionAbility".Translate(), UI_Palette.SectionBorder);
+            UI_Cursor inner = new(UI_GroupBox.ContentRect(card));
 
-            GameFont prevFont = Text.Font;
-            Text.Font = GameFont.Tiny;
-            Text.Anchor = TextAnchor.MiddleLeft;
-
-            //等级与经验
-            GUI.color = TextNormal;
-            Widgets.Label(new Rect(inner.x, inner.y, inner.width, RowHeight),
-                "FamiliaMyth.Panel.Header".Translate(pharna.level, (int)pharna.experience));
-
-            //六维
-            float ry = inner.y + RowHeight;
-            for (int i = 0; i < 6; i++)
+            using (UI_Scope.Text(GameFont.Small, TextAnchor.MiddleLeft))
             {
-                DrawStatusRow(pharna, (PharnaStatusType)i, new Rect(inner.x, ry, inner.width, RowHeight));
-                ry += RowHeight;
+                using (UI_Scope.Color(UI_Palette.TextNormal))
+                    Widgets.Label(inner.Row(RowHeight),
+                        "FamiliaMyth.Panel.Header".Translate(PawnName(pharna), pharna.level, (int)pharna.experience));
+
+                static string PawnName(Hediff_Pharna p) => p.pawn != null ? p.pawn.NameFullColored.ToString() : "";
+
+                for (int i = 0; i < 6; i++)
+                    DrawStatusRow(pharna, (PharnaStatusType)i, inner.Row(RowHeight), i);
             }
-
-            GUI.color = Color.white;
-            Text.Anchor = TextAnchor.UpperLeft;
-            Text.Font = prevFont;
-
-            return card.yMax + SectionGap;
         }
 
-        private static void DrawStatusRow(Hediff_Pharna pharna, PharnaStatusType type, Rect r)
+        private static void DrawStatusRow(Hediff_Pharna pharna, PharnaStatusType type, Rect r, int index)
         {
-            float cur = pharna.GetCurrentStatus(type);
-            float pot = pharna.GetFullStatus(type) - cur;
-            //数值与进度条同色：白 = 正常增速，渐变至粉 = 增速衰减
-            Color color = Color.Lerp(Color.white, DecayPink, 1f - pharna.GetGrowthDecay(type));
+            if ((index & 1) == 0)
+                Widgets.DrawBoxSolid(r, UI_Palette.RowStripe);
 
-            GUI.color = TextNormal;
-            Widgets.Label(new Rect(r.x, r.y, W_Name, r.height), Hediff_Pharna.GetStatusName(type));
+            float now = pharna.GetCurrentStatus(type);
+            float potential = pharna.GetPotential(type);
+            float total = now + potential;
+            float decay = pharna.GetGrowthDecay(type);
+            //进度条随增速衰减由白转暖色
+            Color barColor = Color.Lerp(Color.white, UI_Palette.Decay, 1f - decay);
+            bool reached = now >= Hediff_Pharna.AscendStatusThreshold;
 
-            GUI.color = color;
-            Widgets.Label(new Rect(r.x + W_Name, r.y, W_Num, r.height),
-                "FamiliaMyth.Panel.StatusNumber".Translate(
-                    Hediff_Pharna.GetRank(cur), ((int)cur).ToString(), ((int)pharna.maxStatus).ToString()));
+            using (UI_Scope.Color(UI_Palette.TextNormal))
+                Widgets.Label(new Rect(r.x, r.y, W_Name, r.height), Hediff_Pharna.GetStatusName(type));
 
-            GUI.color = color.WithAlpha(PotentialAlpha);
-            Widgets.Label(new Rect(r.x + W_Name + W_Num, r.y, W_Pot, r.height),
-                "FamiliaMyth.Panel.Potential".Translate($"+{(int)pot}"));
+            using (UI_Scope.Color(UI_Palette.Accent))
+                Widgets.Label(new Rect(r.x + W_Name, r.y, W_Rank, r.height), Hediff_Pharna.GetRank(now));
 
-            float barX = r.x + W_Name + W_Num + W_Pot + 6f;
+            using (UI_Scope.Color(UI_Palette.TextValue))
+                Widgets.Label(new Rect(r.x + W_Name + W_Rank, r.y, W_Value, r.height),
+                    "FamiliaMyth.Panel.StatusValue".Translate(
+                        ((int)now).ToString(), ((int)pharna.maxStatus).ToString()));
+
+            float barX = r.x + W_Name + W_Rank + W_Value + SegmentGap;
             float barW = r.xMax - barX;
             if (barW > 8f)
             {
-                Rect bar = new(barX, r.y + 5f, barW, r.height - 10f);
-                Widgets.DrawBoxSolid(bar, BarBg);
-                GUI.color = color;
-                Widgets.FillableBar(bar, Mathf.Clamp01(cur / pharna.maxStatus));
+                Rect bar = new(barX, r.y + 6f, barW, r.height - 12f);
+                UI_Bar.DrawWithThreshold(bar, now / pharna.maxStatus, barColor,
+                    Hediff_Pharna.AscendStatusThreshold / pharna.maxStatus,
+                    reached ? UI_Palette.Disabled : UI_Palette.Accent);
             }
 
-            GUI.color = Color.white;
+            TooltipHandler.TipRegion(r, () => StatusTooltip(type, now, potential, total, decay),
+                Gen.HashCombineInt(pharna.GetHashCode(), 197305 + (int)type));
+        }
+
+        //数值格式在参数侧完成，文本键内不写格式说明符
+        private static string StatusTooltip(PharnaStatusType type, float now, float potential, float total, float decay)
+        {
+            return Hediff_Pharna.GetStatusName(type)
+                + "\n\n" + "FamiliaMyth.Panel.StatusTooltip".Translate(
+                    ((int)now).ToString(), ((int)potential).ToString(), ((int)total).ToString())
+                + "\n" + "FamiliaMyth.Panel.GrowthEfficiency".Translate(decay.ToStringPercent());
         }
 
         //==================== 发展能力 ====================
 
-        private static float DrawDevelopableSection(Hediff_Pharna pharna, float width, float y)
+        private static void DrawDevelopableSection(Hediff_Pharna pharna, ref UI_Cursor cur)
         {
-            float inner = DevelopableInnerHeight(pharna);
-            Rect card = new(0f, y, width, SectionHeight(inner));
-            UI_GroupBox.DrawOutlinedCardBg(card, "FamiliaMyth.Panel.SectionDevelopable".Translate(), SectionBorder);
-            Rect content = UI_GroupBox.ContentRect(card);
+            float innerHeight = DevelopableInnerHeight(pharna);
+            Rect card = cur.Row(SectionHeight(innerHeight));
+            UI_GroupBox.DrawOutlinedCardBg(card, "FamiliaMyth.Panel.SectionDevelopable".Translate(), UI_Palette.SectionBorder);
+            UI_Cursor inner = new(UI_GroupBox.ContentRect(card));
 
-            GameFont prevFont = Text.Font;
-            Text.Font = GameFont.Tiny;
-            Text.Anchor = TextAnchor.MiddleLeft;
-
-            if (pharna.developableAbilities.NullOrEmpty())
+            using (UI_Scope.Text(GameFont.Small, TextAnchor.MiddleLeft))
             {
-                GUI.color = TextNormal.WithAlpha(0.6f);
-                Widgets.Label(new Rect(content.x, content.y, content.width, RowHeight),
-                    "FamiliaMyth.Panel.Empty".Translate());
-            }
-            else
-            {
-                float ry = content.y;
-                foreach (DevelopableAbility ability in pharna.developableAbilities)
+                if (pharna.developableAbilities.NullOrEmpty())
                 {
+                    using (UI_Scope.Color(UI_Palette.TextNormal.WithAlpha(0.6f)))
+                        Widgets.Label(inner.Row(RowHeight), "FamiliaMyth.Panel.Empty".Translate());
+                    return;
+                }
+
+                for (int i = 0; i < pharna.developableAbilities.Count; i++)
+                {
+                    Rect row = inner.Row(RowHeight);
+                    DevelopableAbility ability = pharna.developableAbilities[i];
                     if (ability == null)
                         continue;
-                    DrawDevelopableRow(new Rect(content.x, ry, content.width, RowHeight), ability);
-                    ry += RowHeight;
+                    DrawDevelopableRow(row, ability, i);
                 }
-            }
-
-            GUI.color = Color.white;
-            Text.Anchor = TextAnchor.UpperLeft;
-            Text.Font = prevFont;
-
-            return card.yMax + SectionGap;
-        }
-
-        //==================== 技能 / 魔法（两栏） ====================
-
-        private static float DrawSkillSpellSection(Hediff_Pharna pharna, float width, float y)
-        {
-            float inner = SkillSpellInnerHeight(pharna);
-            float halfW = (width - SectionGap) / 2f;
-            Rect left = new(0f, y, halfW, SectionHeight(inner));
-            Rect right = new(halfW + SectionGap, y, halfW, SectionHeight(inner));
-
-            UI_GroupBox.DrawOutlinedCardBg(left, "FamiliaMyth.Panel.SectionSkills".Translate(), SectionBorder);
-            UI_GroupBox.DrawOutlinedCardBg(right, "FamiliaMyth.Panel.SectionSpells".Translate(), SectionBorder);
-
-            GameFont prevFont = Text.Font;
-            Text.Font = GameFont.Tiny;
-            Text.Anchor = TextAnchor.MiddleLeft;
-
-            DrawSmallCardList(UI_GroupBox.ContentRect(left), "✦", pharna.skills);
-            DrawSmallCardList(UI_GroupBox.ContentRect(right), "✧", pharna.spells);
-
-            GUI.color = Color.white;
-            Text.Anchor = TextAnchor.UpperLeft;
-            Text.Font = prevFont;
-
-            return left.yMax + SectionGap;
-        }
-
-        private static void DrawSmallCardList(Rect content, string prefix, IEnumerable<IAscendReward> rewards)
-        {
-            if (rewards == null)
-            {
-                GUI.color = TextNormal.WithAlpha(0.6f);
-                Widgets.Label(new Rect(content.x, content.y, content.width, SmallCardH),
-                    "FamiliaMyth.Panel.Empty".Translate());
-                return;
-            }
-
-            float ry = content.y;
-            foreach (IAscendReward reward in rewards)
-            {
-                if (reward == null)
-                    continue;
-                DrawSmallCard(new Rect(content.x, ry, content.width, SmallCardH), prefix, reward.Label, reward.RarityColor);
-                ry += SmallCardH + SmallCardGap;
             }
         }
 
         //发展能力行：★ 名称 + 品质 + 熟练度文本 + 熟练度条（稀有度着色）
-        private static void DrawDevelopableRow(Rect r, DevelopableAbility ability)
+        private static void DrawDevelopableRow(Rect r, DevelopableAbility ability, int index)
         {
             Color color = ((IAscendReward)ability).RarityColor;
-            Widgets.DrawBoxSolid(r, CardBg);
-            Widgets.DrawBoxSolid(new Rect(r.x, r.y, 3f, r.height), color);
-
-            GameFont prevFont = Text.Font;
-            Text.Font = GameFont.Tiny;
-            Text.Anchor = TextAnchor.MiddleLeft;
+            Widgets.DrawBoxSolid(r, UI_Palette.CardBg);
+            if ((index & 1) == 0)
+                Widgets.DrawBoxSolid(r, UI_Palette.RowStripe);
+            Widgets.DrawBoxSolid(new Rect(r.x, r.y, AccentBarW, r.height), color);
 
             float nameW = r.width * 0.45f;
-            GUI.color = color;
-            Widgets.Label(new Rect(r.x + 8f, r.y, nameW - 8f, r.height),
-                $"★ {ability.Label}  {Hediff_Pharna.GetDegreeRank(ability.Degree)}");
+            string name = UI_Text.Truncate(
+                $"★ {ability.Label}  {Hediff_Pharna.GetDegreeRank(ability.Degree)}", nameW - 8f, GameFont.Small);
+
+            using (UI_Scope.Color(color))
+                Widgets.Label(new Rect(r.x + 8f, r.y, nameW - 8f, r.height), name);
 
             float maxProf = ability.def?.maxProficiency ?? 999f;
-            Rect numR = new(r.x + nameW, r.y, 100f, r.height);
-            GUI.color = TextNormal;
-            Widgets.Label(numR, "FamiliaMyth.Panel.DevelopableProficiency".Translate(
-                ((int)ability.Proficiency).ToString(), ((int)maxProf).ToString()));
+            float numW = 110f;
+            Rect numR = new(r.x + nameW, r.y, numW, r.height);
+            using (UI_Scope.Color(UI_Palette.TextValue))
+                Widgets.Label(numR, "FamiliaMyth.Panel.DevelopableProficiency".Translate(
+                    ((int)ability.Proficiency).ToString(), ((int)maxProf).ToString()));
 
-            float barX = numR.xMax + 4f;
-            float barW = r.xMax - barX - 6f;
+            float barX = numR.xMax + SegmentGap;
+            float barW = r.xMax - barX - SegmentGap;
             if (barW > 8f)
             {
-                Rect bar = new(barX, r.y + 5f, barW, r.height - 10f);
-                Widgets.DrawBoxSolid(bar, BarBg);
-                GUI.color = color;
-                Widgets.FillableBar(bar, Mathf.Clamp01(ability.Proficiency / maxProf));
+                Rect bar = new(barX, r.y + 6f, barW, r.height - 12f);
+                UI_Bar.Draw(bar, ability.Proficiency / maxProf, color);
             }
 
-            GUI.color = Color.white;
-            Text.Anchor = TextAnchor.UpperLeft;
-            Text.Font = prevFont;
+            TooltipHandler.TipRegion(r, () => $"{ability.Label}\n\n{ability.Description}",
+                Gen.HashCombineInt(ability.GetHashCode(), 197307));
+        }
+
+        //==================== 技能 / 魔法（两栏） ====================
+
+        private static void DrawSkillSpellSection(Hediff_Pharna pharna, ref UI_Cursor cur)
+        {
+            float innerHeight = SkillSpellInnerHeight(pharna);
+            float halfW = (cur.Width - SectionGap) / 2f;
+            float y = cur.Y;
+            Rect left = new(cur.X, y, halfW, SectionHeight(innerHeight));
+            Rect right = new(cur.X + halfW + SectionGap, y, halfW, SectionHeight(innerHeight));
+            cur.Gap(SectionHeight(innerHeight));
+
+            UI_GroupBox.DrawOutlinedCardBg(left, "FamiliaMyth.Panel.SectionSkills".Translate(), UI_Palette.SectionBorder);
+            UI_GroupBox.DrawOutlinedCardBg(right, "FamiliaMyth.Panel.SectionSpells".Translate(), UI_Palette.SectionBorder);
+
+            using (UI_Scope.Text(GameFont.Small, TextAnchor.MiddleLeft))
+            {
+                DrawSmallCardList(UI_GroupBox.ContentRect(left), "✦", pharna.skills);
+                DrawSmallCardList(UI_GroupBox.ContentRect(right), "✧", pharna.spells);
+            }
+        }
+
+        private static void DrawSmallCardList(Rect content, string prefix, IEnumerable<IAscendReward> rewards)
+        {
+            UI_Cursor cur = new(content);
+
+            if (rewards == null)
+            {
+                using (UI_Scope.Color(UI_Palette.TextNormal.WithAlpha(0.6f)))
+                    Widgets.Label(cur.Row(SmallCardH), "FamiliaMyth.Panel.Empty".Translate());
+                return;
+            }
+
+            foreach (IAscendReward reward in rewards)
+            {
+                Rect row = cur.Row(SmallCardH);
+                if (reward == null)
+                    continue;
+                DrawSmallCard(row, prefix, reward);
+                cur.Gap(SmallCardGap);
+            }
         }
 
         //条目小卡：深底 + 左侧稀有度色条 + 稀有色文本
-        private static void DrawSmallCard(Rect r, string prefix, string label, Color color)
+        private static void DrawSmallCard(Rect r, string prefix, IAscendReward reward)
         {
-            Widgets.DrawBoxSolid(r, CardBg);
-            Widgets.DrawBoxSolid(new Rect(r.x, r.y, 3f, r.height), color);
+            Color color = reward.RarityColor;
+            Widgets.DrawBoxSolid(r, UI_Palette.CardBg);
+            Widgets.DrawBoxSolid(new Rect(r.x, r.y, AccentBarW, r.height), color);
 
-            GUI.color = color;
             Rect labelR = new(r.x + 8f, r.y, r.width - 10f, r.height);
-            GUI.BeginGroup(labelR);
-            Widgets.Label(GenUI.AtZero(labelR), $"{prefix} {label}");
-            GUI.EndGroup();
-            GUI.color = Color.white;
+            using (UI_Scope.Color(color))
+            using (UI_Scope.Group(labelR))
+                Widgets.Label(GenUI.AtZero(labelR),
+                    UI_Text.Truncate($"{prefix} {reward.Label}", labelR.width, GameFont.Small));
+
+            TooltipHandler.TipRegion(r, () => $"{reward.Label}\n\n{reward.Description}",
+                Gen.HashCombineInt(reward.GetHashCode(), 197307));
         }
 
         //==================== 伟业 ====================
 
-        private static float DrawFeatSection(Hediff_Pharna pharna, float width, float y)
+        private static void DrawFeatSection(Hediff_Pharna pharna, ref UI_Cursor cur)
         {
-            float inner = FeatInnerHeight(pharna);
-            Rect card = new(0f, y, width, SectionHeight(inner));
-            UI_GroupBox.DrawOutlinedCardBg(card, "FamiliaMyth.Panel.SectionFeats".Translate(), SectionBorder);
-            Rect content = UI_GroupBox.ContentRect(card);
+            float innerHeight = FeatInnerHeight(pharna);
+            Rect card = cur.Row(SectionHeight(innerHeight));
+            UI_GroupBox.DrawOutlinedCardBg(card, "FamiliaMyth.Panel.SectionFeats".Translate(), UI_Palette.SectionBorder);
+            UI_Cursor inner = new(UI_GroupBox.ContentRect(card));
 
-            GameFont prevFont = Text.Font;
-            Text.Font = GameFont.Tiny;
-            Text.Anchor = TextAnchor.MiddleLeft;
+            using (UI_Scope.Text(GameFont.Small, TextAnchor.MiddleLeft))
+            {
+                if (pharna.feats.NullOrEmpty())
+                {
+                    using (UI_Scope.Color(UI_Palette.TextNormal.WithAlpha(0.6f)))
+                        Widgets.Label(inner.Row(RowHeight), "FamiliaMyth.Panel.Empty".Translate());
+                    return;
+                }
 
-            if (pharna.feats.NullOrEmpty())
-            {
-                GUI.color = TextNormal.WithAlpha(0.6f);
-                Widgets.Label(new Rect(content.x, content.y, content.width, RowHeight),
-                    "FamiliaMyth.Panel.Empty".Translate());
-            }
-            else
-            {
                 List<FeatRecord> sorted = pharna.feats
                     .Where(f => f != null)
                     .OrderByDescending(f => f.tier)
                     .ThenByDescending(f => f.tick)
                     .ToList();
 
-                float ry = content.y;
                 foreach (FeatRecord record in sorted)
                 {
-                    DrawFeatCard(new Rect(content.x, ry, content.width, FeatCardH), record);
-                    ry += FeatCardH + FeatCardGap;
+                    DrawFeatCard(inner.Row(FeatCardH), record);
+                    inner.Gap(FeatCardGap);
                 }
             }
-
-            GUI.color = Color.white;
-            Text.Anchor = TextAnchor.UpperLeft;
-            Text.Font = prevFont;
-
-            return card.yMax + SectionGap;
         }
 
-        //伟业卡：未使用 = 空心（tier 色描边）；已使用 = 实心（tier 色淡填充）
+        //伟业卡：未使用 = 原底 + 亮色条；已使用 = 档位色淡填充 + 半透明色条
         private static void DrawFeatCard(Rect r, FeatRecord record)
         {
-            Color tierColor = TierColorOf(record.tier);
+            Color tierColor = UI_Palette.TierColorOf(record.tier);
+            bool used = record.usedForLevel >= 0;
 
-            Widgets.DrawBoxSolid(r, CardBg);
-            if (record.usedForLevel >= 0)
-                Widgets.DrawBoxSolid(r, tierColor.WithAlpha(0.18f));
-            else
-                UI_GroupBox.DrawOutlinedBox(r, tierColor);
-            Widgets.DrawBoxSolid(new Rect(r.x, r.y, 4f, r.height), tierColor);
+            Widgets.DrawBoxSolid(r, UI_Palette.CardBg);
+            if (used)
+                Widgets.DrawBoxSolid(r, tierColor.WithAlpha(0.10f));
+            Widgets.DrawBoxSolid(new Rect(r.x, r.y, 4f, r.height), used ? tierColor.WithAlpha(0.7f) : tierColor);
 
             string traits = record.featTraits.NullOrEmpty()
                 ? "-"
                 : string.Join(" × ", record.featTraits.Where(t => t != null).Select(t => t.label));
 
-            GUI.color = tierColor;
-            Widgets.Label(new Rect(r.x + 10f, r.y + 2f, r.width - 16f, 18f),
-                "FamiliaMyth.Panel.FeatTitle".Translate(record.tier, traits));
+            using (UI_Scope.Color(tierColor))
+                Widgets.Label(new Rect(r.x + 10f, r.y + 4f, r.width - 16f, 22f),
+                    "FamiliaMyth.Panel.FeatTitle".Translate(record.tier, traits));
 
-            GUI.color = TextNormal;
-            Widgets.Label(new Rect(r.x + 10f, r.y + 21f, r.width - 16f, 16f),
-                "FamiliaMyth.Panel.FeatScore".Translate(
-                    record.battleMagnitude.ToString("F0"), record.share.ToStringPercent()));
+            using (UI_Scope.Color(UI_Palette.TextNormal))
+                Widgets.Label(new Rect(r.x + 10f, r.y + 28f, r.width - 16f, 22f),
+                    "FamiliaMyth.Panel.FeatScore".Translate(
+                        record.battleMagnitude.ToString("F0"), record.share.ToStringPercent()));
 
-            GUI.color = TextNormal.WithAlpha(0.72f);
-            Widgets.Label(new Rect(r.x + 10f, r.y + 40f, r.width - 16f, 16f),
-                "FamiliaMyth.Panel.FeatWhen".Translate(
-                    GenDate.DateFullStringAt(record.tick, Vector2.zero), DescribeTile(record.tileId)));
-
-            GUI.color = Color.white;
+            TooltipHandler.TipRegion(r, () => "FamiliaMyth.Panel.FeatWhen".Translate(
+                GenDate.DateFullStringAt(record.tick, Vector2.zero), DescribeTile(record.tileId)),
+                Gen.HashCombineInt(record.GetHashCode(), 197306));
         }
-
-        private static Color TierColorOf(int tier)
-            => TierColors[Mathf.Clamp(tier - 1, 0, TierColors.Length - 1)];
 
         //地点：取该地块的主要生物群系名；无效或越界地块返回占位符
         private static string DescribeTile(int tileId)

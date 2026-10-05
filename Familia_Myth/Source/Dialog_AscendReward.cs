@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using FamiliaMyth.Pharna;
 using RimWorld;
 using UnityEngine;
@@ -5,7 +7,7 @@ using Verse;
 
 namespace FamiliaMyth.UI
 {
-    public class Dialog_AscendReward : Window
+    public class Dialog_AscendReward : Window_FamiliaBase
     {
         private readonly Hediff_Pharna pharna;
         private readonly List<IAscendReward> rewards;
@@ -14,7 +16,7 @@ namespace FamiliaMyth.UI
 
         private class Hieroglyph
         {
-            public char symbol;
+            public string text;
             public float phase;
             public float speed;
             public float size;
@@ -29,11 +31,21 @@ namespace FamiliaMyth.UI
         private const float WindowWidth = 660f;
         private const float WindowHeight = 620f;
         private const float ContentWidth = 540f;
+        private const float ContentTop = 70f;
         private const float CardHeight = 80f;
         private const float CardSpacing = 10f;
         private const float CardPadding = 14f;
 
-        private static char[] HieroglyphSymbols = "".ToArray();
+        //符文候选字符不足时的兜底字符集
+        private const string FallbackSymbols = "神恩眷族冒险誓约永恒";
+
+        private static readonly HashSet<char> symbolPool = new();
+        private static char[] hieroglyphSymbols = Array.Empty<char>();
+
+        //符文层铺满窗口，内容区即整个窗口
+        protected override bool HasHeaderArea => false;
+
+        public override Vector2 InitialSize => new(WindowWidth, WindowHeight);
 
         public Dialog_AscendReward(Hediff_Pharna pharna, List<IAscendReward> rewards)
         {
@@ -52,26 +64,30 @@ namespace FamiliaMyth.UI
         private void InitHieroglyphs()
         {
             hieroglyphs.Clear();
-            //从当前殖民者名字中获取字符作为神圣符文的候选字符
+
+            //从当前殖民者名字中收集字符作为符文候选
             var pawns = Find.CurrentMap.mapPawns.AllPawnsSpawned
                 .Where(p => p.Faction == Faction.OfPlayer && p.IsColonist)
                 .ToList();
-            foreach ( var pawn in pawns)
+            foreach (var pawn in pawns)
             {
-                string name = pawn.Name.ToString();
-                foreach (char c in name)
-                {
-                    if (!HieroglyphSymbols.Contains(c))
-                        HieroglyphSymbols = HieroglyphSymbols.Append(c).ToArray();
-                }
+                foreach (char c in pawn.Name.ToString())
+                    symbolPool.Add(c);
             }
+            if (symbolPool.Count == 0)
+            {
+                foreach (char c in FallbackSymbols)
+                    symbolPool.Add(c);
+            }
+            hieroglyphSymbols = symbolPool.ToArray();
+
             for (int edge = 0; edge < 4; edge++)
             {
                 for (int j = 0; j < GlyphsPerEdge; j++)
                 {
                     hieroglyphs.Add(new Hieroglyph
                     {
-                        symbol = HieroglyphSymbols[Rand.Range(0, HieroglyphSymbols.Length)],
+                        text = hieroglyphSymbols[Rand.Range(0, hieroglyphSymbols.Length)].ToString(),
                         phase = Rand.Value * Mathf.PI * 2f,
                         speed = Rand.Range(0.3f, 0.8f),
                         size = Rand.Range(14f, 18f),
@@ -82,132 +98,112 @@ namespace FamiliaMyth.UI
             }
         }
 
-        public override Vector2 InitialSize => new(WindowWidth, WindowHeight);
+        protected override void DrawBackLayer(Rect inRect) => DrawHieroglyphs(inRect);
 
-        public override void DoWindowContents(Rect rect)
-        {
-            // 先绘制神圣符文（在最底层）
-            DrawHieroglyphs(rect);
-            // 绘制窗口内容
-            DrawContent(rect);
-        }
+        protected override void DrawContent(Rect contentRect) => DrawRewardList(contentRect);
 
-        private void DrawContent(Rect rect)
+        private void DrawRewardList(Rect rect)
         {
             // 内容区域居中显示
             float contentX = rect.x + (rect.width - ContentWidth) / 2f;
-            float contentTop = 70f;
-            float contentHeight = rect.height - contentTop - 20f;
-            
-            Rect contentRect = new(contentX, rect.y + contentTop, ContentWidth, contentHeight);
+            float contentHeight = rect.height - ContentTop - 20f;
+
+            Rect contentRect = new(contentX, rect.y + ContentTop, ContentWidth, contentHeight);
 
             float scrollbarWidth = 20f;
             float totalHeight = rewards.Count * (CardHeight + CardSpacing);
             Rect viewRect = new(0, 0, contentRect.width - scrollbarWidth, totalHeight);
 
             Widgets.BeginScrollView(contentRect, ref scrollPosition, viewRect);
-            float curY = 0f;
+            UI_Cursor cur = new(0f, 0f, viewRect.width);
             foreach (var reward in rewards)
             {
-                Rect cardRect = new(0, curY, viewRect.width, CardHeight);
-                DrawRewardCard(cardRect, reward);
-                curY += CardHeight + CardSpacing;
+                DrawRewardCard(cur.Row(CardHeight), reward);
+                cur.Gap(CardSpacing);
             }
             Widgets.EndScrollView();
         }
 
         private void DrawHieroglyphs(Rect rect)
         {
+            if (Event.current.type != EventType.Repaint)
+                return;
+
             float time = Time.realtimeSinceStartup;
-            GameFont prevFont = Text.Font;
-            TextAnchor prevAnchor = Text.Anchor;
 
-            Text.Font = GameFont.Tiny;
-            Text.Anchor = TextAnchor.MiddleCenter;
-
-            for (int i = 0; i < hieroglyphs.Count; i++)
+            using (UI_Scope.Text(GameFont.Tiny, TextAnchor.MiddleCenter))
             {
-                var glyph = hieroglyphs[i];
-                float t = (time * glyph.speed + glyph.phase) % (Mathf.PI * 2f);
-
-                float alpha = Mathf.Sin(t) * 0.4f + 0.4f;
-                float floatOffset = Mathf.Sin(t * 2f) * 4f;
-
-                float x, y;
-
-                switch (glyph.edge)
+                for (int i = 0; i < hieroglyphs.Count; i++)
                 {
-                    case 0: // 上边
+                    var glyph = hieroglyphs[i];
+                    float t = (time * glyph.speed + glyph.phase) % (Mathf.PI * 2f);
+
+                    float alpha = Mathf.Sin(t) * 0.4f + 0.4f;
+                    float floatOffset = Mathf.Sin(t * 2f) * 4f;
+
+                    float x, y;
+
+                    switch (glyph.edge)
                     {
-                        float usableWidth = rect.width - GlyphMargin * 2f;
-                        float spacing = usableWidth / (GlyphsPerEdge - 1);
-                        x = rect.x + GlyphMargin + spacing * glyph.index;
-                        y = rect.y + GlyphMargin + floatOffset;
-                        break;
+                        case 0: // 上边
+                        {
+                            float usableWidth = rect.width - GlyphMargin * 2f;
+                            float spacing = usableWidth / (GlyphsPerEdge - 1);
+                            x = rect.x + GlyphMargin + spacing * glyph.index;
+                            y = rect.y + GlyphMargin + floatOffset;
+                            break;
+                        }
+                        case 1: // 右边
+                        {
+                            float usableHeight = rect.height - GlyphMargin * 2f;
+                            float spacing = usableHeight / (GlyphsPerEdge - 1);
+                            x = rect.xMax - GlyphMargin + floatOffset;
+                            y = rect.y + GlyphMargin + spacing * glyph.index;
+                            break;
+                        }
+                        case 2: // 下边
+                        {
+                            float usableWidth = rect.width - GlyphMargin * 2f;
+                            float spacing = usableWidth / (GlyphsPerEdge - 1);
+                            x = rect.x + GlyphMargin + spacing * glyph.index;
+                            y = rect.yMax - GlyphMargin + floatOffset;
+                            break;
+                        }
+                        default: // 左边
+                        {
+                            float usableHeight = rect.height - GlyphMargin * 2f;
+                            float spacing = usableHeight / (GlyphsPerEdge - 1);
+                            x = rect.x + GlyphMargin + floatOffset;
+                            y = rect.y + GlyphMargin + spacing * glyph.index;
+                            break;
+                        }
                     }
-                    case 1: // 右边
+
+                    using (UI_Scope.Color(new Color(1f, 0.85f, 0.4f, alpha)))
                     {
-                        float usableHeight = rect.height - GlyphMargin * 2f;
-                        float spacing = usableHeight / (GlyphsPerEdge - 1);
-                        x = rect.xMax - GlyphMargin + floatOffset;
-                        y = rect.y + GlyphMargin + spacing * glyph.index;
-                        break;
-                    }
-                    case 2: // 下边
-                    {
-                        float usableWidth = rect.width - GlyphMargin * 2f;
-                        float spacing = usableWidth / (GlyphsPerEdge - 1);
-                        x = rect.x + GlyphMargin + spacing * glyph.index;
-                        y = rect.yMax - GlyphMargin + floatOffset;
-                        break;
-                    }
-                    default: // 左边
-                    {
-                        float usableHeight = rect.height - GlyphMargin * 2f;
-                        float spacing = usableHeight / (GlyphsPerEdge - 1);
-                        x = rect.x + GlyphMargin + floatOffset;
-                        y = rect.y + GlyphMargin + spacing * glyph.index;
-                        break;
+                        Rect glyphRect = new(x - glyph.size / 2, y - glyph.size / 2, glyph.size, glyph.size);
+                        Widgets.Label(glyphRect, glyph.text);
                     }
                 }
-
-                // 主字符：金色
-                Color glyphColor = new(1f, 0.85f, 0.4f, alpha);
-                GUI.color = glyphColor;
-                
-                Rect glyphRect = new(x - glyph.size / 2, y - glyph.size / 2, 
-                    glyph.size, glyph.size);
-                Widgets.Label(glyphRect, glyph.symbol.ToString());
             }
-
-            GUI.color = Color.white;
-            Text.Font = prevFont;
-            Text.Anchor = prevAnchor;
         }
 
         private void DrawRewardCard(Rect cardRect, IAscendReward reward)
         {
             var color = reward.RarityColor;
+            bool isMouseOver = Mouse.IsOver(cardRect);
 
             // 卡片背景
-            Widgets.DrawBoxSolid(cardRect, new Color(0.1f, 0.1f, 0.13f, 0.92f));
-
-            bool isMouseOver = Mouse.IsOver(cardRect);
+            Widgets.DrawBoxSolid(cardRect, UI_Palette.CardBg);
             if (isMouseOver)
-            {
                 Widgets.DrawBoxSolid(cardRect, new Color(color.r, color.g, color.b, 0.12f));
-            }
 
             // 稀有度左边框
-            Rect borderRect = new(cardRect.x, cardRect.y, 3f, cardRect.height);
-            Widgets.DrawBoxSolid(borderRect, color);
+            Widgets.DrawBoxSolid(new Rect(cardRect.x, cardRect.y, 3f, cardRect.height), color);
 
             // 悬停时边框外发光
             if (isMouseOver)
-            {
-                Rect glowRect = new(cardRect.x, cardRect.y, 5f, cardRect.height);
-                Widgets.DrawBoxSolid(glowRect, new Color(color.r, color.g, color.b, 0.2f));
-            }
+                Widgets.DrawBoxSolid(new Rect(cardRect.x, cardRect.y, 5f, cardRect.height), new Color(color.r, color.g, color.b, 0.2f));
 
             // 标题行
             Rect titleRect = new(
@@ -216,14 +212,11 @@ namespace FamiliaMyth.UI
                 cardRect.width - CardPadding * 2 - 5f,
                 26f);
 
-            Text.Font = GameFont.Small;
-            GUI.color = isMouseOver ? Color.white : new(0.95f, 0.95f, 0.95f);
-            Widgets.Label(titleRect, GetRewardLabel(reward));
+            using (UI_Scope.Text(GameFont.Small, TextAnchor.MiddleLeft))
+            using (UI_Scope.Color(isMouseOver ? Color.white : new Color(0.95f, 0.95f, 0.95f)))
+                Widgets.Label(titleRect, GetRewardLabel(reward));
 
             // 稀有度标签（标题右侧）
-            GUI.color = color;
-            Text.Anchor = TextAnchor.MiddleRight;
-            Rect rarityRect = new(titleRect.xMax - 70f, titleRect.y, 65f, titleRect.height);
             string rarityLabel = reward.Rarity switch
             {
                 RewardRarity.Unique => (string)"FamiliaMyth.UI.RarityUnique".Translate(),
@@ -232,9 +225,12 @@ namespace FamiliaMyth.UI
                 RewardRarity.Common => (string)"FamiliaMyth.UI.RarityCommon".Translate(),
                 _ => ""
             };
-            Widgets.Label(rarityRect, rarityLabel);
-            Text.Anchor = TextAnchor.UpperLeft;
-            GUI.color = Color.white;
+            using (UI_Scope.Text(GameFont.Small, TextAnchor.MiddleRight))
+            using (UI_Scope.Color(color))
+            {
+                Rect rarityRect = new(titleRect.xMax - 70f, titleRect.y, 65f, titleRect.height);
+                Widgets.Label(rarityRect, rarityLabel);
+            }
 
             // 描述行
             Rect descRect = new(
@@ -242,11 +238,9 @@ namespace FamiliaMyth.UI
                 cardRect.y + 40f,
                 cardRect.width - CardPadding * 2 - 5f,
                 35f);
-            Text.Font = GameFont.Tiny;
-            GUI.color = new Color(0.65f, 0.65f, 0.65f);
-            Widgets.Label(descRect, reward.Description ?? "");
-            GUI.color = Color.white;
-            Text.Font = GameFont.Small;
+            using (UI_Scope.Text(GameFont.Tiny, TextAnchor.UpperLeft))
+            using (UI_Scope.Color(new Color(0.65f, 0.65f, 0.65f)))
+                Widgets.Label(descRect, reward.Description ?? "");
 
             if (Widgets.ButtonInvisible(cardRect))
             {

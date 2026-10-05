@@ -1,4 +1,5 @@
 using FamiliaMyth.Abilities;
+using FamiliaMyth.UI;
 using UnityEngine;
 using Verse;
 
@@ -34,10 +35,10 @@ namespace FamiliaMyth.Pharna
 
         Color RarityColor => Rarity switch
         {
-            RewardRarity.Common => new Color(0.3f, 0.8f, 0.9f),
-            RewardRarity.Uncommon => new Color(1f, 0.3f, 1f),
-            RewardRarity.Rare => new Color(1f, 0.75f, 0.2f),
-            RewardRarity.Unique => new Color(1f, 0.1f, 0.1f),
+            RewardRarity.Common => UI_Palette.RarityCommon,
+            RewardRarity.Uncommon => UI_Palette.RarityUncommon,
+            RewardRarity.Rare => UI_Palette.RarityRare,
+            RewardRarity.Unique => UI_Palette.RarityUnique,
             _ => Color.white
         };
     }

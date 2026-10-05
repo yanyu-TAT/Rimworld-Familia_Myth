@@ -18,6 +18,7 @@
   <FamiliaMyth.UI.CategoryMaxRank>No higher rank in this category</FamiliaMyth.UI.CategoryMaxRank>
   <FamiliaMyth.UI.CategoryProgress>Progress {0}%</FamiliaMyth.UI.CategoryProgress>
   <FamiliaMyth.UI.MemberBio>Lv.{0}</FamiliaMyth.UI.MemberBio>
+  <FamiliaMyth.UI.JumpToPawnTip>Click to jump</FamiliaMyth.UI.JumpToPawnTip>
 
   <!-- ==================== Stat panel explanation fragments ==================== -->
   <FamiliaMyth.Stat.PharnaExperience>Current experience =\n{0}</FamiliaMyth.Stat.PharnaExperience>

@@ -198,7 +198,7 @@
 ✅ 数值系数是否已抽为 const？来源是否对应设计文档？
 ✅ Harmony 补丁 static + try-catch？原版签名已反编译核对？
 ✅ 一次性资源（Material/RenderTexture/Camera/GameObject）是否已释放？
-✅ 随机选择是否有权重耗尽死循环保护（如 tt>0）？
+✅ 随机选择是否有权重耗尽死循环保护（如 tt>0）？候选集合是否已判空（空集合取随机索引会越界）？
 ✅ Hediff 初始 severity > 0（避免被立即移除）？
 ✅ XML 类名带命名空间前缀？defName 唯一？DLC 依赖是否用 PatchOperationConditional 保护？
 ✅ 无吞异常 / 无只走 happy path？
@@ -228,6 +228,7 @@
 | 12 | 归位/移交与信号窗口错位（`Sent*` 当拍成员仍在容器内）     | 在信号当拍完成归位                                                    |
 | 13 | 派生名单漏列应排除类别（把该留下的对象赶走）            | 逐项列出排除集合并核对成功/失败两线口径                                       |
 | 14 | 补丁 catch 里 `return false` 静默屏蔽原版方法 / 成对 `__state` 未设哨兵值 | Prefix 的 catch 一律 `return true` 放行原版；Prefix 出错时给 `__state` 写哨兵值令 Postfix 短路（见 C-03） |
+| 15 | 随机取样前未校验候选集合非空（空集合取随机索引越界） | 取样前判空，必要时填兜底集合（见 B-04 BUG-026） |
 
 ***
 
@@ -269,8 +270,10 @@
 | **存档级与场地** | `GameComponent_*.cs` | 存档级追踪与引擎（评级 / 使者 / 位移击退 / 定时动作） |
 | | `MapComponent_*.cs` | 地图级状态（恩惠特效管理） |
 | **表现层** | `Mote_*.cs` | 地图特效（咏唱词 / 魔法阵 / 光环 / 斩击等） |
-| | `UI_*.cs` + `HistoryTabHelper.cs` | 眷族页、升级奖励弹窗、雷达图、历史页标签 |
+| | `UI_*.cs` | UI 基础设施与页面：`UI_Palette` 全局色源 / `UI_Scope` GUI 状态作用域 / `UI_Text` 度量与截断 / `UI_Bar` 进度条与门槛刻度 / `UI_Layout` 纵向游标 / `UI_GroupBox` 卡片 / `UI_RadarChart` 雷达图 / `UI_FamiliaPage` 眷族页 |
+| | `Window_FamiliaBase.cs` + `Dialog_AscendReward.cs` | 窗口基类（内容区模板 + 初始尺寸换算）与升华奖励弹窗（符文动画） |
 | | `ITab_Pawn_Pharna.cs` | Pawn 级「恩惠」页签：能力 / 发展能力 / 技能·魔法 / 伟业 四分区（仅受恩惠者可见） |
+| | `HistoryTabHelper.cs` + `Gizmo_ManaPool.cs` | 历史窗口眷族页签接入（含失效兜底）与魔力池 Gizmo |
 | **工具与基础设施** | `WeaponHelper.cs` | 武器查询与直线索敌 / 射线工具 |
 | | `HealHelper.cs` | 伤口与断肢治疗工具 |
 | | `FamiliaMythMod.cs` | 模组主类，包含开发日志和计划 |

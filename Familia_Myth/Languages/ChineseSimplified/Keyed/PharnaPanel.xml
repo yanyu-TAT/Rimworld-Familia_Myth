@@ -7,19 +7,25 @@
   <FamiliaMyth.TabPharna>恩惠</FamiliaMyth.TabPharna>
 
   <!-- 分区标题 -->
-  <FamiliaMyth.Panel.SectionAbility>能力</FamiliaMyth.Panel.SectionAbility>
+  <FamiliaMyth.Panel.SectionAbility>基础能力值</FamiliaMyth.Panel.SectionAbility>
   <FamiliaMyth.Panel.SectionDevelopable>发展能力</FamiliaMyth.Panel.SectionDevelopable>
   <FamiliaMyth.Panel.SectionSkills>技能</FamiliaMyth.Panel.SectionSkills>
   <FamiliaMyth.Panel.SectionSpells>魔法</FamiliaMyth.Panel.SectionSpells>
   <FamiliaMyth.Panel.SectionFeats>伟业</FamiliaMyth.Panel.SectionFeats>
   <FamiliaMyth.Panel.Empty>暂无</FamiliaMyth.Panel.Empty>
 
-  <!-- 能力区抬头：{0}=恩惠等级 {1}=经验值 -->
-  <FamiliaMyth.Panel.Header>Lv.{0}　经验 {1}</FamiliaMyth.Panel.Header>
-  <!-- 能力行数值：{0}=等级标签 {1}=当前值 {2}=上限 -->
-  <FamiliaMyth.Panel.StatusNumber>{0} {1} / {2}</FamiliaMyth.Panel.StatusNumber>
+  <!-- 能力区抬头：{0}=角色全名 {1}=恩惠等级 {2}=经验值 -->
+  <FamiliaMyth.Panel.Header>{0}　Lv.{1}　经验 {2}</FamiliaMyth.Panel.Header>
+  <!-- 能力行评级：{0}=等级标签 -->
+  <FamiliaMyth.Panel.StatusRank>{0}</FamiliaMyth.Panel.StatusRank>
+  <!-- 能力行数值：{0}=当前值 {1}=上限 -->
+  <FamiliaMyth.Panel.StatusValue>{0} / {1}</FamiliaMyth.Panel.StatusValue>
   <!-- 潜在值：{0}=带符号数值 -->
   <FamiliaMyth.Panel.Potential>潜在 {0}</FamiliaMyth.Panel.Potential>
+  <!-- 六维行 tooltip：{0}=当前值 {1}=潜在值 {2}=总计 -->
+  <FamiliaMyth.Panel.StatusTooltip>当前 {0}　潜在 {1}　总计 {2}</FamiliaMyth.Panel.StatusTooltip>
+  <!-- 六维行 tooltip：{0}=成长效率百分比（已在代码侧格式化） -->
+  <FamiliaMyth.Panel.GrowthEfficiency>成长效率 {0}</FamiliaMyth.Panel.GrowthEfficiency>
 
   <!-- 发展能力熟练度：{0}=当前熟练度 {1}=熟练度上限 -->
   <FamiliaMyth.Panel.DevelopableProficiency>熟练度 {0} / {1}</FamiliaMyth.Panel.DevelopableProficiency>

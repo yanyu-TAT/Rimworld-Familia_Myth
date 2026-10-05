@@ -24,6 +24,9 @@ namespace FamiliaMyth.Pharna
         private const float TotalStatDecayThreshold = 2000f;
         private const float TotalStatDecayScale = 2500f;
 
+        //升华条件：六维任一项达到该值
+        public const float AscendStatusThreshold = 500f;
+
         //魔力转化：每秒投入的精神力
         private const float PsyfocusPerSecond = 0.0025f;
         //魔力转化：每1%精神力折算的魔力
@@ -158,6 +161,21 @@ namespace FamiliaMyth.Pharna
             };
         }
 
+        //历次升华保留的潜在值
+        public float GetPotential(PharnaStatusType type)
+        {
+            return type switch
+            {
+                PharnaStatusType.Strength => strengthPotential,
+                PharnaStatusType.Endurance => endurancePotential,
+                PharnaStatusType.Dexterity => dexterityPotential,
+                PharnaStatusType.Agility => agilityPotential,
+                PharnaStatusType.Mana => manaPotential,
+                PharnaStatusType.Will => willPotential,
+                _ => 0f
+            };
+        }
+
         public static string GetStatusName(PharnaStatusType type)
         {
             return type switch
@@ -233,7 +251,7 @@ namespace FamiliaMyth.Pharna
             for (int i = 0; i < 6; i++)
             {
                 PharnaStatusType type = (PharnaStatusType)i;
-                status = status || GetCurrentStatus(type) >= 500;
+                status = status || GetCurrentStatus(type) >= AscendStatusThreshold;
             }
             if (!status || AvailableFeat() == null)
                 return "FamiliaMyth.NotMeetAscendRequirementRefusion".Translate();

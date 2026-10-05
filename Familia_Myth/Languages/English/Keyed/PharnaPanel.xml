@@ -7,19 +7,25 @@
   <FamiliaMyth.TabPharna>Pharna</FamiliaMyth.TabPharna>
 
   <!-- Section titles -->
-  <FamiliaMyth.Panel.SectionAbility>Ability</FamiliaMyth.Panel.SectionAbility>
+  <FamiliaMyth.Panel.SectionAbility>Base Status</FamiliaMyth.Panel.SectionAbility>
   <FamiliaMyth.Panel.SectionDevelopable>Developable Ability</FamiliaMyth.Panel.SectionDevelopable>
   <FamiliaMyth.Panel.SectionSkills>Skills</FamiliaMyth.Panel.SectionSkills>
   <FamiliaMyth.Panel.SectionSpells>Spells</FamiliaMyth.Panel.SectionSpells>
   <FamiliaMyth.Panel.SectionFeats>Feats</FamiliaMyth.Panel.SectionFeats>
   <FamiliaMyth.Panel.Empty>None</FamiliaMyth.Panel.Empty>
 
-  <!-- Ability header: {0}=Pharna level {1}=experience -->
-  <FamiliaMyth.Panel.Header>Lv.{0}　Experience {1}</FamiliaMyth.Panel.Header>
-  <!-- Ability row: {0}=rank label {1}=current {2}=cap -->
-  <FamiliaMyth.Panel.StatusNumber>{0} {1} / {2}</FamiliaMyth.Panel.StatusNumber>
+  <!-- Ability header: {0}=full name {1}=Pharna level {2}=experience -->
+  <FamiliaMyth.Panel.Header>{0}　Lv.{1}　Experience {2}</FamiliaMyth.Panel.Header>
+  <!-- Ability row rank: {0}=rank label -->
+  <FamiliaMyth.Panel.StatusRank>{0}</FamiliaMyth.Panel.StatusRank>
+  <!-- Ability row value: {0}=current {1}=cap -->
+  <FamiliaMyth.Panel.StatusValue>{0} / {1}</FamiliaMyth.Panel.StatusValue>
   <!-- Potential: {0}=signed value -->
   <FamiliaMyth.Panel.Potential>Potential {0}</FamiliaMyth.Panel.Potential>
+  <!-- Status row tooltip: {0}=current {1}=potential {2}=total -->
+  <FamiliaMyth.Panel.StatusTooltip>Current {0}　Potential {1}　Total {2}</FamiliaMyth.Panel.StatusTooltip>
+  <!-- Status row tooltip: {0}=growth efficiency percent (formatted in code) -->
+  <FamiliaMyth.Panel.GrowthEfficiency>Growth efficiency {0}</FamiliaMyth.Panel.GrowthEfficiency>
 
   <!-- Developable ability proficiency: {0}=current {1}=cap -->
   <FamiliaMyth.Panel.DevelopableProficiency>Proficiency {0} / {1}</FamiliaMyth.Panel.DevelopableProficiency>

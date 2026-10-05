@@ -16,16 +16,50 @@ namespace FamiliaMyth.UI
         private static readonly FieldInfo tabsField =
             AccessTools.Field(typeof(MainTabWindow_History), "tabs");
 
+        //原版字段缺失或哨兵值被占用时停用自建页签，回退原版历史页
+        public static readonly bool Usable = ResolveUsable();
+
+        private static bool ResolveUsable()
+        {
+            if (curTabField == null || tabsField == null)
+            {
+                Log.Error($"[FamiliaMyth] {nameof(HistoryTabHelper)}: 历史窗口字段缺失，眷族页签停用");
+                return false;
+            }
+
+            try
+            {
+                if (Enum.IsDefined(curTabField.FieldType, Sentinel))
+                {
+                    Log.Error($"[FamiliaMyth] {nameof(HistoryTabHelper)}: 历史页签枚举已占用 {Sentinel}，眷族页签停用");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"[FamiliaMyth] {nameof(HistoryTabHelper)}: 页签类型校验失败，眷族页签停用：{ex}");
+                return false;
+            }
+
+            return true;
+        }
+
         public static bool IsFamiliaTabActive()
         {
+            if (!Usable)
+                return false;
+
             object obj = curTabField.GetValue(null);
             return obj != null && (byte)Convert.ToInt32(obj) == Sentinel;
         }
 
         public static void SelectFamilia()
         {
+            if (!Usable)
+                return;
+
             object obj = Enum.ToObject(curTabField.FieldType, Sentinel);
-            curTabField?.SetValue(null, obj);
+            curTabField.SetValue(null, obj);
         }
 
         public static List<TabRecord> GetTabs(MainTabWindow_History window) =>
@@ -42,6 +76,8 @@ namespace FamiliaMyth.Patch
         {
             try
             {
+                if (!HistoryTabHelper.Usable) return;
+
                 var tabs = HistoryTabHelper.GetTabs(__instance);
                 string familiaTabLabel = "FamiliaMyth.UI.FamiliaTab".Translate();
                 if (tabs.Any(t => t.label == familiaTabLabel)) return;
@@ -64,6 +100,7 @@ namespace FamiliaMyth.Patch
         {
             try
             {
+                if (!HistoryTabHelper.Usable) return true;
                 if (!HistoryTabHelper.IsFamiliaTabActive()) return true;
 
                 var r = rect;
