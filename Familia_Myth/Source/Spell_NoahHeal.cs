@@ -1,4 +1,4 @@
-﻿using Verse;
+using Verse;
 
 namespace FamiliaMyth.Abilities
 {
@@ -24,11 +24,12 @@ namespace FamiliaMyth.Abilities
             var targetPawn = target;
             if (caster == null || targetPawn == null) return;
 
-            targetPawn.TendInjuries();
-            targetPawn.HealInjuries(10f);
+            targetPawn.TendInjuries(null, 1f, caster);
+            targetPawn.HealInjuries(10f, caster);
 
-            // 添加愈合加速光环
-            targetPawn.health.AddHediff(HediffDef);
+            // 添加愈合加速光环；其伟业贡献由 HediffComp_FeatSupport 按实际生效时间累计
+            var aura = targetPawn.health.AddHediff(HediffDef);
+            aura?.TryGetComp<HediffComp_FeatSupport>()?.SetCaster(caster);
         }
     }
 }

@@ -12,6 +12,9 @@
 				<disappearsAfterTicks>6000</disappearsAfterTicks>
 				<showRemainingTime>true</showRemainingTime>
 			</li>
+			<li Class="FamiliaMyth.Abilities.HediffCompProperties_FeatSupport">
+				<supportPerSecond>1.0</supportPerSecond>
+			</li>
 		</comps>
 		<stages>
 			<li>

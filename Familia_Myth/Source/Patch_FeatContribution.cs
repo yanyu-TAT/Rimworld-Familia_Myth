@@ -1,4 +1,4 @@
-﻿using FamiliaMyth.Feat;
+using FamiliaMyth.Feat;
 using HarmonyLib;
 using Verse;
 
@@ -18,6 +18,8 @@ namespace FamiliaMyth.Patch
                 if (dinfo.Instigator is Pawn attacker && attacker != __instance)
                     tracker.RecordDealt(attacker, __instance, totalDamageDealt);
                 tracker.RecordTaken(__instance, dinfo.Instigator as Pawn, totalDamageDealt);
+                //敌方一侧的受损（分摊分母），不分伤害来源
+                tracker.RecordEnemyDamage(__instance, totalDamageDealt);
             }
             catch (Exception ex)
             {

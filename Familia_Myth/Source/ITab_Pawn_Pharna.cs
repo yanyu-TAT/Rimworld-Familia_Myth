@@ -18,7 +18,7 @@ namespace FamiliaMyth.UI
         private const float RowHeight = 28f;
         private const float SmallCardH = 26f;
         private const float SmallCardGap = 2f;
-        private const float FeatCardH = 58f;
+        private const float FeatCardH = 74f;
         private const float FeatCardGap = 4f;
 
         //能力行四段宽度：名称 / 评级 / 数值
@@ -318,7 +318,8 @@ namespace FamiliaMyth.UI
             }
         }
 
-        //伟业卡：未使用 = 原底 + 亮色条；已使用 = 档位色淡填充 + 半透明色条
+        //伟业卡三行：档位·性质 / 战斗名 / 时间·地点；分数明细在 tooltip
+        //未使用 = 原底 + 亮色条；已使用 = 档位色淡填充 + 半透明色条
         private static void DrawFeatCard(Rect r, FeatRecord record)
         {
             Color tierColor = UI_Palette.TierColorOf(record.tier);
@@ -332,19 +333,42 @@ namespace FamiliaMyth.UI
             string traits = record.featTraits.NullOrEmpty()
                 ? "-"
                 : string.Join(" × ", record.featTraits.Where(t => t != null).Select(t => t.label));
+            string battle = record.battleName.NullOrEmpty()
+                ? "FamiliaMyth.FeatUnknownBattle".Translate()
+                : record.battleName;
+
+            float textX = r.x + 10f;
+            float textW = r.width - 16f;
 
             using (UI_Scope.Color(tierColor))
-                Widgets.Label(new Rect(r.x + 10f, r.y + 4f, r.width - 16f, 22f),
+                Widgets.Label(new Rect(textX, r.y + 4f, textW, 22f),
                     "FamiliaMyth.Panel.FeatTitle".Translate(record.tier, traits));
 
             using (UI_Scope.Color(UI_Palette.TextNormal))
-                Widgets.Label(new Rect(r.x + 10f, r.y + 28f, r.width - 16f, 22f),
-                    "FamiliaMyth.Panel.FeatScore".Translate(
-                        record.battleMagnitude.ToString("F0"), record.share.ToStringPercent()));
+                Widgets.Label(new Rect(textX, r.y + 26f, textW, 22f),
+                    UI_Text.Truncate(battle, textW, GameFont.Small));
 
-            TooltipHandler.TipRegion(r, () => "FamiliaMyth.Panel.FeatWhen".Translate(
-                GenDate.DateFullStringAt(record.tick, Vector2.zero), DescribeTile(record.tileId)),
+            using (UI_Scope.Color(UI_Palette.TextValue))
+                Widgets.Label(new Rect(textX, r.y + 48f, textW, 22f),
+                    "FamiliaMyth.Panel.FeatWhen".Translate(
+                        GenDate.DateFullStringAt(record.tick, Vector2.zero), DescribeTile(record.tileId)));
+
+            TooltipHandler.TipRegion(r, () => FeatScoreTooltip(record),
                 Gen.HashCombineInt(record.GetHashCode(), 197306));
+        }
+
+        //tooltip：战斗总得分 / 个人贡献与个人得分 / 各性质系数
+        private static string FeatScoreTooltip(FeatRecord record)
+        {
+            string score = "FamiliaMyth.Panel.FeatScore".Translate(record.battleMagnitude.ToString("F0"));
+            string share = "FamiliaMyth.Panel.FeatShare".Translate(
+                record.share.ToStringPercent(), (record.battleMagnitude * record.share).ToString("F0"));
+            if (record.featTraits.NullOrEmpty()) return $"{score}\n{share}";
+
+            string traits = string.Join(" · ", record.featTraits
+                .Where(t => t != null)
+                .Select(t => $"{t.label} ×{t.multiplier.ToString("F1")}"));
+            return $"{score}\n{share}\n{traits}";
         }
 
         //地点：取该地块的主要生物群系名；无效或越界地块返回占位符

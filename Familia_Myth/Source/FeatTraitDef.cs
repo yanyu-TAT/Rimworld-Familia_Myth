@@ -18,9 +18,9 @@ namespace FamiliaMyth.Feat
 
         // ── 贡献路径权重：每条路径独立系数，累加得个人贡献 ──
         // 各路径量纲不同（造成伤害 / 承受伤害 / 治疗辅助），系数同时承担"权重"与"单位换算"
-        private const float DamageWeight = 1f;    // 造成伤害
-        private const float TakenWeight = 0.5f;   // 承受伤害（扛线）
-        private const float SupportWeight = 1f;   // 治疗 / buff / debuff
+        public const float DamageWeight = 1f;    // 造成伤害
+        public const float TakenWeight = 0.5f;   // 承受伤害（扛线）
+        public const float SupportWeight = 1f;   // 治疗 / buff / debuff
 
         public FeatContext(Battle battle, Map map, string battleId,
             List<Pawn> enemies, List<Pawn> friendlies,
@@ -78,28 +78,54 @@ namespace FamiliaMyth.Feat
             return count;
         }
 
-        // 个人贡献 = 造成的伤害 + 治疗/buff 自报贡献折算
+        // 个人贡献 = 输出 + 承伤折算 + 支援
         public float ContributionOf(Pawn pawn)
         {
-            if (pawn == null || contributions == null) return 0f;
+            ContributionEntry entry = EntryOf(pawn);
+            if (entry == null) return 0f;
+            return entry.dealt * DamageWeight
+                 + entry.taken * TakenWeight
+                 + entry.support * SupportWeight;
+        }
+
+        // 分摊分母：敌方承受的全部伤害 + 我方承伤折算 + 我方支援
+        // 我方 Pawn 打出的伤害已计入敌方受损，此处分母不再重复计入 dealt
+        public float TotalContribution()
+        {
+            float sum = EnemyDamageTotal() * DamageWeight;
+            if (friendlies == null) return sum;
+            for (int i = 0; i < friendlies.Count; i++)
+            {
+                ContributionEntry entry = EntryOf(friendlies[i]);
+                if (entry == null) continue;
+                sum += entry.taken * TakenWeight
+                     + entry.support * SupportWeight;
+            }
+            return sum;
+        }
+
+        // 敌方承受的总伤害（不分来源：我方、炮塔、商队、环境均计入）
+        public float EnemyDamageTotal()
+        {
+            float sum = 0f;
+            if (enemies == null) return sum;
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                ContributionEntry entry = EntryOf(enemies[i]);
+                if (entry != null) sum += entry.enemyTaken;
+            }
+            return sum;
+        }
+
+        internal ContributionEntry EntryOf(Pawn pawn)
+        {
+            if (pawn == null || contributions == null) return null;
             for (int i = 0; i < contributions.Count; i++)
             {
                 ContributionEntry entry = contributions[i];
-                if (entry == null || entry.pawn != pawn || entry.battleId != battleId) continue;
-                return entry.dealt * DamageWeight
-                     + entry.taken * TakenWeight
-                     + entry.support * SupportWeight;
+                if (entry != null && entry.pawn == pawn && entry.battleId == battleId) return entry;
             }
-            return 0f;
-        }
-
-        // 我方参战者的贡献合计（分母含无恩惠者）
-        public float TotalContribution()
-        {
-            float sum = 0f;
-            if (friendlies == null) return sum;
-            for (int i = 0; i < friendlies.Count; i++) sum += ContributionOf(friendlies[i]);
-            return sum;
+            return null;
         }
     }
 
@@ -156,6 +182,7 @@ namespace FamiliaMyth.Feat
         public int tier;                  //档位
         public float share;               //个人贡献占比
         public float battleMagnitude;     //战斗层面总分
+        public string battleName;         //战斗名（结算时快照）
         public int tick;                  //发生时点（TicksAbs）
         public int tileId = -1;           //发生地点（PlanetTile.tileId）
         public int usedForLevel = -1;     //已用于哪一级升华；-1表示未使用
@@ -166,6 +193,7 @@ namespace FamiliaMyth.Feat
             Scribe_Values.Look(ref tier, "tier", 0);
             Scribe_Values.Look(ref share, "share", 0f);
             Scribe_Values.Look(ref battleMagnitude, "battleMagnitude", 0f);
+            Scribe_Values.Look(ref battleName, "battleName");
             Scribe_Values.Look(ref tick, "tick", 0);
             Scribe_Values.Look(ref tileId, "tileId", -1);
             Scribe_Values.Look(ref usedForLevel, "usedForLevel", -1);

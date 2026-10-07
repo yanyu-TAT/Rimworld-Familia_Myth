@@ -140,15 +140,15 @@ namespace FamiliaMyth.Abilities
 
             foreach (var p in pawns)
             {
-                p.RestoreParts(2);
-                p.TendInjuries(5);
+                p.RestoreParts(2, pawn);
+                p.TendInjuries(5, 1f, pawn);
             }
 
             float budget = healBudget;
             Log.Message($"Trying To Heal {pawns.Count} Targets With Budget: {budget}");
             foreach (var p in pawns)
             {
-                budget = p.HealInjuries(budget);
+                budget = p.HealInjuries(budget, pawn);
                 if (budget <= 0) break;
             }
             Log.Message($"Heal Done. Budget Left: {budget}");
@@ -158,6 +158,8 @@ namespace FamiliaMyth.Abilities
                 var hediff = p.health.GetOrAddHediff(HediffDef);
                 var timer = hediff.TryGetComp<HediffComp_Disappears>();
                 timer?.SetDuration(HediffDuationTicks);
+                //疼痛抑制的伟业贡献由 HediffComp_FeatSupport 按实际生效时间累计
+                hediff?.TryGetComp<HediffComp_FeatSupport>()?.SetCaster(pawn);
             }
 
             circleHealCooldown = HealIntervalTicks;

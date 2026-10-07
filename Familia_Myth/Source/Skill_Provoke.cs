@@ -1,4 +1,4 @@
-﻿using Verse;
+using Verse;
 
 namespace FamiliaMyth.Abilities
 {
@@ -43,6 +43,8 @@ namespace FamiliaMyth.Abilities
             else
                 return false;
             Owner.health.AddHediff(hediff);
+            //效果挂在自己身上、作用于敌人，贡献由组件按实际生效时间累计
+            hediff.TryGetComp<HediffComp_FeatSupport>()?.SetCaster(Owner);
             return true;
         }
 

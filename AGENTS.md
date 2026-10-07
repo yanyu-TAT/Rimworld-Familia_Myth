@@ -263,6 +263,7 @@
 | | `FeatUtility.cs` | 结算流水线：取战斗事实 → 逐 Def 判定性质 → 系数累乘 → 按贡献分摊 → 阈值分割档位 |
 | | `GameComponent_FeatTracker.cs` | 战斗扫描器：合并归属修正、结算去重、贡献表与清理 |
 | | `Patch_FeatContribution.cs` | 伤害归因补丁（`Pawn.PostApplyDamage` 记输出 / 承受） |
+| | `HealHelper.cs`（治疗工具） + `HediffComp_FeatSupport.cs` | 支援贡献上报：治疗三工具按真实量记（末位 `healer` 参数归因），持续型效果由 Hediff 组件按实际生效 tick 记（XML 配 `<supportPerSecond>`） |
 | | `Defs/FeatTraitDefs/` | 伟业性质定义（`<judgerClass>` 指向判定器） |
 | **仪式与文化** | `Ritual*.cs`（含 `RitualRoleColonist_*` / `RitualCandidateUtility`） | 给予 / 升华恩惠仪式及其接受者校验 |
 | | `Defs/PreceptDefs/` + `Defs/RitualBehaviorDefs/` + `Defs/RitualOutcomeEffectDefs/` + `Defs/RitualPatternDefs/` | 仪式的 Precept、行为、结果与图案定义 |

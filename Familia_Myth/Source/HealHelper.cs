@@ -1,4 +1,5 @@
-﻿using RimWorld;
+using FamiliaMyth.Feat;
+using RimWorld;
 using Verse;
 
 namespace FamiliaMyth.Abilities
@@ -10,7 +11,8 @@ namespace FamiliaMyth.Abilities
         /// 恢复器官
         /// </summary>
         /// <param name="cnt">恢复个数，默认全部恢复</param>
-        public static void RestoreParts(this Pawn pawn, int? cnt = null)
+        /// <param name="healer">受益归属者；缺省或与被治疗者相同则不计伟业贡献</param>
+        public static void RestoreParts(this Pawn pawn, int? cnt = null, Pawn healer = null)
         {
             if (pawn?.health == null)
                 return;
@@ -23,6 +25,7 @@ namespace FamiliaMyth.Abilities
                 .Where(mp => !missingParts.Any(other => other != mp && IsAncestorOf(other.Part, mp.Part)))
                 .ToList();
 
+            float restored = 0f;
             foreach (var mp in partsToRestore)
             {
                 if (cnt.HasValue)
@@ -37,6 +40,7 @@ namespace FamiliaMyth.Abilities
                     continue;
 
                 pawn.health.RestorePart(part, checkStateChange: false);
+                restored += part.def.GetMaxHealth(pawn);
                 //Log.Message($"[FamiliaMyth] {Pawn.Name} restored part {part.Label}");
                 var injury = (Hediff_Injury)HediffMaker.MakeHediff(HediffDefOf.Cut, pawn, part);
                 float maxHp = part.def.GetMaxHealth(pawn);
@@ -44,6 +48,7 @@ namespace FamiliaMyth.Abilities
                 pawn.health.AddHediff(injury, part);
             }
 
+            ReportSupport(pawn, healer, restored * FeatUtility.RestoreWeight);
             pawn.health.CheckForStateChange(null, null);
         }
 
@@ -64,8 +69,9 @@ namespace FamiliaMyth.Abilities
         /// <summary>
         /// 治疗伤势
         /// </summary>
+        /// <param name="healer">受益归属者；缺省或与被治疗者相同则不计伟业贡献</param>
         /// <returns>未使用的治疗量</returns>
-        public static float HealInjuries(this Pawn pawn, float budget, Func<Hediff_Injury, bool> validator)
+        public static float HealInjuries(this Pawn pawn, float budget, Func<Hediff_Injury, bool> validator, Pawn healer = null)
         {
             if (pawn?.health?.hediffSet?.hediffs == null) return budget;
 
@@ -75,37 +81,43 @@ namespace FamiliaMyth.Abilities
                 .Where(validator)
                 .OrderByDescending(i => i.Severity);
 
+            float healed = 0f;
             foreach (var item in injuries)
             {
                 if (budget <= 0f) break;
                 float heal = Math.Min(item.Severity, budget);
                 item.Heal(heal);
                 budget -= heal;
+                healed += heal;
             }
 
+            ReportSupport(pawn, healer, healed * FeatUtility.HealWeight);
             return budget;
         }
 
         /// <summary>
         /// 治疗伤势
         /// </summary>
+        /// <param name="healer">受益归属者；缺省或与被治疗者相同则不计伟业贡献</param>
         /// <returns>未使用的治疗量</returns>
-        public static float HealInjuries(this Pawn pawn, float budget)
+        public static float HealInjuries(this Pawn pawn, float budget, Pawn healer = null)
         {
-            return pawn.HealInjuries(budget, h => true);
+            return pawn.HealInjuries(budget, h => true, healer);
         }
 
         /// <summary>
         /// 包扎伤口
         /// </summary>
         /// <param name="cnt">包扎伤口数，默认全部包扎</param>
-        public static void TendInjuries(this Pawn pawn, int? cnt = null, float quality = 1f)
+        /// <param name="healer">受益归属者；缺省或与被治疗者相同则不计伟业贡献</param>
+        public static void TendInjuries(this Pawn pawn, int? cnt = null, float quality = 1f, Pawn healer = null)
         {
             //按伤势降序
             var injuries = pawn.health.hediffSet.hediffs
                 .OfType<Hediff_Injury>()
                 .OrderByDescending(i => i.Severity);
 
+            float tended = 0f;
             foreach (var injury in injuries)
             {
                 if (cnt.HasValue)
@@ -114,8 +126,18 @@ namespace FamiliaMyth.Abilities
                     cnt--;
                 }
                 var tendComp = injury.TryGetComp<HediffComp_TendDuration>();
-                tendComp?.CompTended(quality, quality);
+                if (tendComp == null) continue;
+                tendComp.CompTended(quality, quality);
+                tended += injury.Severity;
             }
+
+            ReportSupport(pawn, healer, tended * FeatUtility.TendWeight);
+        }
+
+        private static void ReportSupport(Pawn target, Pawn healer, float points)
+        {
+            if (healer == null || healer == target || points <= 0f) return;
+            GameComponent_FeatTracker.Instance?.RecordSupport(healer, points);
         }
     }
 }

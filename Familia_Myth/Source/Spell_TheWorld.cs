@@ -1,3 +1,4 @@
+using FamiliaMyth.Feat;
 using FamiliaMyth.Pharna;
 using RimWorld;
 using UnityEngine;
@@ -60,6 +61,8 @@ namespace FamiliaMyth.Abilities
             if (!castDone || pawn?.Map == null || !pawn.Spawned || pawn.DeadOrDowned) return;
             totalTicks = (int)(BasicDurationTicks * GetCurrentManaControl());
             remainingTicks = totalTicks;
+            //时停无 Hediff 载体，按生效时长计入支援贡献
+            GameComponent_FeatTracker.Instance?.RecordSupport(pawn, totalTicks / 60f * FeatUtility.ControlPerSecond);
             fieldCenter = pawn.Position;
             Fields[pawn] = pawn.Position;
             

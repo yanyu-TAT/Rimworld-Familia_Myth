@@ -1,4 +1,5 @@
-﻿using RimWorld;
+using FamiliaMyth.Feat;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -115,6 +116,7 @@ namespace FamiliaMyth.Abilities
             int stunTicks = (int)(((Spell_LightGuard)spell).RemainingTicks * StunTicksMultiplier);
             if (stunTicks <= 0 || Map == null || launcher == null) return;
 
+            int stunned = 0;
             foreach (var cell in GenRadial.RadialCellsAround(Position, StunRadius, true))
             {
                 if (!cell.InBounds(Map)) continue;
@@ -123,9 +125,15 @@ namespace FamiliaMyth.Abilities
                     if (thing is Pawn pawn && pawn.HostileTo(launcher.Faction))
                     {
                         pawn.stances.stunner.StunFor(stunTicks, launcher);
+                        stunned++;
                     }
                 }
             }
+
+            //眩晕无 Hediff 载体，按命中人数与眩晕时长计入支援贡献
+            if (stunned > 0 && spell?.pawn != null)
+                GameComponent_FeatTracker.Instance?.RecordSupport(
+                    spell.pawn, stunned * (stunTicks / 60f) * FeatUtility.ControlPerSecond);
 
             //特效
             MoteThrown mote = (MoteThrown)ThingMaker.MakeThing(ThingDef.Named("MagicMissileBurst"));

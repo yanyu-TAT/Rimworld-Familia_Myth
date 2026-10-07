@@ -30,10 +30,14 @@
   <!-- Developable ability proficiency: {0}=current {1}=cap -->
   <FamiliaMyth.Panel.DevelopableProficiency>Proficiency {0} / {1}</FamiliaMyth.Panel.DevelopableProficiency>
 
-  <!-- Feat card lines: {0}=tier {1}=traits {2}=battle score {3}=personal share {4}=time {5}=location -->
+  <!-- Feat card lines: {0}=tier {1}=traits; the name line shows the recorded battle name -->
   <FamiliaMyth.Panel.FeatTitle>Tier {0} · {1}</FamiliaMyth.Panel.FeatTitle>
-  <FamiliaMyth.Panel.FeatScore>Battle score {0}　Personal share {1}</FamiliaMyth.Panel.FeatScore>
   <FamiliaMyth.Panel.FeatWhen>{0} · {1}</FamiliaMyth.Panel.FeatWhen>
   <FamiliaMyth.FeatUnknownPlace>Unknown location</FamiliaMyth.FeatUnknownPlace>
+  <FamiliaMyth.FeatUnknownBattle>Unknown battle</FamiliaMyth.FeatUnknownBattle>
+
+  <!-- Feat tooltip: {0}=battle score; share line {0}=personal share {1}=personal score -->
+  <FamiliaMyth.Panel.FeatScore>Battle score {0}</FamiliaMyth.Panel.FeatScore>
+  <FamiliaMyth.Panel.FeatShare>Personal share {0}　Personal score {1}</FamiliaMyth.Panel.FeatShare>
 
 </LanguageData>

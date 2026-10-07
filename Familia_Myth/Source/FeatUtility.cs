@@ -1,3 +1,4 @@
+using System.Text;
 using FamiliaMyth.Pharna;
 using RimWorld;
 using Verse;
@@ -6,6 +7,13 @@ namespace FamiliaMyth.Feat
 {
     public static class FeatUtility
     {
+        //治疗路径折算：治愈按实际恢复量 1:1；包扎与恢复部位为间接收益，取 0.3
+        public const float HealWeight = 1f;
+        public const float TendWeight = 0.3f;
+        public const float RestoreWeight = 0.3f;
+        //无 Hediff 载体的控制效果（时停 / 眩晕）每秒折算的贡献点数
+        public const float ControlPerSecond = 1f;
+
         //9档阈值表
         public static readonly float[] TierThresholds =
         {
@@ -117,7 +125,8 @@ namespace FamiliaMyth.Feat
                 battleMagnitude *= judger.Multiplier(ctx);
             }
 
-            Log.Message($"Resolve Done, Result: {battleMagnitude:F3}");
+            string battleName = SafeBattleName(battle);
+            LogResolveReport(ctx, battleName, participants, traits, battleMagnitude, totalContribution);
             if (battleMagnitude <= 0f) return;
 
             //战斗地图：优先取参战者所在地图（任务站点/临时地图），回落到调用方传入的 map
@@ -141,7 +150,6 @@ namespace FamiliaMyth.Feat
                 float score = battleMagnitude * share;
 
                 int tier = TierOf(score);
-                Log.Message($"Feat Recorded For {p.Name.ToStringShort}: score:{score},tier:{tier}");
                 if (tier == 0) continue;
 
                 pharna.feats.Add(new FeatRecord
@@ -150,9 +158,83 @@ namespace FamiliaMyth.Feat
                     tier = tier,
                     share = share,
                     battleMagnitude = battleMagnitude,
+                    battleName = battleName,
                     tick = now,
                     tileId = tileId
                 });
+            }
+        }
+
+        //结算报告：输出战斗事实、性质判定与逐人贡献明细，便于核对数值
+        private static void LogResolveReport(FeatContext ctx, string battleName, List<Pawn> participants,
+            List<FeatTraitDef> traits, float battleMagnitude, float totalContribution)
+        {
+            float threat = ctx.Threat();
+            float multiplier = threat > 0f ? battleMagnitude / threat : 1f;
+            string traitText = traits.NullOrEmpty()
+                ? "无"
+                : string.Join("、", traits.Where(t => t != null).Select(t => $"{t.label}×{t.multiplier:F2}"));
+
+            float dealtSum = 0f;
+            float takenSum = 0f;
+            float supportSum = 0f;
+            for (int i = 0; i < ctx.friendlies.Count; i++)
+            {
+                ContributionEntry sum = ctx.EntryOf(ctx.friendlies[i]);
+                if (sum == null) continue;
+                dealtSum += sum.dealt;
+                takenSum += sum.taken;
+                supportSum += sum.support;
+            }
+
+            StringBuilder sb = new();
+            sb.AppendLine($"[FamiliaMyth] 战斗结算：{battleName ?? "未知战斗"}");
+            sb.AppendLine($"  战斗事实：敌方 {ctx.enemies.Count} 人｜战力合计 {threat:F1}｜最强单体 {ctx.MaxCombatPower():F1}｜已倒下或阵亡 {ctx.DefeatedCount()}"
+                + $"；我方 {ctx.friendlies.Count} 人｜倒地 {ctx.DownedCount()}｜受恩惠参与者 {participants.Count}");
+            sb.AppendLine($"  性质判定：{traitText} → 战斗总得分 {battleMagnitude:F1}（敌方战力 {threat:F1} × 性质系数 {multiplier:F2}）");
+            float enemyDamage = ctx.EnemyDamageTotal();
+            sb.AppendLine($"  总贡献：{totalContribution:F1} 总输出： {enemyDamage}");
+            sb.AppendLine($"  贡献明细（输出｜承伤×{FeatContext.TakenWeight:F1}｜支援 → 合计｜占比｜个人得分｜档位）：");
+
+            for (int i = 0; i < ctx.friendlies.Count; i++)
+            {
+                Pawn pawn = ctx.friendlies[i];
+                if (pawn == null) continue;
+
+                ContributionEntry entry = ctx.EntryOf(pawn);
+                float dealt = entry?.dealt ?? 0f;
+                float taken = entry?.taken ?? 0f;
+                float support = entry?.support ?? 0f;
+                float total = ctx.ContributionOf(pawn);
+                float share = totalContribution > 0f ? total / totalContribution : 0f;
+
+                bool rewarded = participants.Contains(pawn);
+                float score = battleMagnitude * share;
+                int tier = TierOf(score);
+                string reward = rewarded
+                    ? $"｜{score:F1}｜{(tier > 0 ? $"{tier} 级" : "未达档位")}"
+                    : "";
+
+                sb.AppendLine($"    {(rewarded ? "[恩惠]" : "[    ]")} {pawn.Name.ToStringShort}（{pawn.KindLabel}）："
+                    + $"{dealt:F1}｜{taken * FeatContext.TakenWeight:F1}｜{support:F1}"
+                    + $" → {total:F1}｜{share.ToStringPercent()}{reward}");
+            }
+
+            Log.Message(sb.ToString());
+        }
+
+        //原版战斗名是按需生成、且会被新日志清空的缓存，结算时取一次快照
+        private static string SafeBattleName(Battle battle)
+        {
+            try
+            {
+                string name = battle.GetName();
+                return name.NullOrEmpty() ? null : name;
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"[FamiliaMyth] Failed To Get Battle Name: {ex}");
+                return null;
             }
         }
     }

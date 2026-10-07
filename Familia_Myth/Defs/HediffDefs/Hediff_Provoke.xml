@@ -17,6 +17,11 @@
         <disappearsAfterTicks>7200</disappearsAfterTicks>
         <showRemainingTime>true</showRemainingTime>
       </li>
+      <!-- 效果挂在自己身上、作用于敌人，故 allowSelf -->
+      <li Class="FamiliaMyth.Abilities.HediffCompProperties_FeatSupport">
+        <supportPerSecond>1.0</supportPerSecond>
+        <allowSelf>true</allowSelf>
+      </li>
     </comps>
   </HediffDef>
 

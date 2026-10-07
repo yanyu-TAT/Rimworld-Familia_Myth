@@ -7,7 +7,7 @@ namespace FamiliaMyth.Feat
     {
         private const int ScanIntervalTicks = 250;
 
-        //每场战斗各参与者的贡献累计
+        //每场战斗各参与者的累计：我方记贡献，敌方记受损
         public List<ContributionEntry> contributions = new();
         //已结算战斗ID
         private List<string> resolved = new();
@@ -22,7 +22,7 @@ namespace FamiliaMyth.Feat
         public override void GameComponentTick()
         {
             if (Find.TickManager.TicksGame % ScanIntervalTicks != 0) return;
-            Log.Message("Scanning Active Battles");
+            //Log.Message("Scanning Active Battles");
 
             List<Battle> battles = Find.BattleLog?.Battles;
             if (battles == null) return;
@@ -43,7 +43,7 @@ namespace FamiliaMyth.Feat
                 if (resolved.Contains(id)) continue;
                 if (!IsFinished(battle)) continue;
 
-                Log.Message($"Resolving Battle: {battle.GetName()}");
+                //Log.Message($"Resolving Battle: {battle.GetName()}");
                 FeatUtility.Resolve(battle, contributions, Find.CurrentMap);
                 resolved.Add(id);
                 PruneContributions(id);
@@ -94,6 +94,15 @@ namespace FamiliaMyth.Feat
             if (pawn == null || amount <= 0f) return;
             ContributionEntry entry = GetOrAdd(pawn);
             if (entry != null) entry.support += amount;
+        }
+
+        //敌方承受的伤害
+        public void RecordEnemyDamage(Pawn victim, float amount)
+        {
+            if (victim == null || amount <= 0f) return;
+            if (victim.Faction == null || !victim.Faction.HostileTo(Faction.OfPlayer)) return;
+            ContributionEntry entry = GetOrAdd(victim);
+            if (entry != null) entry.enemyTaken += amount;
         }
 
         private ContributionEntry GetOrAdd(Pawn pawn)
@@ -231,6 +240,7 @@ namespace FamiliaMyth.Feat
         public float dealt;      //造成伤害
         public float taken;      //承受伤害
         public float support;    //支援
+        public float enemyTaken; //作为敌对方承受的伤害
 
         public void ExposeData()
         {
@@ -239,6 +249,7 @@ namespace FamiliaMyth.Feat
             Scribe_Values.Look(ref dealt, "dealt", 0f);
             Scribe_Values.Look(ref taken, "taken", 0f);
             Scribe_Values.Look(ref support, "support", 0f);
+            Scribe_Values.Look(ref enemyTaken, "enemyTaken", 0f);
         }
     }
 }
