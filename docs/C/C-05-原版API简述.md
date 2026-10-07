@@ -262,7 +262,7 @@ GenerateShuttle(Faction owningFaction = null, IEnumerable<Pawn> requiredPawns = 
 ### StorytellerUtility 威胁点数（原版难度基准）
 - `DefaultSiteThreatPointsNow(IIncidentTarget)` = `PointsPerWealthCurve.Evaluate(财富)` + Σ`PointsPerColonistByWealthCurve.Evaluate(财富)`（每名自由殖民者；动物按 `0.08 × combatPower`、机械体另计）→ 由**全殖民地财富与人口**共同决定。
 - 曲线值：`PointsPerWealthCurve`（0→0、14000→0、400000→2400、700000→3600、1000000→4200）；`PointsPerColonistByWealthCurve`（0→15、10000→15、400000→140、1000000→200）。
-- 本项目任务难度即以此为基准（`QuestUtilities.CalculateTaskParams` 的 `points = DefaultSiteThreatPointsNow() × PharnaGrowthFactor()`）；**伟业值奖励已改为固定量，不随该点数变化**（见 C-03 数值平衡框架）。
+- 本项目任务难度即以此为基准（`QuestUtilities.CalculateTaskParams` 的 `points = DefaultSiteThreatPointsNow() × PharnaGrowthFactor()`）；**任务侧奖励（升级点数）与该点数解耦，伟业不参与任务结算**——点数只标定难度（见 C-03 数值平衡框架）。
 - 出处：`decompiledFiles/RimWorld/StorytellerUtility.cs`。
 
 ### StatDef.forInformationOnly（「仅信息」标记）
@@ -270,7 +270,7 @@ GenerateShuttle(Faction owningFaction = null, IEnumerable<Pawn> requiredPawns = 
 - **全库唯一使用点**：`RimWorld/ScenPart_StatFactor.cs:31` —— `if (!allDef.forInformationOnly && allDef.CanShowWithLoadedMods())`，即**剧本编辑器**在列出「可设系数的 Stat」时将其过滤掉。
 - **不影响**运行时取值、`StatPart` 的应用、信息卡显示。Stat 取值流程为：`StatWorker.GetValue` → `GetValueUnfinalized`（**子类可 override**，如 `StatWorker_MeleeArmorPenetration` 在此反算武器穿甲）→ `FinalizeValue`（**在此统一应用 `stat.parts`**）→ `PostProcessValue`/`postProcessCurve`。
 - 原版惯例：用于「值由其他数据派生、玩家与剧本无法直接设定」的展示型 Stat —— `MeleeWeapon_AverageDPS`、`MeleeWeapon_AverageArmorPenetration`（`Stats_Weapons_Melee.xml`）、`MaxInstallCount`（`Stats_Misc.xml`）。
-- 本项目用法：`Defs/StatDefs/PharnaStats.xml` 的 **20 个恩惠展示 Stat**（六项能力值、`ManaControl` 系列 9 个、`ManaMax` / `ManaConversion` / `ManaConversionSpeed`、经验值 / 伟业值）全部标注 —— 它们的值由 `StatPart_PharnaDisplay`（展示项）/ `StatPart_Pharna`（系数注入）/ `StatPart_ManaControl`（魔力操控）从恩惠 Hediff 派生，玩家与剧本都不应直接设定。
+- 本项目用法：`Defs/StatDefs/PharnaStats.xml` 的 **19 个恩惠展示 Stat**（六项能力值、`ManaControl` 系列 9 个、`ManaMax` / `ManaConversion` / `ManaConversionSpeed`、经验值）全部标注 —— 它们的值由 `StatPart_PharnaDisplay`（展示项）/ `StatPart_Pharna`（系数注入）/ `StatPart_ManaControl`（魔力操控）从恩惠 Hediff 派生，玩家与剧本都不应直接设定。
 - 出处：`decompiledFiles/Verse/StatDef.cs`、`RimWorld/ScenPart_StatFactor.cs`、`RimWorld/StatWorker.cs`、`RimWorld/StatWorker_MeleeArmorPenetration.cs`。
 
 ## 十、文本与本地化

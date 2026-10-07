@@ -210,7 +210,7 @@ namespace FamiliaMyth.Pharna
         {
             explanation = "";
             var sb = new StringBuilder();
-            var val = GetCurrentStatus(type);
+            var val = GetFullStatus(type);
 
             if (skills != null)
                 foreach (var s in skills)

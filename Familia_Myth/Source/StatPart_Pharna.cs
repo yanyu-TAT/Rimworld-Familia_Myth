@@ -25,7 +25,7 @@ namespace FamiliaMyth.Pharna
 
             void Transform(StatRequest req, ref float val)
             {
-                if (!req.HasThing || !req.Thing.Spawned || req.Thing is not Pawn pawn)
+                if (!req.HasThing || req.Thing is not Pawn pawn)
                     return;
 
                 var pharna = pawn.GetPharna();
@@ -59,7 +59,7 @@ namespace FamiliaMyth.Pharna
 
             string GetExplanation(StatRequest req)
             {
-                if (!req.HasThing || !req.Thing.Spawned || req.Thing is not Pawn pawn)
+                if (!req.HasThing || req.Thing is not Pawn pawn)
                     return null;
 
                 var pharna = pawn.GetPharna();

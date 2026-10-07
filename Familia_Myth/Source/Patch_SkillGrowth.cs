@@ -47,6 +47,9 @@ namespace FamiliaMyth.Patch
                 if (sDef == SkillDefOf.Crafting)
                     pharna.GainStatus(PharnaStatusType.Dexterity, xp * DexterityPerXp);
 
+                if (sDef == SkillDefOf.Intellectual)
+                    pharna.GainStatus(PharnaStatusType.Dexterity, xp * DexterityPerXp);
+
                 if (sDef == SkillDefOf.Medicine)
                     pharna.developableAbilities.FirstOrDefault(d => d is DevelopableAbility_Healing)?.GainProficiency(xp * DevelopableAbility_Healing.ProfGainPerXp);
 
