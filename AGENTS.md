@@ -236,7 +236,7 @@
 
 | 系统 | 文件 / 前缀 | 职责 |
 | --- | --- | --- |
-| **恩惠与成长** | `Hediff_Pharna.cs` | 恩惠状态：六维能力值 / 经验 / 伟业记录、成长与升华、魔力池 |
+| **恩惠与成长** | `Hediff_Pharna.cs` | 恩惠状态：六维能力值 / 经验 / 伟业记录、成长与升华、铭刻、魔力池 |
 | | `PharnaUtility`（同文件内） | 恩惠与生效中技能的查询扩展 |
 | | `StatPart_*.cs` + `Patches/StatParts_*.xml` | StatDef 注入修正（恩惠系数 / 信息卡展示项 / 魔力操控） |
 | | `DevelopableAbility*.cs` | 发展能力（熟练度 + StatPart 注入） |
@@ -273,7 +273,7 @@
 | **表现层** | `Mote_*.cs` | 地图特效（咏唱词 / 魔法阵 / 光环 / 斩击等） |
 | | `UI_*.cs` | UI 基础设施与页面：`UI_Palette` 全局色源 / `UI_Scope` GUI 状态作用域 / `UI_Text` 度量与截断 / `UI_Bar` 进度条与门槛刻度 / `UI_Layout` 纵向游标 / `UI_GroupBox` 卡片 / `UI_RadarChart` 雷达图 / `UI_FamiliaPage` 眷族页 |
 | | `Window_FamiliaBase.cs` + `Dialog_AscendReward.cs` | 窗口基类（内容区模板 + 初始尺寸换算）与升华奖励弹窗（符文动画） |
-| | `ITab_Pawn_Pharna.cs` | Pawn 级「恩惠」页签：能力 / 发展能力 / 技能·魔法 / 伟业 四分区（仅受恩惠者可见） |
+| | `ITab_Pawn_Pharna.cs` | Pawn 级「恩惠」页签：能力 / 发展能力 / 技能·魔法 / 伟业 四分区（仅受恩惠者可见），顶栏含铭刻选取 |
 | | `HistoryTabHelper.cs` + `Gizmo_ManaPool.cs` | 历史窗口眷族页签接入（含失效兜底）与魔力池 Gizmo |
 | **工具与基础设施** | `WeaponHelper.cs` | 武器查询与直线索敌 / 射线工具 |
 | | `HealHelper.cs` | 伤口与断肢治疗工具 |

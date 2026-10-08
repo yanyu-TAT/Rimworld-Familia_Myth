@@ -24,6 +24,9 @@
 	<!-- 赋予恩惠仪式完成后的信件描述文本 -->
 	<FamiliaMyth.GrantPharnaRitualDone>{god} 向 {pawn} 降下了神之恩惠。现在 {pawn} 是 {god} 眷族的一员了。</FamiliaMyth.GrantPharnaRitualDone>
 
+	<!-- 升华仪式完成后追加的描述文本：升华只恢复铭刻机会，铭刻本身保留 -->
+	<FamiliaMyth.InscriptionRenewed>{god} 给予 {pawn} 的恩惠得到了升华，可以再次为 {pawn} 选择铭刻的方向了。</FamiliaMyth.InscriptionRenewed>
+
 	<!-- 拒绝理由：该殖民者已拥有恩惠，无法再次赋予 -->
 	<FamiliaMyth.AlreadyHavePharnaRefusion>已有恩惠</FamiliaMyth.AlreadyHavePharnaRefusion>
 	<!-- 拒绝理由：该殖民者没有恩惠，无法升华 -->

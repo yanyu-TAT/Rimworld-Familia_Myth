@@ -17,6 +17,9 @@ namespace FamiliaMyth.UI
         //分区卡描边与顶部高光（比强调色淡）
         public static readonly Color SectionBorder = new(196f / 255f, 149f / 255f, 82f / 255f, 0.55f);
 
+        //铭刻：已铭刻项的左侧色条、进度条与行底（比强调色更亮，同暖金族）
+        public static readonly Color Inscribed = new(1f, 0.86f, 0.52f);
+
         //文本
         public static readonly Color TextNormal = new(0.8f, 0.8f, 0.9f);
         public static readonly Color TextSubtle = new(0.82f, 0.82f, 0.9f);

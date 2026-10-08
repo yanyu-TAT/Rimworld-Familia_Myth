@@ -26,13 +26,24 @@ namespace FamiliaMyth.UI
         private const float W_Rank = 24f;
         private const float W_Value = 96f;
 
+        //名称列内缩，避开铭刻行的左侧色条
+        private const float NameIndent = 6f;
+
         //行内段落间距
         private const float SegmentGap = 6f;
 
         //条目卡左侧色条宽度
         private const float AccentBarW = 3f;
 
+        //铭刻顶栏高度，以及右端让开原版关闭按钮的留白
+        private const float TopBarH = 24f;
+        private const float CloseBtnReserve = 24f;
+
         private Vector2 scroll;
+
+        //铭刻选择模式：顶栏按钮进入，点击能力值行完成后退出
+        private bool selectingInscription;
+        private Pawn lastSelPawn;
 
         public ITab_Pawn_Pharna()
         {
@@ -43,15 +54,28 @@ namespace FamiliaMyth.UI
         //仅持有恩惠者显示本页签
         public override bool IsVisible => SelPawn?.GetPharna() != null;
 
+        //页签基类没有 OnClose，选择模式需在打开与点击外部时复位
+        public override void OnOpen() => selectingInscription = false;
+
+        public override void Notify_ClickOutsideWindow() => selectingInscription = false;
+
         protected override void FillTab()
         {
+            //页签实例会被复用，切换选中对象时必须清掉未完成的选择模式
+            if (SelPawn != lastSelPawn)
+            {
+                lastSelPawn = SelPawn;
+                selectingInscription = false;
+            }
+
             Hediff_Pharna pharna = SelPawn?.GetPharna();
             if (pharna == null) return;
 
             Rect rect = new Rect(0f, 0f, TabWidth, TabHeight).ContractedBy(10f);
-            Rect view = new(0f, 0f, rect.width - 16f, Mathf.Max(MeasureHeight(pharna), rect.height));
+            Rect scrollRect = new(rect.x, rect.y + TopBarH, rect.width, rect.height - TopBarH);
+            Rect view = new(0f, 0f, scrollRect.width - 16f, Mathf.Max(MeasureHeight(pharna), scrollRect.height));
 
-            Widgets.BeginScrollView(rect, ref scroll, view);
+            Widgets.BeginScrollView(scrollRect, ref scroll, view);
             UI_Cursor cur = new(0f, 0f, view.width);
             DrawAbilitySection(pharna, ref cur);
             cur.Gap(SectionGap);
@@ -61,6 +85,8 @@ namespace FamiliaMyth.UI
             cur.Gap(SectionGap);
             DrawFeatSection(pharna, ref cur);
             Widgets.EndScrollView();
+
+            DrawInscriptionBar(pharna, new Rect(rect.x, rect.y, rect.width, TopBarH));
         }
 
         //==================== 高度测算 ====================
@@ -97,7 +123,7 @@ namespace FamiliaMyth.UI
 
         //==================== 能力 ====================
 
-        private static void DrawAbilitySection(Hediff_Pharna pharna, ref UI_Cursor cur)
+        private void DrawAbilitySection(Hediff_Pharna pharna, ref UI_Cursor cur)
         {
             Rect card = cur.Row(SectionHeight(AbilityInnerHeight()));
             UI_GroupBox.DrawOutlinedCardBg(card, "FamiliaMyth.Panel.SectionAbility".Translate(), UI_Palette.SectionBorder);
@@ -116,21 +142,32 @@ namespace FamiliaMyth.UI
             }
         }
 
-        private static void DrawStatusRow(Hediff_Pharna pharna, PharnaStatusType type, Rect r, int index)
+        //铭刻行：左侧色条、行底与进度条三处用铭刻色；选择模式下点击任意行即完成铭刻
+        private void DrawStatusRow(Hediff_Pharna pharna, PharnaStatusType type, Rect r, int index)
         {
-            if ((index & 1) == 0)
+            bool inscribed = pharna.inscriptionType == type;
+
+            if (selectingInscription && Mouse.IsOver(r))
+                Widgets.DrawBoxSolid(r, UI_Palette.Inscribed.WithAlpha(0.15f));
+
+            if (inscribed)
+                Widgets.DrawBoxSolid(r, UI_Palette.Inscribed.WithAlpha(0.10f));
+            else if ((index & 1) == 0)
                 Widgets.DrawBoxSolid(r, UI_Palette.RowStripe);
+
+            if (inscribed)
+                Widgets.DrawBoxSolid(new Rect(r.x, r.y, AccentBarW, r.height), UI_Palette.Inscribed);
 
             float now = pharna.GetCurrentStatus(type);
             float potential = pharna.GetPotential(type);
             float total = now + potential;
             float decay = pharna.GetGrowthDecay(type);
-            //进度条随增速衰减由白转暖色
-            Color barColor = Color.Lerp(Color.white, UI_Palette.Decay, 1f - decay);
+            //铭刻项无衰减，直接用品色区分；其余随增速衰减由白转暖色
+            Color barColor = inscribed ? UI_Palette.Inscribed : Color.Lerp(Color.white, UI_Palette.Decay, 1f - decay);
             bool reached = now >= Hediff_Pharna.AscendStatusThreshold;
 
             using (UI_Scope.Color(UI_Palette.TextNormal))
-                Widgets.Label(new Rect(r.x, r.y, W_Name, r.height), Hediff_Pharna.GetStatusName(type));
+                Widgets.Label(new Rect(r.x + NameIndent, r.y, W_Name - NameIndent, r.height), Hediff_Pharna.GetStatusName(type));
 
             using (UI_Scope.Color(UI_Palette.Accent))
                 Widgets.Label(new Rect(r.x + W_Name, r.y, W_Rank, r.height), Hediff_Pharna.GetRank(now));
@@ -150,17 +187,59 @@ namespace FamiliaMyth.UI
                     reached ? UI_Palette.Disabled : UI_Palette.Accent);
             }
 
-            TooltipHandler.TipRegion(r, () => StatusTooltip(type, now, potential, total, decay),
+            TooltipHandler.TipRegion(r, () => StatusTooltip(pharna, type, now, potential, total, decay),
                 Gen.HashCombineInt(pharna.GetHashCode(), 197305 + (int)type));
+
+            if (selectingInscription && Widgets.ButtonInvisible(r) && pharna.TrySetInscription(type))
+                selectingInscription = false;
         }
 
         //数值格式在参数侧完成，文本键内不写格式说明符
-        private static string StatusTooltip(PharnaStatusType type, float now, float potential, float total, float decay)
+        private string StatusTooltip(Hediff_Pharna pharna, PharnaStatusType type, float now, float potential, float total, float decay)
         {
-            return Hediff_Pharna.GetStatusName(type)
-                + "\n\n" + "FamiliaMyth.Panel.StatusTooltip".Translate(
+            string text = Hediff_Pharna.GetStatusName(type)
+                + "\n\n" + (string)"FamiliaMyth.Panel.StatusTooltip".Translate(
                     ((int)now).ToString(), ((int)potential).ToString(), ((int)total).ToString())
-                + "\n" + "FamiliaMyth.Panel.GrowthEfficiency".Translate(decay.ToStringPercent());
+                + "\n" + (string)"FamiliaMyth.Panel.GrowthEfficiency".Translate(decay.ToStringPercent());
+
+            if (pharna.inscriptionType == type)
+                text += "\n" + (string)"FamiliaMyth.Panel.InscribedDesc".Translate();
+            else if (selectingInscription)
+                text += "\n" + (string)"FamiliaMyth.Panel.InscriptionPickTip".Translate();
+
+            return text;
+        }
+
+        //==================== 铭刻顶栏 ====================
+
+        //右端让开原版关闭按钮（Widgets.CloseButtonFor 占 xMax-22..xMax-4、y+4..y+22）
+        private void DrawInscriptionBar(Hediff_Pharna pharna, Rect bar)
+        {
+            const float ButtonW = 72f;
+            const float TextW = 200f;
+            const float Gap = 6f;
+
+            float right = bar.xMax - CloseBtnReserve;
+            Rect buttonRect = new(right - ButtonW, bar.y + 1f, ButtonW, bar.height - 2f);
+            Rect textRect = new(right - ButtonW - Gap - TextW, bar.y, TextW, bar.height);
+
+            bool active = selectingInscription || pharna.inscriptionAvailable;
+            string label = selectingInscription
+                ? (string)"FamiliaMyth.Panel.InscriptionSelecting".Translate()
+                : pharna.inscriptionAvailable
+                    ? (string)"FamiliaMyth.Panel.InscriptionReady".Translate()
+                    : (string)"FamiliaMyth.Panel.InscriptionUnavailable".Translate();
+
+            using (UI_Scope.Text(GameFont.Small, TextAnchor.MiddleRight))
+            using (UI_Scope.Color(active ? UI_Palette.Inscribed : UI_Palette.Disabled))
+                Widgets.Label(textRect, label);
+
+            string buttonLabel = selectingInscription
+                ? (string)"FamiliaMyth.UI.Cancel".Translate()
+                : (string)"FamiliaMyth.UI.InscriptionButton".Translate();
+
+            if (active && Widgets.ButtonText(buttonRect, buttonLabel, drawBackground: true, doMouseoverSound: true))
+                selectingInscription = !selectingInscription;
         }
 
         //==================== 发展能力 ====================

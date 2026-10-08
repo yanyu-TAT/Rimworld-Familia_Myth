@@ -40,4 +40,12 @@
   <FamiliaMyth.Panel.FeatScore>战斗总得分 {0}</FamiliaMyth.Panel.FeatScore>
   <FamiliaMyth.Panel.FeatShare>个人贡献 {0}　个人得分 {1}</FamiliaMyth.Panel.FeatShare>
 
+  <!-- 铭刻顶栏：可用性只有可用/不可用两态；选择模式提示由按钮切换 -->
+  <FamiliaMyth.Panel.InscriptionReady>铭刻可用</FamiliaMyth.Panel.InscriptionReady>
+  <FamiliaMyth.Panel.InscriptionUnavailable>铭刻不可用</FamiliaMyth.Panel.InscriptionUnavailable>
+  <FamiliaMyth.Panel.InscriptionSelecting>点击能力值行以铭刻</FamiliaMyth.Panel.InscriptionSelecting>
+  <!-- 六维行 tooltip：选择模式中 / 已铭刻项 -->
+  <FamiliaMyth.Panel.InscriptionPickTip>点击铭刻此项</FamiliaMyth.Panel.InscriptionPickTip>
+  <FamiliaMyth.Panel.InscribedDesc>已铭刻</FamiliaMyth.Panel.InscribedDesc>
+
 </LanguageData>

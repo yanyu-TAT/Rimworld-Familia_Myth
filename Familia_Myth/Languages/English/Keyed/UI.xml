@@ -12,6 +12,10 @@
   <FamiliaMyth.UI.RewardTypeSkill>Skill</FamiliaMyth.UI.RewardTypeSkill>
   <FamiliaMyth.UI.RewardTypeDevelopableAbility>Developable Ability</FamiliaMyth.UI.RewardTypeDevelopableAbility>
 
+  <!-- ==================== Inscription ==================== -->
+  <FamiliaMyth.UI.InscriptionButton>Inscribe</FamiliaMyth.UI.InscriptionButton>
+  <FamiliaMyth.UI.Cancel>Cancel</FamiliaMyth.UI.Cancel>
+
   <!-- ==================== Familia rank page ==================== -->
   <FamiliaMyth.UI.FamiliaTab>Familia</FamiliaMyth.UI.FamiliaTab>
   <FamiliaMyth.UI.CategoryRankUpHint>◆ Complete a Rank-Up Quest to raise this rank</FamiliaMyth.UI.CategoryRankUpHint>

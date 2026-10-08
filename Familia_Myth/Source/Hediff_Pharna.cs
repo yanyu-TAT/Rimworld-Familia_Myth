@@ -35,6 +35,8 @@ namespace FamiliaMyth.Pharna
         private const float EntropyPerPercent = 1f;
         //转化结算间隔（每秒一次）
         private const int ConvertIntervalTicks = 60;
+        //经验值转化为铭刻属性的比例
+        private const float InscriptionConvertionRate = 0.08f;
         private static readonly List<string> ranks = new();
 
         public float strength;      //力量
@@ -58,6 +60,11 @@ namespace FamiliaMyth.Pharna
         public List<Skill> skills = new();
         //魔法
         public List<Spell> spells = new();
+
+        //已铭刻的能力值
+        public PharnaStatusType? inscriptionType;
+        //铭刻是否可用：赋予恩惠时置可用，每次升华恢复可用
+        public bool inscriptionAvailable;
 
         public float experience;       //经验值
         public List<FeatRecord> feats = new(); //伟业
@@ -122,6 +129,9 @@ namespace FamiliaMyth.Pharna
                 Log.Warning($"[FamiliaMyth] Can't Get Map Component When Adding Pharna Hediff For {pawn.Name.ToStringShort}");
 
             base.PostAdd(dinfo);
+
+            //首次获得恩惠即给予一次铭刻机会
+            inscriptionAvailable = true;
         }
 
         public override string TipStringExtra
@@ -384,6 +394,9 @@ namespace FamiliaMyth.Pharna
             if (feat != null)
                 feat.usedForLevel = level;
 
+            //升华只恢复铭刻机会，铭刻本身保留
+            inscriptionAvailable = true;
+
             //升级奖励在仪式奖励中给予
             //升级
             ChangeLevel(1);
@@ -392,13 +405,16 @@ namespace FamiliaMyth.Pharna
         //成长衰减系数：1 = 无衰减，越接近 0 衰减越重（受单项与六项总量双重影响）
         public float GetGrowthDecay(PharnaStatusType type)
         {
+            if (inscriptionType == type)
+                return 1f;
+
             float current = GetCurrentStatus(type);
             float statExcess = Mathf.Max(0f, current - StatDecayThreshold);
             float totalExcess = Mathf.Max(0f, TotalStatus - TotalStatDecayThreshold);
             return 1f / (1f + statExcess / StatDecayScale) / (1f + totalExcess / TotalStatDecayScale);
         }
 
-        public bool GainStatus(PharnaStatusType type, float amount)
+        public bool GainStatus(PharnaStatusType type, float amount, bool gainExp = true)
         {
             if (amount <= 0f) return false;
             float current = GetCurrentStatus(type);
@@ -414,7 +430,27 @@ namespace FamiliaMyth.Pharna
                 case PharnaStatusType.Will: will += capped; break;
                 default: return false;
             }
+            if (gainExp)
+                GainExp(amount);
+            return true;
+        }
+
+        public bool GainExp(float amount)
+        {
             experience += amount;
+            if (inscriptionType.HasValue)
+                GainStatus(inscriptionType.Value, amount * InscriptionConvertionRate, false);
+
+            return true;
+        }
+
+        //消耗一次铭刻机会刻下方向；不可用或重复选同一项时不生效
+        public bool TrySetInscription(PharnaStatusType? type)
+        {
+            if (!inscriptionAvailable) return false;
+            if (inscriptionType == type) return false;
+            inscriptionType = type;
+            inscriptionAvailable = false;
             return true;
         }
 
@@ -528,6 +564,9 @@ namespace FamiliaMyth.Pharna
             Scribe_Collections.Look(ref developableAbilities, "developAbilities", LookMode.Deep);
             Scribe_Collections.Look(ref skills, "skills", LookMode.Deep);
             Scribe_Collections.Look(ref spells, "spells", LookMode.Deep);
+
+            Scribe_Values.Look(ref inscriptionType, "inscriptionType", null);
+            Scribe_Values.Look(ref inscriptionAvailable, "inscriptionAvailable", false);
 
             Scribe_Values.Look(ref experience, "experience", 0f);
             Scribe_Collections.Look(ref feats, "feats", LookMode.Deep);

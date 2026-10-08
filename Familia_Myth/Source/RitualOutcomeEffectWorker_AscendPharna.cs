@@ -1,3 +1,4 @@
+using FamiliaMyth.Core;
 using FamiliaMyth.Pharna;
 using FamiliaMyth.UI;
 using RimWorld;
@@ -9,6 +10,8 @@ namespace FamiliaMyth.Ritual
     {
         public RitualOutcomeEffectWorker_AscendPharna() { compDatas = new List<RitualOutcomeComp_Data>(); }
         public RitualOutcomeEffectWorker_AscendPharna(RitualOutcomeEffectDef def) : base(def) { compDatas = new List<RitualOutcomeComp_Data>(); }
+
+        private static string GodName => FamiliaMythMod.godName ?? FamiliaMythMod.DefaultGodName1;
 
         // 仪式质量部分暂不做实现
         public override RitualOutcomePossibility GetOutcome(float quality, LordJob_Ritual ritual)
@@ -48,6 +51,9 @@ namespace FamiliaMyth.Ritual
             var rewards = AscendHelper.GetRandomRewardsFor(3, pharna).ToList();
             if (rewards.Count > 0)
                 Find.WindowStack.Add(new Dialog_AscendReward(pharna, rewards));
+
+            //升华恢复一次铭刻机会，铭刻本身保留
+            extraOutcomeDesc += TranslateHelper.Translate("FamiliaMyth.InscriptionRenewed", ("pawn", pawn.Name), ("god", GodName));
 
             //根据仪式效果赋予 能力落差后遗症
 

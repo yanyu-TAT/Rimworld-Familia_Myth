@@ -27,6 +27,9 @@
 	<!-- Letter description after Grant Pharna ritual completes. {god}=god name, {pawn}=pawn name -->
 	<FamiliaMyth.GrantPharnaRitualDone>{god} bestowed Pharna upon {pawn}. {pawn} is now a member of Familia.</FamiliaMyth.GrantPharnaRitualDone>
 
+	<!-- Appended description after Ascend Pharna completes: ascension only renews the inscription chance -->
+	<FamiliaMyth.InscriptionRenewed>{god} has ascended the Pharna granted to {pawn} — a new inscription direction may be chosen.</FamiliaMyth.InscriptionRenewed>
+
 	<!-- Refusal: colonist already has Pharna, cannot grant again -->
 	<FamiliaMyth.AlreadyHavePharnaRefusion>Already has Pharna</FamiliaMyth.AlreadyHavePharnaRefusion>
 	<!-- Refusal: colonist has no Pharna, cannot ascend -->

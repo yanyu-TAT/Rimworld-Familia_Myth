@@ -40,4 +40,12 @@
   <FamiliaMyth.Panel.FeatScore>Battle score {0}</FamiliaMyth.Panel.FeatScore>
   <FamiliaMyth.Panel.FeatShare>Personal share {0}　Personal score {1}</FamiliaMyth.Panel.FeatShare>
 
+  <!-- Inscription bar: availability has only two states; the button toggles the selecting hint -->
+  <FamiliaMyth.Panel.InscriptionReady>Inscription available</FamiliaMyth.Panel.InscriptionReady>
+  <FamiliaMyth.Panel.InscriptionUnavailable>Inscription unavailable</FamiliaMyth.Panel.InscriptionUnavailable>
+  <FamiliaMyth.Panel.InscriptionSelecting>Click a status row to inscribe</FamiliaMyth.Panel.InscriptionSelecting>
+  <!-- Status row tooltip: while selecting / already inscribed -->
+  <FamiliaMyth.Panel.InscriptionPickTip>Click to inscribe this status</FamiliaMyth.Panel.InscriptionPickTip>
+  <FamiliaMyth.Panel.InscribedDesc>Inscribed</FamiliaMyth.Panel.InscribedDesc>
+
 </LanguageData>

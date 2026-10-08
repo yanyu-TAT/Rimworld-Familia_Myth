@@ -16,6 +16,8 @@
 	<FamiliaMyth.UI.RewardTypeSpell>魔法</FamiliaMyth.UI.RewardTypeSpell>
 	<FamiliaMyth.UI.RewardTypeSkill>技能</FamiliaMyth.UI.RewardTypeSkill>
 	<FamiliaMyth.UI.RewardTypeDevelopableAbility>发展能力</FamiliaMyth.UI.RewardTypeDevelopableAbility>
+	<FamiliaMyth.UI.InscriptionButton>铭刻</FamiliaMyth.UI.InscriptionButton>
+	<FamiliaMyth.UI.Cancel>取消</FamiliaMyth.UI.Cancel>
 	<FamiliaMyth.UI.FamiliaTab>眷族</FamiliaMyth.UI.FamiliaTab>
 	<FamiliaMyth.UI.CategoryRankUpHint>◆ 完成强制任务即可升级评级</FamiliaMyth.UI.CategoryRankUpHint>
 	<FamiliaMyth.UI.CategoryMaxRank>此方向已无更高评级</FamiliaMyth.UI.CategoryMaxRank>

@@ -151,5 +151,55 @@ namespace FamiliaMyth.Debug
 
             Find.WindowStack.Add(new Dialog_DebugOptionListLister(options));
         }
+
+        /// <summary>
+        /// 调试指令：设置或清除铭刻
+        /// </summary>
+        [DebugAction("Familia Myth", "Set Inscription",
+            actionType = DebugActionType.Action,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        public static void SetInscription()
+        {
+            var options = new List<DebugMenuOption>();
+            foreach (PharnaStatusType type in Enum.GetValues(typeof(PharnaStatusType)))
+            {
+                options.Add(new DebugMenuOption(
+                    Hediff_Pharna.GetStatusName(type),
+                    DebugMenuOptionMode.Tool,
+                    () => ApplyInscription(type)));
+            }
+            options.Add(new DebugMenuOption("Clear", DebugMenuOptionMode.Tool, () => ApplyInscription(null)));
+
+            Find.WindowStack.Add(new Dialog_DebugOptionListLister(options));
+        }
+
+        /// <summary>
+        /// 调试指令：恢复铭刻可用性
+        /// </summary>
+        [DebugAction("Familia Myth", "Inscription Available",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        public static void InscriptionAvailable(Pawn pawn)
+        {
+            var pharna = pawn.GetPharna();
+            if (pharna == null) return;
+            pharna.inscriptionAvailable = true;
+            MoteMaker.ThrowText(pawn.DrawPos, pawn.Map, "Inscription available");
+        }
+
+        //先置可用再走统一入口，避免绕过次数校验
+        private static void ApplyInscription(PharnaStatusType? type)
+        {
+            foreach (var pawn in Find.CurrentMap.thingGrid.ThingsAt(Verse.UI.MouseCell()).OfType<Pawn>())
+            {
+                var pharna = pawn.GetPharna();
+                if (pharna == null) continue;
+
+                pharna.inscriptionAvailable = true;
+                pharna.TrySetInscription(type);
+                MoteMaker.ThrowText(pawn.DrawPos, pawn.Map,
+                    type.HasValue ? Hediff_Pharna.GetStatusName(type.Value) : "None");
+            }
+        }
     }
 }
