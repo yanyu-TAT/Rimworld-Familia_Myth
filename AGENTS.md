@@ -198,7 +198,7 @@
 ✅ 数值系数是否已抽为 const？来源是否对应设计文档？
 ✅ Harmony 补丁 static + try-catch？原版签名已反编译核对？
 ✅ 一次性资源（Material/RenderTexture/Camera/GameObject）是否已释放？
-✅ 随机选择是否有权重耗尽死循环保护（如 tt>0）？候选集合是否已判空（空集合取随机索引会越界）？
+✅ 随机选择是否用 `TryRandomElementByWeight`（权重和 ≤ 0 时返回 false）并已判空候选集合（空集合取随机索引会越界）？零权重项不入池？
 ✅ Hediff 初始 severity > 0（避免被立即移除）？
 ✅ XML 类名带命名空间前缀？defName 唯一？DLC 依赖是否用 PatchOperationConditional 保护？
 ✅ 无吞异常 / 无只走 happy path？
@@ -218,7 +218,7 @@
 | 2  | Harmony 补丁方法非 static / 签名不匹配       | 保持 static，重载写明参数类型                                            |
 | 3  | 补丁无 try-catch，一处异常拖垮游戏             | 包裹 try-catch + Log.Error                                      |
 | 4  | Mote/特效资源泄漏（纹理/相机/材质）              | try/finally 销毁；DrawAt 中重查贴图占位                                 |
-| 5  | 随机抽取死循环                            | 权重耗尽判断（`tt > 0`），可抽项为空即返回                                     |
+| 5  | 随机抽取死循环 / 空池抽样                     | 用 `TryRandomElementByWeight`（权重和 ≤ 0 时返回 false）并在抽样前判空候选集；零权重项不入池 |
 | 6  | 迭代中修改集合                            | 快照 / 反向遍历                                                     |
 | 7  | Hediff severity=0 立即被移除            | `initialSeverity` 置正                                          |
 | 8  | XML 类名缺命名空间前缀 / defName 冲突         | 带前缀、全局唯一                                                      |
@@ -241,6 +241,7 @@
 | | `StatPart_*.cs` + `Patches/StatParts_*.xml` | StatDef 注入修正（恩惠系数 / 信息卡展示项 / 魔力操控） |
 | | `DevelopableAbility*.cs` | 发展能力（熟练度 + StatPart 注入） |
 | | `Patch_<能力值>Gain_<来源>.cs` | 各能力值的经验获取补丁 |
+| | `AscendHelper.cs`（含 `AscendRewardSession`） | 升华奖励：Def 注册表与抽取（权重 / 保底 / 确定性种子）、选取会话（刷新 / 锁定） |
 | **魔法** | `Spell*.cs` + `SpellDef.cs` | 魔法框架与具体魔法（继承原版 Ability） |
 | | `Hediff_SpellState.cs` + `Verb_CastSpell*.cs` | 魔法效果状态与咏唱 verb |
 | | `Projectile_*` + `MagicMissileStates.cs` | 魔法弹与运动状态机 |

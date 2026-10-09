@@ -30,6 +30,9 @@
 	<!-- Appended description after Ascend Pharna completes: ascension only renews the inscription chance -->
 	<FamiliaMyth.InscriptionRenewed>{god} has ascended the Pharna granted to {pawn} — a new inscription direction may be chosen.</FamiliaMyth.InscriptionRenewed>
 
+	<!-- Message when ascension completes but no reward can be bestowed ({0}=recipient name) -->
+	<FamiliaMyth.AscendNoReward>The ascension of {0} yielded no new boon — there is no reward left to bestow.</FamiliaMyth.AscendNoReward>
+
 	<!-- Refusal: colonist already has Pharna, cannot grant again -->
 	<FamiliaMyth.AlreadyHavePharnaRefusion>Already has Pharna</FamiliaMyth.AlreadyHavePharnaRefusion>
 	<!-- Refusal: colonist has no Pharna, cannot ascend -->

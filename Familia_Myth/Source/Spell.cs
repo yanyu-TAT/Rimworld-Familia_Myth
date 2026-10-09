@@ -36,6 +36,7 @@ namespace FamiliaMyth.Abilities
         protected static int CurrentTick => Find.TickManager.TicksGame;
 
         public RewardRarity Rarity => Def.rarity;
+        public string DefName => Def?.defName;
         public string Label => Def.label;
         public string Description => Def.description;
 
@@ -60,13 +61,42 @@ namespace FamiliaMyth.Abilities
 
         public bool CanConcurrentCast => Def.canConcurrentCast;
 
+        private List<MagicCircleLayer> magicCircles;
+        public List<MagicCircleLayer> MagicCircles
+        {
+            get
+            {
+                if (!Def.magicCircles.NullOrEmpty())
+                    return Def.magicCircles;
+                if (!magicCircles.NullOrEmpty()) 
+                    return magicCircles;
+
+                //尝试随机生成魔法阵样式
+                magicCircles = new List<MagicCircleLayer>();
+                int cnt = (int)Def.rarity + 1;
+                for (int i = 0; i < cnt; i++)
+                {
+                    var layer = new MagicCircleLayer
+                    {
+                        texPath = $"Familia_Myth/Things/Mote/MagicCircles/{Rand.Range(1, 4)}",
+                        drawColor = Def.themeColor,
+                        scaleFrom = 0.5f,
+                        size = new((i + 1) * 5, (i + 1) * 5),
+                        altitude = i * 0.01f,
+                        rotate = Rand.Range(-20f, 20f),
+                        appearProgress = i * 0.25f,
+                        initialRotation = Rand.Range(0f, 360f)
+                    };
+                    magicCircles.Add(layer);
+                }
+                return magicCircles;
+            }
+        }
+
         public virtual void RewardInitialize()
         {
             def = DefDatabase<SpellDef>.GetNamed(GetType().Name, false);
-
-            //尝试随机生成魔法阵样式
-            if (Def.magicCircles.NullOrEmpty())
-                Def.magicCircles = Def.DefaultMagicCircles;
+            if (Def == null) return;
         }
 
         public override AcceptanceReport CanCast
@@ -198,17 +228,17 @@ namespace FamiliaMyth.Abilities
 
         private void MagicCircleStart()
         {
-            if (Def.magicCircles.NullOrEmpty()) return;
+            if (MagicCircles.NullOrEmpty()) return;
             activeMotes.Clear();
             TickMagicCircle();
         }
 
         private void TickMagicCircle()
         {
-            if (Def.magicCircles.NullOrEmpty() || pawn?.Map == null) return;
+            if (MagicCircles.NullOrEmpty() || pawn?.Map == null) return;
 
             //生成
-            var layers = Def.magicCircles;
+            var layers = MagicCircles;
             for (int i = 0; i < layers.Count; i++)
             {
                 if (i < activeMotes.Count && activeMotes[i]?.Spawned == true) continue;
@@ -218,9 +248,9 @@ namespace FamiliaMyth.Abilities
                 mote.Attach(pawn);
                 GenSpawn.Spawn(mote, pawn.Position, pawn.Map);
 
-                if (i < activeMotes.Count) 
+                if (i < activeMotes.Count)
                     activeMotes[i] = mote;
-                else 
+                else
                     activeMotes.Add(mote);
             }
 
@@ -357,6 +387,7 @@ namespace FamiliaMyth.Abilities
             Scribe_Values.Look(ref actualEnt, "actualEnt");
             Scribe_Values.Look(ref actualMana, "actualMana");
             Scribe_Values.Look(ref wasWarmingUp, "wasWarmingUp");
+            Scribe_Collections.Look(ref magicCircles, "magicCircles", LookMode.Deep);
             Scribe_Collections.Look(ref activeProjectiles, "activeProjectiles", LookMode.Reference);
             Scribe_Collections.Look(ref activeMotes, "activeMotes", LookMode.Reference);
 

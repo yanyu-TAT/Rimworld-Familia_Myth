@@ -1,4 +1,4 @@
-﻿using FamiliaMyth.Pharna;
+using FamiliaMyth.Pharna;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -20,6 +20,8 @@ namespace FamiliaMyth.Abilities
         public RewardType RewardType => RewardType.DevelopableAbility;
 
         public RewardRarity Rarity => def.rarity;
+
+        public string DefName => def?.defName;
 
         public string Label => def.label;
 

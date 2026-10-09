@@ -16,6 +16,11 @@
 	<FamiliaMyth.UI.RewardTypeSpell>魔法</FamiliaMyth.UI.RewardTypeSpell>
 	<FamiliaMyth.UI.RewardTypeSkill>技能</FamiliaMyth.UI.RewardTypeSkill>
 	<FamiliaMyth.UI.RewardTypeDevelopableAbility>发展能力</FamiliaMyth.UI.RewardTypeDevelopableAbility>
+	<!-- 升华奖励弹窗：刷新与锁定（刷新按钮不可用时隐藏） -->
+	<FamiliaMyth.UI.RewardRefreshLeft>刷新（剩余 {0} 次）</FamiliaMyth.UI.RewardRefreshLeft>
+	<FamiliaMyth.UI.RewardLockHint>点击切换锁定：刷新时锁定的卡片会被保留</FamiliaMyth.UI.RewardLockHint>
+	<FamiliaMyth.UI.RewardLockMark>◆</FamiliaMyth.UI.RewardLockMark>
+	<FamiliaMyth.UI.RewardUnlockMark>◇</FamiliaMyth.UI.RewardUnlockMark>
 	<FamiliaMyth.UI.InscriptionButton>铭刻</FamiliaMyth.UI.InscriptionButton>
 	<FamiliaMyth.UI.Cancel>取消</FamiliaMyth.UI.Cancel>
 	<FamiliaMyth.UI.FamiliaTab>眷族</FamiliaMyth.UI.FamiliaTab>

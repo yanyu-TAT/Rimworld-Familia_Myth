@@ -66,6 +66,9 @@ namespace FamiliaMyth.Pharna
         //铭刻是否可用：赋予恩惠时置可用，每次升华恢复可用
         public bool inscriptionAvailable;
 
+        //连续未获得罕见升华奖励的次数，用于稀有权重的保底
+        public int ascendsWithoutRare;
+
         public float experience;       //经验值
         public List<FeatRecord> feats = new(); //伟业
 
@@ -402,6 +405,17 @@ namespace FamiliaMyth.Pharna
             ChangeLevel(1);
         }
 
+        /// <summary>
+        /// 结算升华奖励的保底：到手罕见则清零，否则累加
+        /// </summary>
+        public void NotifyAscendRewardPicked(RewardRarity rarity)
+        {
+            if (rarity == RewardRarity.Rare)
+                ascendsWithoutRare = 0;
+            else
+                ascendsWithoutRare++;
+        }
+
         //成长衰减系数：1 = 无衰减，越接近 0 衰减越重（受单项与六项总量双重影响）
         public float GetGrowthDecay(PharnaStatusType type)
         {
@@ -515,23 +529,11 @@ namespace FamiliaMyth.Pharna
 
         public bool HasReward(IAscendReward reward)
         {
-            if (reward == null) return false;
-            if (spells.Any(t => t.Label == reward.Label)) return true;
-            if (skills.Any(t => t.Label == reward.Label)) return true;
-            if (developableAbilities.Any(t => t.Label == reward.Label)) return true;
+            if (reward?.DefName == null) return false;
+            if (spells.Any(t => t.DefName == reward.DefName)) return true;
+            if (skills.Any(t => t.DefName == reward.DefName)) return true;
+            if (developableAbilities.Any(t => t.DefName == reward.DefName)) return true;
             return false;
-        }
-
-        public IEnumerable<string> GetRewardNames()
-        {
-            foreach (var spell in spells)
-                yield return spell.GetType().Name;
-
-            foreach (var skill in skills)
-                yield return skill.GetType().Name;
-
-            foreach (var developAbleability in developableAbilities)
-                yield return developAbleability.GetType().Name;
         }
 
         public static string GetRank(float value)
@@ -567,6 +569,8 @@ namespace FamiliaMyth.Pharna
 
             Scribe_Values.Look(ref inscriptionType, "inscriptionType", null);
             Scribe_Values.Look(ref inscriptionAvailable, "inscriptionAvailable", false);
+
+            Scribe_Values.Look(ref ascendsWithoutRare, "ascendsWithoutRare", 0);
 
             Scribe_Values.Look(ref experience, "experience", 0f);
             Scribe_Collections.Look(ref feats, "feats", LookMode.Deep);

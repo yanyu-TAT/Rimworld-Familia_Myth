@@ -13,6 +13,9 @@ namespace FamiliaMyth.Ritual
 
         private static string GodName => FamiliaMythMod.godName ?? FamiliaMythMod.DefaultGodName1;
 
+        //每次升华提供的奖励候选数量
+        private const int RewardCount = 3;
+
         // 仪式质量部分暂不做实现
         public override RitualOutcomePossibility GetOutcome(float quality, LordJob_Ritual ritual)
         {
@@ -48,9 +51,11 @@ namespace FamiliaMyth.Ritual
             pharna.Ascend();
 
             //根据仪式效果提供升级奖励
-            var rewards = AscendHelper.GetRandomRewardsFor(3, pharna).ToList();
-            if (rewards.Count > 0)
-                Find.WindowStack.Add(new Dialog_AscendReward(pharna, rewards));
+            var session = new AscendRewardSession(pharna, RewardCount, AscendHelper.GetRerollCount(pharna));
+            if (session.Rewards.Count > 0)
+                Find.WindowStack.Add(new Dialog_AscendReward(session));
+            else
+                Messages.Message("FamiliaMyth.AscendNoReward".Translate(pawn.Name.ToStringShort), MessageTypeDefOf.NeutralEvent);
 
             //升华恢复一次铭刻机会，铭刻本身保留
             extraOutcomeDesc += TranslateHelper.Translate("FamiliaMyth.InscriptionRenewed", ("pawn", pawn.Name), ("god", GodName));

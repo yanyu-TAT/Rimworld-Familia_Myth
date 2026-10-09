@@ -34,31 +34,6 @@ namespace FamiliaMyth.Abilities
         /// </summary>
         public float WarmupTime => (incantationLines.Count - 1) * lineInterval;
 
-        public List<MagicCircleLayer> DefaultMagicCircles
-        {
-            get
-            {
-                var result = new List<MagicCircleLayer>();
-                int cnt = (int)rarity + 1;
-                for (int i = 0; i < cnt; i++)
-                {
-                    var layer = new MagicCircleLayer
-                    {
-                        texPath = $"Familia_Myth/Things/Mote/MagicCircles/{Rand.Range(1, 4)}",
-                        drawColor = themeColor,
-                        scaleFrom = 0.5f,
-                        size = new((i + 1) * 5, (i + 1) * 5),
-                        altitude = i * 0.01f,
-                        rotate = Rand.Range(-20f, 20f),
-                        appearProgress = i * 0.25f,
-                        initialRotation = Rand.Range(0f, 360f)
-                    };
-                    result.Add(layer);
-                }
-                return result;
-            }
-        }
-
         public Spell CreateSpell()
         {
             var spell = (Spell)Activator.CreateInstance(spellClass);
@@ -93,7 +68,7 @@ namespace FamiliaMyth.Abilities
     /// <summary>
     /// 描述施法者咏唱时在其脚下展开的魔法阵
     /// </summary>
-    public class MagicCircleLayer
+    public class MagicCircleLayer : IExposable
     {
         public string texPath;
         public float appearProgress = 0f;   //出现时间占咏唱时间的百分比
@@ -104,5 +79,18 @@ namespace FamiliaMyth.Abilities
         public float scaleFrom = 1f;    //初始缩放
         public Vector2 size = new(1f, 1f); //绘制尺寸
         public ShaderTypeDef shaderType; //默认MoteGlow
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref texPath, "texPath");
+            Scribe_Values.Look(ref appearProgress, "appearProgress");
+            Scribe_Values.Look(ref drawColor, "drawColor", Color.white);
+            Scribe_Values.Look(ref initialRotation, "initialRotation");
+            Scribe_Values.Look(ref rotate, "rotate");
+            Scribe_Values.Look(ref altitude, "altitude");
+            Scribe_Values.Look(ref scaleFrom, "scaleFrom", 1f);
+            Scribe_Values.Look(ref size, "size", new(1f, 1f));
+            Scribe_Defs.Look(ref shaderType, "shaderType");
+        }
     }
 }

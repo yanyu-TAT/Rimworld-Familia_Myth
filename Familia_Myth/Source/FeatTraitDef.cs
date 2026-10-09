@@ -200,6 +200,5 @@ namespace FamiliaMyth.Feat
             if (Scribe.mode == LoadSaveMode.PostLoadInit && featTraits == null)
                 featTraits = new();
         }
-
     }
 }

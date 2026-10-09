@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using FamiliaMyth.Pharna;
 using RimWorld;
 using UnityEngine;
@@ -9,8 +7,7 @@ namespace FamiliaMyth.UI
 {
     public class Dialog_AscendReward : Window_FamiliaBase
     {
-        private readonly Hediff_Pharna pharna;
-        private readonly List<IAscendReward> rewards;
+        private readonly AscendRewardSession session;
 
         private Vector2 scrollPosition;
 
@@ -35,6 +32,12 @@ namespace FamiliaMyth.UI
         private const float CardHeight = 80f;
         private const float CardSpacing = 10f;
         private const float CardPadding = 14f;
+        //锁定栏宽度：与卡片选择区互不重叠，避免同帧争用点击
+        private const float LockWidth = 30f;
+        //底部刷新按钮条高度
+        private const float RefreshBarHeight = 40f;
+        //锁定栏 tooltip 的稳定 id 基数（按卡位偏移）
+        private const int LockHintTooltipId = 197320;
 
         //符文候选字符不足时的兜底字符集
         private const string FallbackSymbols = "神恩眷族冒险誓约永恒";
@@ -47,11 +50,9 @@ namespace FamiliaMyth.UI
 
         public override Vector2 InitialSize => new(WindowWidth, WindowHeight);
 
-        public Dialog_AscendReward(Hediff_Pharna pharna, List<IAscendReward> rewards)
+        public Dialog_AscendReward(AscendRewardSession session)
         {
-            this.pharna = pharna;
-            List<string> rewardNames = pharna.GetRewardNames().ToList();
-            this.rewards = rewards.Where(r => !rewardNames.Contains(r.GetType().Name)).ToList();
+            this.session = session;
 
             forcePause = true;
             doCloseX = false;
@@ -106,22 +107,34 @@ namespace FamiliaMyth.UI
         {
             // 内容区域居中显示
             float contentX = rect.x + (rect.width - ContentWidth) / 2f;
-            float contentHeight = rect.height - ContentTop - 20f;
+            float contentHeight = rect.height - ContentTop - 20f - RefreshBarHeight;
 
             Rect contentRect = new(contentX, rect.y + ContentTop, ContentWidth, contentHeight);
 
             float scrollbarWidth = 20f;
-            float totalHeight = rewards.Count * (CardHeight + CardSpacing);
+            float totalHeight = session.Rewards.Count * (CardHeight + CardSpacing);
             Rect viewRect = new(0, 0, contentRect.width - scrollbarWidth, totalHeight);
 
             Widgets.BeginScrollView(contentRect, ref scrollPosition, viewRect);
             UI_Cursor cur = new(0f, 0f, viewRect.width);
-            foreach (var reward in rewards)
+            for (int i = 0; i < session.Rewards.Count; i++)
             {
-                DrawRewardCard(cur.Row(CardHeight), reward);
+                DrawRewardCard(cur.Row(CardHeight), i);
                 cur.Gap(CardSpacing);
             }
             Widgets.EndScrollView();
+
+            DrawRefreshBar(new Rect(contentX, contentRect.yMax + 6f, ContentWidth, RefreshBarHeight - 6f));
+        }
+
+        //刷新按钮：不可刷新（次数用尽或全部锁定）时不显示
+        private void DrawRefreshBar(Rect rect)
+        {
+            if (!session.CanRefresh) return;
+
+            string label = (string)"FamiliaMyth.UI.RewardRefreshLeft".Translate(session.RerollsLeft);
+            if (Widgets.ButtonText(rect, label, drawBackground: true, doMouseoverSound: true))
+                session.Refresh();
         }
 
         private void DrawHieroglyphs(Rect rect)
@@ -188,8 +201,9 @@ namespace FamiliaMyth.UI
             }
         }
 
-        private void DrawRewardCard(Rect cardRect, IAscendReward reward)
+        private void DrawRewardCard(Rect cardRect, int index)
         {
+            var reward = session.Rewards[index];
             var color = reward.RarityColor;
             bool isMouseOver = Mouse.IsOver(cardRect);
 
@@ -205,11 +219,28 @@ namespace FamiliaMyth.UI
             if (isMouseOver)
                 Widgets.DrawBoxSolid(new Rect(cardRect.x, cardRect.y, 5f, cardRect.height), new Color(color.r, color.g, color.b, 0.2f));
 
+            // 锁定栏与选择区互不重叠，避免同帧争用点击
+            bool locked = session.IsLocked(index);
+            Rect lockRect = new(cardRect.x + 2f, cardRect.y + 2f, LockWidth - 4f, cardRect.height - 4f);
+            Rect bodyRect = new(cardRect.x + LockWidth, cardRect.y, cardRect.width - LockWidth, cardRect.height);
+
+            Widgets.DrawBoxSolid(lockRect, locked ? new Color(color.r, color.g, color.b, 0.22f) : UI_Palette.BarTrack);
+            if (Widgets.ButtonInvisible(lockRect))
+                session.ToggleLock(index);
+            TooltipHandler.TipRegion(lockRect, () => "FamiliaMyth.UI.RewardLockHint".Translate(),
+                Gen.HashCombineInt(GetHashCode(), LockHintTooltipId + index));
+
+            using (UI_Scope.Text(GameFont.Small, TextAnchor.MiddleCenter))
+            using (UI_Scope.Color(locked ? color : UI_Palette.Disabled))
+                Widgets.Label(lockRect, locked
+                    ? (string)"FamiliaMyth.UI.RewardLockMark".Translate()
+                    : (string)"FamiliaMyth.UI.RewardUnlockMark".Translate());
+
             // 标题行
             Rect titleRect = new(
-                cardRect.x + CardPadding + 5f,
-                cardRect.y + 10f,
-                cardRect.width - CardPadding * 2 - 5f,
+                bodyRect.x + CardPadding + 5f,
+                bodyRect.y + 10f,
+                bodyRect.width - CardPadding * 2 - 5f,
                 26f);
 
             using (UI_Scope.Text(GameFont.Small, TextAnchor.MiddleLeft))
@@ -234,18 +265,17 @@ namespace FamiliaMyth.UI
 
             // 描述行
             Rect descRect = new(
-                cardRect.x + CardPadding + 5f,
-                cardRect.y + 40f,
-                cardRect.width - CardPadding * 2 - 5f,
+                bodyRect.x + CardPadding + 5f,
+                bodyRect.y + 40f,
+                bodyRect.width - CardPadding * 2 - 5f,
                 35f);
             using (UI_Scope.Text(GameFont.Tiny, TextAnchor.UpperLeft))
             using (UI_Scope.Color(new Color(0.65f, 0.65f, 0.65f)))
                 Widgets.Label(descRect, reward.Description ?? "");
 
-            if (Widgets.ButtonInvisible(cardRect))
+            if (Widgets.ButtonInvisible(bodyRect))
             {
-                reward.RewardInitialize();
-                reward.Apply(pharna);
+                session.Pick(reward);
                 Close();
             }
         }

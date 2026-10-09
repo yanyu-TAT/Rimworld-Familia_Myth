@@ -1,3 +1,4 @@
+using FamiliaMyth.Feat;
 using FamiliaMyth.Pharna;
 using FamiliaMyth.UI;
 using LudeonTK;
@@ -9,6 +10,11 @@ namespace FamiliaMyth.Debug
     public static class DebugAction_Pharna
     {
         private const float DefaultAmount = 100f;
+        //调试用：一次性展示全部奖励
+        private const int DebugRewardCount = 100;
+
+        private static IEnumerable<Thing> GetThingsAtMouse() => 
+            Find.CurrentMap.thingGrid.ThingsAt(Verse.UI.MouseCell()).ToList();
 
         /// <summary>
         /// 调试指令：增加属性值
@@ -26,7 +32,7 @@ namespace FamiliaMyth.Debug
                     DebugMenuOptionMode.Tool,
                     () =>
                     {
-                        foreach (var pawn in Find.CurrentMap.thingGrid.ThingsAt(Verse.UI.MouseCell()).OfType<Pawn>())
+                        foreach (var pawn in GetThingsAtMouse().OfType<Pawn>())
                         {
                             var pharna = pawn.GetPharna();
                             pharna?.GainStatus(type, DefaultAmount);
@@ -60,27 +66,24 @@ namespace FamiliaMyth.Debug
         public static void AddAscendReward()
         {
             var options = new List<DebugMenuOption>();
-            foreach (var (Factory, _) in AscendHelper.rewards)
+            foreach (var entry in AscendHelper.Entries)
             {
-                var reward = Factory();
-                reward.RewardInitialize();
+                var reward = AscendHelper.CreateReward(entry.Type);
+                if (reward == null) continue;
 
                 options.Add(new DebugMenuOption(
                     $"{reward.Label} [{reward.RewardType}]",
                     DebugMenuOptionMode.Tool,
                     () =>
                     {
-                        foreach (var pawn in Find.CurrentMap.thingGrid.ThingsAt(Verse.UI.MouseCell()).OfType<Pawn>())
+                        foreach (var pawn in GetThingsAtMouse().OfType<Pawn>())
                         {
                             var pharna = pawn.GetPharna();
                             if (pharna == null) continue;
-                            List<string> rewardNames = pharna.GetRewardNames().ToList();
-                            var r = Factory();
-                            if (!rewardNames.Contains(r.GetType().Name))
-                            {
-                                r.RewardInitialize();
-                                r.Apply(pharna);
-                            }
+
+                            var r = AscendHelper.CreateReward(entry.Type);
+                            if (r == null || pharna.HasReward(r)) continue;
+                            r.Apply(pharna);
                         }
                     }
                 ));
@@ -99,13 +102,9 @@ namespace FamiliaMyth.Debug
         {
             var pharna = pawn.GetPharna(); 
             if (pharna == null) return;
-            var rewards = AscendHelper.GetRandomRewardsFor(100, pharna).ToList();
-            if (rewards.Count > 0)
-            {
-                foreach (var reward in rewards)
-                    reward.RewardInitialize();
-                Find.WindowStack.Add(new Dialog_AscendReward(pharna, rewards));
-            }
+            var session = new AscendRewardSession(pharna, DebugRewardCount, 0);
+            if (session.Rewards.Count > 0)
+                Find.WindowStack.Add(new Dialog_AscendReward(session));
         }
 
         [DebugAction("Familia Myth", "All Developable Ability Gain +100 Proficiency",
@@ -136,7 +135,7 @@ namespace FamiliaMyth.Debug
                     DebugMenuOptionMode.Tool,
                     () =>
                     {
-                        foreach (var pawn in Find.CurrentMap.thingGrid.ThingsAt(Verse.UI.MouseCell()).OfType<Pawn>())
+                        foreach (var pawn in GetThingsAtMouse().OfType<Pawn>())
                         {
                             var pharna = pawn.GetPharna();
                             if (pharna != null)
@@ -173,24 +172,10 @@ namespace FamiliaMyth.Debug
             Find.WindowStack.Add(new Dialog_DebugOptionListLister(options));
         }
 
-        /// <summary>
-        /// 调试指令：恢复铭刻可用性
-        /// </summary>
-        [DebugAction("Familia Myth", "Inscription Available",
-            actionType = DebugActionType.ToolMapForPawns,
-            allowedGameStates = AllowedGameStates.PlayingOnMap)]
-        public static void InscriptionAvailable(Pawn pawn)
-        {
-            var pharna = pawn.GetPharna();
-            if (pharna == null) return;
-            pharna.inscriptionAvailable = true;
-            MoteMaker.ThrowText(pawn.DrawPos, pawn.Map, "Inscription available");
-        }
-
         //先置可用再走统一入口，避免绕过次数校验
         private static void ApplyInscription(PharnaStatusType? type)
         {
-            foreach (var pawn in Find.CurrentMap.thingGrid.ThingsAt(Verse.UI.MouseCell()).OfType<Pawn>())
+            foreach (var pawn in GetThingsAtMouse().OfType<Pawn>())
             {
                 var pharna = pawn.GetPharna();
                 if (pharna == null) continue;
@@ -199,6 +184,26 @@ namespace FamiliaMyth.Debug
                 pharna.TrySetInscription(type);
                 MoteMaker.ThrowText(pawn.DrawPos, pawn.Map,
                     type.HasValue ? Hediff_Pharna.GetStatusName(type.Value) : "None");
+            }
+        }
+
+        [DebugAction("Familia Myth", "Give Feat",
+            actionType = DebugActionType.ToolMap,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        public static void GiveFeat()
+        {
+            var options = new List<DebugMenuOption>();
+            foreach(var pawn in GetThingsAtMouse().OfType<Pawn>())
+            {
+                var pharna = pawn.GetPharna();
+                if (pharna == null) continue;
+
+                var feat = new FeatRecord
+                {
+                    tier = 9
+                };
+                pharna.feats.Add(feat);
+                MoteMaker.ThrowText(pawn.DrawPos, pawn.Map, "Feat Added");
             }
         }
     }

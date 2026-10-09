@@ -12,6 +12,12 @@
   <FamiliaMyth.UI.RewardTypeSkill>Skill</FamiliaMyth.UI.RewardTypeSkill>
   <FamiliaMyth.UI.RewardTypeDevelopableAbility>Developable Ability</FamiliaMyth.UI.RewardTypeDevelopableAbility>
 
+  <!-- ==================== Ascension reward dialog: refresh & lock (refresh button hides when unusable) ==================== -->
+  <FamiliaMyth.UI.RewardRefreshLeft>Refresh ({0} left)</FamiliaMyth.UI.RewardRefreshLeft>
+  <FamiliaMyth.UI.RewardLockHint>Click to toggle lock: locked cards are kept when refreshing</FamiliaMyth.UI.RewardLockHint>
+  <FamiliaMyth.UI.RewardLockMark>◆</FamiliaMyth.UI.RewardLockMark>
+  <FamiliaMyth.UI.RewardUnlockMark>◇</FamiliaMyth.UI.RewardUnlockMark>
+
   <!-- ==================== Inscription ==================== -->
   <FamiliaMyth.UI.InscriptionButton>Inscribe</FamiliaMyth.UI.InscriptionButton>
   <FamiliaMyth.UI.Cancel>Cancel</FamiliaMyth.UI.Cancel>

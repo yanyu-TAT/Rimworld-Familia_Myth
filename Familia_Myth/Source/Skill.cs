@@ -62,6 +62,8 @@ namespace FamiliaMyth.Abilities
 
         public RewardRarity Rarity => def.rarity;
 
+        public string DefName => def?.defName;
+
         public string Label => def.label;
 
         public string Description => def.description;

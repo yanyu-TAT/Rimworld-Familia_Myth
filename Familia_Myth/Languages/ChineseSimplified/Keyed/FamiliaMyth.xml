@@ -27,6 +27,9 @@
 	<!-- 升华仪式完成后追加的描述文本：升华只恢复铭刻机会，铭刻本身保留 -->
 	<FamiliaMyth.InscriptionRenewed>{god} 给予 {pawn} 的恩惠得到了升华，可以再次为 {pawn} 选择铭刻的方向了。</FamiliaMyth.InscriptionRenewed>
 
+	<!-- 升华完成但已无任何可授予奖励时的提示文本（{0}=接受者名） -->
+	<FamiliaMyth.AscendNoReward>{0} 的升华没有换来新的恩赐——已经没有可以授予的奖励了。</FamiliaMyth.AscendNoReward>
+
 	<!-- 拒绝理由：该殖民者已拥有恩惠，无法再次赋予 -->
 	<FamiliaMyth.AlreadyHavePharnaRefusion>已有恩惠</FamiliaMyth.AlreadyHavePharnaRefusion>
 	<!-- 拒绝理由：该殖民者没有恩惠，无法升华 -->
