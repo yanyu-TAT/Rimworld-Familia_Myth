@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<!-- Mod page name in the "Options - Mod options" list -->
+	<FamiliaMyth.Settings.Category>Familia Myth</FamiliaMyth.Settings.Category>
+
+	<!-- Experimental content toggle: guild quest system -->
+	<FamiliaMyth.Settings.GuildContentLabel>Experimental content · Guild quest system</FamiliaMyth.Settings.GuildContentLabel>
+	<FamiliaMyth.Settings.GuildContentDesc>Guild envoys and guild quests are still in development and may be incomplete or hurt the experience. Enable to turn them on; when disabled, no new guild quest or envoy is sent, quests already accepted finish naturally, and familia rank and upgrade points are kept.</FamiliaMyth.Settings.GuildContentDesc>
+
+</LanguageData>

@@ -1,3 +1,4 @@
+using FamiliaMyth.Core;
 using FamiliaMyth.Incidents;
 using FamiliaMyth.Quest;
 using RimWorld;
@@ -70,6 +71,14 @@ namespace FamiliaMyth.Familia
         public override void GameComponentTick()
         {
             if (CurrentTick % CheckIntervalTicks != 0) return;
+
+            //实验性内容关闭：不轮询派遣、不入队事件，并遣返在场未对话使者
+            if (!FamiliaMythSettings.GuildContentEnabled)
+            {
+                if (GameComponent_GuildEnvoyTracker.HasEnvoy) GameComponent_GuildEnvoyTracker.RemoveEnvoy();
+                return;
+            }
+
             if (GameComponent_GuildEnvoyTracker.HasEnvoy) return;
 
             //Log.Message("Trying To Issue Quest.");
@@ -174,6 +183,7 @@ namespace FamiliaMyth.Familia
         //入口校验放在任何副作用之前，避免"使者已出场才发现参数不对"的残留
         public bool StartRankUpQuest(GuildQuestGenerator gen, Map map)
         {
+            if (!FamiliaMythSettings.GuildContentEnabled) return false;
             if (gen?.def == null || map == null)
             {
                 Log.Error($"[FamiliaMyth] StartRankUpQuest 参数无效：gen={gen != null}, def={gen?.def != null}, map={map != null}");

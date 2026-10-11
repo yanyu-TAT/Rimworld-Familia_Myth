@@ -34,6 +34,12 @@ namespace FamiliaMyth.Core
         }
 
         public override string ModIdentifier => "FamiliaMyth";
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            FamiliaMythSettings.Register(Settings);
+        }
     }
 
     /// <summary>
@@ -100,6 +106,7 @@ namespace FamiliaMyth.Core
  * - [x] 调整伟业的判定
  * - [ ] 更多更合理的战斗加分项
  * - [ ] 试玩，调整数值
+ * - [ ] 大修公会任务系统
  * - [ ] 添加眷族评级对应的奖励
  * - [-] 调整部分设定及文本问题
  * - [ ] 添加更多提示和消息（如成长反馈），以及战斗日志
@@ -212,4 +219,6 @@ namespace FamiliaMyth.Core
  * 10/08 02:29 专精系统定名为 铭刻 ，实际开发计划未制定
  * 10/09 20:46 完成了专精系统，具体数值待更多调试
  * 10/10 00:38 优化了升华奖励抽取机制，添加了带锁定的刷新和保底机制
+ * 10/10 15:44 发现与模组Passer Race的不兼容，已修复；修复了伟业系统打印日志时的报错
+ * 10/11 14:52 为公会任务相关内容添加了设置项开关，作为实验性内容
  */

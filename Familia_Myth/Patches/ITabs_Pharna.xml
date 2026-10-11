@@ -10,4 +10,13 @@
     </value>
   </Operation>
 
+  <Operation Class="PatchOperationConditional">
+	<xpath>/Defs/ThingDef[@Name="PasserRace_Base_Pawn"]/inspectorTabs</xpath>
+	<match Class="PatchOperationAdd">
+	  <xpath>/Defs/ThingDef[@Name="PasserRace_Base_Pawn"]/inspectorTabs</xpath>
+		<value>
+		  <li>FamiliaMyth.UI.ITab_Pawn_Pharna</li>
+		</value>
+	</match>
+  </Operation>
 </Patch>

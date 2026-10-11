@@ -1,3 +1,4 @@
+using FamiliaMyth.Core;
 using FamiliaMyth.Familia;
 using FamiliaMyth.Quest;
 using RimWorld;
@@ -18,7 +19,9 @@ namespace FamiliaMyth.Incidents
 
         protected override bool CanFireNowSub(IncidentParms parms)
         {
-            if (parms.target is not Map map) return false;
+            //实验性内容关闭：公会任务与使者一并停发（含已排队事件的兜底）
+            if (!FamiliaMythSettings.GuildContentEnabled) return false;
+            if (parms.target is not Map) return false;
             if (GameComponent_GuildEnvoyTracker.HasEnvoy) return false;
             return AvailableCats.Any();
         }
@@ -48,6 +51,8 @@ namespace FamiliaMyth.Incidents
         //让使者携带指定任务出场（日常事件随机选任务与 Debug 指定任务共用入口）
         public static bool SpawnEnvoyWithQuest(GuildQuestGenerator gen, Map map)
         {
+            if (!FamiliaMythSettings.GuildContentEnabled) return false;
+
             //入口校验（在任何副作用之前）：gen 必须已绑定 GuildQuestDef
             if (gen?.def == null || map == null)
             {

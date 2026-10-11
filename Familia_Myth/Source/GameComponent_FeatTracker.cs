@@ -114,14 +114,11 @@ namespace FamiliaMyth.Feat
             while (battle.AbsorbedBy != null) battle = battle.AbsorbedBy;
             string battleId = battle.GetUniqueLoadID();
 
-            for (int i = 0; i < contributions.Count; i++)
-            {
-                ContributionEntry entry = contributions[i];
+            foreach (ContributionEntry entry in contributions)
                 if (entry != null && entry.pawn == pawn && entry.battleId == battleId)
                     return entry;
-            }
 
-            Log.Message($"Start Track {pawn.Name.ToStringShort} In Battle {battle.GetName()}");
+            Log.Message($"Start Track {pawn.Name?.ToStringShort ?? "Unknown"} In Battle {battle.GetName()}");
             ContributionEntry added = new(){ battleId = battleId, pawn = pawn };
             contributions.Add(added);
             return added;

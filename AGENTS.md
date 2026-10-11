@@ -13,7 +13,7 @@
 | 包 ID | `yanyu.familiamyth`                                                          |
 | 语言   | C# 10 / .NET Framework 4.7.2（`net472`，`LangVersion 10.0`）                    |
 | 游戏   | RimWorld 1.6（`Assembly-CSharp`）+ Unity（IMGUI / TextMeshPro / CoreModule）     |
-| 依赖库  | HugsLib（`ModBase` 模组基类；本项目不注册模组设置项）、Harmony 2.x（`[HarmonyPatch]`）、Royalty / Ideology DLC      |
+| 依赖库  | HugsLib（`ModBase` 模组基类 + 设置项接口 `ModSettingsPack`，设置注册见 `FamiliaMythSettings.cs`）、Harmony 2.x（`[HarmonyPatch]`）、Royalty / Ideology DLC      |
 | 可选依赖 | Odyssey（海之眷顾等部分能力需要）                                                         |
 | 输出   | SDK 风格 csproj，`BaseOutputPath` 直出 `Familia_Myth/Assemblies/Familia_Myth.dll` |
 | 远程仓库 | GitHub `yanyu-TAT/Rimworld-Familia_Myth`（main）                               |
@@ -278,7 +278,8 @@
 | | `HistoryTabHelper.cs` + `Gizmo_ManaPool.cs` | 历史窗口眷族页签接入（含失效兜底）与魔力池 Gizmo |
 | **工具与基础设施** | `WeaponHelper.cs` | 武器查询与直线索敌 / 射线工具 |
 | | `HealHelper.cs` | 伤口与断肢治疗工具 |
-| | `FamiliaMythMod.cs` | 模组主类，包含开发日志和计划 |
+| | `FamiliaMythMod.cs` | 模组主类：注册模组设置项（`Initialize`），包含开发日志和计划 |
+| | `FamiliaMythSettings.cs` | 模组设置项：实验性内容开关（`GuildContentEnabled`） |
 | | `Patch_*.cs` | Harmony 补丁（命名与异常防护细则见 C-03） |
 | | `Defs/` + `Patches/` + `Languages/` | XML 定义、条件补丁与中英本地化 |
 
