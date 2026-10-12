@@ -10,12 +10,12 @@
 | 恩惠/能力值 | `Hediff_Pharna.cs` + `StatPart_Pharna.cs` + `Patches/StatParts_Pharna.xml` |
 | 成长/经验 | `Patch_SkillGrowth.cs`、`Patch_WillGain.cs`、各 `<能力值>Gain_<来源>.cs`（力量/耐久/灵巧/敏捷/魔力） |
 | 升华/升级奖励 | `AscendHelper.cs`（注册表 + `AscendRewardSession`：刷新 / 锁定 / 保底）+ `Dialog_AscendReward.cs` + 仪式类 |
-| 魔法框架 | `Spell.cs`（继承原版 Ability）+ `SpellDef.cs` |
+| 魔法框架 | `Spell.cs`（继承原版 Ability）+ `SpellDef.cs` + `Command_Spell.cs`（图标命令，继承原版 `Command_Psycast`：让原版心灵熵条预览施法熵消耗，并在角标与描述中显示魔力消耗） |
 | 咏唱 | `Verb_CastSpell.cs` / `Mote_Incantation.cs` / `Mote_MagicCircle.cs` |
 | 魔法弹 | `Projectile_MagicMissileBase.cs` + `MagicMissileStates.cs` |
 | 技能框架 | `Skill.cs` + `SkillDef.cs` |
 | 发展能力 | `DevelopableAbility.cs` + `DevelopableAbilityDef.cs` + `StatPart_DevelopableAbility.cs` |
-| 魔力系统（精神力→魔力→魔法） | `Hediff_Pharna.cs`（`manaPool` / 常态转化 / `SpendMana`）+ `Defs/StatDefs/PharnaStats.xml`（`ManaMax` / `ManaConversion` / `ManaConversionSpeed` / `ManaControl`）+ `StatPart_ManaControl.cs` + `Gizmo_ManaPool.cs`（池条与自动转化角标） |
+| 魔力系统（精神力→魔力→魔法） | `Hediff_Pharna.cs`（`manaPool` / 常态转化 / `SpendMana`）+ `Defs/StatDefs/PharnaStats.xml`（`ManaMax` / `ManaConversion` / `ManaConversionSpeed` / `ManaControl`）+ `StatPart_ManaControl.cs` + `Gizmo_ManaPool.cs`（池条 / 自动转化角标 / 悬停魔法时的魔力消耗预览段） |
 | 意志/美德 | `MentalState_Virtue.cs`（含触发当拍的心声飘字）+ `Defs/HediffDefs/Hediff_Virtues.xml`（五种 Buff 与范围光环）+ `Patch_Virtue_Trigger.cs`（崩溃前拦截）+ `Hediff_Pharna.TryTriggerVirtue`（概率/冷却/类型抽取） |
 | 公会 | `GameComponent_FamiliaRankTracker.cs` + `GameComponent_GuildEnvoyTracker.cs`（单槽使者）+ `GuildQuestDef/Generator*`（统一工厂 `GuildQuestGenerator.Create(def)` + `Available()` 发布预筛）+ `QuestUtilities.cs` + 任务三件套（`QuestNode_Root_*` / `QuestPart_*` / `SiteClearanceReward`，细节见 C-02）+ 世界对象交互 comp（`WorldObjectComp_*`，如物资押运的定居点按钮）+ 任务脚本（`Defs/QuestScriptDefs/`） |
 | 眷族 UI | `UI_FamiliaPage.cs` + `UI_RadarChart.cs` |

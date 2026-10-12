@@ -9,8 +9,12 @@
   <FamiliaMyth.Ability.SkillCooldown>Cooldown: {0}</FamiliaMyth.Ability.SkillCooldown>
 
   <!-- ==================== Spell ==================== -->
-  <FamiliaMyth.Ability.EntropyOverflow>{0}'s neural heat would exceed the limit</FamiliaMyth.Ability.EntropyOverflow>
-  <FamiliaMyth.Ability.NotEnoughMana>{0} does not have enough mana</FamiliaMyth.Ability.NotEnoughMana>
+  <FamiliaMyth.Ability.ManaExhaust>{0} has run out of mana; casting interrupted</FamiliaMyth.Ability.ManaExhaust>
+  <FamiliaMyth.Ability.EntropyOverlimit>{0}'s neural heat would exceed the limit; casting interrupted</FamiliaMyth.Ability.EntropyOverlimit>
+  <!-- Top-right letter on the gizmo, assembled as "<letter>: <value>" -->
+  <FamiliaMyth.Ability.ManaLetter>M</FamiliaMyth.Ability.ManaLetter>
+  <!-- Description line: {0}=mana cost of this cast (formatted on the code side) -->
+  <FamiliaMyth.Ability.ManaCost>Mana cost: {0}</FamiliaMyth.Ability.ManaCost>
   <FamiliaMyth.Ability.CancelCastLabel>Cancel {0}</FamiliaMyth.Ability.CancelCastLabel>
   <FamiliaMyth.Ability.CancelCastDesc>Cancel the {0} currently being cast</FamiliaMyth.Ability.CancelCastDesc>
   <FamiliaMyth.Ability.SpellKeyLabel>Detonate spell key: {0}</FamiliaMyth.Ability.SpellKeyLabel>
@@ -75,5 +79,5 @@
   <!-- ==================== Mana pool (Hediff_Pharna) ==================== -->
   <FamiliaMyth.Mana.PoolTitle>Mana Pool</FamiliaMyth.Mana.PoolTitle>
   <FamiliaMyth.Mana.PoolTooltip>Current mana: {0} / {1}</FamiliaMyth.Mana.PoolTooltip>
-  <FamiliaMyth.Mana.AutoConvertTooltip>Auto-conversion: while enabled, psyfocus is continuously converted into mana (and generates psychic entropy)</FamiliaMyth.Mana.AutoConvertTooltip>
+  <FamiliaMyth.Mana.AutoConvertTooltip>Auto-conversion: while enabled, psyfocus is continuously converted into mana (and generates neural heat)</FamiliaMyth.Mana.AutoConvertTooltip>
 </LanguageData>

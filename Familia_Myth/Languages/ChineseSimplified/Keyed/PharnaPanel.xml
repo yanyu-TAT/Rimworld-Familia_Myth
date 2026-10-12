@@ -16,12 +16,8 @@
 
   <!-- 能力区抬头：{0}=角色全名 {1}=恩惠等级 {2}=经验值 -->
   <FamiliaMyth.Panel.Header>{0}　Lv.{1}　经验 {2}</FamiliaMyth.Panel.Header>
-  <!-- 能力行评级：{0}=等级标签 -->
-  <FamiliaMyth.Panel.StatusRank>{0}</FamiliaMyth.Panel.StatusRank>
   <!-- 能力行数值：{0}=当前值 {1}=上限 -->
   <FamiliaMyth.Panel.StatusValue>{0} / {1}</FamiliaMyth.Panel.StatusValue>
-  <!-- 潜在值：{0}=带符号数值 -->
-  <FamiliaMyth.Panel.Potential>潜在 {0}</FamiliaMyth.Panel.Potential>
   <!-- 六维行 tooltip：{0}=当前值 {1}=潜在值 {2}=总计 -->
   <FamiliaMyth.Panel.StatusTooltip>当前 {0}　潜在 {1}　总计 {2}</FamiliaMyth.Panel.StatusTooltip>
   <!-- 六维行 tooltip：{0}=成长效率百分比（已在代码侧格式化） -->

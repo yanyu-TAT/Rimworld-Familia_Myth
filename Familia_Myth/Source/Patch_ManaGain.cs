@@ -1,3 +1,4 @@
+using System.Reflection;
 using FamiliaMyth.Abilities;
 using FamiliaMyth.Pharna;
 using HarmonyLib;
@@ -96,6 +97,59 @@ namespace FamiliaMyth.Patch
                 {
                     Log.Error($"[FamiliaMyth] {nameof(Patch_ManaGain_NeedsPsyfocus)} error: {ex}");
                 }
+            }
+        }
+    }
+
+    /// <summary>
+    /// 有魔法但无原版灵能（Psylink）的眷族，在判定层被视为拥有灵能。
+    /// 仅覆盖返回值，<see cref="Pawn_PsychicEntropyTracker.Psylink"/> 本身仍为 null；
+    /// 原版对 HasPsylink 的全部消费者均只作布尔判断，无解引用。
+    /// </summary>
+    [HarmonyPatch(typeof(Pawn), nameof(Pawn.HasPsylink), MethodType.Getter)]
+    public static class Patch_ManaGain_HasPsylink
+    {
+        public static void Postfix(Pawn __instance, ref bool __result)
+        {
+            try
+            {
+                //真灵能者直接放行，不付 GetPharna 的遍历开销
+                if (__result) return;
+                if (__instance.psychicEntropy == null) return;
+                if (__instance.GetPharna()?.spells?.Count > 0) //每次遍历可能性能开销大，之后考虑添加缓存
+                    __result = true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"[FamiliaMyth] {nameof(Patch_ManaGain_HasPsylink)} error: {ex}");
+            }
+        }
+    }
+
+    /// <summary>
+    /// 让有魔法但无灵能的眷族也按段位衰减 Psyfocus，使「冥想回精神力」成为闭环。
+    /// 原值为 0 当且仅当 GetPsylinkLevel() == 0（FallRatePerPsyfocusBand 三项恒为正）。
+    /// </summary>
+    [HarmonyPatch]
+    public static class Patch_ManaGain_PsyfocusFall
+    {
+        //PsyfocusFallPerDay 为 private 属性，无法用 nameof 定位
+        public static MethodBase TargetMethod()
+        {
+            return AccessTools.PropertyGetter(typeof(Pawn_PsychicEntropyTracker), "PsyfocusFallPerDay");
+        }
+
+        public static void Postfix(Pawn_PsychicEntropyTracker __instance, ref float __result)
+        {
+            try
+            {
+                if (__result > 0f) return;
+                if (__instance.Pawn?.GetPharna()?.spells?.Count > 0)    //同前 :119
+                    __result = Pawn_PsychicEntropyTracker.FallRatePerPsyfocusBand[__instance.PsyfocusBand];
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"[FamiliaMyth] {nameof(Patch_ManaGain_PsyfocusFall)} error: {ex}");
             }
         }
     }

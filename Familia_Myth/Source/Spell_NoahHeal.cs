@@ -25,7 +25,7 @@ namespace FamiliaMyth.Abilities
             if (caster == null || targetPawn == null) return;
 
             targetPawn.TendInjuries(null, 1f, caster);
-            targetPawn.HealInjuries(10f, caster);
+            targetPawn.HealInjuries(HealBudget, caster);
 
             // 添加愈合加速光环；其伟业贡献由 HediffComp_FeatSupport 按实际生效时间累计
             var aura = targetPawn.health.AddHediff(HediffDef);

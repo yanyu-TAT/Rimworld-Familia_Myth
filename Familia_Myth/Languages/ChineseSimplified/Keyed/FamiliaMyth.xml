@@ -43,8 +43,6 @@
 	
 	<!-- 经验值 -->
 	<FamiliaMyth.Experience>经验值</FamiliaMyth.Experience>
-	<!-- 伟业 -->
-	<FamiliaMyth.Feats>伟业</FamiliaMyth.Feats>
 
 	<!-- 眷族评级 UI：未知文化占位 -->
 	<FamiliaMyth.UnknownCulture>未知文化</FamiliaMyth.UnknownCulture>

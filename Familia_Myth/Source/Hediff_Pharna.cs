@@ -333,7 +333,7 @@ namespace FamiliaMyth.Pharna
             return spent;
         }
 
-        //返还魔力，不超过储量上限
+        //增加魔力，不超过储量上限
         public void GainMana(float amount)
         {
             if (amount <= 0f) return;
@@ -581,20 +581,17 @@ namespace FamiliaMyth.Pharna
             Scribe_Values.Look(ref lastVirtueTriggeredTick, "lastVirtueTriggeredTick", 99999);
             Scribe_Values.Look(ref currentVirtue, "currentVirtue", null);
 
-            if (Scribe.mode == LoadSaveMode.PostLoadInit && feats == null)
-                feats = new List<FeatRecord>();
-        }
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                feats ??= new List<FeatRecord>();
 
-        private static HediffDef cachedPharnaDef;
-        private static HediffDef PharnaDef => cachedPharnaDef ??= DefDatabase<HediffDef>.GetNamed("Hediff_Pharna");
-
-        [Obsolete("Use Extension Method Of Class Pawn Instead")]
-        public static Hediff_Pharna GetPharna(Pawn pawn)
-        {
-            if (pawn?.health?.hediffSet?.GetFirstHediffOfDef(PharnaDef) is Hediff_Pharna pharna)
-                return pharna;
-
-            return null;
+                //Ability.pawn 与 verb.caster 不参与 Scribe，读档后在此重建
+                foreach (var spell in spells)
+                {
+                    spell.pawn = pawn;
+                    spell.verb.caster = pawn;
+                }
+            }
         }
 
         public void SetVirtueCooldown()

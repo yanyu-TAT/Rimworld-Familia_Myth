@@ -244,3 +244,11 @@
 - 是否规范缺失: 否（属既有原则"复用原版私有实现细节必须先做可用性预检"的延伸）
 - 规范反哺: `docs/C/C-02-架构详解.md` 与 `docs/C/C-04-已实现内容清单.md` 记录兜底语义。
 - 关联: 次数 1
+
+## BUG-028 | 自管 Spell 列表读档后 `Ability.pawn` 为 null → 读档首拍 NRE 并清掉整个恩惠
+- 现象: 读档完成后下一拍，`Player.log` 报 `Exception ticking hediff (Hediff_Pharna 躯干 ticksSinceCreation=…) for pawn 赵璧. Removing hediff...`，栈为 `Ability.get_Casting` ← `Ability.CastingTick` ← `Ability.AbilityTick` ← `Spell.AbilityTick` ← `Hediff_Pharna.PostTick`（异常偏移 `[0x0000d]`）；原版 `Pawn_HealthTracker.HealthTick` 的兜底 `RemoveHediff` 把该 Hediff 直接删除，恩惠等级 / 六维能力值 / 经验 / 伟业 / 魔力池 / 技能 / 发展能力一并丢失。
+- 根因: `Hediff_Pharna` 用 `Scribe_Collections.Look(ref spells, "spells", LookMode.Deep)` 自管 `Spell`（继承原版 `Ability`）列表，而 `Ability.pawn` 与 `verb.caster` 是继承来的普通字段、**不参与 Scribe**。原版对同类自管列表在 `Verse.Hediff.ExposeData` 的 `LoadSaveMode.PostLoadInit` 阶段显式补 `ability.pawn = pawn; ability.verb.caster = pawn;`，本模组的 `PostLoadInit` 只补了 `feats`，漏掉这一步 → 读档后每个 `Spell` 的 `pawn` 均为 null。随后 `Ability.Casting` 的首个条件 `!verb.WarmingUp` 因 `Verb.WarmupStance` 在 `CasterPawn == null` 时直接 `return null` 而安全成立，代码继续求值 `pawn.jobs` → NRE（异常 IL 偏移正落在 `ldfld Ability::pawn` / `ldfld Pawn::jobs` 所在基本块）。`Skill` 与 `DevelopableAbility` 各自 `Scribe_References.Look(ref pharna)` 并经 `pharna.pawn` 间接取 Pawn，故不受影响。
+- 修复方案: 在 `Hediff_Pharna.ExposeData` 的 `PostLoadInit` 分支内遍历 `spells` 重建 `spell.pawn = pawn; spell.verb.caster = pawn;`（与原版 `Hediff` 的处理保持一致）。
+- 是否规范缺失: 是
+- 规范反哺: B-01「七、技术栈特定规范 · RimWorld 对象模型」新增"自管原版类型集合须连原版 `PostLoadInit` 重建一并照搬"一条；AGENTS.md「核心开发原则」新增对应 ✅ 条目、「八、AI 高频错误防犯清单」新增第 16 项。
+- 关联: 次数 1

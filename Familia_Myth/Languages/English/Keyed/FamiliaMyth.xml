@@ -44,8 +44,6 @@
 	<!-- Refusal: colonist does not belong to the player's current ideoligion -->
 	<FamiliaMyth.NotFamiliaMemberRefusion>Not a Familia member</FamiliaMyth.NotFamiliaMemberRefusion>
 
-	<!-- Feats -->
-	<FamiliaMyth.Feats>Feats</FamiliaMyth.Feats>
 	<!-- Experience -->
 	<FamiliaMyth.Experience>Experience</FamiliaMyth.Experience>
 

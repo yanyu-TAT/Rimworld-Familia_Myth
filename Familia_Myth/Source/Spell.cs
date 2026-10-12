@@ -113,14 +113,6 @@ namespace FamiliaMyth.Abilities
                 var tracker = pawn?.psychicEntropy;
                 if (tracker == null) return true;
 
-                float gain = def.EntropyGain - tracker.RecoveryRate * Def.WarmupTime;
-                if (tracker.WouldOverflowEntropy(gain))
-                    return "FamiliaMyth.Ability.EntropyOverflow".Translate(pawn.Name.ToStringShort);
-
-                var pharna = pawn.GetPharna();
-                if (pharna == null || Def.manaCost > pharna.manaPool)
-                    return "FamiliaMyth.Ability.NotEnoughMana".Translate(pawn.Name.ToStringShort);
-
                 return true;
             }
         }
@@ -174,7 +166,7 @@ namespace FamiliaMyth.Abilities
             //咏唱中断
             if (!verb.WarmingUp)
             {
-                Log.Message($"Left Ticks:{warmupTicksLeft}");
+                //Log.Message($"[Familia Myth] Cast Interrupted With Left Ticks:{warmupTicksLeft}");
                 CastComplete(false);
                 return;
             }
@@ -187,13 +179,29 @@ namespace FamiliaMyth.Abilities
             TickWarmUp();
             TickMagicCircle();
 
-            //咏唱时每tick消耗魔力并增加心灵熵
             var tracker = pawn?.psychicEntropy;
             var pharna = pawn?.GetPharna();
             if (tracker == null || pharna == null) return;
+
+            //检查魔力储量
+            if (pharna.manaPool < ManaCostPerTick)
+            {
+                Messages.Message("FamiliaMyth.Ability.ManaExhaust".Translate(pawn.Name?.ToStringShort ?? "Unknown"), MessageTypeDefOf.CautionInput);
+                CastComplete(false);
+                return;
+            }
+            //检查心灵熵
+            if (tracker.WouldOverflowEntropy(EntropyGainPerTick)) //WouldOverflowEntropy中有检查是否启用心灵熵限制
+            {
+                Messages.Message("FamiliaMyth.Ability.EntropyOverlimit".Translate(pawn.Name?.ToStringShort ?? "Unknown"), MessageTypeDefOf.CautionInput);
+                CastComplete(false);
+                return;
+            }
+
+            //咏唱时每tick消耗魔力并增加心灵熵
             float preEnt = tracker.EntropyValue;
             actualMana += pharna.SpendMana(ManaCostPerTick);
-            tracker.TryAddEntropy(EntropyGainPerTick);
+            tracker.TryAddEntropy(EntropyGainPerTick, overLimit: true); //是否超限已检查过，强制增加
 
             //记录实际值
             actualEnt += Mathf.Max(0, tracker.EntropyValue - preEnt);

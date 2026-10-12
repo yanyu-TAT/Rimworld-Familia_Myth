@@ -7,6 +7,11 @@ namespace FamiliaMyth.Abilities
 {
     public class SpellDef : AbilityDef
     {
+        public SpellDef()
+        {
+            gizmoClass = typeof(Command_Spell);
+        }
+
         public Type spellClass;
 
         /// <summary>

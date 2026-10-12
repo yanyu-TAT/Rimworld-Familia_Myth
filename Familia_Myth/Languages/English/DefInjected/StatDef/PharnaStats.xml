@@ -11,7 +11,7 @@
 	<PharnaMana.label>Magic</PharnaMana.label>
 	<PharnaMana.description>Increases mana conversion efficiency and maximum mana capacity.</PharnaMana.description>
 	<PharnaWill.label>Will</PharnaWill.label>
-	<PharnaWill.description>Increases psychic entropy threshold, meditation psyfocus gain, and virtue trigger chance. Reduces virtue cooldown.</PharnaWill.description>
+	<PharnaWill.description>Increases the neural heat limit, meditation psyfocus gain, and virtue trigger chance. Reduces virtue cooldown.</PharnaWill.description>
 	<PharnaExperience.label>Experience</PharnaExperience.label>
 	<PharnaExperience.description>Total experience gained through daily practice and learning. Each ability point gained also grants 1 experience.</PharnaExperience.description>
 	<ManaMax.label>Mana Capacity</ManaMax.label>

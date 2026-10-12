@@ -8,8 +8,12 @@
   <FamiliaMyth.Ability.SkillReady>可适用</FamiliaMyth.Ability.SkillReady>
   <FamiliaMyth.Ability.SkillCooldown>冷却剩余:{0}</FamiliaMyth.Ability.SkillCooldown>
   <!-- ==================== Spell ==================== -->
-  <FamiliaMyth.Ability.EntropyOverflow>{0}的心灵熵将会超出阈值</FamiliaMyth.Ability.EntropyOverflow>
-  <FamiliaMyth.Ability.NotEnoughMana>{0}的魔力不足</FamiliaMyth.Ability.NotEnoughMana>
+  <FamiliaMyth.Ability.ManaExhaust>{0}魔力耗尽，咏唱中断</FamiliaMyth.Ability.ManaExhaust>
+  <FamiliaMyth.Ability.EntropyOverlimit>{0}的心灵熵将会超出阈值，咏唱中断</FamiliaMyth.Ability.EntropyOverlimit>
+  <!-- 图标右上角角标字母，按「字母: 数值」拼装 -->
+  <FamiliaMyth.Ability.ManaLetter>魔力</FamiliaMyth.Ability.ManaLetter>
+  <!-- 图标描述行：{0}=本次施法的魔力消耗（已在代码侧格式化） -->
+  <FamiliaMyth.Ability.ManaCost>魔力消耗：{0}</FamiliaMyth.Ability.ManaCost>
   <FamiliaMyth.Ability.CancelCastLabel>取消释放{0}</FamiliaMyth.Ability.CancelCastLabel>
   <FamiliaMyth.Ability.CancelCastDesc>取消正在释放的{0}</FamiliaMyth.Ability.CancelCastDesc>
   <FamiliaMyth.Ability.SpellKeyLabel>引爆咒：{0}</FamiliaMyth.Ability.SpellKeyLabel>

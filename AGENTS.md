@@ -11,9 +11,9 @@
 | 项    | 值                                                                            |
 | ---- | ---------------------------------------------------------------------------- |
 | 包 ID | `yanyu.familiamyth`                                                          |
-| 语言   | C# 10 / .NET Framework 4.7.2（`net472`，`LangVersion 10.0`）                    |
+| 语言   | C# 10 / .NET Framework 4.7.2（`net472`，`LangVersion 10.0`，**`ImplicitUsings` 开启**）       |
 | 游戏   | RimWorld 1.6（`Assembly-CSharp`）+ Unity（IMGUI / TextMeshPro / CoreModule）     |
-| 依赖库  | HugsLib（`ModBase` 模组基类 + 设置项接口 `ModSettingsPack`，设置注册见 `FamiliaMythSettings.cs`）、Harmony 2.x（`[HarmonyPatch]`）、Royalty / Ideology DLC      |
+| 依赖库  | HugsLib（`ModBase` 模组基类 + **反射自动注册 Harmony 补丁** + 设置项接口 `ModSettingsPack`，设置注册见 `FamiliaMythSettings.cs`）、Harmony 2.x（`[HarmonyPatch]`）、Royalty / Ideology DLC      |
 | 可选依赖 | Odyssey（海之眷顾等部分能力需要）                                                         |
 | 输出   | SDK 风格 csproj，`BaseOutputPath` 直出 `Familia_Myth/Assemblies/Familia_Myth.dll` |
 | 远程仓库 | GitHub `yanyu-TAT/Rimworld-Familia_Myth`（main）                               |
@@ -65,6 +65,7 @@
 ✅ 动手前先 ilspycmd 反编译确认原版 API 签名/字段（不改则问，不凭旧记忆猜）
 ✅ 涉及未知原版 API / DLC 特性时先反编译验证，必要时联网核对当前版本用法
 ✅ 需要跨存读档保持的运行时状态，随所属对象 ExposeData 持久化，或在 Load 后从可持久化数据重建（如嘲讽 Provokers 在 PostLoadInit 重建）
+✅ 自管原版类型的集合时（如仿 `Hediff.abilities` 用 `LookMode.Deep` 自存 `Ability` 列表），必须连原版在该集合上的 `PostLoadInit` 重建一并照搬——`Ability.pawn` / `verb.caster` 这类**继承字段不参与 Scribe**，漏搬即读档首拍 NRE 并被原版兜底 `RemoveHediff` 清掉整个 Hediff（如 B-04 BUG-028）
 ✅ AcceptanceReport 语义：返回字符串（含空串）即「不接受/禁用」；表示接受用 return true（bool→WasAccepted）
 ✅ 根据文档内容使用 RimWorld / Harmony API
 ❌ 凭旧记忆写 RimWorld / Harmony API（版本差异大，易踩坑）
@@ -88,6 +89,8 @@
 ✅ 补丁方法体包裹 try-catch 并 Log.Error，防止一处报错拖垮游戏
 ✅ 重载方法必须写明参数类型数组
 ✅ 访问 Find.* 单例前判空（游戏阶段未初始化时易 NRE）
+✅ 补丁**注册**由 HugsLib 反射自动完成，项目内**不写注册代码**：`FamiliaMythMod : ModBase` → `ModBase.ApplyHarmonyPatches()` → `new Harmony(PackageIdPlayerFacing)` + `HarmonyInst.PatchAll(本程序集)`。新增补丁只需「静态类 + `[HarmonyPatch]`」即可生效，勿写 `PatchAll` / `new Harmony`（细则见 C-03）
+❌ 覆盖 `ModBase.HarmonyAutoPatch` 返回 false —— 会整体关闭本程序集的补丁注册
 ```
 
 ### 资源与性能规范（RimWorld 特有）
@@ -123,6 +126,7 @@
 ✅ 类型明显时用 var；只读字段用 readonly
 ✅ 常量数字集中为 const（见强制规范）；字符串用 $"" 插值
 ✅ 空值判断用 is null / is not null
+✅ 隐式 using 已开启（csproj `ImplicitUsings`），**实际只生成 6 项**：`System` / `System.Collections.Generic` / `System.IO` / `System.Linq` / `System.Threading` / `System.Threading.Tasks`；除这 6 项外的命名空间（`System.Reflection` / `System.Text` / `System.Net.Http` 等）**均须自行 using**
 ❌ 字符串 + 拼接循环、var 滥用（类型不明显时显式声明）
 ```
 
@@ -229,6 +233,7 @@
 | 13 | 派生名单漏列应排除类别（把该留下的对象赶走）            | 逐项列出排除集合并核对成功/失败两线口径                                       |
 | 14 | 补丁 catch 里 `return false` 静默屏蔽原版方法 / 成对 `__state` 未设哨兵值 | Prefix 的 catch 一律 `return true` 放行原版；Prefix 出错时给 `__state` 写哨兵值令 Postfix 短路（见 C-03） |
 | 15 | 随机取样前未校验候选集合非空（空集合取随机索引越界） | 取样前判空，必要时填兜底集合（见 B-04 BUG-026） |
+| 16 | 自管原版类型集合时漏搬原版 `PostLoadInit` 重建（`Ability.pawn` / `verb.caster` 等继承字段不参与 Scribe，读档为 null） | 照搬原版 `Hediff.ExposeData` 的 PostLoadInit 补回；或改持 `Scribe_References` 引用后间接取 Pawn（见 B-04 BUG-028） |
 
 ***
 
@@ -243,9 +248,10 @@
 | | `Patch_<能力值>Gain_<来源>.cs` | 各能力值的经验获取补丁 |
 | | `AscendHelper.cs`（含 `AscendRewardSession`） | 升华奖励：Def 注册表与抽取（权重 / 保底 / 确定性种子）、选取会话（刷新 / 锁定） |
 | **魔法** | `Spell*.cs` + `SpellDef.cs` | 魔法框架与具体魔法（继承原版 Ability） |
+| | `Command_Spell.cs` | 魔法图标命令（继承原版 `Command_Psycast`）：供原版心灵熵条识别并预览施法熵消耗，且角标与描述中显示魔力消耗 |
 | | `Hediff_SpellState.cs` + `Verb_CastSpell*.cs` | 魔法效果状态与咏唱 verb |
 | | `Projectile_*` + `MagicMissileStates.cs` | 魔法弹与运动状态机 |
-| | `Gizmo_ManaPool.cs` | 魔力池状态条与自动转化开关 |
+| | `Gizmo_ManaPool.cs` | 魔力池状态条、自动转化开关与施法魔力消耗预览 |
 | **技能** | `Skill*.cs` + `SkillDef.cs` | 技能框架与具体技能（主动 / 被动 / 触发） |
 | | `HediffComp_SkillState.cs` / `HediffComp_SkillInEffect.cs` | 技能状态标签与效果生命周期 |
 | | `HediffComp_DisappearsWithCounter.cs` | 按剩余次数结束效果的计数 comp |

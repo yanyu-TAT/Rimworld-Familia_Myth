@@ -393,3 +393,36 @@ battleActive / battleExitTick（超时未刷新即视为战斗结束）
 - 原版 `Ability` 是否写战斗日志由 `AbilityDef.writeCombatLog` 决定（默认 false），开启后原版会在能力使用时 `Add(new BattleLogEntry_AbilityUsed(...))`。
 
 - 出处：`decompiledFiles/Verse/Battle.cs`、`BattleLog.cs`、`LogEntry.cs`、`LogEntry_DamageResult.cs`、`BattleLogEntry_*.cs`、`Pawn.cs`、`Pawn_HealthTracker.cs`、`PawnKindDef.cs`、`DamageWorker.cs`、`DamageWorker_AddInjury.cs`、`Find.cs`、`RimWorld/Pawn_RecordsTracker.cs`、`RimWorld/Ability.cs`、`RimWorld/AbilityDef.cs`、`RimWorld/GenDate.cs`、`RimWorld.Planet/WorldGrid.cs`、`RimWorld.Planet/Tile.cs`、`RimWorld.Planet/PlanetTile.cs`、`RimWorld.Planet/CaravanIncidentUtility.cs`。
+
+## 十三、Gizmo 与 Ability 命令
+
+### MapGizmoUtility.LastMouseOverGizmo（「鼠标下的 gizmo」）
+- `MapUIOnGUI()` 用 `GizmoGridDrawer.DrawGizmoGridFor(..., out mouseoverGizmo)` 记录本帧，`MapUIUpdate()` 才把它转正为 `lastMouseOverGizmo` → **读到的是上一帧的值**；且仅在 `Find.MainTabsRoot.OpenTab == null || OpenTab == MainButtonDefOf.Inspect` 时刷新网格。
+- 出处：`decompiledFiles/RimWorld/MapGizmoUtility.cs`。
+
+### 资源条 gizmo 的「施法消耗预览」通道（两处，判据不同）
+
+| 消费者 | 判据 | 预览内容 |
+|---|---|---|
+| `PsychicEntropyGizmo.GizmoOnGUI` | `LastMouseOverGizmo as Command_Psycast`（硬编码） | 熵条叠加 `def.EntropyGain` 增量段；精神力条叠加 `def.PsyfocusCostRange.min` 消耗段 |
+| `GeneGizmo_ResourceHemogen.GizmoOnGUI` | `LastMouseOverGizmo is Command_Ability`（宽松） | 血原质条叠加 `CompAbilityEffect_HemogenCost.Props.hemogenCost` 消耗段 |
+
+- 两者节奏一致：`Mathf.Repeat(Time.time, 0.85f)`，`0.1s` 淡入、`0.25s` 起按 `0.6s` 淡出，绘制时 `GUI.color` 的 alpha 再乘 `0.7`。
+- 熵条只在 `Find.Selector.SingleSelectedThing == pawn && psychicEntropy != null && psychicEntropy.NeedToShowGizmo()` 时出现（`Verse/Pawn.cs:3362`）；`NeedToShowGizmo()` = Royalty 开启 + `PsychicSensitivity > 0` + （熵 > 0 或带 `Hediff_PsychicAmplifier`）。
+- 出处：`decompiledFiles/RimWorld/PsychicEntropyGizmo.cs`、`GeneGizmo_ResourceHemogen.cs`、`Pawn_PsychicEntropyTracker.cs`、`Verse/Pawn.cs`、`Verse/Gizmo.cs`。
+
+### Command_Ability / Command_Psycast 的构造与覆盖面
+- `Ability.GetGizmos()` 用 `Activator.CreateInstance(def.gizmoClass, this, pawn)` 建命令（**无 try-catch**），默认 `gizmoClass = typeof(Command_Ability)`；而 `Psycast.GetGizmos()` 直接 `new Command_Psycast(this, pawn)`，**不读 `gizmoClass`**。
+- `Command_Psycast` 只覆盖三处：构造 `(Psycast ability, Pawn pawn)`、`TopRightLabel`（输出 `NeuralHeatLetter` / `PsyfocusLetter`，即 `H` / `P`，值见 `Data/Royalty/Languages/*/Keyed/GameplayCommands.xml`）、`DisabledCheck`（新增 `def.level` 灵能等级与 `WouldOverflowEntropy(def.EntropyGain + 队列熵)` 两条禁用）。
+- `Command_Ability` 构造体内即解引用 `ability.def`（`category` / `LabelCap` / `hotKey` / `uiIcon` / `level` / `displayOrder`）并**虚调用 `Tooltip`** → 传入的 ability 不能为 null，且派生类 override 的 `Tooltip` 会在派生类改写 `ability` 之前先跑一次。
+- 出处：`decompiledFiles/RimWorld/Ability.cs`、`Command_Ability.cs`、`Command_Psycast.cs`、`Psycast.cs`、`AbilityDef.cs`、`Verse/Gizmo.cs`。
+
+### Ability.Initialize() 的副作用（`new Ability(pawn, def)` 会做什么）
+- 为 `def.comps` 每项 `Activator.CreateInstance(compClass)` + `Initialize(props)`；`Id == -1` 时取 `Find.UniqueIDsManager.GetNextAbilityID()`；访问 `VerbTracker.PrimaryVerb`（懒建 `new VerbTracker(this)` → 按 `def.verbProperties` 建 verb）；`def.charges > 0` 时填 `maxCharges` / `charges`。
+- 故「只想借一个 def 载体」时不要走 `new Ability(pawn, def)`（会消耗唯一 ID 并建 verb / comps），可改用 `FormatterServices.GetUninitializedObject` 造未初始化对象。
+- 出处：`decompiledFiles/RimWorld/Ability.cs:1175-1210`。
+
+### AbilityDef 的文本出口
+- `Ability.Tooltip` → `AbilityDef.GetTooltip(pawn)`，其正文为 `StatSummary(pawn).ToLineList()` 等 → **description 里的消耗行由 `StatSummary` 生成**：`AbilityPsyfocusCost`（`def.PsyfocusCost`）、`AbilityEntropyGain`（`def.EntropyGain`）、`AbilityCastingTime`、冷却、持续时间等。
+- `StatSummary` **非 virtual**；官方扩展点是 `AbilityCompProperties.ExtraStatSummary()`（virtual，被 `StatSummary` 的 comps 循环调用），但 props 侧拿不到所属 Def 的字段值。
+- 出处：`decompiledFiles/RimWorld/AbilityDef.cs`、`Verse/AbilityCompProperties.cs`。
