@@ -8,8 +8,12 @@
     <Configurations>Debug;Release;111</Configurations>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <!-- mod 目录只应出现本模组 DLL，禁止生成 .deps.json 等宿主文件 -->
+    <GenerateDependencyFile>false</GenerateDependencyFile>
     <!-- 两个目标框架的中间目录必须隔离，否则并行构建会互相覆盖 GlobalUsings 等中间文件 -->
     <IntermediateOutputPath>obj\$(Configuration)\$(TargetFramework)\</IntermediateOutputPath>
+    <!-- 两个目标框架串行构建：并行调度会互相干扰，整项目构建时报“生成失败”且不报错误 -->
+    <BuildInParallel>false</BuildInParallel>
   </PropertyGroup>
 
   <!-- RimWorld 1.6（Mono / .NET Framework 4.7.2） -->

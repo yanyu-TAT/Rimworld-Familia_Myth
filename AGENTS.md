@@ -101,8 +101,9 @@
 
 ```
 ✅ Mote/投影/纹理/相机等一次性资源用 try/finally 销毁（Material、RenderTexture、Camera、GameObject）
+✅ 同帧批量创建/销毁临时对象时用 `DestroyImmediate`——`Destroy` 延迟到帧末，上一批对象会残留在相机视野里被渲染进当前结果（见 B-04 BUG-029）
 ✅ 帧循环（DrawAt/Tick）中避免 GC 分配与 LINQ 高频调用
-✅ Mote_Incantation 等文本渲染用相机烘焙贴图，不读字体图集 CPU 数据
+✅ 咏唱词纹理取自离线预渲染 PNG（`Textures/Familia_Myth/Incantation/`，调试指令导出），运行时只读资源、不再烘焙
 ```
 
 ### 代码规范体系（三层引用）
@@ -238,6 +239,7 @@
 | 14 | 补丁 catch 里 `return false` 静默屏蔽原版方法 / 成对 `__state` 未设哨兵值 | Prefix 的 catch 一律 `return true` 放行原版；Prefix 出错时给 `__state` 写哨兵值令 Postfix 短路（见 C-03） |
 | 15 | 随机取样前未校验候选集合非空（空集合取随机索引越界） | 取样前判空，必要时填兜底集合（见 B-04 BUG-026） |
 | 16 | 自管原版类型集合时漏搬原版 `PostLoadInit` 重建（`Ability.pawn` / `verb.caster` 等继承字段不参与 Scribe，读档为 null） | 照搬原版 `Hediff.ExposeData` 的 PostLoadInit 补回；或改持 `Scribe_References` 引用后间接取 Pawn（见 B-04 BUG-028） |
+| 17 | 同帧批量创建/销毁临时对象用 `Destroy`，上一批对象残留在相机视野里被渲染进当前结果 | 用 `DestroyImmediate`；批量导出/生成类代码尤其要注意（见 B-04 BUG-029） |
 
 ***
 
@@ -291,6 +293,8 @@
 | | `FamiliaMythMod.cs` | 模组主类：注册模组设置项（`Initialize`），包含开发日志和计划 |
 | | `FamiliaMythSettings.cs` | 模组设置项：实验性内容开关（`GuildContentEnabled`） |
 | | `Patch_*.cs` | Harmony 补丁（命名与异常防护细则见 C-03） |
+| | `DebugAction_*.cs` | 开发者模式调试指令（恩惠 / 任务 / 杂项：导出咏唱词纹理） |
+| | `Mote_Incantation.cs` + `Textures/Familia_Myth/Incantation/` | 咏唱词纹理：只读离线预渲染 PNG（1.6 用调试指令导出），缺失时报错；`MeshHeight` / `TextHeightRatio` / `marginRatio` 分层控制字号与飞溅留白 |
 | | `Defs/` + `Patches/` + `Languages/` | XML 定义、条件补丁与中英本地化 |
 | | `LoadFolders.xml` + `1.6/` + `1.7/` | 双版本装载：`<v1.6>` / `<v1.7>` 各装载共享根目录与对应版本目录（细则见 B-05） |
 | | `13-同步引用库.ps1` | 从 Steam 游戏与创意工坊刷新 `lib\<版本>\` 引用副本（含哈希记录） |

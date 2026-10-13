@@ -313,7 +313,7 @@ namespace FamiliaMyth.Abilities
             matPropertyBlock.SetColor(ShaderPropertyIDs.Color, DrawColor);
 
             var mesh = MeshPool.GridPlane(def.graphicData.drawSize);
-            Graphics.DrawMesh(mesh, drawLoc, ExactRotation, DrawMat, 0, null, 0, matPropertyBlock, false, false, false);
+            Graphics.DrawMesh(mesh, Matrix4x4.TRS(drawLoc, ExactRotation, Vector3.one), DrawMat, 0, null, 0, matPropertyBlock, false, false, false);
             Comps_PostDraw();
         }
 
