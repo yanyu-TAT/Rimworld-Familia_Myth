@@ -6,16 +6,16 @@
 
 ## 一、项目身份
 
-**Familia Myth** — 基于《在地下城期待邂逅是否搞错了什么》设定的 RimWorld 1.6 模组。玩家扮演神明，通过仪式给予殖民者「神之恩惠」，让殖民者积累能力值/经验/伟业（Feat）并升华升级，成长为拥有技能、魔法、发展能力的眷族冒险者。
+**Familia Myth** — 基于《在地下城期待邂逅是否搞错了什么》设定的 RimWorld 1.6 / 1.7 双版本模组。玩家扮演神明，通过仪式给予殖民者「神之恩惠」，让殖民者积累能力值/经验/伟业（Feat）并升华升级，成长为拥有技能、魔法、发展能力的眷族冒险者。
 
 | 项    | 值                                                                            |
 | ---- | ---------------------------------------------------------------------------- |
 | 包 ID | `yanyu.familiamyth`                                                          |
-| 语言   | C# 10 / .NET Framework 4.7.2（`net472`，`LangVersion 10.0`，**`ImplicitUsings` 开启**）       |
-| 游戏   | RimWorld 1.6（`Assembly-CSharp`）+ Unity（IMGUI / TextMeshPro / CoreModule）     |
+| 语言   | C# 10 双目标：`net472`（1.6）/ `net10.0`（1.7）；单 csproj，**`ImplicitUsings` 开启**              |
+| 游戏   | RimWorld 1.6（Mono）+ 1.7（CoreCLR / .NET 10，Unity 引用面由 `UnityStubs` + `Waylith` 提供） |
 | 依赖库  | HugsLib（`ModBase` 模组基类 + **反射自动注册 Harmony 补丁** + 设置项接口 `ModSettingsPack`，设置注册见 `FamiliaMythSettings.cs`）、Harmony 2.x（`[HarmonyPatch]`）、Royalty / Ideology DLC      |
 | 可选依赖 | Odyssey（海之眷顾等部分能力需要）                                                         |
-| 输出   | SDK 风格 csproj，`BaseOutputPath` 直出 `Familia_Myth/Assemblies/Familia_Myth.dll` |
+| 输出   | 单 csproj 双目标，直出 `Familia_Myth/1.6/Assemblies` 与 `Familia_Myth/1.7/Assemblies`，由 `LoadFolders.xml` 按游戏版本装载（见 `docs/B/B-05`） |
 | 远程仓库 | GitHub `yanyu-TAT/Rimworld-Familia_Myth`（main）                               |
 
 ### 设计文档（只读参考，改动需先对齐）
@@ -32,14 +32,15 @@
 | 操作     | 命令                                                               |
 | ------ | ---------------------------------------------------------------- |
 | 并行调用工具 | 同一批次内并发发起多个互相独立的工具调用（如多个 `pwsh` / `read`） |
-| 编译     | `dotnet build Familia_Myth/Familia_Myth.csproj`（输出直写 Assemblies） |
-| 清理构建产物 | 运行 `11.bat`（清除 Assemblies 中非本模组 DLL 与 obj/）                      |
-| 反编译原版  | 通过ilspycmd输出到decompiledFiles\，详见decompiledFiles\ilspy_help.txt             |
+| 编译     | `dotnet build Familia_Myth/Familia_Myth.csproj`（一次出 1.6 + 1.7 两版；`-f net472` / `-f net10.0` 单编） |
+| 刷新引用副本 | `pwsh -File .\13-同步引用库.ps1 -Version 1.6`（或 `1.7`，需先把 Steam 切到该版本） |
+| 清理构建产物 | 运行 `11.bat`（清除 1.6 / 1.7 目录中非本模组 DLL 与 obj/）                      |
+| 反编译原版  | 通过ilspycmd输出到decompiledFiles\，详见decompiledFiles\ilspy_help.txt（1.6 程序集在 `RimWorldWin64_Data\Managed\`，1.7 在游戏根目录）             |
 | 查看游戏日志 | 项目根目录 `Player.log`                                               |
 | 检查 XML | PowerShell `[xml](Get-Content <file>)` 解析验证                      |
 | 本地化体检 | `pwsh -File .\12-本地化检查.ps1`（7 项：Def 文本覆盖 / TKey / rulesStrings / key 占位 / Keyed 中英差集 / Translate 键 / **XML 类型引用可解析性**） |
 
-> 游戏程序集引用路径为 Steam 本地目录（见 csproj），CI 上不可编译；构建与测试均在本机完成。
+> 编译引用取自 `lib\<版本>\` 副本（由 `13-同步引用库.ps1` 从 Steam 目录刷新），CI 上不可编译；构建与测试均在本机完成。双版本结构详见 `docs/B/B-05-双版本构建与发布.md`。
 
 ***
 
@@ -47,7 +48,7 @@
 
 **Allowed**：`Source/`、`Defs/`、`Patches/`、`Languages/`、`Textures/`、`Materials/`、`docs/`、XML 文件、设计文档。
 **Ask First**：csproj 程序集引用变更、`About.xml` 依赖/版本变更、破坏性重构、改动主设计文档。
-**Never Touch**：`Data/`（原版/DLC XML）、`lib/`、`Assemblies/` 中的第三方 DLL（0Harmony/HugsLib 等）、`Player.log`（仅读取分析）。
+**Never Touch**：`Data/`（原版/DLC XML）、`lib/` 中的 DLL（只由 `13-同步引用库.ps1` 刷新，禁止手工替换）、`Player.log`（仅读取分析）。
 **受控整理**：`decompiledFiles/` 仅允许按「十二 · 反编译文件管理规范」查阅，添加以及管理反编译文件，不可修改其中内容。
 
 ***
@@ -58,6 +59,9 @@
 
 ```
 ✅ 高内聚低耦合、模块职责单一、组合优于继承
+✅ 原版/第三方程序集一律经 `lib\<版本>\` 引用并标 `<Private>false</Private>`；切游戏版本后先跑 `13-同步引用库.ps1` 刷新副本
+✅ 需要按游戏版本分叉的代码用 `#if RW16` / `#if RW17`，两版产物由 `LoadFolders.xml` 装载
+❌ `<HintPath>` 指向 Steam 游戏目录（切版本即失效）、在 mod 根目录保留 `Assemblies/`（`<li>/</li>` 会让两版 DLL 同时被装载）
 ✅ 复用已有代码 — 先查 AscendHelper / HealingHelper / 扩展方法 / 现有基类，不重复造轮子
 ✅ 数值系数抽为 private const 常量（顶部集中，便于调参），避免魔法数字
 ✅ 避免过度注释 — 仅在逻辑不自明处写注释
@@ -186,11 +190,11 @@
 
 ## 六、Git 规范
 
-- 分支：`main` 唯一常驻，正式版本用 tag 发布（版本号见 `About.xml` 与主设计文档「版本计划」）
+- 分支：`main` 唯一常驻，正式版本用 tag 发布（版本号见 `About.xml` 与主设计文档「版本计划」）；双版本共存期可在 tag 名标注对应游戏版本（如 `v0.0.5-1.6-final`）
 - 提交：沿用项目现有中文描述风格（如 `添加了魔法X` / `修复了X` / `重构了X`），一句话说清变更
 - 部署/发版前必须 commit；线上问题用 `git revert` 回滚
 - ❌ `git push --force` / `git reset --hard`
-- ❌ 提交 `Data/`、`lib/`、`Assemblies/` 第三方 DLL、`obj/`、`Player.log`、临时文件（.gitignore 已覆盖）
+- ❌ 提交 `Data/`、`lib/`（引用副本）、非本模组的 DLL、`obj/`、`Player.log`、临时文件（.gitignore 已覆盖）
 
 ***
 
@@ -288,6 +292,8 @@
 | | `FamiliaMythSettings.cs` | 模组设置项：实验性内容开关（`GuildContentEnabled`） |
 | | `Patch_*.cs` | Harmony 补丁（命名与异常防护细则见 C-03） |
 | | `Defs/` + `Patches/` + `Languages/` | XML 定义、条件补丁与中英本地化 |
+| | `LoadFolders.xml` + `1.6/` + `1.7/` | 双版本装载：`<v1.6>` / `<v1.7>` 各装载共享根目录与对应版本目录（细则见 B-05） |
+| | `13-同步引用库.ps1` | 从 Steam 游戏与创意工坊刷新 `lib\<版本>\` 引用副本（含哈希记录） |
 
 > 本表只做**定位索引**：每行一句话说明该文件 / 前缀负责什么。机制细节、常量与信号约定见 `docs/C/C-02-架构详解.md`，长期约定见 `docs/C/C-03-项目长期记忆.md`，任务与内容明细见 `docs/C/C-04-已实现内容清单.md`。新增模块/文件时同步更新本表。
 
@@ -311,6 +317,7 @@
   | 新增/迁移玩家可见文本            | 按 C-03「四条文本路径」处理；新术语先补 `docs/C/C-06-本地化术语表.md`；跑 `12-本地化检查.ps1` 确认对称 |
   | 重命名类名 / 文件；增删枚举成员 | 同步 `Defs`/`Patches` 内相关引用——枚举/数值这类**裸字面值**（如 `<mode>X</mode>`）脚本抓不到，须人工全库检索；类型引用跑 `12-本地化检查.ps1` 第 [7] 项（见 B-04 BUG-020 / BUG-025） |
   | 新增依赖/工具                | 更新「项目身份」技术栈行                            |
+  | 构建/发布结构变更（目标框架 / 输出目录 / LoadFolders / 引用来源） | 更新「项目身份」输出行、「常用命令」与本条；细则写入 `docs/B/B-05-双版本构建与发布.md` |
   | 发现代码与现有规范明显偏离（或新的代码规范） | 先提出偏离点并询问是否为新的规范，确认后追加「强制规范 / 基础代码规范」   |
   | 做出架构决策                 | 追加到关键决策记录（可写 docs/C/C-02）               |
   | 修复典型 Bug               | 写入 `docs/B/B-04-BUG知识库.md`              |

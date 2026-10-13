@@ -1,15 +1,15 @@
-set "sub_folder=/Assemblies"
+@echo off
+setlocal
 set "exclude_file=Familia_Myth.dll"
-set "target_dir=%~dp0%sub_folder%"
 
-pushd "%target_dir%"
-
-for /f "delims=" %%i in ('dir /b /a-d ^| findstr /v /x "%exclude_file%"') do (
-  del "%%i"
+for %%v in (1.6 1.7) do (
+  if exist "%~dp0%%v\Assemblies" (
+    pushd "%~dp0%%v\Assemblies"
+    for /f "delims=" %%i in ('dir /b /a-d ^| findstr /v /x "%exclude_file%"') do del "%%i"
+    popd
+  )
 )
 
-cd ..
-
-rd obj /s /q
+if exist "%~dp0obj" rd /s /q "%~dp0obj"
 
 pause

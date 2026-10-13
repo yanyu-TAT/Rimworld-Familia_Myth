@@ -7,8 +7,10 @@ Familia_Myth/obj/
 .trae/
 .vs/
 Player.log
-Familia_Myth/Assemblies/*
-!Familia_Myth/Assemblies/Familia_Myth.dll
+Familia_Myth/1.6/Assemblies/*
+!Familia_Myth/1.6/Assemblies/Familia_Myth.dll
+Familia_Myth/1.7/Assemblies/*
+!Familia_Myth/1.7/Assemblies/Familia_Myth.dll
 ~$*
 ExampleMods/
 plans/
