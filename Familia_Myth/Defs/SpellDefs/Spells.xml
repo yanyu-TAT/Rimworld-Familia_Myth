@@ -32,11 +32,11 @@
         <jobDef>CastAbilityOnThingMelee</jobDef>
         <stunTargetWhileCasting>true</stunTargetWhileCasting>
 
-        <!-- 动词属性：近战接触，咏唱2秒 -->
+        <!-- 动词属性：近战接触-->
         <verbProperties>
             <verbClass>FamiliaMyth.Abilities.Verb_CastSpell_Touch</verbClass>
             <range>-1</range>
-            <warmupTime>4</warmupTime>
+            <warmupTime>4</warmupTime>	<!-- warmupTime完全由def自身根据咏唱词行数和间隔计算-->
             <drawAimPie>false</drawAimPie>
             <targetParams>
                 <canTargetPawns>true</canTargetPawns>

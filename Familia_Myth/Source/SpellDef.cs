@@ -46,6 +46,14 @@ namespace FamiliaMyth.Abilities
             return spell;
         }
 
+        public override void PostLoad()
+        {
+            base.PostLoad();
+            //根据咏唱词行数和间隔重设预热时间
+            if (verbProperties != null)
+                verbProperties.warmupTime = WarmupTime;
+        }
+
         public override IEnumerable<string> ConfigErrors()
         {
             foreach (var s in base.ConfigErrors())
