@@ -276,3 +276,11 @@
 - 是否规范缺失: 是（`UI_Cursor` 的既有设计意图正是「使高度测算与绘制共用同一套步进」，本次违反的正是它）
 - 规范反哺: `docs/C/C-03-项目长期记忆.md` 的 UI 约定追加一条——凡「测量—绘制」两处都要计算的分区高度，必须调用同一个高度函数（`SectionHeight`），不得在测量侧自行用内区高度相加。
 - 关联: 次数 1
+
+## BUG-032 | Keyed 值以 `x` 开头 → 属性说明栏显示成大写 `X`（机制未查明，已规避）
+- 现象: 恩惠身价倍率的说明栏两行（`FamiliaMyth.Stat.PharnaWealthLevel` / `...WealthExperience`）在游戏内显示为 `X` 开头，而语言文件里写的是小写 `x`。
+- 根因: **未查明**。以下环节已逐行核对且均不改大小写：`Verse/Translator.cs:53-65` `Translate` 原样返回（`PseudoTranslated` 在 `Translator.cs:109-118` 非 DevMode 直接 return original）、`Verse/TranslatorFormattedStringExtensions.cs:5-47` 仅转调、`Verse/ColoredText.cs:155` `Resolve` 只处理颜色标签、`RimWorld/StatWorker.cs:847-851` 与 `:889-901` 原文拼装、`RimWorld/StatDrawEntry.cs:158-169` 原文透传。全工程唯一能把小写变大写的只有 `Verse/TaggedString.cs:27-47` `CapitalizeFirst()`（只翻首字母；整串 `ToUpper()` 仅在串长为 1 时触发），而属性说明链路上无人调用它（`RimWorld/StatsReportUtility.cs` 中两处调用只在 `:220` / `:343` 的标签/标题）。两文件该行 `x` 均为 ASCII 码点 120，`Player.log` 无 `Exception translating`。
+- 修复方案: 键值只保留标签（`恩惠等级 (Lv.{0}) 乘数` / `Pharna level (Lv.{0}) multiplier`），**把倍数符号 `": x{0}"` 移到代码侧与 `ToStringPercent()` 结果拼接**（`StatPart_PharnaWealth.cs` 的 `ExplanationPart`）——与全库原版 101 处调用点同一写法（`RimWorld/StatPart_Age.cs:39`、`RimWorld/StatPart_Quality.cs:57` 等），改动后显示正常。
+- 是否规范缺失: 否（规避写法已与原版惯例一致）
+- 规范反哺: `docs/C/C-03-项目长期记忆.md` 的「四条文本路径」追加一条——纯前缀/符号类文本（如倍数符号 `x`）应拼接在代码侧，不写进 Keyed 值。
+- 关联: 次数 1

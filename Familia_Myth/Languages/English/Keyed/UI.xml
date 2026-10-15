@@ -35,5 +35,7 @@
   <FamiliaMyth.Stat.PharnaStatus>Current: {0} | Potential: {1}\nTotal: {2}\n</FamiliaMyth.Stat.PharnaStatus>
   <FamiliaMyth.Stat.ManaConversionSpeed>Mana conversion efficiency {0} × consciousness {1}\nConversion rate = {2} /s</FamiliaMyth.Stat.ManaConversionSpeed>
   <FamiliaMyth.Stat.FlameAffinityPrefix>Skill Flame Affinity: </FamiliaMyth.Stat.FlameAffinityPrefix>
+  <FamiliaMyth.Stat.PharnaWealthLevel>Pharna level (Lv.{0}) multiplier</FamiliaMyth.Stat.PharnaWealthLevel>
+  <FamiliaMyth.Stat.PharnaWealthExperience>Pharna experience ({0}) multiplier</FamiliaMyth.Stat.PharnaWealthExperience>
 
 </LanguageData>

@@ -249,7 +249,7 @@
 | --- | --- | --- |
 | **恩惠与成长** | `Hediff_Pharna.cs` | 恩惠状态：六维能力值 / 经验 / 伟业记录、成长与升华、铭刻、魔力池 |
 | | `PharnaUtility`（同文件内） | 恩惠与生效中技能的查询扩展 |
-| | `StatPart_*.cs` + `Patches/StatParts_*.xml` | StatDef 注入修正（恩惠系数 / 信息卡展示项 / 魔力操控） |
+| | `StatPart_*.cs` + `Patches/StatParts_*.xml` | StatDef 注入修正（恩惠系数 / 信息卡展示项 / 魔力操控）；`StatPart_PharnaWealth` 把恩惠等级与经验折入原版 `MarketValue`（顶点 ×25），经原版财富链路抬升袭击点数 |
 | | `DevelopableAbility*.cs` | 发展能力（熟练度 + StatPart 注入） |
 | | `Patch_<能力值>Gain_<来源>.cs` | 各能力值的经验获取补丁 |
 | | `AscendHelper.cs`（含 `AscendRewardSession`） | 升华奖励：Def 注册表与抽取（权重 / 保底 / 确定性种子）、选取会话（刷新 / 锁定） |

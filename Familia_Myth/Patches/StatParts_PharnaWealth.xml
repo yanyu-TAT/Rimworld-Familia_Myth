@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+    <!-- ============================================================ -->
+    <!-- Familia Myth - 恩惠身价倍率 StatPart 注入补丁                  -->
+    <!-- 将 StatPart_PharnaWealth 追加到原版 MarketValue 的 <parts>     -->
+    <!-- MarketValue 已自带 StatPart_Health / StatPart_Age，故直接追加  -->
+    <!-- 追加在末尾：先按健康与年龄缩放，再乘恩惠等级/经验倍率（顶点 ×25） -->
+    <!-- ============================================================ -->
+
+    <Operation Class="PatchOperationAdd">
+        <xpath>Defs/StatDef[defName="MarketValue"]/parts</xpath>
+        <value>
+            <li Class="FamiliaMyth.Pharna.StatPart_PharnaWealth" />
+        </value>
+    </Operation>
+
+</Patch>
