@@ -10,7 +10,7 @@ namespace FamiliaMyth.Debug
         /// 调试指令：把全部咏唱词烘焙成 PNG 落到 mod 的 Textures/Incantation/ 下。
         /// 1.7 的字体后端不提供中文字形，需在 1.6 下导出后随 mod 分发。
         /// </summary>
-        [DebugAction("Familia Myth", "导出咏唱词纹理",
+        [DebugAction("Familia Myth: Incantation Lines", "导出咏唱词纹理（会导致一次严重的卡顿）",
             actionType = DebugActionType.Action,
             allowedGameStates = AllowedGameStates.PlayingOnMap)]
         public static void DumpIncantationTextures()

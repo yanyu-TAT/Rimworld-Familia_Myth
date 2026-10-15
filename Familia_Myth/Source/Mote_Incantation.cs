@@ -215,7 +215,7 @@ namespace FamiliaMyth.Abilities
                 : Path.GetFullPath(Path.Combine(Path.GetDirectoryName(asmPath), "..", ".."));
             if (root.NullOrEmpty())
             {
-                Log.Error("[FamiliaMyth] 导出咏唱词纹理失败：拿不到 mod 根目录。");
+                Log.Error("[FamiliaMyth] 导出咏唱词纹理失败： mod 根目录获取失败。");
                 return;
             }
 
@@ -225,6 +225,9 @@ namespace FamiliaMyth.Abilities
             var lines = new HashSet<string>();
             foreach (SpellDef def in DefDatabase<SpellDef>.AllDefs)
             {
+                if (!def.spellKey.NullOrEmpty())
+                    lines.Add(def.spellKey);
+
                 if (def.incantationLines == null)
                     continue;
                 foreach (string line in def.incantationLines)

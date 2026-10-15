@@ -268,3 +268,11 @@
 - 是否规范缺失: 否（属对 Unity 动态字体语义的理解偏差，非流程遗漏）
 - 规范反哺: 无需新增规范；结论记入 C-03「运行时与构建运维约定」。
 - 关联: 次数 1
+
+## BUG-031 | 滚动视窗高度漏算分区卡外壳 → 最后一个分区的末尾条目滚不出来
+- 现象: 恩惠页签内容变长后，伟业分区最后一张卡片始终卡在滚动视窗外，滚到底也看不到完整内容（卡片更多时，最后两张都有部分被裁掉）。
+- 根因: `ITab_Pawn_Pharna.MeasureHeight()` 用各分区的**内区高度**（`AbilityInnerHeight()` / `DevelopableInnerHeight()` / `SkillSpellInnerHeight()` / `FeatInnerHeight()`）直接相加，而绘制侧每个分区实际占用的是 `SectionHeight(inner) = UI_GroupBox.TitleHeight(30) + BasicMargin×2(8) + inner`——**测量漏掉 4 份外壳共 152px**，比一张伟业卡（`FeatCardH + FeatCardGap = 78`）还高，于是最后一行必然落在 `Widgets.BeginScrollView` 的裁剪区之外。
+- 修复方案: `MeasureHeight()` 改为累加 `SectionHeight(...)`（与绘制侧调用同一个函数），并追加 `ScrollBottomPad(8)` 作为底部留白。`SkillSpellInnerHeight` / `FeatInnerHeight` 末尾已含一个条目间隔，属安全方向的富余，未再收敛。
+- 是否规范缺失: 是（`UI_Cursor` 的既有设计意图正是「使高度测算与绘制共用同一套步进」，本次违反的正是它）
+- 规范反哺: `docs/C/C-03-项目长期记忆.md` 的 UI 约定追加一条——凡「测量—绘制」两处都要计算的分区高度，必须调用同一个高度函数（`SectionHeight`），不得在测量侧自行用内区高度相加。
+- 关联: 次数 1

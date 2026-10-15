@@ -20,6 +20,8 @@ namespace FamiliaMyth.UI
         private const float SmallCardGap = 2f;
         private const float FeatCardH = 74f;
         private const float FeatCardGap = 4f;
+        //滚动内容底部留白，避免最后一行紧贴视窗下沿
+        private const float ScrollBottomPad = 8f;
 
         //能力行四段宽度：名称 / 评级 / 数值
         private const float W_Name = 80f;
@@ -116,10 +118,10 @@ namespace FamiliaMyth.UI
         }
 
         private static float MeasureHeight(Hediff_Pharna pharna)
-            => AbilityInnerHeight() + SectionGap
-             + DevelopableInnerHeight(pharna) + SectionGap
-             + SkillSpellInnerHeight(pharna) + SectionGap
-             + FeatInnerHeight(pharna);
+            => SectionHeight(AbilityInnerHeight()) + SectionGap
+             + SectionHeight(DevelopableInnerHeight(pharna)) + SectionGap
+             + SectionHeight(SkillSpellInnerHeight(pharna)) + SectionGap
+             + SectionHeight(FeatInnerHeight(pharna)) + ScrollBottomPad;
 
         //==================== 能力 ====================
 
