@@ -375,7 +375,7 @@ namespace FamiliaMyth.Pharna
             if (!autoConvert) return;
             var tracker = pawn?.psychicEntropy;
             if (tracker == null) return;
-            if (manaPool >= MaxMana) return;
+            if (manaPool + PsyfocusPerSecond * ManaConversionRate >= MaxMana) return;
 
             float spend = Mathf.Min(PsyfocusPerSecond, tracker.CurrentPsyfocus);
             if (spend <= 0f) return;
