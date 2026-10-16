@@ -68,4 +68,20 @@
 	<FamiliaMyth.Virtue.Prayer.Powerful>{god}，我不会让他们过去。</FamiliaMyth.Virtue.Prayer.Powerful>
 	<FamiliaMyth.Virtue.Prayer.Vigorous>{god}……我不会倒下。</FamiliaMyth.Virtue.Prayer.Vigorous>
 
+	<!-- ==================== 恩惠丢失与重建 ==================== -->
+	<!-- 恩惠载体 hediff 意外消失时的信件标题 -->
+	<FamiliaMyth.PharnaLost.LetterLabel>恩惠消失</FamiliaMyth.PharnaLost.LetterLabel>
+	<!-- 信件正文（{0}=殖民者名） -->
+	<FamiliaMyth.PharnaLost.LetterText>你赋予{0}的神之恩惠已消失\n但恩惠内容仍保存在其灵魂深处，要重建恩惠吗？\n\n\n\n注：若非通过DevMode自行移除，请发送完整报错日志给本模组作者。</FamiliaMyth.PharnaLost.LetterText>
+	<!-- 重建按钮：按记录重建恩惠 -->
+	<FamiliaMyth.PharnaLost.Restore>重建</FamiliaMyth.PharnaLost.Restore>
+	<!-- 重建成功提示（{0}=殖民者名） -->
+	<FamiliaMyth.PharnaLost.RestoreDone>已为 {0} 重建恩惠</FamiliaMyth.PharnaLost.RestoreDone>
+	<!-- 重建失败理由：无法创建恩惠 -->
+	<FamiliaMyth.PharnaLost.RestoreFailed>重建失败：无法创建恩惠</FamiliaMyth.PharnaLost.RestoreFailed>
+	<!-- 重建失败理由：该殖民者已持有恩惠 -->
+	<FamiliaMyth.PharnaLost.AlreadyRestored>该殖民者已持有恩惠</FamiliaMyth.PharnaLost.AlreadyRestored>
+	<!-- 放弃按钮：丢弃记录，不再提示 -->
+	<FamiliaMyth.PharnaLost.Discard>放弃</FamiliaMyth.PharnaLost.Discard>
+
 </LanguageData>

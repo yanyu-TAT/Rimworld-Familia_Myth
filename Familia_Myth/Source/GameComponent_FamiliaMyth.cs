@@ -1,4 +1,5 @@
 using FamiliaMyth.Abilities;
+using FamiliaMyth.Pharna;
 using RimWorld;
 using Verse;
 
@@ -12,6 +13,29 @@ namespace FamiliaMyth.Core
         public static GameComponent_FamiliaMyth Instance => Current.Game?.GetComponent<GameComponent_FamiliaMyth>();
 
         public static List<(int tick, Action action, Thing giver)> pendingActions = new();
+
+        public readonly Dictionary<Pawn, PharnaRecord> records = new();
+
+        public void CommitRecord(Hediff_Pharna pharna)
+        {
+            var pawn = pharna?.pawn;
+            if (pawn == null) return;
+            if (!records.TryGetValue(pawn, out var record))
+            {
+                record = new();
+                records[pawn] = record;
+            }
+            record.Record(pharna);
+        }
+
+        public void Discard(Pawn pawn)
+            => records.Remove(pawn);
+
+        public PharnaRecord GetRecord(Pawn pawn)
+        {
+            if (pawn == null) return null;
+            return records.TryGetValue(pawn, out var record) ? record : null;
+        }
 
         public static void Schedule(int tick, Action action, Thing giver)
         {
@@ -47,6 +71,33 @@ namespace FamiliaMyth.Core
                 act.action();
                 pendingActions.Remove(act);
             }
+        }
+
+        public void NotifyPharnaLost(Hediff_Pharna pharna)
+        {
+            if (Find.LetterStack == null) return;
+            CommitRecord(pharna);
+            var pawn = pharna?.pawn;
+            if (pawn == null || pawn.Destroyed || pawn.Dead || pawn.health?.hediffSet == null) return;
+            if (GetRecord(pawn) is PharnaRecord record)
+                SendLetterPharnaLost(pawn, record);
+        }
+
+        private void SendLetterPharnaLost(Pawn pawn, PharnaRecord record)
+        {
+            TaggedString label = "FamiliaMyth.PharnaLost.LetterLabel".Translate();
+            TaggedString text = "FamiliaMyth.PharnaLost.LetterText".Translate(pawn.Name?.ToStringShort ?? "Unknown");
+            LetterDef letterDef = DefDatabase<LetterDef>.GetNamed("FamiliaMyth_PharnaLost", false);
+            if (letterDef == null)
+            {
+                Log.Error("[FamiliaMyth] Can't find LetterDef FamiliaMyth_PharnaLost, using NeutralEvent instead.");
+                letterDef = LetterDefOf.NeutralEvent;
+            }
+            if (LetterMaker.MakeLetter(label, text, letterDef) is not ChoiceLetter_PharnaLost letter) return;
+            letter.title = label;
+            letter.Text = text;
+            letter.pawn = pawn;
+            Find.LetterStack.ReceiveLetter(letter);
         }
     }
 }

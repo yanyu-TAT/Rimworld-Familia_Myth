@@ -71,4 +71,20 @@
 	<FamiliaMyth.Virtue.Prayer.Powerful>{god}, I won't let them through.</FamiliaMyth.Virtue.Prayer.Powerful>
 	<FamiliaMyth.Virtue.Prayer.Vigorous>{god}... I won't fall.</FamiliaMyth.Virtue.Prayer.Vigorous>
 
+	<!-- ==================== Pharna loss and rebuild ==================== -->
+	<!-- Letter title when a Pharna hediff unexpectedly disappears -->
+	<FamiliaMyth.PharnaLost.LetterLabel>Pharna Lost</FamiliaMyth.PharnaLost.LetterLabel>
+	<!-- Letter body ({0}=colonist name) -->
+	<FamiliaMyth.PharnaLost.LetterText>The divine Pharna you granted to {0} has disappeared.\nHowever, Its contents are still preserved deep within the soul. Restore the Pharna?\n\n\n\nNote: If this was not removed manually via DevMode, please send the full error log to this mod's author.</FamiliaMyth.PharnaLost.LetterText>
+	<!-- Restore button: rebuild the Pharna from the record -->
+	<FamiliaMyth.PharnaLost.Restore>Restore</FamiliaMyth.PharnaLost.Restore>
+	<!-- Restore success message ({0}=colonist name) -->
+	<FamiliaMyth.PharnaLost.RestoreDone>Pharna restored for {0}</FamiliaMyth.PharnaLost.RestoreDone>
+	<!-- Restore failure reason: could not create the Pharna -->
+	<FamiliaMyth.PharnaLost.RestoreFailed>Restore failed: could not create the Pharna</FamiliaMyth.PharnaLost.RestoreFailed>
+	<!-- Restore failure reason: this colonist already has a Pharna -->
+	<FamiliaMyth.PharnaLost.AlreadyRestored>This colonist already has a Pharna</FamiliaMyth.PharnaLost.AlreadyRestored>
+	<!-- Discard button: discard the record and stop prompting -->
+	<FamiliaMyth.PharnaLost.Discard>Discard</FamiliaMyth.PharnaLost.Discard>
+
 </LanguageData>

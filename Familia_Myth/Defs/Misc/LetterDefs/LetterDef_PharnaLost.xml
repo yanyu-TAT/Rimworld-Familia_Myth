@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- 神之恩惠载体 hediff 意外消失时的提示信件 -->
+  <!-- 玩家可在信件中选择重建恩惠或放弃，通知由 GameComponent_FamiliaMyth 发出 -->
+
+  <LetterDef ParentName="CustomChoiceLetterBase">
+    <defName>FamiliaMyth_PharnaLost</defName>
+    <letterClass>FamiliaMyth.Pharna.ChoiceLetter_PharnaLost</letterClass>
+  </LetterDef>
+
+</Defs>

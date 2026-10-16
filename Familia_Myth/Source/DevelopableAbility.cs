@@ -114,6 +114,13 @@ namespace FamiliaMyth.Abilities
             }
         }
 
+        //指定初始化熟练度的添加方法，仅限开发者或重建恩惠时使用
+        public virtual void Apply(Hediff_Pharna p, float prof)
+        {
+            Apply(p);
+            GainProficiency(prof);
+        }
+
         public virtual void Tick() { }
 
         public virtual IEnumerable<Gizmo> GetGizmos()

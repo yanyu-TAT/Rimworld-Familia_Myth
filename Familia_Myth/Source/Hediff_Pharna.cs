@@ -1,4 +1,5 @@
 using FamiliaMyth.Abilities;
+using FamiliaMyth.Core;
 using FamiliaMyth.Feat;
 using RimWorld;
 using System.Text;
@@ -302,6 +303,19 @@ namespace FamiliaMyth.Pharna
                 ConvertPsyfocusToMana();
         }
 
+        public override void PostRemoved()
+        {
+            base.PostRemoved();
+            try
+            {
+                GameComponent_FamiliaMyth.Instance?.NotifyPharnaLost(this);
+            }
+            catch(Exception ex)
+            {
+                Log.Error($"[FamiliaMyth] Failed to cache pharna record on removal: {ex}");
+            }
+        }
+
         public void Update()
         {
             foreach (var skill in skills)
@@ -590,6 +604,24 @@ namespace FamiliaMyth.Pharna
                 {
                     spell.pawn = pawn;
                     spell.verb.caster = pawn;
+                }
+            }
+
+            if (Scribe.mode == LoadSaveMode.PostLoadInit && pawn?.health?.hediffSet != null && !pawn.health.hediffSet.hediffs.Contains(this))
+            {
+                try
+                {
+                    //part 解析失败时把本 hediff 从 hediffSet 摘除
+                    Part ??= pawn.RaceProps.body.corePart;
+                    pawn.health.AddHediff(this, Part);
+                    if (!pawn.health.hediffSet.hediffs.Contains(this))
+                        Log.Error($"[FamiliaMyth] Failed to re-add pharna to {pawn?.Name?.ToStringShort ?? "Unknown"} when loading.");
+                    else
+                        Log.Warning($"[FamiliaMyth] Failed to add pharna to {pawn?.Name?.ToStringShort ?? "Unknown"} when loading. Now re-added.");
+                }
+                catch (Exception ex)
+                {
+                    Log.Error($"[FamiliaMyth] Failed to re-add pharna after loading: {ex}");
                 }
             }
         }
