@@ -1,3 +1,4 @@
+using FamiliaMyth.Core;
 using UnityEngine;
 using Verse;
 
@@ -28,10 +29,17 @@ namespace FamiliaMyth.Pharna
             new CurvePoint(CurveMax, CurveMax),
         });
 
+        /// <summary>六维之一的内置默认曲线（共享实例，仅供参考与复制）</summary>
+        public static SimpleCurve BuiltinDefault(PharnaStatusType statusType)
+        {
+            //魔力的默认曲线为 y = x
+            return statusType == PharnaStatusType.Mana ? Identity : Default;
+        }
+
+        /// <summary>六维之一当前生效的曲线：优先玩家配置，设置未就绪时用内置默认</summary>
         public static SimpleCurve GetCurve(PharnaStatusType statusType)
         {
-            //目前全部使用默认值（魔力的默认曲线为 y = x）
-            return statusType == PharnaStatusType.Mana ? Identity : Default;
+            return FamiliaMythSettings.Curve(statusType) ?? BuiltinDefault(statusType);
         }
 
         /// <summary>把原始能力值折算为曲线有效值；定义域外取端点值。</summary>

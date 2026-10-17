@@ -250,7 +250,7 @@
 | **恩惠与成长** | `Hediff_Pharna.cs` | 恩惠状态：六维能力值 / 经验 / 伟业记录、成长与升华、铭刻、魔力池 |
 | | `PharnaUtility`（同文件内） | 恩惠与生效中技能的查询扩展 |
 | | `StatPart_*.cs` + `Patches/StatParts_*.xml` | StatDef 注入修正（恩惠系数 / 信息卡展示项 / 魔力操控）；`StatPart_PharnaWealth` 把恩惠等级与经验折入原版 `MarketValue`（顶点 ×25），经原版财富链路抬升袭击点数 |
-| | `PharnaCurve.cs` | 六维加成曲线：把原始能力值折算为系数计算用的有效值（默认轻微前缓后急，魔力维恒等） |
+| | `PharnaCurve.cs` | 六维加成曲线：把原始能力值折算为系数计算用的有效值（优先取设置页配置，未配置时用内置默认：轻微前缓后急，魔力维恒等） |
 | | `DevelopableAbility*.cs` | 发展能力（熟练度 + StatPart 注入） |
 | | `Patch_<能力值>Gain_<来源>.cs` | 各能力值的经验获取补丁 |
 | | `Hediff_Pharna.PainFactor`（override） | 耐久 → 疼痛系数：覆盖 `Hediff.PainFactor` 返回 `0.9995^s`（`s` 为 `PharnaCurve` 折算值），`GainStatus` 改耐久后刷 `DirtyPainCache`（疼痛是 Hediff 累乘值、不是 StatDef，无法经 `StatPart_Pharna` 注入） |
@@ -288,15 +288,15 @@
 | **存档级与场地** | `GameComponent_*.cs` | 存档级追踪与引擎（评级 / 使者 / 位移击退 / 定时动作） |
 | | `MapComponent_*.cs` | 地图级状态（恩惠特效管理） |
 | **表现层** | `Mote_*.cs` | 地图特效（咏唱词 / 魔法阵 / 光环 / 斩击等） |
-| | `UI_*.cs` | UI 基础设施与页面：`UI_Palette` 全局色源 / `UI_Scope` GUI 状态作用域 / `UI_Text` 度量与截断 / `UI_Bar` 进度条与门槛刻度 / `UI_Layout` 纵向游标 / `UI_GroupBox` 卡片 / `UI_RadarChart` 雷达图 / `UI_FamiliaPage` 眷族页 |
+| | `UI_*.cs` | UI 基础设施与页面：`UI_Palette` 全局色源 / `UI_Scope` GUI 状态作用域 / `UI_Text` 度量与截断 / `UI_Bar` 进度条与门槛刻度 / `UI_Layout` 纵向游标 / `UI_GroupBox` 卡片 / `UI_RadarChart` 雷达图 / `UI_FamiliaPage` 眷族页 / `UI_SettingsPage` 模组设置页 / `UI_CurveEditor` 曲线编辑器 |
 | | `Window_FamiliaBase.cs` + `Dialog_AscendReward.cs` | 窗口基类（内容区模板 + 初始尺寸换算）与升华奖励弹窗（符文动画） |
 | | `ITab_Pawn_Pharna.cs` | Pawn 级「恩惠」页签：能力 / 发展能力 / 技能·魔法 / 伟业 四分区（仅受恩惠者可见），顶栏含铭刻选取 |
 | | `HistoryTabHelper.cs` + `Gizmo_ManaPool.cs` | 历史窗口眷族页签接入（含失效兜底）与魔力池 Gizmo |
 | **工具与基础设施** | `WeaponHelper.cs` | 武器查询与直线索敌 / 射线工具 |
 | | `HealHelper.cs` | 伤口与断肢治疗工具 |
-| | `FamiliaMythMod.cs` | 模组主类（`Verse.Mod` 子类）：构造函数内注册全部 Harmony 补丁与设置数据，包含开发日志和计划 |
-| | `FamiliaMythSettings.cs` | 模组设置项门面：实验性内容开关（`GuildContentEnabled`） |
-| | `FamiliaMythSettingsData.cs` | 模组设置数据（`ModSettings` 子类，`GetSettings<T>` 读写 Config 目录） |
+| | `FamiliaMythMod.cs` | 模组主类（`Verse.Mod` 子类）：构造函数内注册全部 Harmony 补丁与设置数据，包含开发日志和计划（文件内日志 / 计划表仅用户维护） |
+| | `FamiliaMythSettings.cs` | 模组设置项门面：实验性内容开关（`GuildContentEnabled`）与六维曲线读写（`Curve` / `ResetCurve` / `ResetAllCurves`） |
+| | `FamiliaMythSettingsData.cs` | 模组设置数据（`ModSettings` 子类，`GetSettings<T>` 读写 Config 目录）：公会开关 + 六条 `Scribe_Deep` 曲线 |
 | | `Patch_*.cs` | Harmony 补丁（命名与异常防护细则见 C-03） |
 | | `DebugAction_*.cs` | 开发者模式调试指令（恩惠 / 任务 / 杂项：导出咏唱词纹理） |
 | | `Mote_Incantation.cs` + `Textures/Familia_Myth/Incantation/` | 咏唱词纹理：只读离线预渲染 PNG（1.6 用调试指令导出），缺失时报错；`MeshHeight` / `TextHeightRatio` / `marginRatio` 分层控制字号与飞溅留白 |
@@ -314,6 +314,7 @@
 - **不加时间戳**：维护上述文档时，不在文件头部添加或更新"更新: 日期"之类的时间戳。
 - **主设定文档仅用户修改**：`Familia Myth rim.txt` 及其配套文档（`能力值效果.txt`、`能力值增长.txt`、`技能.txt`、`发展能力.txt`、`魔法.txt`、`魔法.xlsx`、`pointPreview.xlsx` 等）为权威设定来源，**仅由用户修改**；Agent 只能读取参考，不得改动或代写。
 - **计划文件统一存放 `plans/`**：用户要求生成的开发计划（如技能/特效/补充 XML 计划）一律放入根目录 `plans/`，不散落在 docs/ 或工具目录。**计划仅为阶段性思路参考，其中的代码/数值/接口可能与最终实际实现存在极大差异，落地一律以 Source/Defs 实际代码与用户确认为准，勿把计划当作已实现内容引用。**
+- **模组主类内的日志与计划表仅用户维护**：`Familia_Myth/Source/FamiliaMythMod.cs` 中的 Todo List、Develop Log、开发日志、计划表等记录均**只由用户维护**；Agent 不得新增、修改、删除、整理或"顺手补一条"。需要记录进度时写 `docs/C/C-04-已实现内容清单.md` 或 `plans/`。
 
 ***
 

@@ -1,4 +1,5 @@
 using HarmonyLib;
+using UnityEngine;
 using Verse;
 
 namespace FamiliaMyth.Core
@@ -43,6 +44,26 @@ namespace FamiliaMyth.Core
         /// 模组设置数据
         /// </summary>
         public FamiliaMythSettingsData SettingsData => GetSettings<FamiliaMythSettingsData>();
+
+        /// <summary>
+        /// 「选项 → 模组选项」中的页名；非空值决定本模组是否出现在该列表
+        /// </summary>
+        public override string SettingsCategory() => "FamiliaMyth.Settings.Category".Translate();
+
+        /// <summary>
+        /// 设置页内容
+        /// </summary>
+        public override void DoSettingsWindowContents(Rect inRect)
+        {
+            try
+            {
+                UI.UI_SettingsPage.Draw(inRect);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("[FamiliaMyth] Failed to draw settings window: " + ex);
+            }
+        }
 
         /// <summary>
         /// 注册本程序集的全部 Harmony 补丁
@@ -266,5 +287,6 @@ namespace FamiliaMyth.Core
  * 10/16 17:52 发现魔力自动恢复溢出的问题，已修复
  * 10/17 13:13 为持有恩惠者的死亡信件添加了额外内容
  * 10/17 19:13 完成了第二轮数值平衡，对应的曲线未接入设置项
- * 10/17 19:46 移除了对HugsLib的依赖，补丁注册与模组设置数据改由原版接口实现
+ * 10/17 19:46 移除了对HugsLib的依赖
+ * 10/17 20:34 完成了模组设置页
  */

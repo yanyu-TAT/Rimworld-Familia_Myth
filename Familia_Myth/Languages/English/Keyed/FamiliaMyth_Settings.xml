@@ -4,8 +4,19 @@
 	<!-- Mod page name in the "Options - Mod options" list -->
 	<FamiliaMyth.Settings.Category>Familia Myth</FamiliaMyth.Settings.Category>
 
+	<!-- Group headers: experimental content / numeric settings -->
+	<FamiliaMyth.Settings.ExperimentalGroup>Experimental content</FamiliaMyth.Settings.ExperimentalGroup>
+	<FamiliaMyth.Settings.NumericGroup>Numeric settings</FamiliaMyth.Settings.NumericGroup>
+	<FamiliaMyth.Settings.NumericGroupDesc>Bonus curves for the six attributes. Changes apply immediately and are saved with the mod settings.</FamiliaMyth.Settings.NumericGroupDesc>
+
 	<!-- Experimental content toggle: guild quest system -->
-	<FamiliaMyth.Settings.GuildContentLabel>Experimental content · Guild quest system</FamiliaMyth.Settings.GuildContentLabel>
+	<FamiliaMyth.Settings.GuildContentLabel>Guild quest system</FamiliaMyth.Settings.GuildContentLabel>
 	<FamiliaMyth.Settings.GuildContentDesc>Guild envoys and guild quests are still in development and may be incomplete or hurt the experience. Enable to turn them on; when disabled, no new guild quest or envoy is sent, quests already accepted finish naturally, and familia rank and upgrade points are kept.</FamiliaMyth.Settings.GuildContentDesc>
+
+	<!-- Numeric settings - mapping curves -->
+	<FamiliaMyth.Settings.CurveSubGroup>Mapping curves</FamiliaMyth.Settings.CurveSubGroup>
+	<FamiliaMyth.Settings.CurveReset>Reset</FamiliaMyth.Settings.CurveReset>
+	<FamiliaMyth.Settings.CurveResetAll>Reset all</FamiliaMyth.Settings.CurveResetAll>
+	<FamiliaMyth.Settings.CurveHint>The curve maps a raw attribute value to the value used for bonus calculation: the horizontal axis is the raw value and the vertical axis the effective value. Drag the points to adjust; double-click empty space to add a point; right-click a middle point to remove it; the horizontal position of both end points is fixed. Dragging and adding snap to steps of 100.</FamiliaMyth.Settings.CurveHint>
 
 </LanguageData>

@@ -4,8 +4,19 @@
 	<!-- 「选项 → 模组选项」列表中的模组页名 -->
 	<FamiliaMyth.Settings.Category>Familia Myth</FamiliaMyth.Settings.Category>
 
+	<!-- 分组头：实验性内容 / 数值配置 -->
+	<FamiliaMyth.Settings.ExperimentalGroup>实验性内容</FamiliaMyth.Settings.ExperimentalGroup>
+	<FamiliaMyth.Settings.NumericGroup>数值配置</FamiliaMyth.Settings.NumericGroup>
+	<FamiliaMyth.Settings.NumericGroupDesc>六维能力值的加成曲线。修改后立即生效，并随模组设置一起保存。</FamiliaMyth.Settings.NumericGroupDesc>
+
 	<!-- 实验性内容开关：公会任务系统 -->
-	<FamiliaMyth.Settings.GuildContentLabel>实验性内容 · 公会任务系统</FamiliaMyth.Settings.GuildContentLabel>
+	<FamiliaMyth.Settings.GuildContentLabel>公会任务系统</FamiliaMyth.Settings.GuildContentLabel>
 	<FamiliaMyth.Settings.GuildContentDesc>公会使者与公会任务尚在开发中，可能存在不完整或影响体验的内容。勾选后启用；取消勾选后不再发布新的公会任务与使者，已接取的任务会自然结束，眷族评级与升级点数保留。</FamiliaMyth.Settings.GuildContentDesc>
+
+	<!-- 数值配置 → 映射曲线 -->
+	<FamiliaMyth.Settings.CurveSubGroup>映射曲线</FamiliaMyth.Settings.CurveSubGroup>
+	<FamiliaMyth.Settings.CurveReset>重置</FamiliaMyth.Settings.CurveReset>
+	<FamiliaMyth.Settings.CurveResetAll>全部重置</FamiliaMyth.Settings.CurveResetAll>
+	<FamiliaMyth.Settings.CurveHint>曲线把原始能力值映射为加成计算用的有效值：横轴为原始能力值，纵轴为有效值。拖动白点调整；双击空白处加点；右键中间点删除；两端点的横轴固定。拖动与加点按 100 吸附。</FamiliaMyth.Settings.CurveHint>
 
 </LanguageData>
