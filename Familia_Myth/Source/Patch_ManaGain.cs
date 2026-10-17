@@ -38,8 +38,8 @@ namespace FamiliaMyth.Patch
                 var pharna = pawn.GetPharna();
                 if (pharna == null) return;
 
-                //每点心灵熵0.1点
-                pharna.GainStatus(PharnaStatusType.Mana, amount * 0.1f);
+                //每点心灵熵0.25点
+                pharna.GainStatus(PharnaStatusType.Mana, amount * 0.25f);
 
                 //魔导（无该发展能力时跳过）
                 var magic = pharna.developableAbilities?.FirstOrDefault(p => p.def == MagicDef);

@@ -3,11 +3,12 @@ using Verse;
 
 namespace FamiliaMyth.Pharna
 {
-    public enum StatPartMode{
+    public enum StatPartMode
+    {
         Offset,     //加算
-        Factor,     //乘算
-        ExpDecay    //指数衰减
+        Factor      //乘算
     }
+
     public class StatPart_Pharna : StatPart
     {
         public PharnaStatusType statusType;
@@ -31,18 +32,14 @@ namespace FamiliaMyth.Pharna
                 var pharna = pawn.GetPharna();
                 if (pharna == null) return;
 
-                float status = pharna.GetFinalStatus(statusType);
+                float status = PharnaCurve.Sample(PharnaCurve.GetCurve(statusType), pharna.GetFinalStatus(statusType));
                 switch (mode)
                 {
                     case StatPartMode.Offset:
                         val += a * status; break;
                     case StatPartMode.Factor:
                         val *= 1 + a * status; break;
-                    case StatPartMode.ExpDecay:
-                        val *= (float)Math.Pow(a, status); break;
                 }
-
-                return;
             }
         }
 
@@ -73,7 +70,7 @@ namespace FamiliaMyth.Pharna
                 string s = "  Lv." + level.ToString() + " " + Hediff_Pharna.GetStatusName(statusType) + rank + curStatus.ToString() + ": ";
 
                 //添加符号
-                if (mode == StatPartMode.ExpDecay || mode == StatPartMode.Factor)
+                if (mode == StatPartMode.Factor)
                 {
                     s += "x";
                 }
@@ -98,11 +95,6 @@ namespace FamiliaMyth.Pharna
                         s += displayAsPercent
                             ? (1 + a * fullStatus).ToStringPercent()
                             : (1 + a * fullStatus).ToString("G3");
-                        break;
-                    case StatPartMode.ExpDecay:
-                        s += displayAsPercent
-                            ? ((float)Math.Pow(a, fullStatus)).ToStringPercent()
-                            : ((float)Math.Pow(a, fullStatus)).ToString("G3");
                         break;
                 }
 

@@ -37,7 +37,9 @@ namespace FamiliaMyth.Pharna
         //转化结算间隔（每秒一次）
         private const int ConvertIntervalTicks = 60;
         //经验值转化为铭刻属性的比例
-        private const float InscriptionConvertionRate = 0.08f;
+        private const float InscriptionConvertionRate = 0.12f;
+        //耐久：每点降低的疼痛系数
+        private const float PainFactorPerPoint = 0.9995f;
         private static readonly List<string> ranks = new();
 
         public float strength;      //力量
@@ -83,6 +85,9 @@ namespace FamiliaMyth.Pharna
 
         //六项当前值之和
         public float TotalStatus => strength + endurance + dexterity + agility + mana + will;
+
+        //疼痛系数：耐久越高，疼痛感知越低
+        public override float PainFactor => Mathf.Pow(PainFactorPerPoint, PharnaCurve.Sample(PharnaCurve.GetCurve(PharnaStatusType.Endurance), GetFinalStatus(PharnaStatusType.Endurance)));
 
         //美德触发间隔（10-0.001x）天
         protected int VirtueTriggerInterval => (int)((10f - 0.001 * GetFinalStatus(PharnaStatusType.Will)) * GenDate.TicksPerDay);
@@ -380,6 +385,13 @@ namespace FamiliaMyth.Pharna
             float spend = Mathf.Min(PsyfocusPerSecond, tracker.CurrentPsyfocus);
             if (spend <= 0f) return;
 
+            if (tracker.WouldOverflowEntropy(spend * 100f * EntropyPerPercent))
+            {
+                Messages.Message("FamiliaMyth.AutoManaConvert.EntropyOverlimit".Translate(pawn?.Name?.ToStringShort ?? "Unknown"), MessageTypeDefOf.CautionInput);
+                autoConvert = false;
+                return;
+            }
+
             //消耗精神力
             tracker.OffsetPsyfocusDirectly(-spend);
             //产生心灵熵
@@ -458,6 +470,8 @@ namespace FamiliaMyth.Pharna
                 case PharnaStatusType.Will: will += capped; break;
                 default: return false;
             }
+            if (type == PharnaStatusType.Endurance && pawn?.health?.hediffSet != null)
+                pawn.health.hediffSet.DirtyPainCache();
             if (gainExp)
                 GainExp(amount);
             return true;

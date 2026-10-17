@@ -4,10 +4,9 @@
     <!-- ============================================================ -->
     <!-- Familia Myth - StatPart 注入补丁                              -->
     <!-- 将 StatPart_Pharna 注入原版 StatDef 的 <parts> 列表           -->
-    <!-- k = 当前能力值 + 潜在值                                       -->
-    <!-- Offset:   val += k * a                                        -->
-    <!-- Factor:   val *= (1 + k * a)                                  -->
-    <!-- ExpDecay: val *= a ^ k                                        -->
+    <!-- s = PharnaCurve 折算后的有效能力值                            -->
+    <!-- Offset:   val += s * a                                        -->
+    <!-- Factor:   val *= (1 + s * a)                                  -->
     <!--                                                              -->
     <!-- 重构说明：改用 PatchOperationConditional 模式，参考           -->
     <!-- IsekaiLeveling 的 IsekaiStatPatches.xml 实现。                -->
@@ -18,7 +17,7 @@
 
     <!-- ==================== 力量 (Strength) ======================= -->
 
-    <!-- 近战伤害系数: val += k * 0.00075 -->
+    <!-- 近战伤害系数: val += s * 0.00075 -->
     <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="MeleeDamageFactor"]/parts</xpath>
         <match Class="PatchOperationAdd">
@@ -27,7 +26,7 @@
                 <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                     <statusType>Strength</statusType>
                     <mode>Offset</mode>
-                    <a>0.00015</a>
+                    <a>0.00075</a>
                 </li>
             </value>
         </match>
@@ -38,7 +37,7 @@
                     <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                         <statusType>Strength</statusType>
                         <mode>Offset</mode>
-                        <a>0.00015</a>
+                        <a>0.00075</a>
                     </li>
                 </parts>
             </value>
@@ -52,7 +51,7 @@
         </value>
     </Operation>
 
-    <!-- 负重能力: val *= (1 + k * 0.00050) -->
+    <!-- 负重能力: val *= (1 + s * 0.00050) -->
     <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="CarryingCapacity"]/parts</xpath>
         <match Class="PatchOperationAdd">
@@ -61,7 +60,7 @@
                 <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                     <statusType>Strength</statusType>
                     <mode>Factor</mode>
-                    <a>0.00015</a>
+                    <a>0.0005</a>
                 </li>
             </value>
         </match>
@@ -72,7 +71,7 @@
                     <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                         <statusType>Strength</statusType>
                         <mode>Factor</mode>
-                        <a>0.00015</a>
+                        <a>0.0005</a>
                     </li>
                 </parts>
             </value>
@@ -82,7 +81,7 @@
 
     <!-- ==================== 耐久 (Endurance) ===================== -->
 
-    <!-- 锐器护甲: val += k * 0.00025 -->
+    <!-- 锐器护甲: val += s * 0.00025 -->
     <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="ArmorRating_Sharp"]/parts</xpath>
         <match Class="PatchOperationAdd">
@@ -91,7 +90,7 @@
                 <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                     <statusType>Endurance</statusType>
                     <mode>Offset</mode>
-                    <a>0.00010</a>
+                    <a>0.00025</a>
                 </li>
             </value>
         </match>
@@ -102,14 +101,14 @@
                     <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                         <statusType>Endurance</statusType>
                         <mode>Offset</mode>
-                        <a>0.00010</a>
+                        <a>0.00025</a>
                     </li>
                 </parts>
             </value>
         </nomatch>
     </Operation>
 
-    <!-- 钝器护甲: val += k * 0.00025 -->
+    <!-- 钝器护甲: val += s * 0.00025 -->
     <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="ArmorRating_Blunt"]/parts</xpath>
         <match Class="PatchOperationAdd">
@@ -118,7 +117,7 @@
                 <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                     <statusType>Endurance</statusType>
                     <mode>Offset</mode>
-                    <a>0.0000625</a>
+                    <a>0.00025</a>
                 </li>
             </value>
         </match>
@@ -129,14 +128,14 @@
                     <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                         <statusType>Endurance</statusType>
                         <mode>Offset</mode>
-                        <a>0.0000625</a>
+                        <a>0.00025</a>
                     </li>
                 </parts>
             </value>
         </nomatch>
     </Operation>
 
-    <!-- 热能护甲: val += k * 0.00009 -->
+    <!-- 热能护甲: val += s * 0.00009 -->
     <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="ArmorRating_Heat"]/parts</xpath>
         <match Class="PatchOperationAdd">
@@ -145,7 +144,7 @@
                 <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                     <statusType>Endurance</statusType>
                     <mode>Offset</mode>
-                    <a>0.0000375</a>
+                    <a>0.00009</a>
                 </li>
             </value>
         </match>
@@ -156,14 +155,14 @@
                     <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                         <statusType>Endurance</statusType>
                         <mode>Offset</mode>
-                        <a>0.0000375</a>
+                        <a>0.00009</a>
                     </li>
                 </parts>
             </value>
         </nomatch>
     </Operation>
 
-    <!-- 愈合系数: val += k * 0.00007 -->
+    <!-- 愈合系数: val += s * 0.00007 -->
     <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="InjuryHealingFactor"]/parts</xpath>
         <match Class="PatchOperationAdd">
@@ -172,7 +171,7 @@
                 <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                     <statusType>Endurance</statusType>
                     <mode>Offset</mode>
-                    <a>0.000075</a>
+                    <a>0.00007</a>
                 </li>
             </value>
         </match>
@@ -183,14 +182,14 @@
                     <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                         <statusType>Endurance</statusType>
                         <mode>Offset</mode>
-                        <a>0.000075</a>
+                        <a>0.00007</a>
                     </li>
                 </parts>
             </value>
         </nomatch>
     </Operation>
 
-    <!-- 受伤系数: val *= 0.9999 ^ k -->
+    <!-- 受伤系数: val *= (1 - s * 0.00006321) -->
     <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="IncomingDamageFactor"]/parts</xpath>
         <match Class="PatchOperationAdd">
@@ -198,8 +197,8 @@
             <value>
                 <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                     <statusType>Endurance</statusType>
-                    <mode>ExpDecay</mode>
-                    <a>0.99994</a>
+                    <mode>Factor</mode>
+                    <a>-0.00006321</a>
                 </li>
             </value>
         </match>
@@ -209,15 +208,15 @@
                 <parts>
                     <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                         <statusType>Endurance</statusType>
-                        <mode>ExpDecay</mode>
-                        <a>0.99994</a>
+                        <mode>Factor</mode>
+                        <a>-0.00006321</a>
                     </li>
                 </parts>
             </value>
         </nomatch>
     </Operation>
 
-    <!-- 硬直时间: val *= 0.9995 ^ k -->
+    <!-- 硬直时间: val *= (1 - s * 0.00009933) -->
     <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="StaggerDurationFactor"]/parts</xpath>
         <match Class="PatchOperationAdd">
@@ -225,8 +224,8 @@
             <value>
                 <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                     <statusType>Endurance</statusType>
-                    <mode>ExpDecay</mode>
-                    <a>0.99993</a>
+                    <mode>Factor</mode>
+                    <a>-0.00009933</a>
                 </li>
             </value>
         </match>
@@ -236,42 +235,15 @@
                 <parts>
                     <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                         <statusType>Endurance</statusType>
-                        <mode>ExpDecay</mode>
-                        <a>0.99993</a>
+                        <mode>Factor</mode>
+                        <a>-0.00009933</a>
                     </li>
                 </parts>
             </value>
         </nomatch>
     </Operation>
 
-    <!-- 疼痛阈值: val *= 0.9995 ^ k (降低阈值=更耐痛) -->
-    <Operation Class="PatchOperationConditional">
-        <xpath>Defs/StatDef[defName="PainShockThreshold"]/parts</xpath>
-        <match Class="PatchOperationAdd">
-            <xpath>Defs/StatDef[defName="PainShockThreshold"]/parts</xpath>
-            <value>
-                <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
-                    <statusType>Endurance</statusType>
-                    <mode>ExpDecay</mode>
-                    <a>1.00006</a>
-                </li>
-            </value>
-        </match>
-        <nomatch Class="PatchOperationAdd">
-            <xpath>Defs/StatDef[defName="PainShockThreshold"]</xpath>
-            <value>
-                <parts>
-                    <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
-                        <statusType>Endurance</statusType>
-                        <mode>ExpDecay</mode>
-                        <a>1.00006</a>
-                    </li>
-                </parts>
-            </value>
-        </nomatch>
-    </Operation>
-
-    <!-- 休息下降速率: val *= 0.9998 ^ k (降低=更少需要休息) -->
+    <!-- 休息下降速率: val *= (1 - s * 0.00008647) (降低=更少需要休息) -->
     <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="RestFallRateFactor"]/parts</xpath>
         <match Class="PatchOperationAdd">
@@ -279,8 +251,8 @@
             <value>
                 <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                     <statusType>Endurance</statusType>
-                    <mode>ExpDecay</mode>
-                    <a>0.99994</a>
+                    <mode>Factor</mode>
+                    <a>-0.00008647</a>
                 </li>
             </value>
         </match>
@@ -290,8 +262,8 @@
                 <parts>
                     <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                         <statusType>Endurance</statusType>
-                        <mode>ExpDecay</mode>
-                        <a>0.99994</a>
+                        <mode>Factor</mode>
+                        <a>-0.00008647</a>
                     </li>
                 </parts>
             </value>
@@ -301,7 +273,7 @@
 
     <!-- ==================== 灵巧 (Dexterity) ===================== -->
 
-    <!-- 全局工作速度: val += k * 0.00030 -->
+    <!-- 全局工作速度: val += s * 0.00030 -->
     <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="WorkSpeedGlobal"]/parts</xpath>
         <match Class="PatchOperationAdd">
@@ -310,7 +282,7 @@
                 <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                     <statusType>Dexterity</statusType>
                     <mode>Offset</mode>
-                    <a>0.00010</a>
+                    <a>0.0003</a>
                     <displayAsPercent>false</displayAsPercent>
                 </li>
             </value>
@@ -322,7 +294,7 @@
                     <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                         <statusType>Dexterity</statusType>
                         <mode>Offset</mode>
-                        <a>0.00010</a>
+                        <a>0.0003</a>
                         <displayAsPercent>false</displayAsPercent>
                     </li>
                 </parts>
@@ -330,7 +302,7 @@
         </nomatch>
     </Operation>
 
-    <!-- 近战冷却系数: val *= 0.9998 ^ k -->
+    <!-- 近战冷却系数: val *= (1 - s * 0.00008647) -->
     <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="MeleeCooldownFactor"]/parts</xpath>
         <match Class="PatchOperationAdd">
@@ -338,8 +310,8 @@
             <value>
                 <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                     <statusType>Dexterity</statusType>
-                    <mode>ExpDecay</mode>
-                    <a>0.99994</a>
+                    <mode>Factor</mode>
+                    <a>-0.00008647</a>
                 </li>
             </value>
         </match>
@@ -349,15 +321,15 @@
                 <parts>
                     <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                         <statusType>Dexterity</statusType>
-                        <mode>ExpDecay</mode>
-                        <a>0.99994</a>
+                        <mode>Factor</mode>
+                        <a>-0.00008647</a>
                     </li>
                 </parts>
             </value>
         </nomatch>
     </Operation>
 
-    <!-- 瞄准时间: val *= 0.9995 ^ k -->
+    <!-- 瞄准时间: val *= (1 - s * 0.00009933) -->
     <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="AimingDelayFactor"]/parts</xpath>
         <match Class="PatchOperationAdd">
@@ -365,8 +337,8 @@
             <value>
                 <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                     <statusType>Dexterity</statusType>
-                    <mode>ExpDecay</mode>
-                    <a>0.99993</a>
+                    <mode>Factor</mode>
+                    <a>-0.00009933</a>
                 </li>
             </value>
         </match>
@@ -376,15 +348,15 @@
                 <parts>
                     <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                         <statusType>Dexterity</statusType>
-                        <mode>ExpDecay</mode>
-                        <a>0.99993</a>
+                        <mode>Factor</mode>
+                        <a>-0.00009933</a>
                     </li>
                 </parts>
             </value>
         </nomatch>
     </Operation>
 
-    <!-- 远程冷却: val *= 0.9998 ^ k -->
+    <!-- 远程冷却: val *= (1 - s * 0.00008647) -->
     <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="RangedCooldownFactor"]/parts</xpath>
         <match Class="PatchOperationAdd">
@@ -392,8 +364,8 @@
             <value>
                 <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                     <statusType>Dexterity</statusType>
-                    <mode>ExpDecay</mode>
-                    <a>0.99996</a>
+                    <mode>Factor</mode>
+                    <a>-0.00008647</a>
                 </li>
             </value>
         </match>
@@ -403,15 +375,15 @@
                 <parts>
                     <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                         <statusType>Dexterity</statusType>
-                        <mode>ExpDecay</mode>
-                        <a>0.99996</a>
+                        <mode>Factor</mode>
+                        <a>-0.00008647</a>
                     </li>
                 </parts>
             </value>
         </nomatch>
     </Operation>
 
-    <!-- 射击精度: val += k * 0.00030 -->
+    <!-- 射击精度: val += s * 0.00050 -->
     <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="ShootingAccuracyPawn"]/parts</xpath>
         <match Class="PatchOperationAdd">
@@ -420,7 +392,7 @@
                 <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                     <statusType>Dexterity</statusType>
                     <mode>Offset</mode>
-                    <a>0.0000625</a>
+                    <a>0.0005</a>
                 </li>
             </value>
         </match>
@@ -431,7 +403,7 @@
                     <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                         <statusType>Dexterity</statusType>
                         <mode>Offset</mode>
-                        <a>0.0000625</a>
+                        <a>0.0005</a>
                     </li>
                 </parts>
             </value>
@@ -441,7 +413,7 @@
 
     <!-- ==================== 敏捷 (Agility) ====================== -->
 
-    <!-- 移动速度: val *= (1 + k * 0.00025) -->
+    <!-- 移动速度: val *= (1 + s * 0.00025) -->
     <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="MoveSpeed"]/parts</xpath>
         <match Class="PatchOperationAdd">
@@ -450,7 +422,7 @@
                 <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                     <statusType>Agility</statusType>
                     <mode>Factor</mode>
-                    <a>0.0000375</a>
+                    <a>0.00025</a>
                 </li>
             </value>
         </match>
@@ -461,14 +433,14 @@
                     <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                         <statusType>Agility</statusType>
                         <mode>Factor</mode>
-                        <a>0.0000375</a>
+                        <a>0.00025</a>
                     </li>
                 </parts>
             </value>
         </nomatch>
     </Operation>
 
-    <!-- 近战闪避: val += k * 0.00100 (原始值，经 postProcessCurve 后映射为百分比) -->
+    <!-- 近战闪避: val += s * 0.0015 (原始值，经 postProcessCurve 后映射为百分比) -->
     <Operation Class="PatchOperationConditional">
         <xpath>Defs/StatDef[defName="MeleeDodgeChance"]/parts</xpath>
         <match Class="PatchOperationAdd">
@@ -477,7 +449,7 @@
                 <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                     <statusType>Agility</statusType>
                     <mode>Offset</mode>
-                    <a>0.0000875</a>
+                    <a>0.0015</a>
                     <displayAsPercent>false</displayAsPercent>
                 </li>
             </value>
@@ -489,7 +461,7 @@
                     <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                         <statusType>Agility</statusType>
                         <mode>Offset</mode>
-                        <a>0.0000875</a>
+                        <a>0.0015</a>
                         <displayAsPercent>false</displayAsPercent>
                     </li>
                 </parts>
@@ -538,7 +510,7 @@
                 <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                     <statusType>Will</statusType>
                     <mode>Offset</mode>
-                    <a>0.00001</a>
+                    <a>0.0001</a>
                     <displayAsPercent>true</displayAsPercent>
                 </li>
             </value>
@@ -550,7 +522,7 @@
                     <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                         <statusType>Will</statusType>
                         <mode>Offset</mode>
-                        <a>0.00001</a>
+                        <a>0.0001</a>
                         <displayAsPercent>true</displayAsPercent>
                     </li>
                 </parts>

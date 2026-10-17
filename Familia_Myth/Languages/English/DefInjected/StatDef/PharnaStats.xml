@@ -3,7 +3,7 @@
 	<PharnaStrength.label>Strength</PharnaStrength.label>
 	<PharnaStrength.description>Increases melee damage factor and carrying capacity.</PharnaStrength.description>
 	<PharnaEndurance.label>Endurance</PharnaEndurance.label>
-	<PharnaEndurance.description>Increases sharp/blunt/heat armor and healing factor. Reduces damage taken and stagger duration, increases pain shock threshold, and slows rest rate fall.</PharnaEndurance.description>
+	<PharnaEndurance.description>Increases sharp/blunt/heat armor and healing factor. Reduces damage taken, stagger duration, and pain, and slows rest rate fall.</PharnaEndurance.description>
 	<PharnaDexterity.label>Dexterity</PharnaDexterity.label>
 	<PharnaDexterity.description>Increases global work speed, shooting accuracy. Reduces melee cooldown, aiming time, and ranged cooldown.</PharnaDexterity.description>
 	<PharnaAgility.label>Agility</PharnaAgility.label>

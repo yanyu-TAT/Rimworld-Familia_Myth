@@ -5,7 +5,7 @@
   <StatDef>
     <defName>PharnaStrength</defName>
     <label>力量</label>
-    <description>提升近战伤害系数和负重能力。\n\n近战伤害系数：+k × 0.00015\n负重能力：× (1 + k × 0.00015)</description>
+    <description>提升近战伤害系数和负重能力。</description>
     <category>Pharna</category>
     <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <defaultBaseValue>0</defaultBaseValue>
@@ -30,7 +30,7 @@
   <StatDef>
     <defName>PharnaEndurance</defName>
     <label>耐久</label>
-    <description>提升锐器/钝器/热能护甲，提高愈合系数，降低受伤系数和硬直时间，提升疼痛阈值，减缓休息值下降。\n\n锐器护甲：+k × 0.00010\n钝器护甲：+k × 0.0000625\n热能护甲：+k × 0.0000375\n愈合系数：+k × 0.000075\n受伤系数：× 0.99994^k\n硬直时间：× 0.99993^k\n疼痛阈值：× 1.00006^k\n休息下降：× 0.99994^k</description>
+    <description>提升锐器/钝器/热能护甲，提高愈合系数，降低受伤系数、硬直时间和疼痛感，减缓休息值下降。</description>
     <category>Pharna</category>
     <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <defaultBaseValue>0</defaultBaseValue>
@@ -55,7 +55,7 @@
   <StatDef>
     <defName>PharnaDexterity</defName>
     <label>灵巧</label>
-    <description>提升全局工作速度，降低近战冷却和瞄准时间，缩短远程冷却，提升射击精度。\n\n全局工作速度：+k × 0.00010\n近战冷却系数：× 0.99994^k\n瞄准时间：× 0.99993^k\n远程冷却：× 0.99996^k\n射击精度：+k × 0.0000625</description>
+    <description>提升全局工作速度，降低近战冷却和瞄准时间，缩短远程冷却，提升射击精度。</description>
     <category>Pharna</category>
     <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <defaultBaseValue>0</defaultBaseValue>
@@ -80,7 +80,7 @@
   <StatDef>
     <defName>PharnaAgility</defName>
     <label>敏捷</label>
-    <description>提升移动速度，提升近战闪避和远程闪避。\n\n移动速度：× (1 + k × 0.0000375)\n近战闪避：+k × 0.0000875\n远程闪避：+k × 0.00003</description>
+    <description>提升移动速度，提升近战闪避和远程闪避。</description>
     <category>Pharna</category>
     <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <defaultBaseValue>0</defaultBaseValue>
@@ -105,7 +105,7 @@
   <StatDef>
     <defName>PharnaMana</defName>
     <label>魔力</label>
-    <description>提升魔力转化效率与魔力储量上限。\n\n魔力转化效率：+k × 0.00100\n魔力储量：+k × 0.75000</description>
+    <description>提升魔力转化效率与魔力储量上限。</description>
     <category>Pharna</category>
     <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <defaultBaseValue>0</defaultBaseValue>
@@ -130,7 +130,7 @@
   <StatDef>
     <defName>PharnaWill</defName>
     <label>意志</label>
-    <description>提升美德触发概率，缩短美德冷却间隔。\n\n美德触发概率：0.75 × (1 - e^(-0.00025 × k))\n美德冷却间隔：(10 - 0.001 × k) 天</description>
+    <description>提升美德触发概率，缩短美德冷却间隔。</description>
     <category>Pharna</category>
     <workerClass>FamiliaMyth.Abilities.StatWorker_Pharna</workerClass>
     <defaultBaseValue>0</defaultBaseValue>

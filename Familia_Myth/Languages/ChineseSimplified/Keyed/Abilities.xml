@@ -10,6 +10,7 @@
   <!-- ==================== Spell ==================== -->
   <FamiliaMyth.Ability.ManaExhaust>{0}魔力耗尽，咏唱中断</FamiliaMyth.Ability.ManaExhaust>
   <FamiliaMyth.Ability.EntropyOverlimit>{0}的心灵熵将会超出阈值，咏唱中断</FamiliaMyth.Ability.EntropyOverlimit>
+  <FamiliaMyth.AutoManaConvert.EntropyOverlimit>{0}的心灵熵将会超出阈值，魔力自动转化已关闭</FamiliaMyth.AutoManaConvert.EntropyOverlimit>
   <!-- 图标右上角角标字母，按「字母: 数值」拼装 -->
   <FamiliaMyth.Ability.ManaLetter>魔力</FamiliaMyth.Ability.ManaLetter>
   <!-- 图标描述行：{0}=本次施法的魔力消耗（已在代码侧格式化） -->

@@ -22,7 +22,7 @@ namespace FamiliaMyth.Abilities
             return mode switch
             {
                 PharnaDisplayMode.Status => GetStatusExplanation(pharna),
-                PharnaDisplayMode.Experience => GetExperienceExplanation(pharna),
+                PharnaDisplayMode.Experience => "\n",
                 PharnaDisplayMode.ManaConversionSpeed => GetManaConversionSpeedExplanation(pharna),
                 _ => ""
             };
@@ -39,28 +39,11 @@ namespace FamiliaMyth.Abilities
                 pharna.ManaConversionSpeed.ToString("F1"));
         }
 
-        private string GetExperienceExplanation(Hediff_Pharna pharna)
-        {
-            bool first = true;
-            var sb = new StringBuilder();
-            foreach (var a in Enum.GetValues(typeof(PharnaStatusType)))
-            {
-                var type = (PharnaStatusType)a;
-                string s = "  " + (first ? " " : "+");
-                if (first)
-                    first = false;
-                s += $"{(int)pharna.GetCurrentStatus(type)}({Hediff_Pharna.GetStatusName(type)})";
-                sb.AppendLine(s);
-            }
-
-            return "FamiliaMyth.Stat.PharnaExperience".Translate(sb.ToString().TrimEnd());
-        }
-
         private string GetStatusExplanation(Hediff_Pharna pharna)
         {
             float cur = pharna.GetCurrentStatus(statusType);
             float full = pharna.GetFullStatus(statusType);
-            _ = pharna.GetFinalStatus(statusType, out var explanation);
+            float final = pharna.GetFinalStatus(statusType, out var explanation);
             float pot = full - cur;
             string rank = Hediff_Pharna.GetRank(cur);
             string typeName = Hediff_Pharna.GetStatusName(statusType);
@@ -71,6 +54,9 @@ namespace FamiliaMyth.Abilities
             s += status;
 
             s += explanation;
+
+            float effective = PharnaCurve.Sample(PharnaCurve.GetCurve(statusType), final);
+            s += "\n" + "FamiliaMyth.Stat.PharnaCurveEffective".Translate(final.ToString("F0"), effective.ToString("F0"));
 
             return s;
         }
@@ -83,7 +69,7 @@ namespace FamiliaMyth.Abilities
 
             val = mode switch
             {
-                PharnaDisplayMode.Status => pharna.GetFinalStatus(statusType),
+                PharnaDisplayMode.Status => PharnaCurve.Sample(PharnaCurve.GetCurve(statusType), pharna.GetFinalStatus(statusType)),
                 PharnaDisplayMode.Experience => pharna.experience,
                 PharnaDisplayMode.ManaConversionSpeed => pharna.ManaConversionSpeed,
                 _ => -1f

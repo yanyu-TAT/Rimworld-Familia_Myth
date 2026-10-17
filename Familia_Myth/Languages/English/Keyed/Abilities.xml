@@ -11,6 +11,7 @@
   <!-- ==================== Spell ==================== -->
   <FamiliaMyth.Ability.ManaExhaust>{0} has run out of mana; casting interrupted</FamiliaMyth.Ability.ManaExhaust>
   <FamiliaMyth.Ability.EntropyOverlimit>{0}'s neural heat would exceed the limit; casting interrupted</FamiliaMyth.Ability.EntropyOverlimit>
+	<FamiliaMyth.AutoManaConvert.EntropyOverlimit>{0}'s neural heat would exceed the limit; mana auto convert stopped</FamiliaMyth.AutoManaConvert.EntropyOverlimit>
   <!-- Top-right letter on the gizmo, assembled as "<letter>: <value>" -->
   <FamiliaMyth.Ability.ManaLetter>M</FamiliaMyth.Ability.ManaLetter>
   <!-- Description line: {0}=mana cost of this cast (formatted on the code side) -->

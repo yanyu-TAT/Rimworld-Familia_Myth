@@ -18,7 +18,7 @@
                 <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                     <statusType>Agility</statusType>
                     <mode>Offset</mode>
-                    <a>0.00003</a>
+                    <a>0.000075</a>
                     <displayAsPercent>true</displayAsPercent>
                 </li>
             </value>
@@ -31,7 +31,7 @@
                     <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                         <statusType>Agility</statusType>
                         <mode>Offset</mode>
-                        <a>0.00003</a>
+                        <a>0.000075</a>
                         <displayAsPercent>true</displayAsPercent>
                     </li>
                 </value>
@@ -43,7 +43,7 @@
                         <li Class="FamiliaMyth.Pharna.StatPart_Pharna">
                             <statusType>Agility</statusType>
                             <mode>Offset</mode>
-                            <a>0.00003</a>
+                            <a>0.000075</a>
                             <displayAsPercent>true</displayAsPercent>
                         </li>
                     </parts>
