@@ -84,4 +84,7 @@
 	<!-- 放弃按钮：丢弃记录，不再提示 -->
 	<FamiliaMyth.PharnaLost.Discard>放弃</FamiliaMyth.PharnaLost.Discard>
 
+	<!-- 持有恩惠的殖民者死亡时，追加在死亡信件正文后的文本 -->
+	<FamiliaMyth.PharnaDeath.DeathLetterText>你感觉到一份来自于你的恩惠已经不再跃动。</FamiliaMyth.PharnaDeath.DeathLetterText>
+
 </LanguageData>

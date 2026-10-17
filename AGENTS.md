@@ -253,6 +253,8 @@
 | | `DevelopableAbility*.cs` | 发展能力（熟练度 + StatPart 注入） |
 | | `Patch_<能力值>Gain_<来源>.cs` | 各能力值的经验获取补丁 |
 | | `AscendHelper.cs`（含 `AscendRewardSession`） | 升华奖励：Def 注册表与抽取（权重 / 保底 / 确定性种子）、选取会话（刷新 / 锁定） |
+| | `PharnaRecord.cs` | 恩惠丢失快照（六维 / 潜在值 / 铭刻 / 等级 / 经验 / 伟业 / 魔力池 + 技能魔法发展能力 defName 与熟练度）与重建（统一工厂 + `Apply`，事后校验） |
+| | `ChoiceLetter_PharnaLost.cs` + `Defs/Misc/LetterDefs/LetterDef_PharnaLost.xml` | 恩惠意外消失信（重建 / 放弃两个按钮）；`Patch_PharnaDeathLetter.cs` 在持有恩惠者死亡信正文前置神明感知段 |
 | **魔法** | `Spell*.cs` + `SpellDef.cs` | 魔法框架与具体魔法（继承原版 Ability） |
 | | `Command_Spell.cs` | 魔法图标命令（继承原版 `Command_Psycast`）：供原版心灵熵条识别并预览施法熵消耗，且角标与描述中显示魔力消耗 |
 | | `Hediff_SpellState.cs` + `Verb_CastSpell*.cs` | 魔法效果状态与咏唱 verb |

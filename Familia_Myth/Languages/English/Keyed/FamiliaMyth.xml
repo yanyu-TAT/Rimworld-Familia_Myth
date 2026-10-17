@@ -87,4 +87,7 @@
 	<!-- Discard button: discard the record and stop prompting -->
 	<FamiliaMyth.PharnaLost.Discard>Discard</FamiliaMyth.PharnaLost.Discard>
 
+	<!-- Appended to the death letter when a colonist holding Pharna dies -->
+	<FamiliaMyth.PharnaDeath.DeathLetterText>You feel that one of the Pharna you granted has gone still.</FamiliaMyth.PharnaDeath.DeathLetterText>
+
 </LanguageData>

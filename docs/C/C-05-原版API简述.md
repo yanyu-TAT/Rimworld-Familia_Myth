@@ -258,6 +258,13 @@ GenerateShuttle(Faction owningFaction = null, IEnumerable<Pawn> requiredPawns = 
 - `TickInterval(int delta)`：同步 `Severity = level`（故 severity 即等级）；`SetLevelTo(int)` 转调 `ChangeLevel`；`ShouldRemove => level == 0`。
 - `PostAdd` 与读档 `PostLoadInit` 均要求 `Part != null`（否则 Log.Error，后者还会移除自身）→ 自定义 HediffDef 必须指定 `part`，本项目用躯干。
 - 出处：`decompiledFiles/Verse/Hediff_Level.cs`。
+- `ExposeData`：`Scribe_Values.Look(ref level, "level", 0)`；`LoadSaveMode.PostLoadInit` 且 `Part == null` 时先 `Log.Error(GetType().Name + " has null part after loading.")` 再 `pawn.health.hediffSet.hediffs.Remove(this)` —— **直接改列表、不触发 `PostRemoved`**，故依赖 `PostRemoved` 的清理 / 通知逻辑在读档期收不到该次移除。
+
+### Pawn_HealthTracker.AddHediff / HediffSet.AddDirect（失败是静默的）
+- `AddHediff(HediffDef def, BodyPartRecord part = null, ...)` 内部 `HediffMaker.MakeHediff` → `AddHediff(hediff, part, ...)`，**无论内部是否真的加入都 `return hediff`**；`part == null` 时只按 `def.defaultInstallPart` 补，补不到则 `hediff.Part` 保持 null。
+- `HediffSet.AddDirect` 的两种拒绝都是 `Log.Error` + `return`（无异常、无返回值）：`hediff.def == null`、`hediff.Part != null && !GetNotMissingParts().Contains(hediff.Part)`。
+- 结论：判定「是否真的加上了」只能用 `hediffSet.hediffs.Contains(hediff)` 或重新 `GetFirstHediffOfDef`。
+- 出处：`decompiledFiles/Verse/Pawn_HealthTracker.cs`、`Verse/HediffSet.cs`。
 
 ### StorytellerUtility 威胁点数（原版难度基准）
 - `DefaultSiteThreatPointsNow(IIncidentTarget)` = `PointsPerWealthCurve.Evaluate(财富)` + Σ`PointsPerColonistByWealthCurve.Evaluate(财富)`（每名自由殖民者；动物按 `0.08 × combatPower`、机械体另计）→ 由**全殖民地财富与人口**共同决定。
@@ -283,6 +290,12 @@ GenerateShuttle(Faction owningFaction = null, IEnumerable<Pawn> requiredPawns = 
 - 因此 **.NET 的 `{0:P0}` / `{0:F1}` 格式说明符不可用**：`:` 会让解析器把 `0` 当作函数名，最终静默替换为空串（现象与排查见 B-04 BUG-024）。需要格式化时在参数侧先 `ToStringPercent()` / `ToString("F1")`，再作为裸 `{0}` 传入。
 - 无参 `.Translate()`（`Verse/Translator.cs:53`）直接查表返回原文、**不做符号解析**，故文本中含 `{BASETEXT}` 等二次占位符是安全的。
 - 出处：`decompiledFiles/Verse/TranslatorFormattedStringExtensions.cs`、`Verse/GrammarResolverSimple.cs`、`Verse/LanguageWorker.cs`、`Verse/Translator.cs`。
+
+### 正文着色（ColoredText.Colorize）与死亡信挂载点
+- `ColoredText.Colorize(this TaggedString ts, Color color)`（`Verse/ColoredText.cs:240`）= `ts.Resolve().Colorize(color)`；`Colorize(this string, Color)`（`:245`）= `<color=#RRGGBBAA>…</color>` 包裹 → **TaggedString 可着色，但产出是 string**（`TaggedString` 本身只有 `rawText` + `Resolve()`）。
+- 信件正文经 `Dialog_NodeTree.DrawNode` 的 `Widgets.Label(rect, curNode.text.Resolve())` 绘制 → `Widgets.Label(Rect, TaggedString)` → `GUI.Label(position, label, Text.CurFontStyle)`，颜色标签随原版富文本渲染生效；尺寸测量走 `RawText.StripTags()`，不撑坏布局；`CapitalizeFirst()` 经 `FirstLetterBetweenTags()` 跳过 `<` 标签，以 `<color=…>` 开头不会被误大写。
+- 死亡信正文由 `HealthUtility.GetDiedLetterText(pawn, dinfo, hediff)` 生成（三选一：`dinfo.Value.Def.deathMessage` / `PawnDiedBecauseOf` / `PawnDied`），在 `Pawn_HealthTracker.NotifyPlayerOfKilled` 里被调用后继续追加借用殖民者 / precept / 动物等段落 → 对 `GetDiedLetterText` 做 Postfix 追加的内容**不在正文最末**；要位于最末须改挂 `LetterStack.ReceiveLetter(Letter let, string debugInfo = null, int delayTicks = 0, bool playSound = true)`（`Verse/LetterStack.cs:56`）。
+- 出处：`decompiledFiles/Verse/ColoredText.cs`、`TaggedString.cs`、`Dialog_NodeTree.cs`、`Widgets.cs`、`HealthUtility.cs`、`Pawn_HealthTracker.cs`、`LetterStack.cs`。
 
 ## 十一、理想文化（Ideo）系统
 

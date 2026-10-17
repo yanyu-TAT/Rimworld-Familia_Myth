@@ -9,6 +9,7 @@
 | 模组入口与神名 | `FamiliaMythMod.cs`（HugsLib `ModBase` 子类，**不注册模组设置项**；神名 = 当前文化主神名 `godName` ← `Ideo.KeyDeityName`；默认称呼 `DefaultGodName1`/`DefaultGodName2` + `Honorific` 与 `GodAddress` 见 C-03） |
 | 恩惠/能力值 | `Hediff_Pharna.cs` + `StatPart_Pharna.cs` + `Patches/StatParts_Pharna.xml` |
 | 成长/经验 | `Patch_SkillGrowth.cs`、`Patch_WillGain.cs`、各 `<能力值>Gain_<来源>.cs`（力量/耐久/灵巧/敏捷/魔力） |
+| 恩惠丢失重建 | `PharnaRecord.cs`（纯值快照 + 重建）+ `GameComponent_FamiliaMyth.cs`（`Dictionary<Pawn, PharnaRecord>` 登记 / 发信）+ `ChoiceLetter_PharnaLost.cs`（重建 / 放弃）+ `Hediff_Pharna.PostRemoved`（唯一捕获点）+ `ExposeData` 读档自愈；死亡信追加见 `Patch_PharnaDeathLetter.cs` |
 | 升华/升级奖励 | `AscendHelper.cs`（注册表 + `AscendRewardSession`：刷新 / 锁定 / 保底）+ `Dialog_AscendReward.cs` + 仪式类 |
 | 魔法框架 | `Spell.cs`（继承原版 Ability）+ `SpellDef.cs` + `Command_Spell.cs`（图标命令，继承原版 `Command_Psycast`：让原版心灵熵条预览施法熵消耗，并在角标与描述中显示魔力消耗） |
 | 咏唱 | `Verb_CastSpell.cs` / `Mote_Incantation.cs` / `Mote_MagicCircle.cs` |
