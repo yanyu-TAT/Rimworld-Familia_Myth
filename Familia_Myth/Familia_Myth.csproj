@@ -48,10 +48,6 @@
       <HintPath>..\lib\1.6\0Harmony.dll</HintPath>
       <Private>false</Private>
     </Reference>
-    <Reference Include="HugsLib">
-      <HintPath>..\lib\1.6\HugsLib.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\lib\1.6\UnityEngine.dll</HintPath>
       <Private>false</Private>
@@ -100,10 +96,6 @@
     </Reference>
     <Reference Include="0Harmony">
       <HintPath>..\lib\1.7\0Harmony.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="HugsLib">
-      <HintPath>..\lib\1.7\HugsLib.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityStubs">

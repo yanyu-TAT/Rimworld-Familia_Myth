@@ -1,14 +1,14 @@
 # Familia Myth
 
-> 参考《在地下城期待邂逅是否搞错了什么》设定的 RimWorld 1.6 模组。
+> 参考《在地下城期待邂逅是否搞错了什么》设定的 RimWorld 1.6 / 1.7 模组。
 > 
 > 你将扮演降临下界的神明，为殖民者刻下「神之恩惠」，将他们培养成独当一面的眷族冒险者。
 
 | 项目 | 说明 |
 | --- | --- |
 | 当前版本 | 0.0.5 |
-| 支持版本 | RimWorld 1.6 |
-| 必需依赖 | Harmony、HugsLib、Royalty、Ideology |
+| 支持版本 | RimWorld 1.6 / 1.7 |
+| 必需依赖 | Harmony、Royalty、Ideology |
 | 可选依赖 | Odyssey |
 | 语言 | 简体中文 / English |
 
@@ -68,10 +68,10 @@
 
 ## 环境要求与安装
 
-1. RimWorld 1.6，并启用 **Royalty** 与 **Ideology**（必需）。
-2. 订阅并启用 **Harmony** 与 **HugsLib**（必需）；启用 **Odyssey** 可解锁部分基于该dlc的能力，未启用时相关能力自动停用、不会报错。
+1. RimWorld 1.6 或 1.7，并启用 **Royalty** 与 **Ideology**（必需）。
+2. 订阅并启用 **Harmony**（必需）；启用 **Odyssey** 可解锁部分基于该dlc的能力，未启用时相关能力自动停用、不会报错。
 3. 将 `Familia_Myth` 文件夹放入 RimWorld 的 `Mods` 目录，在模组列表中启用。
-4. 从源码构建：`dotnet build Familia_Myth/Familia_Myth.csproj`（输出直写 `Assemblies/`）；构建后建议运行根目录的 `11.bat`，清理 `Assemblies/` 中多余的第三方 DLL。
+4. 从源码构建：`dotnet build Familia_Myth/Familia_Myth.csproj`（一次产出 1.6 与 1.7 两版，分别直写 `Familia_Myth/1.6/Assemblies` 与 `Familia_Myth/1.7/Assemblies`，由 `LoadFolders.xml` 按游戏版本装载）；构建后建议运行根目录的 `11.bat` 清理多余产物。
 
 ## 游玩前须知
 

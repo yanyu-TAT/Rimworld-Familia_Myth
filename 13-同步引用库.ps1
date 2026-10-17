@@ -18,9 +18,7 @@ $ErrorActionPreference = 'Stop'
 $repoRoot = $PSScriptRoot
 $libDir = Join-Path $repoRoot "lib\$Version"
 
-# HugsLib 尚无 1.7 版本，两个游戏版本都取 v1.6 分支；作者发布 1.7 后需改这里。
 $harmonyDir = Join-Path $WorkshopDir "2009463077\$Version\Assemblies"
-$hugsLibDir = Join-Path $WorkshopDir '818773962\v1.6\Assemblies'
 
 # 1.6 的 mscorlib 取自游戏的 Mono 运行时：Unity 的 Mono 支持 C# 8 默认接口实现，
 # 编译器据此放行；换成 .NET Framework targeting pack 的同名程序集会报 CS8701。
@@ -38,7 +36,6 @@ $sourceMap = if ($Version -eq '1.6') {
         "$managed\UnityEngine.UIElementsModule.dll"        = 'UnityEngine.UIElementsModule.dll'
         "$managed\UnityEngine.ImageConversionModule.dll"   = 'UnityEngine.ImageConversionModule.dll'
         "$harmonyDir\0Harmony.dll"                         = '0Harmony.dll'
-        "$hugsLibDir\HugsLib.dll"                          = 'HugsLib.dll'
     }
 }
 else {
@@ -49,7 +46,6 @@ else {
         "$GameDir\Waylith.dll"                             = 'Waylith.dll'
         "$GameDir\Waylith.UnityCompat.dll"                 = 'Waylith.UnityCompat.dll'
         "$harmonyDir\0Harmony.dll"                         = '0Harmony.dll'
-        "$hugsLibDir\HugsLib.dll"                          = 'HugsLib.dll'
     }
 }
 

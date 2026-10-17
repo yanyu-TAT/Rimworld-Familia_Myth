@@ -15,11 +15,6 @@
 
     <modDependencies>
         <li>
-            <displayName>HugsLib</displayName>
-            <packageId>unlimitedhugs.hugslib</packageId>
-            <steamWorkshopUrl>steam://url/CommunityFilePage/818773962</steamWorkshopUrl>
-        </li>
-        <li>
             <displayName>Harmony</displayName>
             <packageId>brrainz.harmony</packageId>
             <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
@@ -34,7 +29,6 @@
 
     <loadAfter>
         <li>brrainz.harmony</li>
-        <li>unlimitedhugs.hugslib</li>
         <li>Ancot.AncotLibrary</li>
         <li>Ludeon.RimWorld</li>
         <li>Ludeon.RimWorld.Royalty</li>

@@ -1,4 +1,4 @@
-using HugsLib;
+using HarmonyLib;
 using Verse;
 
 namespace FamiliaMyth.Core
@@ -6,7 +6,7 @@ namespace FamiliaMyth.Core
     /// <summary>
     /// 模组主类
     /// </summary>
-    public class FamiliaMythMod : ModBase
+    public class FamiliaMythMod : Mod
     {
         /// <summary>
         /// 相对于玩家的默认神名：如 “你”
@@ -33,12 +33,30 @@ namespace FamiliaMyth.Core
             }
         }
 
-        public override string ModIdentifier => "FamiliaMyth";
-
-        public override void Initialize()
+        public FamiliaMythMod(ModContentPack content) : base(content)
         {
-            base.Initialize();
-            FamiliaMythSettings.Register(Settings);
+            FamiliaMythSettings.Register(this);
+            ApplyHarmonyPatches();
+        }
+
+        /// <summary>
+        /// 模组设置数据
+        /// </summary>
+        public FamiliaMythSettingsData SettingsData => GetSettings<FamiliaMythSettingsData>();
+
+        /// <summary>
+        /// 注册本程序集的全部 Harmony 补丁
+        /// </summary>
+        private void ApplyHarmonyPatches()
+        {
+            try
+            {
+                new Harmony(Content.PackageIdPlayerFacing).PatchAll(typeof(FamiliaMythMod).Assembly);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("[FamiliaMyth] Failed to apply Harmony patches: " + ex);
+            }
         }
     }
 
@@ -248,4 +266,5 @@ namespace FamiliaMyth.Core
  * 10/16 17:52 发现魔力自动恢复溢出的问题，已修复
  * 10/17 13:13 为持有恩惠者的死亡信件添加了额外内容
  * 10/17 19:13 完成了第二轮数值平衡，对应的曲线未接入设置项
+ * 10/17 19:46 移除了对HugsLib的依赖，补丁注册与模组设置数据改由原版接口实现
  */

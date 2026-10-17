@@ -13,7 +13,7 @@
 | 包 ID | `yanyu.familiamyth`                                                          |
 | 语言   | C# 10 双目标：`net472`（1.6）/ `net10.0`（1.7）；单 csproj，**`ImplicitUsings` 开启**              |
 | 游戏   | RimWorld 1.6（Mono）+ 1.7（CoreCLR / .NET 10，Unity 引用面由 `UnityStubs` + `Waylith` 提供） |
-| 依赖库  | HugsLib（`ModBase` 模组基类 + **反射自动注册 Harmony 补丁** + 设置项接口 `ModSettingsPack`，设置注册见 `FamiliaMythSettings.cs`）、Harmony 2.x（`[HarmonyPatch]`）、Royalty / Ideology DLC      |
+| 依赖库  | Harmony 2.x（`[HarmonyPatch]` + 模组构造函数内 `PatchAll` 注册）、原版 `Verse.Mod` 设置数据（`ModSettings` + `GetSettings<T>`，见 `FamiliaMythSettingsData.cs`）、Royalty / Ideology DLC      |
 | 可选依赖 | Odyssey（海之眷顾等部分能力需要）                                                         |
 | 输出   | 单 csproj 双目标，直出 `Familia_Myth/1.6/Assemblies` 与 `Familia_Myth/1.7/Assemblies`，由 `LoadFolders.xml` 按游戏版本装载（见 `docs/B/B-05`） |
 | 远程仓库 | GitHub `yanyu-TAT/Rimworld-Familia_Myth`（main）                               |
@@ -93,8 +93,8 @@
 ✅ 补丁方法体包裹 try-catch 并 Log.Error，防止一处报错拖垮游戏
 ✅ 重载方法必须写明参数类型数组
 ✅ 访问 Find.* 单例前判空（游戏阶段未初始化时易 NRE）
-✅ 补丁**注册**由 HugsLib 反射自动完成，项目内**不写注册代码**：`FamiliaMythMod : ModBase` → `ModBase.ApplyHarmonyPatches()` → `new Harmony(PackageIdPlayerFacing)` + `HarmonyInst.PatchAll(本程序集)`。新增补丁只需「静态类 + `[HarmonyPatch]`」即可生效，勿写 `PatchAll` / `new Harmony`（细则见 C-03）
-❌ 覆盖 `ModBase.HarmonyAutoPatch` 返回 false —— 会整体关闭本程序集的补丁注册
+✅ 补丁**注册**在 `FamiliaMythMod` 构造函数内一次性完成：`new Harmony(Content.PackageIdPlayerFacing).PatchAll(typeof(FamiliaMythMod).Assembly)`，整体包 try-catch + `Log.Error`。新增补丁只需「静态类 + `[HarmonyPatch]`」即可生效，除该构造函数外勿写 `PatchAll` / `new Harmony`（细则见 C-03）
+❌ 移除或绕过构造函数里的 `PatchAll` —— 会整体丢失本程序集的补丁注册
 ```
 
 ### 资源与性能规范（RimWorld 特有）
@@ -294,8 +294,9 @@
 | | `HistoryTabHelper.cs` + `Gizmo_ManaPool.cs` | 历史窗口眷族页签接入（含失效兜底）与魔力池 Gizmo |
 | **工具与基础设施** | `WeaponHelper.cs` | 武器查询与直线索敌 / 射线工具 |
 | | `HealHelper.cs` | 伤口与断肢治疗工具 |
-| | `FamiliaMythMod.cs` | 模组主类：注册模组设置项（`Initialize`），包含开发日志和计划 |
-| | `FamiliaMythSettings.cs` | 模组设置项：实验性内容开关（`GuildContentEnabled`） |
+| | `FamiliaMythMod.cs` | 模组主类（`Verse.Mod` 子类）：构造函数内注册全部 Harmony 补丁与设置数据，包含开发日志和计划 |
+| | `FamiliaMythSettings.cs` | 模组设置项门面：实验性内容开关（`GuildContentEnabled`） |
+| | `FamiliaMythSettingsData.cs` | 模组设置数据（`ModSettings` 子类，`GetSettings<T>` 读写 Config 目录） |
 | | `Patch_*.cs` | Harmony 补丁（命名与异常防护细则见 C-03） |
 | | `DebugAction_*.cs` | 开发者模式调试指令（恩惠 / 任务 / 杂项：导出咏唱词纹理） |
 | | `Mote_Incantation.cs` + `Textures/Familia_Myth/Incantation/` | 咏唱词纹理：只读离线预渲染 PNG（1.6 用调试指令导出），缺失时报错；`MeshHeight` / `TextHeightRatio` / `marginRatio` 分层控制字号与飞溅留白 |

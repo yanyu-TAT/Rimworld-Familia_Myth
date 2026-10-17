@@ -1,31 +1,20 @@
-using HugsLib.Settings;
-using Verse;
-
 namespace FamiliaMyth.Core
 {
     /// <summary>
-    /// 模组设置项：实验性内容开关（HugsLib 设置体系，入口为「选项 → 模组选项」）
+    /// 模组设置项：实验性内容开关
     /// </summary>
     public static class FamiliaMythSettings
     {
-        private const string GuildContentName = "EnableGuildContent";
-
-        private static SettingHandle<bool> guildContent;
+        private static FamiliaMythMod _mod;
 
         /// <summary>
-        /// 公会任务系统（实验性内容）是否启用；设置项尚未注册时按关闭处理
+        /// 公会任务系统（实验性内容）是否启用；设置尚未就绪时按关闭处理
         /// </summary>
-        public static bool GuildContentEnabled => guildContent?.Value ?? false;
+        public static bool GuildContentEnabled => _mod?.SettingsData?.guildContent ?? false;
 
-        //由 FamiliaMythMod.Initialize 调用
-        public static void Register(ModSettingsPack pack)
-        {
-            pack.EntryName = "FamiliaMyth.Settings.Category".Translate();
-
-            guildContent = pack.GetHandle(GuildContentName,
-                "FamiliaMyth.Settings.GuildContentLabel".Translate(),
-                "FamiliaMyth.Settings.GuildContentDesc".Translate(),
-                false);
-        }
+        /// <summary>
+        /// 由模组主类构造时注入自身
+        /// </summary>
+        public static void Register(FamiliaMythMod owner) => _mod = owner;
     }
 }

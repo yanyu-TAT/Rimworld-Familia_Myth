@@ -45,7 +45,7 @@
 - 升级奖励各稀有度内容达标（普通 3 / 稀有 5 / 罕见 7），数值对齐设计文档
 - 全功能游戏内无红字；Royalty / Ideology 为硬依赖（恩惠仪式、遗迹探索等需要），Odyssey 为可选依赖——未启用 Odyssey 时相关能力（海之眷顾等）自动停用且不报错
 - ✅ **中英双语本地化完整**
-- 兼容性验证（HugsLib/Harmony/Ancot Library 等）
+- 兼容性验证（Harmony/Ancot Library 等）
 
 ## 六、设计文档索引
 
