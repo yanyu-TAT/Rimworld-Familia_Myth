@@ -37,4 +37,7 @@
   <Skill_2FightIs2Be.label>I Fight, Therefore I Am</Skill_2FightIs2Be.label>
   <Skill_2FightIs2Be.description>Triggers when entering combat:\nall abilities rise the longer the fight goes on, rest and nutrition consumption are reduced and mental resistance is increased;\nthe effect ends a while after leaving combat.</Skill_2FightIs2Be.description>
 
+  <Skill_SuccessionOfJustice.label>Succession of Justice</Skill_SuccessionOfJustice.label>
+  <Skill_SuccessionOfJustice.description>Always active:\nFamilia members within range, including this person, gain bonuses: mana and will raised, mental break threshold lowered;\nradius and strength scale with this person's experience.</Skill_SuccessionOfJustice.description>
+
 </LanguageData>

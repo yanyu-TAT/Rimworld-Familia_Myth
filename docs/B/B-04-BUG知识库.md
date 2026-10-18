@@ -308,3 +308,11 @@
 - 是否规范缺失: 是（Def 命名规范缺少「必须是合法标识符」一条）
 - 规范反哺: AGENTS.md「5. XML 定义」与 B-01「XML（Defs / Patches）」各补一条 defName 命名约束。
 - 关联: 次数 1
+
+## BUG-036 | HediffStage 字段只在一次性 Init 里设置 → 读档后数值修正与提示行静默消失
+- 现象: 「正义继巡」读档后，受影响者的崩溃阈值压制失效、Hediff 提示框里「共鸣来自：XXX」一行消失；无任何报错。
+- 根因: `Hediff_SuccessionOfJusticeInEffect.Init()` 里设置 `stage.statFactors` 与 `stage.extraTooltip`，而 `Init` 只在 Tick 新建 Hediff 时调用；读档走 `ExposeData` 恢复，不会重跑 `Init`，`stage` 是实例字段（不参与 Scribe），两个字段保持 null。`StatUtility.GetStatValueFromList` 对 null 列表返回默认值（1）、`extraTooltip` 有 `NullOrEmpty` 判空 → 全程静默，只在功能上悄悄失效。
+- 修复方案: `ExposeData` 的 `PostLoadInit` 反查到施予者技能后重跑 `Init(skill)`，把 `statFactors` / `extraTooltip` 一并重建；`Init` 内部对参数判空（`from = skill?.Owner`），否则「查不到施予者」的兜底路径会先 NRE。
+- 是否规范缺失: 是（缺少「`CurStage` 依赖的字段必须可重建」的约定）
+- 规范反哺: C-03 补长期约定；C-05 补 `HediffStage.extraTooltip` 走 `Formatted` 而非 `Translate` 的语义。
+- 关联: 次数 1

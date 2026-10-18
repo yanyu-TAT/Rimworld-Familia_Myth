@@ -293,7 +293,8 @@ GenerateShuttle(Faction owningFaction = null, IEnumerable<Pawn> requiredPawns = 
 - **聚合语义**：`HediffSet.RestFallFactor` / `GetHungerRateFactor` 遍历所有 hediff 的 `CurStage`，先把各值**相乘**、再累加各 Offset，最后 `Mathf.Max(..., 0)`。
 - **崩溃阈值**：HediffStage **没有**对应字段；它是 `StatDefOf.MentalBreakThreshold`（默认 0.35、`minValue 0.01`、`maxValue 0.5`），`MentalBreaker` 三个阈值都由它派生：`Minor = GetStatValue(MentalBreakThreshold)`、`Major = ×0.5714286`、`Extreme = ×1/7`。降低崩溃阈值 = 给该 StatDef 注入负值（`HediffStage.statOffsets` 或 `StatPart` 皆可），最终受 `minValue 0.01` 截断。
 - **战斗状态窗口**：`Pawn_RecordsTracker.BattleActive` 不是即时失效——`EnterBattle` 每次把 `battleExitTick = now + 5000`（`Battle.TicksForBattleExit = 5000`），getter 只有在 `battleExitTick < TicksGame` 时才返回 null → 最后一次战斗事件后仍有 **2 小时**「在战斗中」窗口。判断「脱离战斗」要么接受这个尾巴，要么改用自有计时。
-- 出处：`decompiledFiles/Verse/HediffStage.cs`、`Verse/HediffSet.cs`、`Verse/HediffStatsUtility.cs`、`RimWorld/StatWorker.cs`、`RimWorld/Need_Food.cs`、`RimWorld/Need_Rest.cs`、`Verse.AI/MentalBreaker.cs`、`RimWorld/Pawn_RecordsTracker.cs`、`Verse/Battle.cs`、`Data/Core/Defs/Stats/Stats_Pawns_General.xml`（1.6 与 `lib/1.7/Assembly-CSharp.dll` 两版均核对）。
+- **`extraTooltip`**：`Hediff.GetTooltip` 对 `def.extraTooltip` 与 `CurStage.extraTooltip` 都走 `tipSb.AppendLineTagged(...Formatted(pawn.Named("PAWN")))`（`Hediff.cs:799-806`）——只做 `Formatted`（替换 `{PAWN}` 等命名参数），**不会 `Translate`**，所以赋给 `stage.extraTooltip` 的必须是**已翻译好的最终文本**（`"Key".Translate(args)` 的结果），否则显示的是键名。
+- 出处：`decompiledFiles/Verse/HediffStage.cs`、`Verse/HediffSet.cs`、`Verse/HediffStatsUtility.cs`、`Verse/Hediff.cs`、`RimWorld/StatWorker.cs`、`RimWorld/Need_Food.cs`、`RimWorld/Need_Rest.cs`、`Verse.AI/MentalBreaker.cs`、`RimWorld/Pawn_RecordsTracker.cs`、`Verse/Battle.cs`、`Data/Core/Defs/Stats/Stats_Pawns_General.xml`（1.6 与 `lib/1.7/Assembly-CSharp.dll` 两版均核对）。
 
 ## 十、文本与本地化
 

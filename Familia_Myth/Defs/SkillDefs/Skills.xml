@@ -171,4 +171,17 @@
     <checkInterval>60</checkInterval>
   </FamiliaMyth.Abilities.SkillDef>
 
+  <FamiliaMyth.Abilities.SkillDef>
+    <defName>Skill_SuccessionOfJustice</defName>
+    <label>正义继巡</label>
+    <description>常态生效：\n一定范围内的同眷族成员与自身获得增益：魔力/意志提升，崩溃阈值下降；作用范围与增幅程度随自身经验值提升。</description>
+    <skillClass>FamiliaMyth.Abilities.Skill_SuccessionOfJustice</skillClass>
+    <rarity>Rare</rarity>
+    <skillType>Passive</skillType>
+    <cooldown>0</cooldown>
+    <warmup>0</warmup>
+    <duration>0</duration>
+    <checkInterval>60</checkInterval>
+  </FamiliaMyth.Abilities.SkillDef>
+
 </Defs>

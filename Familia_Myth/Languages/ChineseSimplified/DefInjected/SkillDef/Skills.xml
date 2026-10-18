@@ -28,5 +28,7 @@
   <Skill_RoundhouseKick.label>回旋踢</Skill_RoundhouseKick.label>
   <Skill_SwordRain.description>持有锐伤近战武器时可释放：\n对周围小范围内的敌人连续造成两次武器伤害；\n若造成击杀或击倒敌人，则立即重置冷却，但重置次数有限。</Skill_SwordRain.description>
   <Skill_SwordRain.label>剑雨滂沱</Skill_SwordRain.label>
+  <Skill_SuccessionOfJustice.description>常态生效：\n一定范围内的同眷族成员与自身获得增益：魔力/意志提升，崩溃阈值下降；作用范围与增幅程度随自身经验值提升。</Skill_SuccessionOfJustice.description>
+  <Skill_SuccessionOfJustice.label>正义继巡</Skill_SuccessionOfJustice.label>
 
 </LanguageData>

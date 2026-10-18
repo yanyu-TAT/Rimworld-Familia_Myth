@@ -48,6 +48,10 @@
   <FamiliaMyth.Ability.ManaLoadManaSpent>已积累消耗魔力：{0}</FamiliaMyth.Ability.ManaLoadManaSpent>
   <!-- ==================== 我战我在（Skill_2FightIs2Be） ==================== -->
   <FamiliaMyth.Ability.2FightIs2Be>  我战我在: +{0}</FamiliaMyth.Ability.2FightIs2Be>
+  <!-- ==================== 正义继巡（Skill_SuccessionOfJustice） ==================== -->
+  <FamiliaMyth.Ability.SuccessionOfJustice>  正义继巡: +{0}</FamiliaMyth.Ability.SuccessionOfJustice>
+  <!-- {0}=施予者名（Hediff 提示框补行） -->
+  <FamiliaMyth.Ability.SuccessionOfJusticeFrom>共鸣来自：{0} </FamiliaMyth.Ability.SuccessionOfJusticeFrom>
   <!-- ==================== 余烬（Skill_Ember） ==================== -->
   <FamiliaMyth.Ability.EmberTriggered>由于被击倒，{0} 的技能：余烬 已触发</FamiliaMyth.Ability.EmberTriggered>
   <!-- ==================== 嘲讽（Skill_Provoke） ==================== -->

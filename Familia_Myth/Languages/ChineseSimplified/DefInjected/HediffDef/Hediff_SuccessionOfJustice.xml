@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Hediff_SuccessionOfJustice 玩家可见文本（自 Defs 迁移；Def 内文本保留为默认/兜底） -->
+
+  <SuccessionOfJusticeInEffect.description>恩惠共鸣：\n获得魔力/意志属性值补正，提高精神抗性</SuccessionOfJusticeInEffect.description>
+  <SuccessionOfJusticeInEffect.label>正义继巡</SuccessionOfJusticeInEffect.label>
+
+</LanguageData>

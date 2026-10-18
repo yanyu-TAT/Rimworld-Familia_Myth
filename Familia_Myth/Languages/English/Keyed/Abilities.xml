@@ -60,6 +60,11 @@
   <!-- ==================== I Fight, Therefore I Am ==================== -->
   <FamiliaMyth.Ability.2FightIs2Be>  I Fight, Therefore I Am: +{0}</FamiliaMyth.Ability.2FightIs2Be>
 
+  <!-- ==================== Succession of Justice ==================== -->
+  <FamiliaMyth.Ability.SuccessionOfJustice>  Succession of Justice: +{0}</FamiliaMyth.Ability.SuccessionOfJustice>
+  <!-- {0}=giver name (extra tooltip line on the hediff) -->
+  <FamiliaMyth.Ability.SuccessionOfJusticeFrom>Resonance from: {0}</FamiliaMyth.Ability.SuccessionOfJusticeFrom>
+
   <!-- ==================== Ember ==================== -->
   <FamiliaMyth.Ability.EmberTriggered>Knocked down, so {0}'s skill Ember has triggered</FamiliaMyth.Ability.EmberTriggered>
 

@@ -16,10 +16,11 @@ namespace FamiliaMyth.Abilities
         {
             get
             {
-                stage.hungerRateFactor = Mathf.Clamp01(HungerRestFactorRate / ageTicks);
-                stage.restFallFactor = Mathf.Clamp01(HungerRestFactorRate / ageTicks);
+                float age = ageTicks == 0 ? 1 : ageTicks;
+                stage.hungerRateFactor = Mathf.Clamp01(HungerRestFactorRate / age);
+                stage.restFallFactor = Mathf.Clamp01(HungerRestFactorRate / age);
                 stage.statFactors = modifiers;
-                modifiers[0].value = Mathf.Clamp01(MentalBreakThresholdRate / ageTicks);
+                modifiers[0].value = Mathf.Clamp01(MentalBreakThresholdRate / age);
 
                 return stage;
             }

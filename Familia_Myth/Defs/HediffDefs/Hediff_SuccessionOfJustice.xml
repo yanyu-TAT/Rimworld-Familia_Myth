@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <HediffDef>
+    <defName>SuccessionOfJusticeInEffect</defName>
+    <label>正义继巡</label>
+    <description>恩惠共鸣：\n获得魔力/意志属性值补正，提高精神抗性</description>
+    <hediffClass>FamiliaMyth.Abilities.Hediff_SuccessionOfJusticeInEffect</hediffClass>
+    <isBad>false</isBad>
+    <initialSeverity>1</initialSeverity>
+    <stages>
+      <li />
+    </stages>
+    <comps>
+      <li Class="FamiliaMyth.Abilities.HediffCompProperties_SkillInEffect">
+        <skillDef>Skill_SuccessionOfJustice</skillDef>
+        <compClass>FamiliaMyth.Abilities.HediffComp_SuccessionOfJusticeInEffect</compClass>
+      </li>
+      <!-- 与 Skill_SuccessionOfJustice.Tick 里的 120 tick 刷新保持一致 -->
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>120</disappearsAfterTicks>
+      </li>
+    </comps>
+  </HediffDef>
+
+</Defs>
