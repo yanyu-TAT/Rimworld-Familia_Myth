@@ -14,12 +14,7 @@ namespace FamiliaMyth.Patch
                 GameComponent_FeatTracker tracker = GameComponent_FeatTracker.Instance;
                 if (tracker == null || __instance == null || totalDamageDealt <= 0f) return;
 
-                //输出侧记给攻击者；承受侧记给受击者（带来源，供承伤路径过滤友军误伤）
-                if (dinfo.Instigator is Pawn attacker && attacker != __instance)
-                    tracker.RecordDealt(attacker, __instance, totalDamageDealt);
-                tracker.RecordTaken(__instance, dinfo.Instigator as Pawn, totalDamageDealt);
-                //敌方一侧的受损（分摊分母），不分伤害来源
-                tracker.RecordEnemyDamage(__instance, totalDamageDealt);
+                tracker.RecordDamage(dinfo.Instigator as Pawn, __instance, totalDamageDealt);
             }
             catch (Exception ex)
             {

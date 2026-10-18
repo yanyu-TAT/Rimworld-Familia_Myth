@@ -411,9 +411,7 @@ namespace FamiliaMyth.UI
                 Widgets.DrawBoxSolid(r, tierColor.WithAlpha(0.10f));
             Widgets.DrawBoxSolid(new Rect(r.x, r.y, 4f, r.height), used ? tierColor.WithAlpha(0.7f) : tierColor);
 
-            string traits = record.featTraits.NullOrEmpty()
-                ? "-"
-                : string.Join(" × ", record.featTraits.Where(t => t != null).Select(t => t.label));
+            string traits = FeatTraitLine(record);
             string battle = record.battleName.NullOrEmpty()
                 ? "FamiliaMyth.FeatUnknownBattle".Translate()
                 : record.battleName;
@@ -438,18 +436,50 @@ namespace FamiliaMyth.UI
                 Gen.HashCombineInt(record.GetHashCode(), 197306));
         }
 
-        //tooltip：战斗总得分 / 个人贡献与个人得分 / 各性质系数
+        //tooltip：战斗总得分 / 个人贡献与个人得分 / 战斗层与个人层性质系数
         private static string FeatScoreTooltip(FeatRecord record)
         {
-            string score = "FamiliaMyth.Panel.FeatScore".Translate(record.battleMagnitude.ToString("F0"));
-            string share = "FamiliaMyth.Panel.FeatShare".Translate(
-                record.share.ToStringPercent(), (record.battleMagnitude * record.share).ToString("F0"));
-            if (record.featTraits.NullOrEmpty()) return $"{score}\n{share}";
+            float personalScore = record.battleMagnitude * record.share * record.personalMultiplier;
+            List<string> lines = new()
+            {
+                "FamiliaMyth.Panel.FeatScore".Translate(record.battleMagnitude.ToString("F0")),
+                "FamiliaMyth.Panel.FeatShare".Translate(record.share.ToStringPercent(), personalScore.ToString("F0")),
+            };
 
-            string traits = string.Join(" · ", record.featTraits
+            string battleTraits = JoinTraitLabels(record.featTraits);
+            if (battleTraits != null) lines.Add(battleTraits);
+
+            string personalTraits = JoinTraitLabels(record.personalTraits);
+            if (personalTraits != null)
+                lines.Add("FamiliaMyth.Panel.FeatPersonalTraits".Translate(personalTraits));
+
+            return string.Join("\n", lines);
+        }
+
+        //卡面性质：战斗层与个人层 label 合并；无性质时占位
+        private static string FeatTraitLine(FeatRecord record)
+        {
+            List<string> labels = new();
+            CollectTraitLabels(record.featTraits, labels);
+            CollectTraitLabels(record.personalTraits, labels);
+            return labels.Count == 0 ? "-" : string.Join(" × ", labels);
+        }
+
+        private static void CollectTraitLabels(List<FeatTraitDef> traits, List<string> labels)
+        {
+            if (traits == null) return;
+            for (int i = 0; i < traits.Count; i++)
+                if (traits[i] != null) labels.Add(traits[i].label);
+        }
+
+        //tooltip 性质行：标签与系数并列；空列表返回 null
+        private static string JoinTraitLabels(List<FeatTraitDef> traits)
+        {
+            if (traits.NullOrEmpty()) return null;
+            string joined = string.Join(" · ", traits
                 .Where(t => t != null)
                 .Select(t => $"{t.label} ×{t.multiplier.ToString("F1")}"));
-            return $"{score}\n{share}\n{traits}";
+            return joined.NullOrEmpty() ? null : joined;
         }
 
         //地点：取该地块的主要生物群系名；无效或越界地块返回占位符

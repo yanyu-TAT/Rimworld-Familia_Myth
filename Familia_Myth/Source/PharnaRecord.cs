@@ -1,4 +1,4 @@
-﻿using FamiliaMyth.Abilities;
+using FamiliaMyth.Abilities;
 using FamiliaMyth.Feat;
 using Verse;
 
@@ -60,6 +60,8 @@ namespace FamiliaMyth.Pharna
                     feats.Add(new FeatRecord
                     {
                         featTraits = record.featTraits == null ? new List<FeatTraitDef>() : new List<FeatTraitDef>(record.featTraits),
+                        personalTraits = record.personalTraits == null ? new List<FeatTraitDef>() : new List<FeatTraitDef>(record.personalTraits),
+                        personalMultiplier = record.personalMultiplier,
                         tier = record.tier,
                         share = record.share,
                         battleMagnitude = record.battleMagnitude,

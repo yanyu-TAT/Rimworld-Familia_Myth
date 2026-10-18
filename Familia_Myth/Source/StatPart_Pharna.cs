@@ -32,13 +32,13 @@ namespace FamiliaMyth.Pharna
                 var pharna = pawn.GetPharna();
                 if (pharna == null) return;
 
-                float status = PharnaCurve.Sample(PharnaCurve.GetCurve(statusType), pharna.GetFinalStatus(statusType));
+                float processedStatus = PharnaCurve.Sample(PharnaCurve.GetCurve(statusType), pharna.GetFinalStatus(statusType));
                 switch (mode)
                 {
                     case StatPartMode.Offset:
-                        val += a * status; break;
+                        val += a * processedStatus; break;
                     case StatPartMode.Factor:
-                        val *= 1 + a * status; break;
+                        val *= 1 + a * processedStatus; break;
                 }
             }
         }
@@ -62,11 +62,12 @@ namespace FamiliaMyth.Pharna
                 var pharna = pawn.GetPharna();
                 if (pharna == null) return "";
 
-                int fullStatus = (int)pharna.GetFinalStatus(statusType);
+                int finalStatus = (int)pharna.GetFinalStatus(statusType);
                 int curStatus = (int)pharna.GetCurrentStatus(statusType);
+                int processedStatus = (int)PharnaCurve.Sample(PharnaCurve.GetCurve(statusType), finalStatus);
                 string rank = Hediff_Pharna.GetRank(curStatus);
                 int level = pharna.level;
-                //说明文本，例：Lv.3 敏捷F399: +35.5%
+                //说明文本，例：Lv.3 敏捷F399: +35.5%    （仅使用当前值）
                 string s = "  Lv." + level.ToString() + " " + Hediff_Pharna.GetStatusName(statusType) + rank + curStatus.ToString() + ": ";
 
                 //添加符号
@@ -83,18 +84,18 @@ namespace FamiliaMyth.Pharna
                     s += "-";
                 }
 
-                //计算数值
+                //计算数值（使用处理后的值）
                 switch (mode)
                 {
                     case StatPartMode.Offset:
                         s += displayAsPercent
-                            ? (a * fullStatus).ToStringPercent()
-                            : (a * fullStatus).ToString("G3");
+                            ? (a * processedStatus).ToStringPercent()
+                            : (a * processedStatus).ToString("G3");
                         break;
                     case StatPartMode.Factor:
                         s += displayAsPercent
-                            ? (1 + a * fullStatus).ToStringPercent()
-                            : (1 + a * fullStatus).ToString("G3");
+                            ? (1 + a * processedStatus).ToStringPercent()
+                            : (1 + a * processedStatus).ToString("G3");
                         break;
                 }
 

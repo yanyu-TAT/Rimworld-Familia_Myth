@@ -32,9 +32,10 @@
   <FamiliaMyth.FeatUnknownPlace>未知地点</FamiliaMyth.FeatUnknownPlace>
   <FamiliaMyth.FeatUnknownBattle>未知战斗</FamiliaMyth.FeatUnknownBattle>
 
-  <!-- 伟业 tooltip：{0}=战斗总得分；个人行 {0}=贡献占比 {1}=个人得分 -->
+  <!-- 伟业 tooltip：{0}=战斗总得分；个人行 {0}=贡献占比 {1}=个人得分；个人性质行 {0}=性质明细 -->
   <FamiliaMyth.Panel.FeatScore>战斗总得分 {0}</FamiliaMyth.Panel.FeatScore>
   <FamiliaMyth.Panel.FeatShare>个人贡献 {0}　个人得分 {1}</FamiliaMyth.Panel.FeatShare>
+  <FamiliaMyth.Panel.FeatPersonalTraits>个人性质 {0}</FamiliaMyth.Panel.FeatPersonalTraits>
 
   <!-- 铭刻顶栏：可用性只有可用/不可用两态；选择模式提示由按钮切换 -->
   <FamiliaMyth.Panel.InscriptionReady>铭刻可用</FamiliaMyth.Panel.InscriptionReady>

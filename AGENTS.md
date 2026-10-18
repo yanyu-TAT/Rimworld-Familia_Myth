@@ -50,6 +50,8 @@
 **Ask First**：csproj 程序集引用变更、`About.xml` 依赖/版本变更、破坏性重构、改动主设计文档。
 **Never Touch**：`Data/`（原版/DLC XML）、`lib/` 中的 DLL（只由 `13-同步引用库.ps1` 刷新，禁止手工替换）、`Player.log`（仅读取分析）。
 **受控整理**：`decompiledFiles/` 仅允许按「十二 · 反编译文件管理规范」查阅，添加以及管理反编译文件，不可修改其中内容。
+**工作守则**：必须遵循第十二节的协作规范进行工作
+
 
 ***
 
@@ -240,6 +242,7 @@
 | 15 | 随机取样前未校验候选集合非空（空集合取随机索引越界） | 取样前判空，必要时填兜底集合（见 B-04 BUG-026） |
 | 16 | 自管原版类型集合时漏搬原版 `PostLoadInit` 重建（`Ability.pawn` / `verb.caster` 等继承字段不参与 Scribe，读档为 null） | 照搬原版 `Hediff.ExposeData` 的 PostLoadInit 补回；或改持 `Scribe_References` 引用后间接取 Pawn（见 B-04 BUG-028） |
 | 17 | 同帧批量创建/销毁临时对象用 `Destroy`，上一批对象残留在相机视野里被渲染进当前结果 | 用 `DestroyImmediate`；批量导出/生成类代码尤其要注意（见 B-04 BUG-029） |
+| 18 | 反编译的版本与实际运行的版本不一致（`decompiledFiles/` 是 1.6，实机跑 1.7），据此判断运行时行为 | 排查运行时行为前先确认游戏版本，反编译对应版本（1.6 在 `RimWorldWin64_Data\Managed\`，1.7 在游戏根目录）；`Pawn` / `Thing` 的死亡与销毁路径两版不同（见 B-04 BUG-033） |
 
 ***
 
@@ -275,10 +278,10 @@
 | | `QuestUtilities.cs` | 任务点数计算（升级点由各任务 part 发放） |
 | | `WorldObjectComp_*.cs` | 世界对象交互 comp（定居点领取 / 交付按钮） |
 | | `Defs/GuildQuestDefs/` + `Defs/QuestScriptDefs/` | 任务定义与任务脚本 |
-| **伟业（Feat）** | `FeatTraitDef.cs`（内含 `FeatContext` / `FeatTraitJudger` / `FeatRecord`） | 伟业数据层：性质定义（`judgerClass` + 系数）、战斗数据包、判定器基类与统一工厂、记录 |
-| | `FeatTraitJudgers.cs` | 各性质判定器（阈值集中在类内；判定只看战斗事实，不看来源） |
-| | `FeatUtility.cs` | 结算流水线：取战斗事实 → 逐 Def 判定性质 → 系数累乘 → 按贡献分摊 → 阈值分割档位 |
-| | `GameComponent_FeatTracker.cs` | 战斗扫描器：合并归属修正、结算去重、贡献表与清理 |
+| **伟业（Feat）** | `FeatTraitDef.cs`（内含 `FeatTraitScope` / `FeatContext` / `FeatTraitJudger` / `FeatRecord`） | 伟业数据层：性质定义（`judgerClass` + 系数 + `scope` 作用域）、战斗数据包门面（持贡献账本）、判定器基类（战斗层 / 个人层双入口）与统一工厂、记录 |
+| | `FeatTraitJudgers.cs` | 各性质判定器（阈值集中在类内；判定只看战斗事实，不看来源；`Battle` 实现 `Judge(ctx)`、`Pawn` 实现 `Judge(ctx, subject)`） |
+| | `FeatUtility.cs` | 结算流水线：取战斗事实 → 战斗层逐 Def 判定并累乘 → 个人层逐人判定 → 按贡献分摊并乘个人系数 → 阈值分割档位 |
+| | `GameComponent_FeatTracker.cs` | 战斗扫描器与贡献账本（`BattleAccount` / `PawnContribution`）：按战斗聚合、归属解析、吸收归并、结算去重与清理 |
 | | `Patch_FeatContribution.cs` | 伤害归因补丁（`Pawn.PostApplyDamage` 记输出 / 承受） |
 | | `HealHelper.cs`（治疗工具） + `HediffComp_FeatSupport.cs` | 支援贡献上报：治疗三工具按真实量记（末位 `healer` 参数归因），持续型效果由 Hediff 组件按实际生效 tick 记（XML 配 `<supportPerSecond>`） |
 | | `Defs/FeatTraitDefs/` | 伟业性质定义（`<judgerClass>` 指向判定器） |

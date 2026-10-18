@@ -1,4 +1,5 @@
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace FamiliaMyth.Feat
@@ -7,8 +8,8 @@ namespace FamiliaMyth.Feat
     {
         private const int ScanIntervalTicks = 250;
 
-        //每场战斗各参与者的累计：我方记贡献，敌方记受损
-        public List<ContributionEntry> contributions = new();
+        //每场战斗一本账
+        public List<BattleAccount> accounts = new();
         //已结算战斗ID
         private List<string> resolved = new();
 
@@ -22,15 +23,13 @@ namespace FamiliaMyth.Feat
         public override void GameComponentTick()
         {
             if (Find.TickManager.TicksGame % ScanIntervalTicks != 0) return;
-            //Log.Message("Scanning Active Battles");
 
             List<Battle> battles = Find.BattleLog?.Battles;
             if (battles == null) return;
 
-            //修复战斗引用
-            RenormalizeContributions();
+            //被吸收的战斗曾写过账，先把账本并进它现在归属的战斗
+            MigrateAbsorbed();
 
-            //结算已结束且未结算的战斗
             for (int i = 0; i < battles.Count; i++)
             {
                 Battle battle = battles[i];
@@ -43,15 +42,13 @@ namespace FamiliaMyth.Feat
                 if (resolved.Contains(id)) continue;
                 if (!IsFinished(battle)) continue;
 
-                //Log.Message($"Resolving Battle: {battle.GetName()}");
-                FeatUtility.Resolve(battle, contributions, Find.CurrentMap);
+                FeatUtility.Resolve(battle, AccountById(id), Find.CurrentMap);
                 resolved.Add(id);
-                PruneContributions(id);
+                DropAccount(id);
             }
 
-            //清理
             PruneResolved();
-            PruneOrphanContributions();
+            PruneOrphanAccounts();
         }
 
         //结束判定
@@ -68,73 +65,107 @@ namespace FamiliaMyth.Feat
             return Find.TickManager.TicksAbs - last > Battle.TicksForBattleExit;
         }
 
-        //造成伤害
-        public void RecordDealt(Pawn attacker, Pawn victim, float amount)
+        //一次伤害的三条路径共用一次归属解析
+        public void RecordDamage(Pawn attacker, Pawn victim, float amount)
         {
-            if (attacker == null || amount <= 0f) return;
-            if (attacker.Faction != Faction.OfPlayer) return;                   
-            if (victim != null && !victim.HostileTo(Faction.OfPlayer)) return;
-            ContributionEntry entry = GetOrAdd(attacker);
-            if (entry != null) entry.dealt += amount;
-        }
+            if (victim == null || amount <= 0f) return;
+            Faction player = Faction.OfPlayer;
+            if (player == null) return;
 
-        //承受伤害
-        public void RecordTaken(Pawn victim, Pawn inflictor, float amount)
-        {
-            if (victim == null || inflictor == null || amount <= 0f) return;
-            if (victim.Faction != Faction.OfPlayer) return;
-            if (!inflictor.HostileTo(Faction.OfPlayer)) return;
-            ContributionEntry entry = GetOrAdd(victim);
-            if (entry != null) entry.taken += amount;
+            //敌对判据一律走 Faction.HostileTo：GenHostility.HostileTo 对 Destroyed 的对象直接返回 false，
+            //而致死一击的受害者在本回调里已被销毁，用它会漏记那一击
+            bool enemyHit = victim.Faction != null && victim.Faction.HostileTo(player);
+            bool dealt = attacker != null && attacker != victim
+                && attacker.Faction == player && enemyHit;
+            bool taken = victim.Faction == player
+                && attacker != null && attacker.Faction != null && attacker.Faction.HostileTo(player);
+            if (!dealt && !taken && !enemyHit) return;
+
+            BattleAccount account = AccountFor(attacker, victim);
+            if (account == null) return;
+
+            int now = Find.TickManager.TicksAbs;
+            account.Touch(now);
+            if (enemyHit) account.enemyDamage += amount;
+            if (dealt) account.AddDealt(attacker, amount);
+            if (taken) account.AddTaken(victim, amount);
         }
 
         //治疗/buff/debuff
         public void RecordSupport(Pawn pawn, float amount)
         {
             if (pawn == null || amount <= 0f) return;
-            ContributionEntry entry = GetOrAdd(pawn);
-            if (entry != null) entry.support += amount;
+            if (pawn.Faction != Faction.OfPlayer) return;
+
+            BattleAccount account = AccountFor(pawn, pawn);
+            if (account == null) return;
+
+            account.Touch(Find.TickManager.TicksAbs);
+            account.AddSupport(pawn, amount);
         }
 
-        //敌方承受的伤害
-        public void RecordEnemyDamage(Pawn victim, float amount)
+        //归属优先取攻击者（我方出手者必已在战斗中），回落受击者
+        private BattleAccount AccountFor(Pawn attacker, Pawn victim)
         {
-            if (victim == null || amount <= 0f) return;
-            if (victim.Faction == null || !victim.Faction.HostileTo(Faction.OfPlayer)) return;
-            ContributionEntry entry = GetOrAdd(victim);
-            if (entry != null) entry.enemyTaken += amount;
-        }
-
-        private ContributionEntry GetOrAdd(Pawn pawn)
-        {
-            if (pawn == null) return null;
-            Battle battle = pawn.records?.BattleActive;
+            Battle battle = attacker?.records?.BattleActive ?? victim?.records?.BattleActive;
             if (battle == null) return null;
 
             while (battle.AbsorbedBy != null) battle = battle.AbsorbedBy;
-            string battleId = battle.GetUniqueLoadID();
-
-            foreach (ContributionEntry entry in contributions)
-                if (entry != null && entry.pawn == pawn && entry.battleId == battleId)
-                    return entry;
-
-            Log.Message($"Start Track {pawn.Name?.ToStringShort ?? "Unknown"} In Battle {battle.GetName()}");
-            ContributionEntry added = new(){ battleId = battleId, pawn = pawn };
-            contributions.Add(added);
-            return added;
+            return GetOrAddAccount(battle);
         }
 
-        private void PruneContributions(string battleId)
+        private BattleAccount GetOrAddAccount(Battle battle)
         {
-            for (int i = contributions.Count - 1; i >= 0; i--)
-                if (contributions[i] == null || contributions[i].battleId == battleId)
-                    contributions.RemoveAt(i);
+            string battleId = battle.GetUniqueLoadID();
+            BattleAccount account = AccountById(battleId);
+            if (account != null) return account;
+            account = new BattleAccount(battleId, Find.TickManager.TicksAbs);
+            accounts.Add(account);
+            return account;
         }
+
+        private BattleAccount AccountById(string battleId)
+        {
+            for (int i = 0; i < accounts.Count; i++)
+                if (accounts[i] != null && accounts[i].battleId == battleId) return accounts[i];
+            return null;
+        }
+
+        //把已被吸收的战斗的账本并进它现在归属的战斗
+        private void MigrateAbsorbed()
+        {
+            if (accounts.Count <= 1) return;
+
+            for (int i = accounts.Count - 1; i >= 0; i--)
+            {
+                BattleAccount account = accounts[i];
+                if (account == null) { accounts.RemoveAt(i); continue; }
+
+                //全员都已过期时保留原 id，等结算精确匹配
+                Battle current = account.CurrentBattle();
+                if (current == null) continue;
+
+                while (current.AbsorbedBy != null) current = current.AbsorbedBy;
+                string newId = current.GetUniqueLoadID();
+                if (newId == account.battleId) continue;
+
+                BattleAccount target = AccountById(newId);
+                if (target == null) account.battleId = newId;
+                else
+                {
+                    target.Merge(account);
+                    accounts.RemoveAt(i);
+                }
+            }
+        }
+
+        private void DropAccount(string battleId)
+            => accounts.RemoveAll(a => a == null || a.battleId == battleId);
 
         //只保留当前战斗列表中的已结算ID，避免长局无限累积
         private void PruneResolved()
         {
-            var battles = Find.BattleLog?.Battles;
+            List<Battle> battles = Find.BattleLog?.Battles;
             if (battles.NullOrEmpty()) return;
             if (resolved.Count <= battles.Count) return;
 
@@ -149,57 +180,11 @@ namespace FamiliaMyth.Feat
             resolved.RemoveAll(id => !alive.Contains(id));
         }
 
-        //把条目重新归属到pawn当前有效的战斗，并归并同键条目。
-        private void RenormalizeContributions()
+        //清理孤儿账本：战斗在结算前就被 BattleLog 挤出列表，且账本内无人还挂在战斗上
+        private void PruneOrphanAccounts()
         {
-            if (contributions.Count == 0) return;
-
-            List<ContributionEntry> merged = new();
-            for (int i = 0; i < contributions.Count; i++)
-            {
-                ContributionEntry entry = contributions[i];
-                if (entry == null || entry.pawn == null) continue;
-
-                // BattleActive 为 null 时保留原 ID：该战斗正待结算（结算轮与失效轮同 tick）
-                Battle current = entry.pawn.records?.BattleActive;
-                if (current != null)
-                {
-                    string newId = current.GetUniqueLoadID();
-                    if (newId != entry.battleId) entry.battleId = newId;
-                }
-
-                ContributionEntry target = FindEntry(merged, entry.battleId, entry.pawn);
-                if (target == null)
-                {
-                    merged.Add(entry);
-                }
-                else
-                {
-                    // 同键归并：否则 ContributionOf 只返回第一条，其余战绩被静默丢弃
-                    target.dealt += entry.dealt;
-                    target.taken += entry.taken;
-                    target.support += entry.support;
-                }
-            }
-
-            contributions = merged;
-        }
-
-        private static ContributionEntry FindEntry(List<ContributionEntry> list, string battleId, Pawn pawn)
-        {
-            for (int i = 0; i < list.Count; i++)
-            {
-                ContributionEntry entry = list[i];
-                if (entry != null && entry.pawn == pawn && entry.battleId == battleId) return entry;
-            }
-            return null;
-        }
-
-        //清理孤儿条目
-        private void PruneOrphanContributions()
-        {
-            var battles = Find.BattleLog?.Battles;
-            if (contributions.Count == 0 || battles.NullOrEmpty()) return;
+            List<Battle> battles = Find.BattleLog?.Battles;
+            if (accounts.Count == 0 || battles.NullOrEmpty()) return;
 
             List<string> alive = new();
             for (int i = 0; i < battles.Count; i++)
@@ -210,43 +195,142 @@ namespace FamiliaMyth.Feat
                 alive.Add(battle.GetUniqueLoadID());
             }
 
-            contributions.RemoveAll(e => e == null
-                || (e.pawn == null)
-                || (!alive.Contains(e.battleId)
-                    && !resolved.Contains(e.battleId)
-                    && e.pawn.records?.BattleActive == null));
+            accounts.RemoveAll(a => a == null
+                || (!alive.Contains(a.battleId)
+                    && !resolved.Contains(a.battleId)
+                    && a.CurrentBattle() == null));
         }
 
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Collections.Look(ref contributions, "contributions", LookMode.Deep);
+            Scribe_Collections.Look(ref accounts, "accounts", LookMode.Deep);
             Scribe_Collections.Look(ref resolved, "resolved", LookMode.Value);
 
             if (Scribe.mode != LoadSaveMode.PostLoadInit) return;
-            contributions ??= new List<ContributionEntry>();
+            accounts ??= new List<BattleAccount>();
             resolved ??= new List<string>();
         }
     }
 
-    // 单场战斗中某个参与者的贡献累计
-    public class ContributionEntry : IExposable
+    // 一场战斗一本账：分摊分母挂在账本上，Pawn 只是账本里的一行
+    public class BattleAccount : IExposable
     {
         public string battleId;
-        public Pawn pawn;
-        public float dealt;      //造成伤害
-        public float taken;      //承受伤害
-        public float support;    //支援
-        public float enemyTaken; //作为敌对方承受的伤害
+        //敌方承受的全部伤害（我方 Pawn / 炮塔 / 商队 / 陷阱 / 环境均计入）
+        public float enemyDamage;
+        //账本内首个 / 最后一个贡献事件的时点
+        public int firstTick;
+        public int lastTick;
+        public Dictionary<Pawn, PawnContribution> pawns = new();
+
+        //Scribe_Collections 的字典重载要求 key / value 的 work list 跨阶段存活，故必须是字段
+        private List<Pawn> keysWorkList;
+        private List<PawnContribution> valuesWorkList;
+
+        public BattleAccount() { }
+
+        public BattleAccount(string battleId, int now)
+        {
+            this.battleId = battleId;
+            firstTick = now;
+            lastTick = now;
+        }
+
+        // ── 记账 ──
+
+        public void Touch(int now)
+        {
+            firstTick = Mathf.Min(firstTick, now);
+            lastTick = Mathf.Max(lastTick, now);
+        }
+
+        public void AddDealt(Pawn pawn, float amount) => Row(pawn).dealt += amount;
+
+        public void AddTaken(Pawn pawn, float amount) => Row(pawn).taken += amount;
+
+        public void AddSupport(Pawn pawn, float amount) => Row(pawn).support += amount;
+
+        // ── 查询 ──
+
+        public PawnContribution Find(Pawn pawn)
+        {
+            if (pawn == null) return null;
+            return pawns.TryGetValue(pawn, out PawnContribution row) ? row : null;
+        }
+
+        //账本内任一成员仍在战斗中，就能指出这本账现在的归属
+        public Battle CurrentBattle()
+        {
+            foreach (KeyValuePair<Pawn, PawnContribution> pair in pawns)
+            {
+                Battle battle = pair.Key?.records?.BattleActive;
+                if (battle != null) return battle;
+            }
+            return null;
+        }
+
+        // ── 归并 ──
+
+        public void Merge(BattleAccount other)
+        {
+            if (other == null || other == this) return;
+
+            enemyDamage += other.enemyDamage;
+            firstTick = Mathf.Min(firstTick, other.firstTick);
+            lastTick = Mathf.Max(lastTick, other.lastTick);
+
+            foreach (KeyValuePair<Pawn, PawnContribution> pair in other.pawns)
+            {
+                if (pair.Key == null) continue;
+                if (pawns.TryGetValue(pair.Key, out PawnContribution existing))
+                {
+                    existing.dealt += pair.Value.dealt;
+                    existing.taken += pair.Value.taken;
+                    existing.support += pair.Value.support;
+                }
+                else pawns.Add(pair.Key, pair.Value);
+            }
+        }
+
+        //调用方保证 pawn 非 null（三条 Add* 都在外层判过空）
+        private PawnContribution Row(Pawn pawn)
+        {
+            if (!pawns.TryGetValue(pawn, out PawnContribution row))
+            {
+                row = new PawnContribution();
+                Log.Message($"[Familia Myth] Start Tracking {pawn.Name?.ToStringShort ?? pawn.Label} In Battle {pawn.records?.BattleActive?.GetName() ?? "Unknown Battle"}");
+                pawns.Add(pawn, row);
+            }
+            return row;
+        }
 
         public void ExposeData()
         {
             Scribe_Values.Look(ref battleId, "battleId");
-            Scribe_References.Look(ref pawn, "pawn");
+            Scribe_Values.Look(ref enemyDamage, "enemyDamage", 0f);
+            Scribe_Values.Look(ref firstTick, "firstTick", 0);
+            Scribe_Values.Look(ref lastTick, "lastTick", 0);
+            Scribe_Collections.Look(ref pawns, "pawns", LookMode.Reference, LookMode.Deep,
+                ref keysWorkList, ref valuesWorkList);
+
+            if (Scribe.mode != LoadSaveMode.PostLoadInit) return;
+            pawns ??= new Dictionary<Pawn, PawnContribution>();
+        }
+    }
+
+    // 账本里的一行：某个我方 Pawn 在这场战斗里的贡献；Pawn 由字典 key 承担
+    public class PawnContribution : IExposable
+    {
+        public float dealt;
+        public float taken;
+        public float support;
+
+        public void ExposeData()
+        {
             Scribe_Values.Look(ref dealt, "dealt", 0f);
             Scribe_Values.Look(ref taken, "taken", 0f);
             Scribe_Values.Look(ref support, "support", 0f);
-            Scribe_Values.Look(ref enemyTaken, "enemyTaken", 0f);
         }
     }
 }

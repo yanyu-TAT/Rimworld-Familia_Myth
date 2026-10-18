@@ -2,42 +2,43 @@
 <Defs>
 
   <!-- 玩家可见文本可经 Languages/<语言>/DefInjected/FeatTraitDef/FeatTraits.xml 覆盖（此处为默认文本，同时作为兜底） -->
-  <!-- judgerClass 指向判定器：阈值写在各判定器类内（Source/FeatTraitJudgers.cs），此处只配系数与排序 -->
-
-  <FamiliaMyth.Feat.FeatTraitDef>
-    <defName>FeatTrait_RepelledAssault</defName>
-    <label>击退强袭</label>
-    <description>击退了一支成规模的来袭之敌。</description>
-    <multiplier>1.2</multiplier>
-    <judgerClass>FamiliaMyth.Feat.Judger_RepelledAssault</judgerClass>
-    <displayOrder>10</displayOrder>
-  </FamiliaMyth.Feat.FeatTraitDef>
-
+  <!-- judgerClass 指向判定器：阈值写在各判定器类内（Source/FeatTraitJudgers.cs），此处只配系数、作用域与排序 -->
+  <!-- scope 缺省为 Battle：系数乘进战斗总得分（全队共享）；Pawn：系数只乘该参与者个人得分 -->
   <FamiliaMyth.Feat.FeatTraitDef>
     <defName>FeatTrait_AgainstTheOdds</defName>
     <label>以寡敌众</label>
     <description>以远少于对方的人数击退了强敌。</description>
-    <multiplier>1.4</multiplier>
+    <multiplier>1.3</multiplier>
     <judgerClass>FamiliaMyth.Feat.Judger_AgainstTheOdds</judgerClass>
     <displayOrder>20</displayOrder>
   </FamiliaMyth.Feat.FeatTraitDef>
 
   <FamiliaMyth.Feat.FeatTraitDef>
-    <defName>FeatTrait_FlawlessVictory</defName>
-    <label>无伤克敌</label>
-    <description>自身无人倒下便结束了这场战斗。</description>
-    <multiplier>1.3</multiplier>
-    <judgerClass>FamiliaMyth.Feat.Judger_FlawlessVictory</judgerClass>
+    <defName>FeatTrait_CompleteVictory</defName>
+    <label>大获全胜</label>
+    <description>己方无人倒下便结束了这场战斗。</description>
+    <multiplier>1.1</multiplier>
+    <judgerClass>FamiliaMyth.Feat.Judger_CompleteVictory</judgerClass>
     <displayOrder>30</displayOrder>
   </FamiliaMyth.Feat.FeatTraitDef>
 
   <FamiliaMyth.Feat.FeatTraitDef>
-    <defName>FeatTrait_SlayTheMighty</defName>
-    <label>绝境克强敌</label>
-    <description>在压倒性的劣势中击杀强敌。</description>
-    <multiplier>1.6</multiplier>
-    <judgerClass>FamiliaMyth.Feat.Judger_SlayTheMighty</judgerClass>
+    <defName>FeatTrait_SingleDefender</defName>
+    <label>一夫当关</label>
+    <description>独自击退了绝大多数敌人。</description>
+    <multiplier>1.5</multiplier>
+    <judgerClass>FamiliaMyth.Feat.Judger_SingleDefender</judgerClass>
+    <scope>Pawn</scope>
     <displayOrder>40</displayOrder>
+  </FamiliaMyth.Feat.FeatTraitDef>
+
+  <FamiliaMyth.Feat.FeatTraitDef>
+    <defName>FeatTrait_EasilyOvercome</defName>
+    <label>摧枯拉朽</label>
+    <description>在极短时间内击溃了敌人。</description>
+    <multiplier>1.2</multiplier>
+    <judgerClass>FamiliaMyth.Feat.Judger_EasilyOvercome</judgerClass>
+    <displayOrder>50</displayOrder>
   </FamiliaMyth.Feat.FeatTraitDef>
 
 </Defs>
