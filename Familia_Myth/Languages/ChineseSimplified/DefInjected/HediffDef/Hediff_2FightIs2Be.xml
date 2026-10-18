@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Hediff_2FightIs2Be 玩家可见文本（自 Defs 迁移；Def 内文本保留为默认/兜底） -->
+
+  <FightIs2BeInEffect.description>战斗续行：全能力值随战斗时间提升，降低休息值与营养值消耗，提高精神抗性。</FightIs2BeInEffect.description>
+  <FightIs2BeInEffect.label>我战我在</FightIs2BeInEffect.label>
+
+</LanguageData>

@@ -48,15 +48,15 @@ namespace FamiliaMyth.Abilities
             return true;
         }
 
-        public override void NotifyEnffectStart()
+        public override void Notify_EnffectStart()
         {
-            base.NotifyEnffectStart();
+            base.Notify_EnffectStart();
             Provokers.Add(Owner);
         }
 
-        public override void NotifyEffectEnd()
+        public override void Notify_EffectEnd()
         {
-            base.NotifyEffectEnd();
+            base.Notify_EffectEnd();
             Provokers.Remove(Owner);
         }
 

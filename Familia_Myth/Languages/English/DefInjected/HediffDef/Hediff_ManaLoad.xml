@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Hediff_ManaLoad player-visible text (migrated from Defs; Def text kept as default/fallback) -->
+
+  <ManaLoadInEffect.description>Mana spent is converted into stat bonuses; spending mana again resets the duration.</ManaLoadInEffect.description>
+  <ManaLoadInEffect.label>Mana Load</ManaLoadInEffect.label>
+
+</LanguageData>

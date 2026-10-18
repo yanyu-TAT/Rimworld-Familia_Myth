@@ -20,7 +20,7 @@
   <FamiliaMyth.Ability.SpellKeyLabel>引爆咒：{0}</FamiliaMyth.Ability.SpellKeyLabel>
   <!-- ==================== 重生女神之礼赞（Spell_ZeoGullveig） ==================== -->
   <FamiliaMyth.Ability.ZeoGullveig>重生女神之礼赞</FamiliaMyth.Ability.ZeoGullveig>
-  <FamiliaMyth.Ability.ZeoGullveigAutoLabel>重生女神之礼赞：自动治愈</FamiliaMyth.Ability.ZeoGullveigAutoLabel>
+  <FamiliaMyth.Ability.ZeoGullveigAutoLabel>大地女神之礼赞：自动治愈</FamiliaMyth.Ability.ZeoGullveigAutoLabel>
   <FamiliaMyth.Ability.ZeoGullveigAutoDesc>持续消耗魔力自动进行自我治愈，魔力不足时自动关闭</FamiliaMyth.Ability.ZeoGullveigAutoDesc>
   <FamiliaMyth.Ability.ZeoGullveigNoMana>{0}魔力不足，自动治愈已关闭。</FamiliaMyth.Ability.ZeoGullveigNoMana>
   <FamiliaMyth.Ability.PawnDead>{0}已死亡</FamiliaMyth.Ability.PawnDead>
@@ -43,6 +43,11 @@
   <FamiliaMyth.Ability.DesperateArmyWinWill>  哀兵必胜: +{0}</FamiliaMyth.Ability.DesperateArmyWinWill>
   <!-- ==================== 狂化招乱（Skill_BerserkerChaos） ==================== -->
   <FamiliaMyth.BerserkerChaosLabel>  狂化招乱</FamiliaMyth.BerserkerChaosLabel>
+  <!-- ==================== 魔力装填（Skill_ManaLoad） ==================== -->
+  <FamiliaMyth.Ability.ManaLoadStrength>  魔力装填: +{0}</FamiliaMyth.Ability.ManaLoadStrength>
+  <FamiliaMyth.Ability.ManaLoadManaSpent>已积累消耗魔力：{0}</FamiliaMyth.Ability.ManaLoadManaSpent>
+  <!-- ==================== 我战我在（Skill_2FightIs2Be） ==================== -->
+  <FamiliaMyth.Ability.2FightIs2Be>  我战我在: +{0}</FamiliaMyth.Ability.2FightIs2Be>
   <!-- ==================== 余烬（Skill_Ember） ==================== -->
   <FamiliaMyth.Ability.EmberTriggered>由于被击倒，{0} 的技能：余烬 已触发</FamiliaMyth.Ability.EmberTriggered>
   <!-- ==================== 嘲讽（Skill_Provoke） ==================== -->

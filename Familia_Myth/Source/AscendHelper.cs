@@ -74,8 +74,8 @@ namespace FamiliaMyth.Pharna
         private const float RareWeight = 1f;
 
         //保底：连续未获得罕见奖励时，罕见权重每层增加的倍率与封顶
-        private const float PityWeightStep = 1f;
-        private const float PityWeightMaxMultiplier = 10f;
+        private const float PityWeightStep = 2f;
+        private const float PityWeightMaxMultiplier = 15f;
 
         //每次升华的刷新次数
         private const int RerollsPerAscend = 1;

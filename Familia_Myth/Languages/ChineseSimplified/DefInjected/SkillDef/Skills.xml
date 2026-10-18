@@ -2,27 +2,31 @@
 <LanguageData>
 
 	<Skill_DesperateArmyWin.label>哀兵必胜</Skill_DesperateArmyWin.label>
-	<Skill_DesperateArmyWin.description>心情低落时常态生效：根据心情低落的程度，获得大幅的力量、耐久、敏捷与意志补正。</Skill_DesperateArmyWin.description>
+	<Skill_DesperateArmyWin.description>心情低落时常态生效：\n根据心情低落的程度，获得大幅的力量、耐久、敏捷与意志补正。</Skill_DesperateArmyWin.description>
 
 	<Skill_Railgun.label>超电磁炮</Skill_Railgun.label>
-	<Skill_Railgun.description>持有远程枪械时可释放：向武器注入电磁能量，此后数次射击将贯穿弹道，对路径上所有敌人造成大量伤害并使其短暂麻痹，遇墙则弹道被截停，并对墙体造成额外伤害。</Skill_Railgun.description>
+	<Skill_Railgun.description>持有远程枪械时可释放：\n向武器注入电磁能量，此后数次射击将贯穿弹道，对路径上所有敌人造成大量伤害并使其短暂麻痹，\n遇墙则弹道被截停，并对墙体造成额外伤害。</Skill_Railgun.description>
 
   <!-- 自 Defs 迁移补充 -->
-  <Skill_BerserkerChaos.description>常态生效：受伤越重，近战伤害越高。</Skill_BerserkerChaos.description>
+  <Skill_BerserkerChaos.description>常态生效：\n受伤越重，近战伤害越高。</Skill_BerserkerChaos.description>
   <Skill_BerserkerChaos.label>狂化招乱</Skill_BerserkerChaos.label>
-  <Skill_Ember.description>被击倒时触发：短时间内强制维持生存并高速修复伤势，之后强制昏迷。</Skill_Ember.description>
+  <Skill_Ember.description>被击倒时触发：\n短时间内强制维持生存并高速修复伤势，之后强制昏迷。</Skill_Ember.description>
   <Skill_Ember.label>余烬</Skill_Ember.label>
-  <Skill_FlameAffinity.description>常态生效：热能护甲大幅提高，最高舒适温度大幅提高，易燃性提高，不再畏惧火焰，燃烧时持续恢复伤势</Skill_FlameAffinity.description>
+  <Skill_FlameAffinity.description>常态生效：\n热能护甲大幅提高，最高舒适温度大幅提高，\n易燃性提高，不再畏惧火焰，燃烧时持续恢复伤势</Skill_FlameAffinity.description>
   <Skill_FlameAffinity.label>火焰亲和</Skill_FlameAffinity.label>
-  <Skill_IaiSpiritSlash.description>持有锐伤近战武器时可释放：进入居合状态，期间将受到的所有伤害纳于刀身；片刻后拔刀向指定方向疾进一段距离，对沿途敌人造成武器伤害，并附加所纳伤害的一部分。</Skill_IaiSpiritSlash.description>
+  <Skill_IaiSpiritSlash.description>持有锐伤近战武器时可释放：\n进入居合状态，期间将受到的所有伤害纳于刀身；\n片刻后拔刀向指定方向疾进一段距离，对沿途敌人造成武器伤害，并附加所吸收伤害的一部分。</Skill_IaiSpiritSlash.description>
   <Skill_IaiSpiritSlash.label>居合拔刀气刃斩</Skill_IaiSpiritSlash.label>
-  <Skill_LanceCharge.description>持有锐伤近战武器时可释放：向一定距离内的目标点冲刺，对沿途敌人造成大量伤害并将其击退。</Skill_LanceCharge.description>
+  <Skill_LanceCharge.description>持有锐伤近战武器时可释放：\n向一定距离内的目标点冲刺，对沿途敌人造成大量伤害并将其击退。</Skill_LanceCharge.description>
   <Skill_LanceCharge.label>夹枪冲锋</Skill_LanceCharge.label>
-  <Skill_Provoke.description>征召时可释放：使周围大范围内的敌人将攻击目标转向自己，持续数小时。</Skill_Provoke.description>
+  <Skill_ManaLoad.description>消耗魔力时触发：\n根据积累的魔力消耗获得魔力操控·攻击与力量补正，\n效果持续数小时，期间再次消耗魔力则重置持续时间。</Skill_ManaLoad.description>
+  <Skill_ManaLoad.label>魔力装填</Skill_ManaLoad.label>
+  <Skill_2FightIs2Be.description>进入战斗状态时触发：\n随战斗时间持续提升全能力值，降低休息值与营养值消耗，提高精神抗性；\n脱离战斗一段时间后结束。</Skill_2FightIs2Be.description>
+  <Skill_2FightIs2Be.label>我战我在</Skill_2FightIs2Be.label>
+  <Skill_Provoke.description>征召时可释放：\n使周围大范围内的敌人将攻击目标转向自己，持续数小时。</Skill_Provoke.description>
   <Skill_Provoke.label>吸引仇恨</Skill_Provoke.label>
-  <Skill_RoundhouseKick.description>对自身周围一定范围内的单个敌人造成徒手伤害，并将其大力击退；若击退路径上有阻挡，则造成大量额外伤害。可存储数次。</Skill_RoundhouseKick.description>
+  <Skill_RoundhouseKick.description>对自身周围一定范围内的单个敌人造成徒手伤害，并将其大力击退；\n若击退路径上有阻挡，则造成大量额外伤害。可存储数次。</Skill_RoundhouseKick.description>
   <Skill_RoundhouseKick.label>回旋踢</Skill_RoundhouseKick.label>
-  <Skill_SwordRain.description>持有锐伤近战武器时可释放：对周围小范围内的敌人连续造成两次武器伤害；若造成击杀或使敌人倒地，则立即重置冷却，但重置次数有限。</Skill_SwordRain.description>
+  <Skill_SwordRain.description>持有锐伤近战武器时可释放：\n对周围小范围内的敌人连续造成两次武器伤害；\n若造成击杀或击倒敌人，则立即重置冷却，但重置次数有限。</Skill_SwordRain.description>
   <Skill_SwordRain.label>剑雨滂沱</Skill_SwordRain.label>
 
 </LanguageData>

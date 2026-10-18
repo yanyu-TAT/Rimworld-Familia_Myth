@@ -3,7 +3,7 @@
 
   <!-- Items_AncientRelic 玩家可见文本（自 Defs 迁移；Def 内文本保留为默认/兜底） -->
 
-  <FM_AncientRelicArtifact.description>古代仙精留下的宝物，蕴含着难以置信的力量，但目前似乎还无法打开。</FM_AncientRelicArtifact.description>
-  <FM_AncientRelicArtifact.label>仙精宝物</FM_AncientRelicArtifact.label>
+  <FM_AncientRelicArtifact.description>一枚封存的圣物匣。据信曾为某个失落文明所敬奉，历经岁月仍保存完好。</FM_AncientRelicArtifact.description>
+  <FM_AncientRelicArtifact.label>古代圣物匣</FM_AncientRelicArtifact.label>
 
 </LanguageData>

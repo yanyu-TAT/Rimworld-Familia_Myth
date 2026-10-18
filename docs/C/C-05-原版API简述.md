@@ -280,6 +280,21 @@ GenerateShuttle(Faction owningFaction = null, IEnumerable<Pawn> requiredPawns = 
 - 本项目用法：`Defs/StatDefs/PharnaStats.xml` 的 **19 个恩惠展示 Stat**（六项能力值、`ManaControl` 系列 9 个、`ManaMax` / `ManaConversion` / `ManaConversionSpeed`、经验值）全部标注 —— 它们的值由 `StatPart_PharnaDisplay`（展示项）/ `StatPart_Pharna`（系数注入）/ `StatPart_ManaControl`（魔力操控）从恩惠 Hediff 派生，玩家与剧本都不应直接设定。
 - 出处：`decompiledFiles/Verse/StatDef.cs`、`RimWorld/ScenPart_StatFactor.cs`、`RimWorld/StatWorker.cs`、`RimWorld/StatWorker_MeleeArmorPenetration.cs`。
 
+### HediffStage 的数值修正（statOffsets / statFactors / 饥饿与休息速率）
+
+- `HediffStage` 是 hediff 阶段的**声明式修正表**，一个 stage 可同时挂：`statOffsets`（对任意 StatDef 加算）、`statFactors`（乘算）、`hungerRateFactor` / `hungerRateFactorOffset`、`restFallFactor` / `restFallFactorOffset`、`statOffsetsBySeverity` / `statFactorsBySeverity`（按 severity 曲线）、`damageFactors`、`capMods` 等。
+- **StatDef 修正的生效点**：`StatWorker.GetValueInternal` 在 offsets 累加阶段调 `HediffStatsUtility.GetStatOffsetForSeverity(stat, stage, pawn, severity)`，在 factors 累乘阶段调 `GetStatFactorForSeverity(...)` —— 与特性 / 基因 / 戒律 / 装备同层参与，最终 `applyPostProcess` 时统一 `Mathf.Clamp(def.minValue, def.maxValue)`（`StatWorker.cs:823-826`）。
+- **优先级**：`statOffsets` 命中（非 0）即 return，`statOffsetsBySeverity` 只是 fallback；`statFactors` 同理（值 `1` 视为未命中）。同一 stage 两处都配同一 stat 时，普通列表会盖掉曲线。
+- **额外修饰**：`multiplyStatChangesBySeverity`（offset 再 ×severity）、`statOffsetEffectMultiplier` / `statFactorEffectMultiplier`（再乘一个 pawn 的 StatDef 值）。
+- **显示**：`statOffsets` / `statFactors` 会进 StatDef 提示框的「相关健康状态」区（`StatWorker.GetOffsetsAndFactorsExplanation` 按 hediff 逐条列出，格式 `LabelBaseCap: +x`），hediff 卡片另经 `HediffStatsUtility.SpecialDisplayStats` 列出（饥饿/休息速率条目也在其中）——**不需要自写 ExplanationPart**。
+- **共享实例陷阱**：`def.stages` 的元素是**全 Def 共享**，动态值必须在 `CurStage` 里 `new HediffStage` 返回（本项目 `Hediff_EfficientCirculation` / `Hediff_2FightIs2Be` 即此写法），就地改字段会污染所有同 Def 的 pawn 与存档。
+- **饥饿速率**：`Need_Food.FoodFallPerTickAssumingCategory` = `BaseHungerRate(生命阶段, 种族) × 饥饿档位倍率 × hediffSet.GetHungerRateFactor() × 特性 HungerRateFactor × 床 BedHungerRateFactor`。**没有** `HungerRateMultiplier` 这类 StatDef（`StatDefOf` 里只有仅对床生效的 `BedHungerRateFactor`），故营养下降只能走 `stage.hungerRateFactor`（或 patch / 特性 / 床）。
+- **休息速率**：`Need_Rest.RestFallPerTick` = 常量 × `hediffSet.RestFallFactor` × 档位系数；`NeedInterval` 里**非休息分支**才再 `× GetStatValue(StatDefOf.RestFallRateFactor)`（睡眠恢复走 `RestRateMultiplier`）。两者都只作用于清醒时的下降。
+- **聚合语义**：`HediffSet.RestFallFactor` / `GetHungerRateFactor` 遍历所有 hediff 的 `CurStage`，先把各值**相乘**、再累加各 Offset，最后 `Mathf.Max(..., 0)`。
+- **崩溃阈值**：HediffStage **没有**对应字段；它是 `StatDefOf.MentalBreakThreshold`（默认 0.35、`minValue 0.01`、`maxValue 0.5`），`MentalBreaker` 三个阈值都由它派生：`Minor = GetStatValue(MentalBreakThreshold)`、`Major = ×0.5714286`、`Extreme = ×1/7`。降低崩溃阈值 = 给该 StatDef 注入负值（`HediffStage.statOffsets` 或 `StatPart` 皆可），最终受 `minValue 0.01` 截断。
+- **战斗状态窗口**：`Pawn_RecordsTracker.BattleActive` 不是即时失效——`EnterBattle` 每次把 `battleExitTick = now + 5000`（`Battle.TicksForBattleExit = 5000`），getter 只有在 `battleExitTick < TicksGame` 时才返回 null → 最后一次战斗事件后仍有 **2 小时**「在战斗中」窗口。判断「脱离战斗」要么接受这个尾巴，要么改用自有计时。
+- 出处：`decompiledFiles/Verse/HediffStage.cs`、`Verse/HediffSet.cs`、`Verse/HediffStatsUtility.cs`、`RimWorld/StatWorker.cs`、`RimWorld/Need_Food.cs`、`RimWorld/Need_Rest.cs`、`Verse.AI/MentalBreaker.cs`、`RimWorld/Pawn_RecordsTracker.cs`、`Verse/Battle.cs`、`Data/Core/Defs/Stats/Stats_Pawns_General.xml`（1.6 与 `lib/1.7/Assembly-CSharp.dll` 两版均核对）。
+
 ## 十、文本与本地化
 
 ### `"Key".Translate(args)` 的占位符格式化器（GrammarResolverSimple）

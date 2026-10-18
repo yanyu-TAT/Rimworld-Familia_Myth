@@ -14,13 +14,13 @@ namespace FamiliaMyth.Abilities
         public override void CompPostPostAdd(DamageInfo? dinfo)
         {
             base.CompPostPostAdd(dinfo);
-            Skill.NotifyEnffectStart();
+            Skill.Notify_EnffectStart();
         }
 
         public override void CompPostPostRemoved()
         {
             base.CompPostPostRemoved();
-            Skill.NotifyEffectEnd();
+            Skill.Notify_EffectEnd();
         }
     }
 

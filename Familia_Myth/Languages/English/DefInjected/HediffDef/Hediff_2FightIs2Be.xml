@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Hediff_2FightIs2Be player-visible text (migrated from Defs; Def text kept as default/fallback) -->
+
+  <FightIs2BeInEffect.description>Battle continuation: all abilities rise the longer the fight goes on; rest and nutrition consumption are reduced and mental resistance is increased.</FightIs2BeInEffect.description>
+  <FightIs2BeInEffect.label>I Fight, Therefore I Am</FightIs2BeInEffect.label>
+
+</LanguageData>

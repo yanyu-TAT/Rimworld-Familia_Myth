@@ -3,7 +3,7 @@
 
   <!-- Items_AncientRelic player-visible text (migrated from Defs; Def text kept as default fallback) -->
 
-  <FM_AncientRelicArtifact.description>A treasure left behind by the ancient spirits. It holds unbelievable power, but for now it seems it cannot be opened.</FM_AncientRelicArtifact.description>
-  <FM_AncientRelicArtifact.label>Spirit Treasure</FM_AncientRelicArtifact.label>
+  <FM_AncientRelicArtifact.description>A sealed relic casket. It is believed to have been venerated by a lost civilization, and has survived the ages intact.</FM_AncientRelicArtifact.description>
+  <FM_AncientRelicArtifact.label>Ancient Relic Casket</FM_AncientRelicArtifact.label>
 
 </LanguageData>

@@ -4,11 +4,11 @@
   <FeatTrait_AgainstTheOdds.label>以寡敌众</FeatTrait_AgainstTheOdds.label>
   <FeatTrait_AgainstTheOdds.description>以远少于对方的人数击退了强敌。</FeatTrait_AgainstTheOdds.description>
 
-  <FeatTrait_CompleteVictory.label>无伤克敌</FeatTrait_CompleteVictory.label>
-  <FeatTrait_CompleteVictory.description>自身无人倒下便结束了这场战斗。</FeatTrait_CompleteVictory.description>
+  <FeatTrait_CompleteVictory.label>大获全胜</FeatTrait_CompleteVictory.label>
+  <FeatTrait_CompleteVictory.description>己方无人倒下便结束了这场战斗。</FeatTrait_CompleteVictory.description>
 
   <FeatTrait_SingleDefender.label>一夫当关</FeatTrait_SingleDefender.label>
-  <FeatTrait_SingleDefender.description>一人的贡献超过了其余所有人。</FeatTrait_SingleDefender.description>
+  <FeatTrait_SingleDefender.description>独自击退了绝大多数敌人。</FeatTrait_SingleDefender.description>
 
   <FeatTrait_EasilyOvercome.label>摧枯拉朽</FeatTrait_EasilyOvercome.label>
   <FeatTrait_EasilyOvercome.description>在极短时间内击溃了敌人。</FeatTrait_EasilyOvercome.description>

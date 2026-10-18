@@ -292,3 +292,19 @@
 - 是否规范缺失: 是（复用原版工具方法未核对其隐式前置条件）
 - 规范反哺: AGENTS.md 已有「复用原版部件/工具前先反编译核对其隐式前置条件」，本条目补实例——`GenHostility.HostileTo` 对 `Destroyed` 早退，凡「事后归因 / 统计」场景都不该用它，直接判 `Faction.HostileTo` 更稳。
 - 关联: 次数 1
+
+## BUG-034 | HediffComp 内部的跨存档累积量未 Scribe → 读档后效果强度归零
+- 现象: 「魔力装填」读档后 Hediff 与其剩余时间都还在，但已积累的魔力消耗量变成 0，属性补正回落。
+- 根因: `HediffComp_ManaLoadInEffect.manaSpent` 是普通字段，没有在 `CompExposeData` 里 `Scribe_Values.Look` 注册；Hediff 自身的持久化只覆盖 Hediff / comp 基类字段，不覆盖 comp 自定义字段。
+- 修复方案: 补 `CompExposeData`（`Scribe_Values.Look(ref manaSpent, "manaSpent")`）。
+- 是否规范缺失: 否（已有「需要跨存读档保持的运行时状态随所属对象 ExposeData 持久化」规范，本次为实现遗漏）
+- 规范反哺: 无新增；实现「按累计量成长」的 comp 时，把累积字段与效果 Hediff 同期持久化。
+- 关联: 次数 1
+
+## BUG-035 | 新增 Def 的 defName 以数字开头 → DefInjected 无法表达（语言文件解析失败）
+- 现象: 为 `2FightIs2BeInEffect` 写 `<2FightIs2BeInEffect.label>` 时整个语言文件解析失败，该 Hediff 的中/英文本都无法覆盖。
+- 根因: DefInjected 的键就是 **XML 元素名** `<defName>.<字段>`，而 XML 规定元素名不得以数字开头；这类 def 的 label/description 只能留在 Def 里（中英共用中文），违背本地化规范。
+- 修复方案: 改名为 `FightIs2BeInEffect`，同步改代码侧 `DefDatabase<HediffDef>.GetNamed("FightIs2BeInEffect")` 字符串。
+- 是否规范缺失: 是（Def 命名规范缺少「必须是合法标识符」一条）
+- 规范反哺: AGENTS.md「5. XML 定义」与 B-01「XML（Defs / Patches）」各补一条 defName 命名约束。
+- 关联: 次数 1

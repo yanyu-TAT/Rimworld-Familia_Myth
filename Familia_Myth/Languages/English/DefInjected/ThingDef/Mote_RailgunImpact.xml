@@ -3,6 +3,6 @@
 
   <!-- Mote_RailgunImpact player-visible text (migrated from Defs; Def text kept as default fallback) -->
 
-  <Mote_RailgunImpact.label>Railgun</Mote_RailgunImpact.label>
+  <Mote_RailgunImpact.label>Electromagnetic Piercing Trail</Mote_RailgunImpact.label>
 
 </LanguageData>

@@ -1,35 +1,40 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
 
-	<Skill_DesperateArmyWin.label>Desperate Army's Victory</Skill_DesperateArmyWin.label>
-	<Skill_DesperateArmyWin.description>Always active while mood is low: gains large bonuses to strength, endurance, agility and will, scaled to how low the mood is.</Skill_DesperateArmyWin.description>
-
-	<Skill_LanceCharge.label>Lance Charge</Skill_LanceCharge.label>
-	<Skill_LanceCharge.description>Requires a melee weapon (sharp). Dashes toward a target point within a moderate distance, dealing heavy damage to enemies along the path and knocking them back.</Skill_LanceCharge.description>
-
-	<Skill_Railgun.label>Railgun</Skill_Railgun.label>
-	<Skill_Railgun.description>Requires a ranged weapon. Charges the weapon with electromagnetic energy: the next several shots pierce along the bullet path, dealing heavy damage and briefly stunning enemies. Walls stop the shot but take piercing damage.</Skill_Railgun.description>
-
-  <!-- Additional entries migrated from Defs -->
-  <Skill_BerserkerChaos.description>Always active: the more badly wounded this person is, the higher their melee damage.</Skill_BerserkerChaos.description>
   <Skill_BerserkerChaos.label>Berserker Chaos</Skill_BerserkerChaos.label>
+  <Skill_BerserkerChaos.description>Always active:\nthe more badly wounded this person is, the higher their melee damage.</Skill_BerserkerChaos.description>
 
-  <Skill_Ember.description>Triggers when knocked down: forces this person to stay alive for a short time and rapidly repair their injuries, then forces them into a coma.</Skill_Ember.description>
-  <Skill_Ember.label>Ember</Skill_Ember.label>
-
-  <Skill_FlameAffinity.description>Always active: greatly increases heat armor and maximum comfortable temperature, increases flammability, removes any fear of fire, and continuously heals injuries while burning.</Skill_FlameAffinity.description>
-  <Skill_FlameAffinity.label>Flame Affinity</Skill_FlameAffinity.label>
-
-  <Skill_IaiSpiritSlash.description>Requires a melee weapon (sharp). Enters an iai stance, taking all incoming damage into the blade. After a moment, draws and flashes a short distance in the chosen direction, dealing weapon damage to enemies along the path plus a portion of the damage absorbed.</Skill_IaiSpiritSlash.description>
-  <Skill_IaiSpiritSlash.label>Iai Spirit Slash</Skill_IaiSpiritSlash.label>
-
-  <Skill_Provoke.description>Can be used while drafted: makes enemies in a large area around this person target them instead, for several hours.</Skill_Provoke.description>
   <Skill_Provoke.label>Provoke</Skill_Provoke.label>
+  <Skill_Provoke.description>Can be used while drafted:\nmakes enemies in a large area around this person target them instead, for several hours.</Skill_Provoke.description>
 
-  <Skill_RoundhouseKick.description>Deals unarmed damage to a single enemy within a short distance and knocks them back hard. If the knockback path is blocked, deals heavy additional damage. Can store several charges.</Skill_RoundhouseKick.description>
+  <Skill_DesperateArmyWin.label>Desperate Army's Victory</Skill_DesperateArmyWin.label>
+  <Skill_DesperateArmyWin.description>Always active while mood is low:\ngains large bonuses to strength, endurance, agility and will, scaled to how low the mood is.</Skill_DesperateArmyWin.description>
+
   <Skill_RoundhouseKick.label>Roundhouse Kick</Skill_RoundhouseKick.label>
+  <Skill_RoundhouseKick.description>Deals unarmed damage to a single enemy within a short distance and knocks them back hard.\nIf the knockback path is blocked, deals heavy additional damage. Can store several charges.</Skill_RoundhouseKick.description>
 
-  <Skill_SwordRain.description>Requires a melee weapon (sharp). Strikes enemies in a small area around this person with two weapon hits. A kill or a downed enemy immediately resets the cooldown, but only a limited number of times.</Skill_SwordRain.description>
   <Skill_SwordRain.label>Sword Rain</Skill_SwordRain.label>
+  <Skill_SwordRain.description>Requires a melee weapon (sharp).\nStrikes enemies in a small area around this person with two weapon hits.\nA kill or a knocked-down enemy immediately resets the cooldown, but only a limited number of times.</Skill_SwordRain.description>
+
+  <Skill_FlameAffinity.label>Flame Affinity</Skill_FlameAffinity.label>
+  <Skill_FlameAffinity.description>Always active:\ngreatly increases heat armor and maximum comfortable temperature,\nincreases flammability, removes any fear of fire, and continuously heals injuries while burning.</Skill_FlameAffinity.description>
+
+  <Skill_LanceCharge.label>Lance Charge</Skill_LanceCharge.label>
+  <Skill_LanceCharge.description>Requires a melee weapon (sharp).\nDashes toward a target point within a moderate distance, dealing heavy damage to enemies along the path and knocking them back.</Skill_LanceCharge.description>
+
+  <Skill_ManaLoad.label>Mana Load</Skill_ManaLoad.label>
+  <Skill_ManaLoad.description>Triggers when spending mana:\ngrants bonuses to attack mana control and strength based on the mana spent so far.\nThe effect lasts several hours, and spending mana again during it resets the duration.</Skill_ManaLoad.description>
+
+  <Skill_Ember.label>Ember</Skill_Ember.label>
+  <Skill_Ember.description>Triggers when knocked down:\nforces this person to stay alive for a short time and rapidly repair their injuries, then forces them into a coma.</Skill_Ember.description>
+
+  <Skill_IaiSpiritSlash.label>Iai Spirit Slash</Skill_IaiSpiritSlash.label>
+  <Skill_IaiSpiritSlash.description>Requires a melee weapon (sharp).\nEnters an iai stance, taking all incoming damage into the blade.\nAfter a moment, draws and flashes a short distance in the chosen direction, dealing weapon damage to enemies along the path plus a portion of the damage absorbed.</Skill_IaiSpiritSlash.description>
+
+  <Skill_Railgun.label>Railgun</Skill_Railgun.label>
+  <Skill_Railgun.description>Requires a ranged weapon.\nCharges the weapon with electromagnetic energy: the next several shots pierce along the bullet path, dealing heavy damage and briefly stunning enemies.\nWalls stop the shot but take piercing damage.</Skill_Railgun.description>
+
+  <Skill_2FightIs2Be.label>I Fight, Therefore I Am</Skill_2FightIs2Be.label>
+  <Skill_2FightIs2Be.description>Triggers when entering combat:\nall abilities rise the longer the fight goes on, rest and nutrition consumption are reduced and mental resistance is increased;\nthe effect ends a while after leaving combat.</Skill_2FightIs2Be.description>
 
 </LanguageData>

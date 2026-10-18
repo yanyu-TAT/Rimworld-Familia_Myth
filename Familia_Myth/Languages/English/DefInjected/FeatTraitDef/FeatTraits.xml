@@ -4,11 +4,11 @@
   <FeatTrait_AgainstTheOdds.label>Against the Odds</FeatTrait_AgainstTheOdds.label>
   <FeatTrait_AgainstTheOdds.description>Repelled a far larger force with only a handful of defenders.</FeatTrait_AgainstTheOdds.description>
 
-  <FeatTrait_CompleteVictory.label>Flawless Victory</FeatTrait_CompleteVictory.label>
+  <FeatTrait_CompleteVictory.label>Decisive Victory</FeatTrait_CompleteVictory.label>
   <FeatTrait_CompleteVictory.description>Won the battle without a single ally going down.</FeatTrait_CompleteVictory.description>
 
   <FeatTrait_SingleDefender.label>Holding the Line Alone</FeatTrait_SingleDefender.label>
-  <FeatTrait_SingleDefender.description>Outdid everyone else in the battle single-handedly.</FeatTrait_SingleDefender.description>
+  <FeatTrait_SingleDefender.description>Single-handedly repelled the vast majority of the enemies.</FeatTrait_SingleDefender.description>
 
   <FeatTrait_EasilyOvercome.label>Crushing Victory</FeatTrait_EasilyOvercome.label>
   <FeatTrait_EasilyOvercome.description>Overwhelmed the enemy in a very short span of time.</FeatTrait_EasilyOvercome.description>

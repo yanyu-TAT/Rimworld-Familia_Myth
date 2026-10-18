@@ -157,6 +157,7 @@
 ```
 ✅ 引用类名带命名空间前缀（如 <li Class="HarmonyLib..."> / Verse.HediffDef）——xml 中类名注意命名空间前缀
 ✅ 新 Def 的 defName 全局唯一；ParentName 继承时核对父子关系
+✅ defName 必须是字母/下划线开头的合法标识符——DefInjected 键是 XML 元素名 `<DefName>.<字段>`，数字开头无法表达（见 B-04 BUG-035）
 ✅ 逻辑优先做进 Defs/Patches（PatchOperationConditional 按 DLC/Mod 条件注入），减少代码分支
 ```
 

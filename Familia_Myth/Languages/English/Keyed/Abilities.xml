@@ -53,6 +53,13 @@
   <!-- ==================== Berserker Chaos ==================== -->
   <FamiliaMyth.BerserkerChaosLabel>  Berserker Chaos</FamiliaMyth.BerserkerChaosLabel>
 
+  <!-- ==================== Mana Load ==================== -->
+  <FamiliaMyth.Ability.ManaLoadStrength>  Mana Load: +{0}</FamiliaMyth.Ability.ManaLoadStrength>
+  <FamiliaMyth.Ability.ManaLoadManaSpent>Mana spent: {0}</FamiliaMyth.Ability.ManaLoadManaSpent>
+
+  <!-- ==================== I Fight, Therefore I Am ==================== -->
+  <FamiliaMyth.Ability.2FightIs2Be>  I Fight, Therefore I Am: +{0}</FamiliaMyth.Ability.2FightIs2Be>
+
   <!-- ==================== Ember ==================== -->
   <FamiliaMyth.Ability.EmberTriggered>Knocked down, so {0}'s skill Ember has triggered</FamiliaMyth.Ability.EmberTriggered>
 

@@ -14,14 +14,14 @@
 | 魔法框架 | `Spell.cs`（继承原版 Ability）+ `SpellDef.cs` + `Command_Spell.cs`（图标命令，继承原版 `Command_Psycast`：让原版心灵熵条预览施法熵消耗，并在角标与描述中显示魔力消耗） |
 | 咏唱 | `Verb_CastSpell.cs` / `Mote_Incantation.cs` / `Mote_MagicCircle.cs` |
 | 魔法弹 | `Projectile_MagicMissileBase.cs` + `MagicMissileStates.cs` |
-| 技能框架 | `Skill.cs` + `SkillDef.cs` |
+| 技能框架 | `Skill.cs` + `SkillDef.cs`（数值修正三条通道见 C-02「技能」，改原版 StatDef / 饥饿休息速率 / 崩溃阈值的 `HediffStage` 用法见 C-05） |
 | 发展能力 | `DevelopableAbility.cs` + `DevelopableAbilityDef.cs` + `StatPart_DevelopableAbility.cs` |
 | 魔力系统（精神力→魔力→魔法） | `Hediff_Pharna.cs`（`manaPool` / 常态转化 / `SpendMana`）+ `Defs/StatDefs/PharnaStats.xml`（`ManaMax` / `ManaConversion` / `ManaConversionSpeed` / `ManaControl`）+ `StatPart_ManaControl.cs` + `Gizmo_ManaPool.cs`（池条 / 自动转化角标 / 悬停魔法时的魔力消耗预览段） |
 | 意志/美德 | `MentalState_Virtue.cs`（含触发当拍的心声飘字）+ `Defs/HediffDefs/Hediff_Virtues.xml`（五种 Buff 与范围光环）+ `Patch_Virtue_Trigger.cs`（崩溃前拦截）+ `Hediff_Pharna.TryTriggerVirtue`（概率/冷却/类型抽取） |
 | 公会 | `GameComponent_FamiliaRankTracker.cs` + `GameComponent_GuildEnvoyTracker.cs`（单槽使者）+ `GuildQuestDef/Generator*`（统一工厂 `GuildQuestGenerator.Create(def)` + `Available()` 发布预筛）+ `QuestUtilities.cs` + 任务三件套（`QuestNode_Root_*` / `QuestPart_*` / `SiteClearanceReward`，细节见 C-02）+ 世界对象交互 comp（`WorldObjectComp_*`，如物资押运的定居点按钮）+ 任务脚本（`Defs/QuestScriptDefs/`） |
 | 眷族 UI | `UI_FamiliaPage.cs` + `UI_RadarChart.cs` |
 | 特效 | `Mote_*.cs` + `Textures/` + `Materials/` |
-| 本地化 | `Languages/` —— `Keyed/`（代码内文本 5 个文件）+ `DefInjected/`（Def 文本，文件名与 `Defs/` 一一对应）；中英逐键对称（`12-本地化检查.ps1` 第 [2]~[7] 项全绿；第 [1] 项 236 键中仅缺已知取舍的 `Spell_TheWorld.label`）。机制与四条文本路径见 C-03，术语基准见 C-06 |
+| 本地化 | `Languages/` —— `Keyed/`（代码内文本 6 个文件）+ `DefInjected/`（Def 文本，文件名与 `Defs/` 一一对应）；中英逐键对称（`12-本地化检查.ps1` 第 [2]~[7] 项全绿；第 [1] 项 244 键中仅缺已知取舍的 `Spell_TheWorld.label`）。机制与四条文本路径见 C-03，术语基准见 C-06 |
 
 ## 内容索引
 

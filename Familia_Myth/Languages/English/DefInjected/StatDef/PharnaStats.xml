@@ -11,15 +11,15 @@
 	<PharnaMana.label>Magic</PharnaMana.label>
 	<PharnaMana.description>Increases mana conversion efficiency and maximum mana capacity.</PharnaMana.description>
 	<PharnaWill.label>Will</PharnaWill.label>
-	<PharnaWill.description>Increases the neural heat limit, meditation psyfocus gain, and virtue trigger chance. Reduces virtue cooldown.</PharnaWill.description>
+	<PharnaWill.description>Increases virtue trigger chance and reduces virtue cooldown.</PharnaWill.description>
 	<PharnaExperience.label>Experience</PharnaExperience.label>
 	<PharnaExperience.description>Total experience gained through daily practice and learning. Each ability point gained also grants 1 experience.</PharnaExperience.description>
 	<ManaMax.label>Mana Capacity</ManaMax.label>
-	<ManaMax.description>Maximum mana this person can store.</ManaMax.description>
+	<ManaMax.description>The maximum mana this person can store.</ManaMax.description>
 	<ManaConversion.label>Mana Conversion</ManaConversion.label>
 	<ManaConversion.description>The efficiency of converting psyfocus into mana.</ManaConversion.description>
 	<ManaConversionSpeed.label>Mana Conversion Rate</ManaConversionSpeed.label>
-	<ManaConversionSpeed.description>Mana converted per second when psyfocus is plentiful.</ManaConversionSpeed.description>
+	<ManaConversionSpeed.description>Mana converted per second when psyfocus is plentiful.\n\nMana conversion rate = base conversion × mana conversion efficiency × current consciousness.</ManaConversionSpeed.description>
 	<ManaConversionSpeed.formatString>{0} /s</ManaConversionSpeed.formatString>
 
 	<!-- Mana Control (StatDef): governed by spell type, Magic Arts proficiency and consciousness -->

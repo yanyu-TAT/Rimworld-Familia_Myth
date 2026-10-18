@@ -349,6 +349,10 @@ namespace FamiliaMyth.Pharna
                 if (ability is DevelopableAbility_Magic magic)
                     magic.GainProficiency(spent * DevelopableAbility_Magic.ProfGainPerMana);
 
+            foreach (var skill in skills)
+                if (skill is Skill_ManaLoad manaLoad)
+                    manaLoad.Notify_ManaConsumed(spent);
+
             return spent;
         }
 

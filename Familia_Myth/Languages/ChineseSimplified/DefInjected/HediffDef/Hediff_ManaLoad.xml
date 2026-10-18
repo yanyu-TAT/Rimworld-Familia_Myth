@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Hediff_ManaLoad 玩家可见文本（自 Defs 迁移；Def 内文本保留为默认/兜底） -->
+
+  <ManaLoadInEffect.description>消耗的魔力转化为属性增益，期间再次消耗魔力会重置持续时间。</ManaLoadInEffect.description>
+  <ManaLoadInEffect.label>魔力装填</ManaLoadInEffect.label>
+
+</LanguageData>

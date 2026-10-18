@@ -11,15 +11,15 @@
 	<PharnaMana.label>魔力</PharnaMana.label>
 	<PharnaMana.description>提升魔力转化效率与魔力储量上限。</PharnaMana.description>
 	<PharnaWill.label>意志</PharnaWill.label>
-	<PharnaWill.description>提升心灵熵阈值与冥想精神力获取，提升美德触发概率，缩短美德冷却间隔。</PharnaWill.description>
+	<PharnaWill.description>提升美德触发概率，缩短美德冷却间隔。</PharnaWill.description>
 	<PharnaExperience.label>经验值</PharnaExperience.label>
 	<PharnaExperience.description>通过日常练习和学习获取的总经验值，每获得1点能力值同时获得1点经验值。</PharnaExperience.description>
 	<ManaMax.label>魔力储量</ManaMax.label>
-	<ManaMax.description>能够储存的魔力上限。</ManaMax.description>
+	<ManaMax.description>该角色能够储存的魔力上限。</ManaMax.description>
 	<ManaConversion.label>魔力转化效率</ManaConversion.label>
 	<ManaConversion.description>将精神力转化为魔力时的转换效率。</ManaConversion.description>
 	<ManaConversionSpeed.label>魔力转化速度</ManaConversionSpeed.label>
-	<ManaConversionSpeed.description>精神力充足时每秒能够转化的魔力量。</ManaConversionSpeed.description>
+	<ManaConversionSpeed.description>精神力充足时每秒能够转化的魔力量。\n\n魔力转化速度 = 基础转化量 × 魔力转化效率 × 当前意识。</ManaConversionSpeed.description>
 	<ManaConversionSpeed.formatString>{0} /秒</ManaConversionSpeed.formatString>
 
 	<!-- 魔力操控（StatDef）：受魔法种类、魔导熟练度与意识共同影响 -->

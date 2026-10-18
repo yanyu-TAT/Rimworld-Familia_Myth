@@ -3,6 +3,6 @@
 
   <!-- Mote_RailgunImpact 玩家可见文本（自 Defs 迁移；Def 内文本保留为默认/兜底） -->
 
-  <Mote_RailgunImpact.label>超电磁炮</Mote_RailgunImpact.label>
+  <Mote_RailgunImpact.label>超电磁贯穿光带</Mote_RailgunImpact.label>
 
 </LanguageData>

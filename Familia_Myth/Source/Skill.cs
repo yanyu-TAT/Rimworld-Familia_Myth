@@ -245,12 +245,12 @@ namespace FamiliaMyth.Abilities
         /// <param name="targetInfo">Targeter返回的目标</param>
         protected virtual void OnTargeting(LocalTargetInfo targetInfo) { }
 
-        public virtual void NotifyEnffectStart()
+        public virtual void Notify_EnffectStart()
         {
             active = true;
         }
 
-        public virtual void NotifyEffectEnd()
+        public virtual void Notify_EffectEnd()
         {
             active = false;
         }

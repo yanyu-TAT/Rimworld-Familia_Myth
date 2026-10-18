@@ -1,3 +1,5 @@
+using FamiliaMyth.Abilities;
+using FamiliaMyth.Pharna;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -301,6 +303,13 @@ namespace FamiliaMyth.Feat
                 row = new PawnContribution();
                 Log.Message($"[Familia Myth] Start Tracking {pawn.Name?.ToStringShort ?? pawn.Label} In Battle {pawn.records?.BattleActive?.GetName() ?? "Unknown Battle"}");
                 pawns.Add(pawn, row);
+
+                if (pawn.GetPharna() is Hediff_Pharna pharna)
+                {
+                    foreach (var skill in pharna.skills)
+                        if (skill is Skill_2FightIs2Be fight)
+                            fight.Notify_BattleStart();
+                }
             }
             return row;
         }
