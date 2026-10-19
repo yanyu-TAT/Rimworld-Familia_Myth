@@ -17,7 +17,7 @@ namespace FamiliaMyth.Ritual
             if (p == null || p.health == null || p.health.hediffSet == null) 
                 return false;
 
-            if (!RitualCandidateUtility.IsPlayerIdeoMember(p, out reason, skipReason))
+            if (!RitualCandidateUtility.IsFamiliaIdeoMember(p, out reason, skipReason))
                 return false;
 
             if (p.health.hediffSet.GetFirstHediffOfDef(PharnaDef) is not Hediff_Pharna pharna){
