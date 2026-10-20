@@ -9,6 +9,8 @@
   <Spell_Explosion.label>爆裂魔法</Spell_Explosion.label>
   <Spell_FusilladeFlameSpears.description>咏唱过程中锁定扇形范围内敌人，结束时发射火标枪轰炸目标附近区域</Spell_FusilladeFlameSpears.description>
   <Spell_FusilladeFlameSpears.label>齐射火标枪</Spell_FusilladeFlameSpears.label>
+  <Spell_FutsuNoMitama.description>咏唱结束后以自身为中心展开大型法阵，范围内所有单位大幅减速并被反复打断行动；法阵持续期间施法者自身无法移动或行动。范围与持续时间受法强影响。</Spell_FutsuNoMitama.description>
+  <Spell_FutsuNoMitama.label>布都御魂</Spell_FutsuNoMitama.label>
   <Spell_KingsSword.description>召唤一把悬浮环绕的巨剑，自动攻击靠近施法者的敌人。在场期间重复施法可叠加持续时间，并使攻击范围与伤害大幅提升</Spell_KingsSword.description>
   <Spell_KingsSword.label>君王之剑</Spell_KingsSword.label>
   <Spell_LightGuard.description>咏唱结束后召唤数个环绕施法者的光灵，吸收来袭弹射物并灼烧靠近的敌人；光灵数量与持续时间受法强影响</Spell_LightGuard.description>
@@ -18,6 +20,7 @@
   <Spell_NoahHeal.description>包扎所有伤口在一段时间内加速愈合</Spell_NoahHeal.description>
   <Spell_NoahHeal.label>诺亚治愈</Spell_NoahHeal.label>
   <Spell_TheWorld.description>展开时滞领域，范围内除发动者以外的事物的时间将被停止</Spell_TheWorld.description>
+  <Spell_TheWorld.label>时间停止</Spell_TheWorld.label>
   <Spell_ThunderStorm.description>将天气变为暴风雨，向地图上的随机敌人降下数次大范围雷击</Spell_ThunderStorm.description>
   <Spell_ThunderStorm.label>豪雷积雨云</Spell_ThunderStorm.label>
   <Spell_ZeoGullveig.description>咏唱结束后在目标点展开治愈法阵，为范围内友方包扎伤口、恢复伤势并附加疼痛抑制</Spell_ZeoGullveig.description>

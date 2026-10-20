@@ -31,9 +31,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="1.7\**" />
     <Compile Remove="Texture\**" />
     <Compile Remove="Defs\**" />
+    <EmbeddedResource Remove="1.7\**" />
     <EmbeddedResource Remove="Texture\**" />
+    <None Remove="1.7\**" />
     <None Remove="Texture\**" />
   </ItemGroup>
 

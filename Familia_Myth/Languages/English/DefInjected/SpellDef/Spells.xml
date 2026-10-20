@@ -9,6 +9,8 @@
   <Spell_Explosion.label>Explosion</Spell_Explosion.label>
   <Spell_FusilladeFlameSpears.description>Locks onto enemies within a cone while chanting, then looses flame spears that bombard the area around them when the cast ends</Spell_FusilladeFlameSpears.description>
   <Spell_FusilladeFlameSpears.label>Fusillade Flame Spears</Spell_FusilladeFlameSpears.label>
+  <Spell_FutsuNoMitama.description>Once the incantation ends, unfolds a large field centered on the caster: all units within are heavily slowed and their actions repeatedly interrupted; the caster cannot move or act while the field lasts. Radius and duration scale with spell power.</Spell_FutsuNoMitama.description>
+  <Spell_FutsuNoMitama.label>Futsu no Mitama</Spell_FutsuNoMitama.label>
   <Spell_KingsSword.description>Summons a greatsword that hovers and circles around the caster, attacking nearby enemies on its own. Casting it again while it is active extends its duration and greatly increases its attack range and damage</Spell_KingsSword.description>
   <Spell_KingsSword.label>King's Sword</Spell_KingsSword.label>
   <Spell_LightGuard.description>Once the incantation ends, summons several light spirits to circle the caster, absorbing incoming projectiles and burning nearby enemies. The number of spirits and the duration are affected by spell power</Spell_LightGuard.description>
@@ -18,6 +20,7 @@
   <Spell_NoahHeal.description>Bandages all wounds, which then heal faster for a time</Spell_NoahHeal.description>
   <Spell_NoahHeal.label>Noah Heal</Spell_NoahHeal.label>
   <Spell_TheWorld.description>Unfolds a field of stalled time, in which the time of everything but its caster comes to a stop</Spell_TheWorld.description>
+  <Spell_TheWorld.label>Time Stop</Spell_TheWorld.label>
   <Spell_ThunderStorm.description>Turns the weather into a violent storm, calling down several large lightning strikes on random enemies across the map</Spell_ThunderStorm.description>
   <Spell_ThunderStorm.label>Thunder Storm</Spell_ThunderStorm.label>
   <Spell_ZeoGullveig.description>Once the incantation ends, unfolds a healing circle at the target point that bandages wounds, heals injuries and suppresses pain for allies within it</Spell_ZeoGullveig.description>

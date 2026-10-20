@@ -556,6 +556,16 @@ namespace FamiliaMyth.Pharna
                         currentVirtue = null;
                     }
                 };
+
+                //填满魔力池
+                yield return new Command_Action
+                {
+                    defaultLabel = "DEV: Fulfill Mana Pool",
+                    action = delegate
+                    {
+                        GainMana(MaxMana);
+                    }
+                };
             }
         }
 

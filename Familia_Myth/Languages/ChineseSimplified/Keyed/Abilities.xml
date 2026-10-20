@@ -31,6 +31,8 @@
   <FamiliaMyth.Ability.LightGuard>守护光灵</FamiliaMyth.Ability.LightGuard>
   <!-- ==================== 君王之剑（Spell_KingsSword） ==================== -->
   <FamiliaMyth.Ability.KingsSword>君王之剑</FamiliaMyth.Ability.KingsSword>
+  <!-- ==================== 布都御魂（Spell_FutsuNoMitama） ==================== -->
+  <FamiliaMyth.Ability.FutsuNoMitama>布都御魂</FamiliaMyth.Ability.FutsuNoMitama>
   <!-- ==================== 技能：武器需求 ==================== -->
   <FamiliaMyth.Ability.NoSharpWeapon>未持有剑（锐伤近战武器）</FamiliaMyth.Ability.NoSharpWeapon>
   <FamiliaMyth.Ability.NoSpear>未持有长矛（锐伤近战武器）</FamiliaMyth.Ability.NoSpear>

@@ -37,6 +37,9 @@
   <!-- ==================== King's Sword ==================== -->
   <FamiliaMyth.Ability.KingsSword>King's Sword</FamiliaMyth.Ability.KingsSword>
 
+  <!-- ==================== Futsu no Mitama ==================== -->
+  <FamiliaMyth.Ability.FutsuNoMitama>Futsu no Mitama</FamiliaMyth.Ability.FutsuNoMitama>
+
   <!-- ==================== Skills: weapon requirements ==================== -->
   <FamiliaMyth.Ability.NoSharpWeapon>No sword (sharp melee weapon) equipped</FamiliaMyth.Ability.NoSharpWeapon>
   <FamiliaMyth.Ability.NoSpear>No spear (sharp melee weapon) equipped</FamiliaMyth.Ability.NoSpear>

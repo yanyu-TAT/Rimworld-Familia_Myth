@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <!-- 布都御魂·领域法阵。
+       单层法阵，贴图为白底图（Familia_Myth/Things/Mote/FutsuNoMitamaCircle，512×512），
+       代码用 instanceColor 染紫。
+       绘制尺寸由 Mote_FutsuNoMitama.Init 的 linearScale（半径×2）驱动，故 drawSize 取 1。 -->
+  <ThingDef ParentName="MoteBase">
+    <defName>Mote_FutsuNoMitama</defName>
+    <thingClass>FamiliaMyth.Abilities.Mote_FutsuNoMitama</thingClass>
+    <altitudeLayer>MoteLow</altitudeLayer>
+    <mote>
+      <fadeInTime>0</fadeInTime>
+      <!-- 存活由 Spell 的 Maintain 维持，效果结束后停止维护并按 fadeOutTime 淡出 -->
+      <solidTime>9999999</solidTime>
+      <fadeOutTime>0.5</fadeOutTime>
+      <needsMaintenance>true</needsMaintenance>
+      <fadeOutUnmaintained>true</fadeOutUnmaintained>
+    </mote>
+    <graphicData>
+      <graphicClass>Graphic_Mote</graphicClass>
+      <texPath>Familia_Myth/Things/Mote/FutsuNoMitamaCircle</texPath>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>1</drawSize>
+      <color>(1, 1, 1, 1)</color>
+    </graphicData>
+  </ThingDef>
+
+  <!-- 布都御魂·中心巨剑。
+       贴图为竖向紫色巨剑（Familia_Myth/Things/Mote/FutsuNoMitamaSword，512×512）；
+       drawSize 必须保持贴图 1:1 比例（512×512 → 方形，如 (7.2, 7.2)）：配成长方形会把方形贴图横向压扁，剑看起来被压缩。
+       绘制由 Mote_FutsuNoMitamaSword.DrawAt 自绘（分段 quad 裁剪），graphicData 只提供材质与尺寸。 -->
+  <ThingDef ParentName="MoteBase">
+    <defName>Mote_FutsuNoMitamaSword</defName>
+    <thingClass>FamiliaMyth.Abilities.Mote_FutsuNoMitamaSword</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <mote>
+      <fadeInTime>0</fadeInTime>
+      <solidTime>9999999</solidTime>
+      <fadeOutTime>0.5</fadeOutTime>
+      <needsMaintenance>true</needsMaintenance>
+      <fadeOutUnmaintained>true</fadeOutUnmaintained>
+    </mote>
+    <graphicData>
+      <graphicClass>Graphic_Mote</graphicClass>
+      <texPath>Familia_Myth/Things/Mote/FutsuNoMitamaSword</texPath>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(12, 12)</drawSize>
+      <color>(1, 1, 1, 1)</color>
+    </graphicData>
+  </ThingDef>
+</Defs>

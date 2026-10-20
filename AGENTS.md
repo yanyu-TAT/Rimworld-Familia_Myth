@@ -35,7 +35,7 @@
 | 编译     | `dotnet build Familia_Myth/Familia_Myth.csproj`（一次出 1.6 + 1.7 两版；`-f net472` / `-f net10.0` 单编） |
 | 刷新引用副本 | `pwsh -File .\13-同步引用库.ps1 -Version 1.6`（或 `1.7`，需先把 Steam 切到该版本） |
 | 清理构建产物 | 运行 `11.bat`（清除 1.6 / 1.7 目录中非本模组 DLL 与 obj/）                      |
-| 反编译原版  | 通过ilspycmd输出到decompiledFiles\，详见decompiledFiles\ilspy_help.txt（1.6 程序集在 `RimWorldWin64_Data\Managed\`，1.7 在游戏根目录）             |
+| 反编译原版  | 通过 ilspycmd 输出到 `kb/L0-证据/decompiled/<版本>/`，详见 `kb/L0-证据/decompiled/README.md`（1.6 程序集在 `RimWorldWin64_Data\Managed\`，1.7 在游戏根目录）             |
 | 查看游戏日志 | 项目根目录 `Player.log`                                               |
 | 检查 XML | PowerShell `[xml](Get-Content <file>)` 解析验证                      |
 | 本地化体检 | `pwsh -File .\12-本地化检查.ps1`（7 项：Def 文本覆盖 / TKey / rulesStrings / key 占位 / Keyed 中英差集 / Translate 键 / **XML 类型引用可解析性**） |
@@ -49,7 +49,7 @@
 **Allowed**：`Source/`、`Defs/`、`Patches/`、`Languages/`、`Textures/`、`Materials/`、`docs/`、XML 文件、设计文档。
 **Ask First**：csproj 程序集引用变更、`About.xml` 依赖/版本变更、破坏性重构、改动主设计文档。
 **Never Touch**：`Data/`（原版/DLC XML）、`lib/` 中的 DLL（只由 `13-同步引用库.ps1` 刷新，禁止手工替换）、`Player.log`（仅读取分析）。
-**受控整理**：`decompiledFiles/` 仅允许按「十二 · 反编译文件管理规范」查阅，添加以及管理反编译文件，不可修改其中内容。
+**受控整理**：`kb/L0-证据/decompiled/` 仅允许按「十二 · 反编译文件管理规范」查阅，添加以及管理反编译文件，不可修改其中内容。
 **工作守则**：必须遵循第十二节的协作规范进行工作
 
 
@@ -180,7 +180,7 @@
 ### 7. 注释
 
 ```
-✅ 注释只描述**当前状态** —— 这个类型 / 成员现在是什么、做什么
+✅ 注释只描述 **当前状态** —— 这个类型 / 成员现在是什么、做什么
 ✅ 力求简短，一两句话概括即可
 ✅ 仅在逻辑不自明处、或需说明接口契约与约束时才写注释
 ✅ 实现发生变化时同步更新注释 —— 与实现不符的注释比冗长的注释更糟
@@ -195,8 +195,8 @@
 ## 六、Git 规范
 
 - 分支：`main` 唯一常驻，正式版本用 tag 发布（版本号见 `About.xml` 与主设计文档「版本计划」）；双版本共存期可在 tag 名标注对应游戏版本（如 `v0.0.5-1.6-final`）
-- 提交：沿用项目现有中文描述风格（如 `添加了魔法X` / `修复了X` / `重构了X`），一句话说清变更
-- 部署/发版前必须 commit；线上问题用 `git revert` 回滚
+- 提交：所有变更由用户进行提交  
+- 回滚：必要时征求用户意见后进行回滚
 - ❌ `git push --force` / `git reset --hard`
 - ❌ 提交 `Data/`、`lib/`（引用副本）、非本模组的 DLL、`obj/`、`Player.log`、临时文件（.gitignore 已覆盖）
 
@@ -243,7 +243,7 @@
 | 15 | 随机取样前未校验候选集合非空（空集合取随机索引越界） | 取样前判空，必要时填兜底集合（见 B-04 BUG-026） |
 | 16 | 自管原版类型集合时漏搬原版 `PostLoadInit` 重建（`Ability.pawn` / `verb.caster` 等继承字段不参与 Scribe，读档为 null） | 照搬原版 `Hediff.ExposeData` 的 PostLoadInit 补回；或改持 `Scribe_References` 引用后间接取 Pawn（见 B-04 BUG-028） |
 | 17 | 同帧批量创建/销毁临时对象用 `Destroy`，上一批对象残留在相机视野里被渲染进当前结果 | 用 `DestroyImmediate`；批量导出/生成类代码尤其要注意（见 B-04 BUG-029） |
-| 18 | 反编译的版本与实际运行的版本不一致（`decompiledFiles/` 是 1.6，实机跑 1.7），据此判断运行时行为 | 排查运行时行为前先确认游戏版本，反编译对应版本（1.6 在 `RimWorldWin64_Data\Managed\`，1.7 在游戏根目录）；`Pawn` / `Thing` 的死亡与销毁路径两版不同（见 B-04 BUG-033） |
+| 18 | 反编译的版本与实际运行的版本不一致（`kb/L0-证据/decompiled/1.6` 是 1.6，实机跑 1.7；Clap 项目则相反：库为 1.7），据此判断运行时行为 | 排查运行时行为前先确认游戏版本，反编译对应版本（1.6 在 `RimWorldWin64_Data\Managed\`，1.7 在游戏根目录）；`Pawn` / `Thing` 的死亡与销毁路径两版不同（见 B-04 BUG-033） |
 
 ***
 
@@ -346,8 +346,8 @@
 - **疑问即问**：对用户的要求或说明有疑惑时，直接通过工具提问；不猜测、不质疑、不否定。
 - **结论需证据**：给出任何结论前，基于反编译结果查证；若没有证据，则在给出结论后明确指明"无证据/未经验证"。
 - **XML 命名空间前缀**：编写 XML 文件时，引用类名注意命名空间前缀（详见「五、基础代码规范 · XML 定义」）。
-- **反编译工具**：使用 `ilspycmd` 进行反编译，结果统一输出到 `decompiledFiles/` 目录（命令见「二、常用命令」）。
-- **反编译文件管理规范**（`decompiledFiles/` 布局与维护；重新反编译或补充反编译后按此执行）：
+- **反编译工具**：使用 `ilspycmd` 进行反编译，结果统一输出到全项目共享库 `kb/L0-证据/decompiled/<版本>/`（命令见「二、常用命令」，布局与增补规范见 `kb/L0-证据/decompiled/README.md`）。
+- **反编译文件管理规范**（`kb/L0-证据/decompiled/<版本>/` 布局与维护；重新反编译或补充反编译后按此执行）：
   - 布局：文件按「完整命名空间目录 + 类型名文件」存放，目录即命名空间（如 `Verse/`、`Verse.AI/`、`RimWorld.Planet/`），无命名空间类型归 `_global/`
   - 命名：文件以其中主类型（class / struct / interface / enum / delegate）名命名，纯委托文件以委托名命名（文件名 = 类型名）
   - 去重：内容（哈希）完全相同的文件只保留一份，不留整目录/整批次的重复副本
@@ -356,5 +356,3 @@
   - 边界：该目录不提交 git、不参与构建、不得当作作品代码改动；整理属受控维护，动作须按本规范执行
 - **不改代码文件**：除非被直接要求，不修改代码文件（XML 文件除外）。
 - **中文思考链**：始终使用中文输出思考链（reasoning / chain-of-thought），便于与用户协作审阅。
-- **集中工具调用**：把互相独立的 Shell/命令等工具调用集中在同一批次内并发发起（一次 `pwsh` 调用内可串联多条命令），减少往返，以节约 token。
-

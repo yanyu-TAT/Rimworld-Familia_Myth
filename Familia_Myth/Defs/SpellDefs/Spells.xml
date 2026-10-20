@@ -587,4 +587,80 @@
 		<lineInterval>2.2</lineInterval>
 	</FamiliaMyth.Abilities.SpellDef>
 
+	<!-- ==================== 布都御魂 (Futsu no Mitama) ===================== -->
+	<FamiliaMyth.Abilities.SpellDef>
+		<defName>Spell_FutsuNoMitama</defName>
+		<manaCost>1800</manaCost>
+		<statBases>
+			<Ability_EntropyGain>180</Ability_EntropyGain>
+		</statBases>
+		<label>布都御魂</label>
+		<description>咏唱结束后以自身为中心展开大型法阵，范围内所有单位大幅减速并被反复打断行动；法阵持续期间施法者自身无法移动或行动。范围与持续时间受法强影响。</description>
+
+		<!-- 魔法实现类 -->
+		<spellClass>FamiliaMyth.Abilities.Spell_FutsuNoMitama</spellClass>
+
+		<!-- 稀有度 -->
+		<rarity>Uncommon</rarity>
+
+		<!-- 魔法类型：领域魔法 -->
+		<spellType>Field</spellType>
+
+		<!-- 以自身为中心展开，无需选择目标 -->
+		<targetRequired>false</targetRequired>
+
+		<!-- 代表色：紫 -->
+		<themeColor>(0.55, 0.25, 0.95, 1)</themeColor>
+
+		<!-- 图标路径：占位用君王之剑，待绘布都御魂图标 -->
+		<iconPath>Familia_Myth/UI/Icons/Spells/FutsuNoMitama</iconPath>
+
+		<!-- 动词属性：以自身为中心 -->
+		<verbProperties>
+			<verbClass>FamiliaMyth.Abilities.Verb_CastSpell</verbClass>
+			<range>-1</range>
+			<warmupTime>1</warmupTime>
+			<drawAimPie>false</drawAimPie>
+			<targetParams>
+				<canTargetPawns>true</canTargetPawns>
+				<canTargetLocations>true</canTargetLocations>
+				<canTargetSelf>true</canTargetSelf>
+				<canTargetAnimals>false</canTargetAnimals>
+				<canTargetBuildings>false</canTargetBuildings>
+			</targetParams>
+			<requireLineOfSight>false</requireLineOfSight>
+		</verbProperties>
+
+		<!-- 咏唱期紫色咏唱法阵 -->
+		<magicCircles>
+			<li>
+				<texPath>Familia_Myth/Things/Mote/MagicCircles/2</texPath>
+				<drawColor>(0.55, 0.25, 0.95, 1)</drawColor>
+				<size>(6, 6)</size>
+				<scaleFrom>0.5</scaleFrom>
+				<rotate>10</rotate>
+				<appearProgress>0</appearProgress>
+			</li>
+		</magicCircles>
+
+		<!-- 咏唱文本 -->
+		<incantationLines>
+			<li>呼唤至尊之名</li>
+			<li>诚惶诚恐——</li>
+			<li>攻无不克的我等武神</li>
+			<li>尊贵九天的导护</li>
+			<li>赐予卑微此身巍然贵体的神力</li>
+			<li>拯救吧</li>
+			<li>净化之光，破邪之刃。</li>
+			<li>横扫吧</li>
+			<li>平定之太刀，征伐之灵剑。</li>
+			<li>今于此地，以吾名招来</li>
+			<li>自天降临，一统大地</li>
+			<li>神武斗征——</li>
+			<li>「布都御魂」</li>
+		</incantationLines>
+		<!-- 占位值：咏唱时长由主人后续确定（13 行 → 12 × lineInterval 秒） -->
+		<lineInterval>1.0</lineInterval>
+	</FamiliaMyth.Abilities.SpellDef>
+
 </Defs>
