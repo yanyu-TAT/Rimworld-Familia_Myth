@@ -19,6 +19,8 @@
   <Spell_LuminousWind.label>Luminous Wind</Spell_LuminousWind.label>
   <Spell_NoahHeal.description>Bandages all wounds, which then heal faster for a time</Spell_NoahHeal.description>
   <Spell_NoahHeal.label>Noah Heal</Spell_NoahHeal.label>
+  <Spell_SolLight.description>Once the incantation ends, unfolds a magic circle at the target point. After a short delay it bandages wounds and heals injuries for Familia members in range. Healing amount and radius scale with spell power.</Spell_SolLight.description>
+  <Spell_SolLight.label>Light of Sol</Spell_SolLight.label>
   <Spell_TheWorld.description>Unfolds a field of stalled time, in which the time of everything but its caster comes to a stop</Spell_TheWorld.description>
   <Spell_TheWorld.label>Time Stop</Spell_TheWorld.label>
   <Spell_ThunderStorm.description>Turns the weather into a violent storm, calling down several large lightning strikes on random enemies across the map</Spell_ThunderStorm.description>

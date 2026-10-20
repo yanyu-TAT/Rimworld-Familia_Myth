@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- 索尔之光·目标点法阵。
+       贴图复用 ZeoGullveigCircle（白底圆阵，代码 instanceColor 染灰绿）。
+       渲染由 Mote_SolLight.TimeInterval 通过 linearScale（直径=2×Radius×进度）驱动，
+       故 drawSize 取 1（基准 1x1，linearScale 即实际直径）；存活由 Spell 每拍 Maintain 维持。 -->
+  <ThingDef ParentName="MoteBase">
+    <defName>Mote_SolLightCircle</defName>
+    <thingClass>FamiliaMyth.Abilities.Mote_SolLight</thingClass>
+    <altitudeLayer>MoteLow</altitudeLayer>
+    <mote>
+      <fadeInTime>0</fadeInTime>
+      <solidTime>999999</solidTime>
+      <fadeOutTime>0</fadeOutTime>
+      <needsMaintenance>true</needsMaintenance>
+      <fadeOutUnmaintained>false</fadeOutUnmaintained>
+    </mote>
+    <graphicData>
+      <graphicClass>Graphic_Mote</graphicClass>
+      <texPath>Familia_Myth/Things/Mote/ZeoGullveigCircle</texPath>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>1</drawSize>
+    </graphicData>
+  </ThingDef>
+
+</Defs>

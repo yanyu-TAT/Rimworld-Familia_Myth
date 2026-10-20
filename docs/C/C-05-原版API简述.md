@@ -476,3 +476,21 @@ battleActive / battleExitTick（超时未刷新即视为战斗结束）
 - `Command_Ability.ProcessInput`：`if (ability.def.targetRequired) Find.Targeter.BeginTargeting(ability.verb); else ability.QueueCastingJob(ability.pawn, LocalTargetInfo.Invalid);` → 把 `AbilityDef.targetRequired` 设为 `false`，点图标即直接进入咏唱/施法，不再要求玩家选目标（布都御魂即此用法）。
 - 1.6 与 1.7 的 `AbilityDef.targetRequired` 均存在且默认 `true`（1.7 已用 `lib/1.7/Assembly-CSharp.dll` 核对）。
 - 出处：`kb/L0-证据/decompiled/1.6/RimWorld/Command_Ability.cs`、`RimWorld/AbilityDef.cs`。
+
+## 十五、特效与粒子（Mote / Fleck）
+
+### Mote 的绘制状态（`linearScale` / `instanceColor` / `exactRotation`）
+- `Mote` 是 `Thing`，绘制由 `Graphic_Mote` + 三个实例字段决定：`linearScale`（**世界尺寸倍数**，配 `drawSize=1` 时等价于「直径」）、`instanceColor`（乘到材质颜色上，含 alpha）、`exactRotation`（需自己按 `deltaTime` 累加）。
+- 驱动位置：`TimeInterval(float deltaTime)` 每帧调用 —— 把动画写成「elapsed 的纯函数」最省心：外部只 `SetElapsed(tick)`，Mote 里按 elapsed 推导 scale/alpha；`TickInterval(int delta)` 每 tick 调用，适合计数器。
+- `needsMaintenance` + `fadeOutUnmaintained` 需要每拍 `Mote.Maintain()` 续命；由代码 `Destroy()` 收尾时把 `fadeOutUnmaintained` 设 false，避免与代码里的 alpha 淡出叠成两段。
+- 贴图是白底时 `instanceColor` 可直接染色（`ZeoGullveigCircle` 即白底图，金色/灰绿都靠染色）；`Mote` 的 `def` 是 `ThingDef`，**没有** `SpellDef.themeColor`，颜色需由 Spell 侧传入。
+- 出处：`kb/L0-证据/decompiled/1.6/Verse/Mote.cs`、`RimWorld/Graphic_Mote.cs`；本项目样本 `Mote_ZeoGullveig` / `Mote_SolLight`。
+
+### Fleck 粒子的速度与生命周期（`FleckSystemThrown` / `FleckThrown`）
+- `FleckSystemThrown` 只是 `FleckSystemBase<FleckThrown>` 的壳，运动在 `FleckThrown`：
+  - `Setup(FleckCreationData)`：先 `SetVelocity(velocityAngle, velocitySpeed)`（水平方向），再把 `creationData.velocity`（`Vector3?`）**叠加**上去：`velocity += creationData.velocity.Value`；`airTimeLeft = creationData.airTimeLeft ?? 999999f`。
+  - `TimeInterval`：`velocity += def.acceleration * deltaTime`；`NextPosition` 用 `worldPos += velocity * deltaTime` —— **velocity 单位是「格/秒」**，垂直位移直接用 y 分量（`Vector3.down * 速度`）。
+  - `Skidding`（`!Flying && Speed > 0.01`）会按 `skidSpeedMultiplierPerTick` 衰减速度；默认 `airTimeLeft` 极大 → `Flying` 恒真，不进入 skidding。
+- `FleckDef` 的 `fadeInTime` / `solidTime` / `fadeOutTime` 决定 alpha 时间线（`FleckStatic.TimeInterval`），总寿命 = 三者之和。**下落距离 = 速度 × 总寿命**：想让粒子明显位移，速度必须按寿命量级给（如寿命 1.5s、想落 3 格 → 2 格/秒）。
+- 结论：**速度量级太小是「粒子看起来不动」的最常见原因**（本项目 BUG-037）。
+- 出处：`kb/L0-证据/decompiled/1.6/Verse/FleckThrown.cs`（`Setup` / `TimeInterval` / `NextPosition`）、`Verse/FleckCreationData.cs`、`Verse/FleckStatic.cs`、`Verse/FleckSystemThrown.cs`；`Setup` 的 velocity 叠加语义已用 `lib/1.7/Assembly-CSharp.dll` 核对一致。

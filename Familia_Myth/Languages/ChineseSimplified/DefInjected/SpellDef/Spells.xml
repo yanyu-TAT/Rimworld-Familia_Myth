@@ -19,6 +19,8 @@
   <Spell_LuminousWind.label>光明之风</Spell_LuminousWind.label>
   <Spell_NoahHeal.description>包扎所有伤口在一段时间内加速愈合</Spell_NoahHeal.description>
   <Spell_NoahHeal.label>诺亚治愈</Spell_NoahHeal.label>
+  <Spell_SolLight.description>咏唱结束后在目标点展开法阵，短暂延迟后为范围内的同眷族成员包扎伤口并恢复伤势；回复量与范围受法强影响。</Spell_SolLight.description>
+  <Spell_SolLight.label>索尔之光</Spell_SolLight.label>
   <Spell_TheWorld.description>展开时滞领域，范围内除发动者以外的事物的时间将被停止</Spell_TheWorld.description>
   <Spell_TheWorld.label>时间停止</Spell_TheWorld.label>
   <Spell_ThunderStorm.description>将天气变为暴风雨，向地图上的随机敌人降下数次大范围雷击</Spell_ThunderStorm.description>

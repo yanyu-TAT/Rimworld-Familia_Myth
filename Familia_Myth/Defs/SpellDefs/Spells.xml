@@ -659,8 +659,60 @@
 			<li>神武斗征——</li>
 			<li>「布都御魂」</li>
 		</incantationLines>
-		<!-- 占位值：咏唱时长由主人后续确定（13 行 → 12 × lineInterval 秒） -->
-		<lineInterval>1.0</lineInterval>
+		<lineInterval>2.1</lineInterval>
+	</FamiliaMyth.Abilities.SpellDef>
+
+	<!-- ==================== 索尔之光 (Sol Light) ===================== -->
+	<FamiliaMyth.Abilities.SpellDef>
+		<defName>Spell_SolLight</defName>
+		<manaCost>1200</manaCost>
+		<statBases>
+			<Ability_EntropyGain>120</Ability_EntropyGain>
+		</statBases>
+		<label>索尔之光</label>
+		<description>咏唱结束后在目标点展开法阵，短暂延迟后为范围内的同眷族成员包扎伤口并恢复伤势；回复量与范围受法强影响。</description>
+
+		<!-- 魔法实现类 -->
+		<spellClass>FamiliaMyth.Abilities.Spell_SolLight</spellClass>
+
+		<!-- 稀有度 -->
+		<rarity>Uncommon</rarity>
+
+		<!-- 魔法类型：治疗魔法 -->
+		<spellType>Heal</spellType>
+
+		<!-- 代表色：灰绿 -->
+		<themeColor>(0.56, 0.70, 0.56, 1)</themeColor>
+
+		<iconPath>Familia_Myth/UI/Icons/Spells/NoahHeal</iconPath>
+
+		<!-- 动词属性：目标点施法 -->
+		<verbProperties>
+			<verbClass>FamiliaMyth.Abilities.Verb_CastSpell</verbClass>
+			<range>60</range>
+			<warmupTime>1</warmupTime>
+			<drawAimPie>false</drawAimPie>
+			<targetParams>
+				<canTargetPawns>true</canTargetPawns>
+				<canTargetLocations>true</canTargetLocations>
+				<canTargetSelf>false</canTargetSelf>
+				<canTargetAnimals>false</canTargetAnimals>
+				<canTargetBuildings>false</canTargetBuildings>
+			</targetParams>
+			<requireLineOfSight>true</requireLineOfSight>
+		</verbProperties>
+
+		<!-- 咏唱文本 -->
+		<incantationLines>
+			<li>一度遭拒的天之光啊</li>
+			<li>拯救肤浅之我身的慈悲之腕啊</li>
+			<li>请代表我无力的言灵</li>
+			<li>拯救哀怜之辈吧</li>
+			<li>阳光啊——</li>
+			<li>倾听祈愿消退破灭吧</li>
+			<li>「索尔之光」</li>
+		</incantationLines>
+		<lineInterval>1.8</lineInterval>
 	</FamiliaMyth.Abilities.SpellDef>
 
 </Defs>
