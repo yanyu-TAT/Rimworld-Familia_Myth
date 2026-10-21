@@ -96,4 +96,12 @@
   <FamiliaMyth.Mana.PoolTitle>Mana Pool</FamiliaMyth.Mana.PoolTitle>
   <FamiliaMyth.Mana.PoolTooltip>Current mana: {0} / {1}</FamiliaMyth.Mana.PoolTooltip>
   <FamiliaMyth.Mana.AutoConvertTooltip>Auto-conversion: while enabled, psyfocus is continuously converted into mana (and generates neural heat)</FamiliaMyth.Mana.AutoConvertTooltip>
+
+  <!-- ==================== Weapon Attunement ==================== -->
+  <FamiliaMyth.DevelopableAbility.WeaponAttunementLabel>Weapon Attunement</FamiliaMyth.DevelopableAbility.WeaponAttunementLabel>
+  <FamiliaMyth.WeaponAttunement.HediffLabel>{0} proficiency: {1}</FamiliaMyth.WeaponAttunement.HediffLabel>
+  <FamiliaMyth.WeaponAttunement.Summary>Proficiency: {0} / {1}</FamiliaMyth.WeaponAttunement.Summary>
+  <FamiliaMyth.WeaponAttunement.ResetChance>Attack cooldown reset chance: {0}</FamiliaMyth.WeaponAttunement.ResetChance>
+  <FamiliaMyth.WeaponAttunement.CritChance>Critical hit chance: {0}</FamiliaMyth.WeaponAttunement.CritChance>
+  <FamiliaMyth.WeaponAttunement.Crit>Critical hit!</FamiliaMyth.WeaponAttunement.Crit>
 </LanguageData>

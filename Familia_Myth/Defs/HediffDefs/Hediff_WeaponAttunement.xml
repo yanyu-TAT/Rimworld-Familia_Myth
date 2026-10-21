@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <!-- 武器同调：当前装备武器的熟练度展示状态（无 severity 条） -->
+  <HediffDef>
+    <defName>Hediff_WeaponAttunement</defName>
+    <label>武器同调</label>
+    <description>当前装备武器的熟练度档位。</description>
+    <hediffClass>FamiliaMyth.Abilities.Hediff_WeaponAttunement</hediffClass>
+    <initialSeverity>1</initialSeverity>
+    <isBad>false</isBad>
+    <tendable>false</tendable>
+    <everCurableByItem>false</everCurableByItem>
+    <makesAlert>false</makesAlert>
+  </HediffDef>
+</Defs>

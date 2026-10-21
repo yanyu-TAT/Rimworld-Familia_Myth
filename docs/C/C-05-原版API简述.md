@@ -296,6 +296,12 @@ GenerateShuttle(Faction owningFaction = null, IEnumerable<Pawn> requiredPawns = 
 - **`extraTooltip`**：`Hediff.GetTooltip` 对 `def.extraTooltip` 与 `CurStage.extraTooltip` 都走 `tipSb.AppendLineTagged(...Formatted(pawn.Named("PAWN")))`（`Hediff.cs:799-806`）——只做 `Formatted`（替换 `{PAWN}` 等命名参数），**不会 `Translate`**，所以赋给 `stage.extraTooltip` 的必须是**已翻译好的最终文本**（`"Key".Translate(args)` 的结果），否则显示的是键名。
 - 出处：`kb/L0-证据/decompiled/1.6/Verse/HediffStage.cs`、`Verse/HediffSet.cs`、`Verse/HediffStatsUtility.cs`、`Verse/Hediff.cs`、`RimWorld/StatWorker.cs`、`RimWorld/Need_Food.cs`、`RimWorld/Need_Rest.cs`、`Verse.AI/MentalBreaker.cs`、`RimWorld/Pawn_RecordsTracker.cs`、`Verse/Battle.cs`、`Data/Core/Defs/Stats/Stats_Pawns_General.xml`（1.6 与 `lib/1.7/Assembly-CSharp.dll` 两版均核对）。
 
+### Hediff 的动态文本与展示（`Label` / `TipStringExtra` / `Description`）
+- `Hediff.Label`、`LabelBase`、`LabelInBrackets`、`TipStringExtra`、`Description` 均为 virtual，可覆写成按数据实时计算的文本；健康面板按 `LabelCap` 绘制，tooltip 由 `GetTooltip` 拼 `LabelCap` + `SeverityLabel` + `TipStringExtra` + `Description`。
+- 展示型 Hediff 只需 `initialSeverity > 0`（`ShouldRemove => Severity <= 0`）；不设 `maxSeverity` 时健康面板**不画 severity 条**（`HealthCardUtility` 只在 `maxSeverity < float.MaxValue` 或 `lethalSeverity > 0` 时绘制）。
+- 避免被当作伤病：`isBad=false`、`tendable=false`、`everCurableByItem=false`、`makesAlert=false`。
+- 出处：`kb/L0-证据/decompiled/1.6/Verse/Hediff.cs`、`RimWorld/HealthCardUtility.cs`、`Verse/HediffDef.cs`。
+
 ## 十、文本与本地化
 
 ### `"Key".Translate(args)` 的占位符格式化器（GrammarResolverSimple）
@@ -477,7 +483,17 @@ battleActive / battleExitTick（超时未刷新即视为战斗结束）
 - 1.6 与 1.7 的 `AbilityDef.targetRequired` 均存在且默认 `true`（1.7 已用 `lib/1.7/Assembly-CSharp.dll` 核对）。
 - 出处：`kb/L0-证据/decompiled/1.6/RimWorld/Command_Ability.cs`、`RimWorld/AbilityDef.cs`。
 
+### 近战攻击冷却（`Stance_Cooldown` 的创建点）
+- 近战攻击没有 verb 冷却字段：`Verb.TryCastNextBurstShot` 在 `TryCastShot` 结算后 `CasterPawn.stances.SetStance(new Stance_Cooldown(verbProps.AdjustedCooldownTicks(...), ...))`；`Pawn_MeleeVerbs.TryMeleeAttack` 由 `pawn.stances.FullBodyBusy` 拦截，冷却结束即可再攻。
+- `Stance_Busy.ticksLeft` 是 public，`Stance_Cooldown` 构造 Postfix 里置 0 即让下一拍 `StanceTick` 递减后过期——这是「按每次挥击概率重置冷却」的稳当时机（此时冷却刚建立）。
+- 出处：`kb/L0-证据/decompiled/1.6/Verse/Verb.cs:519-532`、`Verse/Stance_Busy.cs`、`RimWorld/Pawn_MeleeVerbs.cs`。
+
 ## 十五、特效与粒子（Mote / Fleck）
+
+### 带颜色的飘字（`MoteMaker.ThrowText`）
+- 两个重载：`ThrowText(Vector3 loc, Map map, string text, float timeBeforeStartFadeout = -1f)` 与 `ThrowText(Vector3 loc, Map map, string text, Color color, float timeBeforeStartFadeout = -1f)`；颜色是**文字颜色**，不传则用默认白。
+- 本项目样本：闪避飘字 `CompRangeAttackDodge`（默认色）、武器同调暴击飘字 `Patch_WeaponAttunement_Crit`（淡红 `new Color(1f, 0.55f, 0.55f)`、`1.9f` 时长）。
+- 出处：`kb/L0-证据/decompiled/1.6/RimWorld/MoteMaker.cs:43-48`。
 
 ### Mote 的绘制状态（`linearScale` / `instanceColor` / `exactRotation`）
 - `Mote` 是 `Thing`，绘制由 `Graphic_Mote` + 三个实例字段决定：`linearScale`（**世界尺寸倍数**，配 `drawSize=1` 时等价于「直径」）、`instanceColor`（乘到材质颜色上，含 alpha）、`exactRotation`（需自己按 `deltaTime` 累加）。

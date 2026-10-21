@@ -79,4 +79,15 @@
     <traitDefName>Trait_DevelopableAbility_Mineralogy</traitDefName>
   </FamiliaMyth.Abilities.DevelopableAbilityDef>
 
+  <!-- 武器同调发展能力：近战命中率、武器熟练度与暴击 -->
+  <FamiliaMyth.Abilities.DevelopableAbilityDef>
+    <defName>DevelopableAbility_WeaponAttunement</defName>
+    <label>武器同调</label>
+    <description>提升近战命中率，并通过装备近战武器积累武器熟练度的发展能力。武器熟练度提供概率重置攻击冷却与暴击概率。通过近战战斗提升熟练度。</description>
+    <abilityClass>FamiliaMyth.Abilities.DevelopableAbility_WeaponAttunement</abilityClass>
+    <maxProficiency>999</maxProficiency>
+    <rarity>Rare</rarity>
+    <traitDefName>Trait_DevelopableAbility_WeaponAttunement</traitDefName>
+  </FamiliaMyth.Abilities.DevelopableAbilityDef>
+
 </Defs>

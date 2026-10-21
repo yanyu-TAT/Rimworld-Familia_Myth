@@ -313,12 +313,21 @@ namespace FamiliaMyth.Pharna
             base.PostRemoved();
             try
             {
+                RemoveWeaponAttunementHediffs();
                 GameComponent_FamiliaMyth.Instance?.NotifyPharnaLost(this);
             }
             catch(Exception ex)
             {
                 Log.Error($"[FamiliaMyth] Failed to cache pharna record on removal: {ex}");
             }
+        }
+
+        private void RemoveWeaponAttunementHediffs()
+        {
+            if (pawn?.health?.hediffSet == null) return;
+            foreach (Hediff hediff in pawn.health.hediffSet.hediffs.ToList())
+                if (hediff is Hediff_WeaponAttunement)
+                    pawn.health.RemoveHediff(hediff);
         }
 
         public void Update()

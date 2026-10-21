@@ -200,4 +200,33 @@
   <Trait_DevelopableAbility_Mineralogy.description>由恩惠赋予的矿物学发展能力，提升采矿/深钻井操作速度与采矿效率。</Trait_DevelopableAbility_Mineralogy.description>
   <Trait_DevelopableAbility_Mineralogy.label>矿物学</Trait_DevelopableAbility_Mineralogy.label>
 
+
+  <!-- Trait_DevelopableAbility_WeaponAttunement -->
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.0.description>[PAWN_nameDef]拥有基础武器同调能力。</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.0.description>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.0.label>武器同调I</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.0.label>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.1.description>[PAWN_nameDef]的武器同调能力有所提升。</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.1.description>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.1.label>武器同调H</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.1.label>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.2.description>[PAWN_nameDef]的武器同调能力稳步提升。</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.2.description>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.2.label>武器同调G</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.2.label>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.3.description>[PAWN_nameDef]的武器同调能力显著提升。</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.3.description>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.3.label>武器同调F</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.3.label>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.4.description>[PAWN_nameDef]的武器同调能力达到进阶水平。</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.4.description>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.4.label>武器同调E</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.4.label>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.5.description>[PAWN_nameDef]的武器同调能力达到精进水平。</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.5.description>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.5.label>武器同调D</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.5.label>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.6.description>[PAWN_nameDef]的武器同调能力达到高阶水平。</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.6.description>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.6.label>武器同调C</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.6.label>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.7.description>[PAWN_nameDef]的武器同调能力达到卓越水平。</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.7.description>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.7.label>武器同调B</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.7.label>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.8.description>[PAWN_nameDef]的武器同调能力达到顶尖水平。</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.8.description>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.8.label>武器同调A</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.8.label>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.9.description>[PAWN_nameDef]的武器同调能力超凡脱俗。</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.9.description>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.9.label>武器同调S</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.9.label>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.10.description>[PAWN_nameDef]的武器同调能力达到传说级别。</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.10.description>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.10.label>武器同调SS</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.10.label>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.11.description>[PAWN_nameDef]的武器同调能力已臻化境。</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.11.description>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.11.label>武器同调SSS</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.11.label>
+  <Trait_DevelopableAbility_WeaponAttunement.description>由恩惠赋予的武器同调发展能力，提升近战命中率并通过装备近战武器积累武器熟练度。</Trait_DevelopableAbility_WeaponAttunement.description>
+  <Trait_DevelopableAbility_WeaponAttunement.label>武器同调</Trait_DevelopableAbility_WeaponAttunement.label>
+
 </LanguageData>

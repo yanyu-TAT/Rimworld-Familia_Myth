@@ -81,7 +81,7 @@ namespace FamiliaMyth.Abilities
         public virtual bool GainProficiency(float amout)
         {
             var prevDegree = Degree;
-            proficiency += amout;
+            proficiency = Mathf.Min(proficiency + amout, def?.maxProficiency ?? float.MaxValue);
             //升级
             if (Degree !=  prevDegree)
             {

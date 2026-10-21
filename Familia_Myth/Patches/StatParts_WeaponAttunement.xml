@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+  <!-- 武器同调：近战命中率 -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/StatDef[defName="MeleeHitChance"]/parts</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/StatDef[defName="MeleeHitChance"]/parts</xpath>
+      <value><li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" /></value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>Defs/StatDef[defName="MeleeHitChance"]</xpath>
+      <value><parts><li Class="FamiliaMyth.Abilities.StatPart_DevelopableAbility" /></parts></value>
+    </nomatch>
+  </Operation>
+</Patch>

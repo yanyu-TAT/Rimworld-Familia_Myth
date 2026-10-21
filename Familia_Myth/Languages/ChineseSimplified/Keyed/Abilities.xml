@@ -78,4 +78,12 @@
   <FamiliaMyth.Mana.PoolTitle>魔力</FamiliaMyth.Mana.PoolTitle>
   <FamiliaMyth.Mana.PoolTooltip>当前魔力：{0} / {1}</FamiliaMyth.Mana.PoolTooltip>
   <FamiliaMyth.Mana.AutoConvertTooltip>自动转化：开启时持续把精神力转化为魔力（同时产生心灵熵）</FamiliaMyth.Mana.AutoConvertTooltip>
+
+  <!-- ==================== 武器同调 ==================== -->
+	<FamiliaMyth.DevelopableAbility.WeaponAttunementLabel>武器同调</FamiliaMyth.DevelopableAbility.WeaponAttunementLabel>
+	<FamiliaMyth.WeaponAttunement.HediffLabel>{0}熟练度：{1}</FamiliaMyth.WeaponAttunement.HediffLabel>
+	<FamiliaMyth.WeaponAttunement.Summary>熟练度：{0} / {1}</FamiliaMyth.WeaponAttunement.Summary>
+	<FamiliaMyth.WeaponAttunement.ResetChance>攻击冷却重置概率：{0}</FamiliaMyth.WeaponAttunement.ResetChance>
+	<FamiliaMyth.WeaponAttunement.CritChance>暴击概率：{0}</FamiliaMyth.WeaponAttunement.CritChance>
+	<FamiliaMyth.WeaponAttunement.Crit>暴击！</FamiliaMyth.WeaponAttunement.Crit>
 </LanguageData>

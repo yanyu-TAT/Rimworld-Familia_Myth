@@ -24,7 +24,11 @@ namespace FamiliaMyth.Patch
                 if (pharna == null) return;
 
                 if (sDef == SkillDefOf.Melee)
+                {
                     pharna.GainStatus(PharnaStatusType.Strength, xp * StrengthPerXpMelee);
+                    pharna.developableAbilities.FirstOrDefault(d => d is DevelopableAbility_WeaponAttunement)?
+                        .GainProficiency(xp * DevelopableAbility_WeaponAttunement.ProfGainPerXp);
+                }
 
                 if (sDef == SkillDefOf.Mining)
                     pharna.GainStatus(PharnaStatusType.Strength, xp * StrengthPerXpMining);

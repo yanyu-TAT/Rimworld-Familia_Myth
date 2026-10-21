@@ -8,7 +8,7 @@ using Verse;
 namespace FamiliaMyth.Patch
 {
     /// <summary>
-    /// 烈焰魔剑附魔：近战命中时消耗一次计数，并在施法者前方展开扇形火焰。
+    /// 烈焰魔剑附魔：近战攻击时消耗一次计数，并在施法者前方展开扇形火焰。
     /// </summary>
     [HarmonyPatch(typeof(Verb_MeleeAttack), "TryCastShot")]
     public static class Patch_FlameSword
@@ -50,11 +50,10 @@ namespace FamiliaMyth.Patch
         private static FleckDef SmokeDef =>
             smokeDef ??= DefDatabase<FleckDef>.GetNamed("SmokeGrowing");
 
-        public static void Postfix(Verb_MeleeAttack __instance, bool __result)
+        public static void Postfix(Verb_MeleeAttack __instance)
         {
             try
             {
-                if (!__result) return;
                 if (__instance.CasterPawn is not Pawn caster || caster.Map == null || caster.health == null)
                     return;
 

@@ -394,4 +394,25 @@
     </degreeDatas>
   </TraitDef>
 
+  <TraitDef>
+    <defName>Trait_DevelopableAbility_WeaponAttunement</defName>
+    <label>武器同调</label>
+    <description>由恩惠赋予的武器同调发展能力，提升近战命中率并通过装备近战武器积累武器熟练度。</description>
+    <commonality>0</commonality>
+    <degreeDatas>
+      <li><label>武器同调I</label><degree>0</degree><description>[PAWN_nameDef]拥有基础武器同调能力。</description></li>
+      <li><label>武器同调H</label><degree>1</degree><description>[PAWN_nameDef]的武器同调能力有所提升。</description></li>
+      <li><label>武器同调G</label><degree>2</degree><description>[PAWN_nameDef]的武器同调能力稳步提升。</description></li>
+      <li><label>武器同调F</label><degree>3</degree><description>[PAWN_nameDef]的武器同调能力显著提升。</description></li>
+      <li><label>武器同调E</label><degree>4</degree><description>[PAWN_nameDef]的武器同调能力达到进阶水平。</description></li>
+      <li><label>武器同调D</label><degree>5</degree><description>[PAWN_nameDef]的武器同调能力达到精进水平。</description></li>
+      <li><label>武器同调C</label><degree>6</degree><description>[PAWN_nameDef]的武器同调能力达到高阶水平。</description></li>
+      <li><label>武器同调B</label><degree>7</degree><description>[PAWN_nameDef]的武器同调能力达到卓越水平。</description></li>
+      <li><label>武器同调A</label><degree>8</degree><description>[PAWN_nameDef]的武器同调能力达到顶尖水平。</description></li>
+      <li><label>武器同调S</label><degree>9</degree><description>[PAWN_nameDef]的武器同调能力超凡脱俗。</description></li>
+      <li><label>武器同调SS</label><degree>10</degree><description>[PAWN_nameDef]的武器同调能力达到传说级别。</description></li>
+      <li><label>武器同调SSS</label><degree>11</degree><description>[PAWN_nameDef]的武器同调能力已臻化境。</description></li>
+    </degreeDatas>
+  </TraitDef>
+
 </Defs>

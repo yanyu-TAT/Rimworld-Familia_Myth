@@ -18,4 +18,7 @@
   <DevelopableAbility_Mineralogy.description>A developable ability that increases mining and deep drilling speed, and mining yield. Proficiency rises through mining work.</DevelopableAbility_Mineralogy.description>
   <DevelopableAbility_Mineralogy.label>Mineralogy</DevelopableAbility_Mineralogy.label>
 
+  <DevelopableAbility_WeaponAttunement.description>A developable ability that increases melee hit chance and accumulates weapon proficiency while a melee weapon is equipped. Weapon proficiency grants a chance to reset attack cooldown and to critically hit. Proficiency rises through melee combat.</DevelopableAbility_WeaponAttunement.description>
+  <DevelopableAbility_WeaponAttunement.label>Weapon Attunement</DevelopableAbility_WeaponAttunement.label>
+
 </LanguageData>

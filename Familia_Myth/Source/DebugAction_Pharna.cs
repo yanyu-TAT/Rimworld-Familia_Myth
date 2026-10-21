@@ -1,3 +1,4 @@
+using FamiliaMyth.Abilities;
 using FamiliaMyth.Feat;
 using FamiliaMyth.Pharna;
 using FamiliaMyth.UI;
@@ -120,6 +121,19 @@ namespace FamiliaMyth.Debug
                 ability.GainProficiency(DefaultAmount);
                 MoteMaker.ThrowText(pawn.Position.ToVector3(), pawn.Map, $"{ability.Proficiency}");
             }
+        }
+
+        [DebugAction("Familia Myth", "Weapon Attunement +50 (current weapon)",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        public static void GainWeaponAttunement(Pawn pawn)
+        {
+            var ability = pawn?.GetWeaponAttunement();
+            var weapon = pawn?.equipment?.Primary;
+            if (ability == null || weapon?.def == null || !weapon.def.IsMeleeWeapon) return;
+            ability.AddWeaponProficiency(weapon.def, 50f);
+            ability.SyncDisplayHediff();
+            MoteMaker.ThrowText(pawn.DrawPos, pawn.Map, $"{ability.GetWeaponProficiency(weapon.def)}");
         }
 
         [DebugAction("Familia Myth", "Trigger Virtue",

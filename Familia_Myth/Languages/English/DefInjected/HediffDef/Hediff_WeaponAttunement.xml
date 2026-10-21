@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Hediff_WeaponAttunement player-visible text (Def text kept as default fallback) -->
+
+  <Hediff_WeaponAttunement.description>The proficiency rank of the currently equipped weapon.</Hediff_WeaponAttunement.description>
+  <Hediff_WeaponAttunement.label>Weapon Attunement</Hediff_WeaponAttunement.label>
+
+</LanguageData>

@@ -1,5 +1,7 @@
 # AGENTS.md — AI 编程助手指南
 
+> **共享知识库 `kb/` 的位置**：`D:\CODE\rim\kb\`。本项目根目录下的 `kb/` 是指向该目录的**目录联接**（junction），因此 `kb/...` 与 `..\kb\...` 两种写法等价，**不是**项目内的独立副本。
+
 > 本文件为本项目 AI 编程规范的**权威源**。详细规则见 `docs/B/B-01-开发规范.md`，Bug 反哺见 `docs/B/B-04-BUG知识库.md`。
 
 ***
@@ -41,6 +43,8 @@
 | 本地化体检 | `pwsh -File .\12-本地化检查.ps1`（7 项：Def 文本覆盖 / TKey / rulesStrings / key 占位 / Keyed 中英差集 / Translate 键 / **XML 类型引用可解析性**） |
 
 > 编译引用取自 `lib\<版本>\` 副本（由 `13-同步引用库.ps1` 从 Steam 目录刷新），CI 上不可编译；构建与测试均在本机完成。双版本结构详见 `docs/B/B-05-双版本构建与发布.md`。
+
+> **构建与实机测试由用户执行**：受运行环境沙箱限制（MSBuild 的 `Csc` 任务需用匿名管道读取编译器输出，受限沙箱下报 `MSB3883 拒绝访问`），Agent 不执行 `dotnet build`，也不进游戏实测；代码落地后由用户本地构建并验证，把问题反馈给 Agent。Agent 侧负责静态核对：XML 解析、`12-本地化检查.ps1`、反编译 API 核对与代码审阅。
 
 ***
 
@@ -255,7 +259,7 @@
 | | `PharnaUtility`（同文件内） | 恩惠与生效中技能的查询扩展 |
 | | `StatPart_*.cs` + `Patches/StatParts_*.xml` | StatDef 注入修正（恩惠系数 / 信息卡展示项 / 魔力操控）；`StatPart_PharnaWealth` 把恩惠等级与经验折入原版 `MarketValue`（顶点 ×25），经原版财富链路抬升袭击点数 |
 | | `PharnaCurve.cs` | 六维加成曲线：把原始能力值折算为系数计算用的有效值（优先取设置页配置，未配置时用内置默认：轻微前缓后急，魔力维恒等） |
-| | `DevelopableAbility*.cs` | 发展能力（熟练度 + StatPart 注入） |
+| | `DevelopableAbility*.cs` | 发展能力（熟练度 + StatPart 注入）；武器同调含按武器 def 的熟练度、冷却重置 / 暴击补丁与当前装备展示 Hediff |
 | | `Patch_<能力值>Gain_<来源>.cs` | 各能力值的经验获取补丁 |
 | | `Hediff_Pharna.PainFactor`（override） | 耐久 → 疼痛系数：覆盖 `Hediff.PainFactor` 返回 `0.9995^s`（`s` 为 `PharnaCurve` 折算值），`GainStatus` 改耐久后刷 `DirtyPainCache`（疼痛是 Hediff 累乘值、不是 StatDef，无法经 `StatPart_Pharna` 注入） |
 | | `AscendHelper.cs`（含 `AscendRewardSession`） | 升华奖励：Def 注册表与抽取（权重 / 保底 / 确定性种子）、选取会话（刷新 / 锁定） |

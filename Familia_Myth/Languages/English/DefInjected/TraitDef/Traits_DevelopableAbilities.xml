@@ -200,4 +200,33 @@
   <Trait_DevelopableAbility_Mineralogy.description>A mineralogy developable ability granted by Pharna. Increases mining and deep drilling speed, and mining yield.</Trait_DevelopableAbility_Mineralogy.description>
   <Trait_DevelopableAbility_Mineralogy.label>Mineralogy</Trait_DevelopableAbility_Mineralogy.label>
 
+
+  <!-- Trait_DevelopableAbility_WeaponAttunement -->
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.0.description>[PAWN_nameDef] has basic weapon attunement.</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.0.description>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.0.label>Weapon Attunement I</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.0.label>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.1.description>[PAWN_nameDef]'s weapon attunement has improved.</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.1.description>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.1.label>Weapon Attunement H</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.1.label>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.2.description>[PAWN_nameDef]'s weapon attunement is improving steadily.</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.2.description>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.2.label>Weapon Attunement G</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.2.label>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.3.description>[PAWN_nameDef]'s weapon attunement has improved markedly.</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.3.description>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.3.label>Weapon Attunement F</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.3.label>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.4.description>[PAWN_nameDef]'s weapon attunement has reached a proficient level.</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.4.description>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.4.label>Weapon Attunement E</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.4.label>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.5.description>[PAWN_nameDef]'s weapon attunement has reached an advanced level.</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.5.description>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.5.label>Weapon Attunement D</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.5.label>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.6.description>[PAWN_nameDef]'s weapon attunement has reached a high level.</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.6.description>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.6.label>Weapon Attunement C</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.6.label>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.7.description>[PAWN_nameDef]'s weapon attunement has reached an exceptional level.</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.7.description>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.7.label>Weapon Attunement B</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.7.label>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.8.description>[PAWN_nameDef]'s weapon attunement has reached a peerless level.</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.8.description>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.8.label>Weapon Attunement A</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.8.label>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.9.description>[PAWN_nameDef]'s weapon attunement has transcended the mundane.</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.9.description>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.9.label>Weapon Attunement S</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.9.label>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.10.description>[PAWN_nameDef]'s weapon attunement has reached legendary levels.</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.10.description>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.10.label>Weapon Attunement SS</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.10.label>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.11.description>[PAWN_nameDef]'s weapon attunement has reached the pinnacle of mastery.</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.11.description>
+  <Trait_DevelopableAbility_WeaponAttunement.degreeDatas.11.label>Weapon Attunement SSS</Trait_DevelopableAbility_WeaponAttunement.degreeDatas.11.label>
+  <Trait_DevelopableAbility_WeaponAttunement.description>A weapon attunement developable ability granted by Pharna. Increases melee hit chance and accumulates weapon proficiency while a melee weapon is equipped.</Trait_DevelopableAbility_WeaponAttunement.description>
+  <Trait_DevelopableAbility_WeaponAttunement.label>Weapon Attunement</Trait_DevelopableAbility_WeaponAttunement.label>
+
 </LanguageData>

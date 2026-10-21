@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Hediff_WeaponAttunement 玩家可见文本（Def 内文本保留为默认/兜底） -->
+
+  <Hediff_WeaponAttunement.description>当前装备武器的熟练度档位。</Hediff_WeaponAttunement.description>
+  <Hediff_WeaponAttunement.label>武器同调</Hediff_WeaponAttunement.label>
+
+</LanguageData>

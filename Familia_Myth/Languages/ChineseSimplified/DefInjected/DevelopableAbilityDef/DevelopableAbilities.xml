@@ -18,4 +18,7 @@
   <DevelopableAbility_Mineralogy.description>提升采矿/深钻井操作速度以及采矿效率的发展能力。通过采矿类工作提升熟练度。</DevelopableAbility_Mineralogy.description>
   <DevelopableAbility_Mineralogy.label>矿物学</DevelopableAbility_Mineralogy.label>
 
+  <DevelopableAbility_WeaponAttunement.description>提升近战命中率，并通过装备近战武器积累武器熟练度的发展能力。武器熟练度提供概率重置攻击冷却与暴击概率。通过近战战斗提升熟练度。</DevelopableAbility_WeaponAttunement.description>
+  <DevelopableAbility_WeaponAttunement.label>武器同调</DevelopableAbility_WeaponAttunement.label>
+
 </LanguageData>
