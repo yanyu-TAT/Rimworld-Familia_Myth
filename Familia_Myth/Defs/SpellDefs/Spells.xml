@@ -715,4 +715,52 @@
 		<lineInterval>1.8</lineInterval>
 	</FamiliaMyth.Abilities.SpellDef>
 
+	<!-- ==================== 烈焰魔剑 (Blaze Magic Sword) ===================== -->
+	<FamiliaMyth.Abilities.SpellDef>
+		<defName>Spell_FlameSword</defName>
+		<manaCost>250</manaCost>
+		<statBases>
+			<Ability_EntropyGain>60</Ability_EntropyGain>
+		</statBases>
+		<label>烈焰魔剑</label>
+		<description>咏唱结束后为自身附加烈焰附魔，接下来数次近战攻击会在命中方向扫出扇形火焰；伤害受法强影响。</description>
+
+		<!-- 魔法实现类 -->
+		<spellClass>FamiliaMyth.Abilities.Spell_FlameSword</spellClass>
+
+		<!-- 稀有度 -->
+		<rarity>Common</rarity>
+
+		<!-- 魔法类型：赋予魔法 -->
+		<spellType>Enchant</spellType>
+
+		<!-- 代表色：橙红 -->
+		<themeColor>(1, 0.4, 0.12, 1)</themeColor>
+
+		<iconPath>Familia_Myth/UI/Icons/Spells/FlameSword</iconPath>
+
+		<!-- 显示与施法设置：自身施法 -->
+		<displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
+		<disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>
+
+		<!-- 动词属性：自身施法（warmupTime 由咏唱行数与 lineInterval 计算） -->
+		<verbProperties>
+			<verbClass>FamiliaMyth.Abilities.Verb_CastSpell</verbClass>
+			<targetable>false</targetable>
+			<nonInterruptingSelfCast>true</nonInterruptingSelfCast>
+			<range>-1</range>
+			<warmupTime>1</warmupTime>
+			<drawAimPie>false</drawAimPie>
+			<targetParams>
+				<canTargetSelf>true</canTargetSelf>
+			</targetParams>
+		</verbProperties>
+
+		<!-- 咏唱文本：仅一句魔法名 -->
+		<incantationLines>
+			<li>「烈焰魔剑」</li>
+		</incantationLines>
+		<lineInterval>1.5</lineInterval>
+	</FamiliaMyth.Abilities.SpellDef>
+
 </Defs>

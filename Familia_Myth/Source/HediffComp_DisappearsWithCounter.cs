@@ -16,6 +16,11 @@ namespace FamiliaMyth.Abilities
             cnt = Props.maxCount;
         }
 
+        public void ResetCnt()
+        {
+            cnt = Props.maxCount;
+        }
+
         public bool TryConsume()
         {
             if (cnt <= 0) return false;

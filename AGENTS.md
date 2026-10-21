@@ -268,7 +268,7 @@
 | | `Gizmo_ManaPool.cs` | 魔力池状态条、自动转化开关与施法魔力消耗预览 |
 | **技能** | `Skill*.cs` + `SkillDef.cs` | 技能框架与具体技能（主动 / 被动 / 触发） |
 | | `HediffComp_SkillState.cs` / `HediffComp_SkillInEffect.cs` | 技能状态标签与效果生命周期 |
-| | `HediffComp_DisappearsWithCounter.cs` | 按剩余次数结束效果的计数 comp |
+| | `HediffComp_DisappearsWithCounter.cs` | 按剩余次数结束效果的计数 comp（`TryConsume` 消耗，`ResetCnt` 重设计数） |
 | | `Hediff_*.cs`（效果类） | 技能 / 魔法的常驻效果 Hediff（配套 `Defs/HediffDefs/`） |
 | **意志与美德** | `MentalState_Virtue.cs` | 美德精神状态与触发当拍的心声飘字 |
 | | `Patch_Virtue*.cs` | 崩溃前拦截与美德可控性补丁 |

@@ -35,9 +35,9 @@ namespace FamiliaMyth.Abilities
         public bool canConcurrentCast = true;
 
         /// <summary>
-        /// 咏唱秒数
+        /// 咏唱秒数。至少一个行间隔，保证单行咏唱也能进入原版 warmup。
         /// </summary>
-        public float WarmupTime => (incantationLines.Count - 1) * lineInterval;
+        public float WarmupTime => Mathf.Max(lineInterval, (incantationLines.Count - 1) * lineInterval);
 
         public Spell CreateSpell()
         {

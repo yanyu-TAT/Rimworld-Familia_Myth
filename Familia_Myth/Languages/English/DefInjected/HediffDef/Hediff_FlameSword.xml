@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Hediff_FlameSword player-visible text (migrated from Defs; Def text kept as default/fallback) -->
+
+  <FlameSwordInEffect.description>The enchantment of the Blaze Magic Sword: the next few melee hits set off a cone of flame in the direction of the struck target.</FlameSwordInEffect.description>
+  <FlameSwordInEffect.label>Blaze Magic Sword: Enchant</FlameSwordInEffect.label>
+
+</LanguageData>

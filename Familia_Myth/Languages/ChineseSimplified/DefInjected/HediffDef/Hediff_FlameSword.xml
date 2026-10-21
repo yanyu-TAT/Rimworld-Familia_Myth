@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- Hediff_FlameSword 玩家可见文本（自 Defs 迁移；Def 内文本保留为默认/兜底） -->
+
+  <FlameSwordInEffect.description>咏唱烈焰魔剑后获得的附魔：接下来数次近战命中的方向会爆发出扇形火焰。</FlameSwordInEffect.description>
+  <FlameSwordInEffect.label>烈焰魔剑·附魔</FlameSwordInEffect.label>
+
+</LanguageData>

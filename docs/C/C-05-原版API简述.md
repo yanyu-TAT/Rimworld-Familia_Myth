@@ -494,3 +494,8 @@ battleActive / battleExitTick（超时未刷新即视为战斗结束）
 - `FleckDef` 的 `fadeInTime` / `solidTime` / `fadeOutTime` 决定 alpha 时间线（`FleckStatic.TimeInterval`），总寿命 = 三者之和。**下落距离 = 速度 × 总寿命**：想让粒子明显位移，速度必须按寿命量级给（如寿命 1.5s、想落 3 格 → 2 格/秒）。
 - 结论：**速度量级太小是「粒子看起来不动」的最常见原因**（本项目 BUG-037）。
 - 出处：`kb/L0-证据/decompiled/1.6/Verse/FleckThrown.cs`（`Setup` / `TimeInterval` / `NextPosition`）、`Verse/FleckCreationData.cs`、`Verse/FleckStatic.cs`、`Verse/FleckSystemThrown.cs`；`Setup` 的 velocity 叠加语义已用 `lib/1.7/Assembly-CSharp.dll` 核对一致。
+
+### 原版火焰特效的复用件（Fleck / Effecter）
+- `DamageDef Flame` 的 `explosionCellFleck` 为 `BlastFlame`（`Data/Core/Defs/DamageDefs/Damages_Environmental.xml`）：原版火焰爆炸按**每个爆炸格**生成 `BlastFlame`，不是单个中心爆点。自制方向性范围可对每个受影响格 `FleckMaker.GetDataStatic(cell.ToVector3Shifted(), map, BlastFlameDef, scale)`。
+- `Fleck_RadialSparks`（`MoteCircularSparks`）是**原地环形扩张**的 shader 特效，不适合方向性扇形；需要火星时用 `MicroSparksFast` / `HeatGlow_Intense`。
+- 其他可复用件：`ExplosionFlash`（爆炸闪光）、`HeatGlow` / `HeatGlow_Intense`（热光）、`Smoke` / `SmokeGrowing`（烟）、`Fleck_HeatDiffusion` / `Fleck_HeatWaveDistortion`（热浪/扭曲）；巨型爆炸的 `Mote_GiantExplosion` / `Mote_GiantExplosionInner` 画幅过大，不适合小范围。

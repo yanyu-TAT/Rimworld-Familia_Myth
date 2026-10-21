@@ -7,6 +7,8 @@
   <Spell_ArcsRay.label>Arcs Ray</Spell_ArcsRay.label>
   <Spell_Explosion.description>Once the incantation ends, sets off a huge explosion at the target point whose damage and radius scale with spell power. Afterwards the caster is left paralyzed for hours by mana exhaustion</Spell_Explosion.description>
   <Spell_Explosion.label>Explosion</Spell_Explosion.label>
+  <Spell_FlameSword.description>After the incantation, enchants the caster: the next few melee hits sweep a cone of flame in the direction of the struck target, with damage scaling with spell power.</Spell_FlameSword.description>
+  <Spell_FlameSword.label>Blaze Magic Sword</Spell_FlameSword.label>
   <Spell_FusilladeFlameSpears.description>Locks onto enemies within a cone while chanting, then looses flame spears that bombard the area around them when the cast ends</Spell_FusilladeFlameSpears.description>
   <Spell_FusilladeFlameSpears.label>Fusillade Flame Spears</Spell_FusilladeFlameSpears.label>
   <Spell_FutsuNoMitama.description>Once the incantation ends, unfolds a large field centered on the caster: all units within are heavily slowed and their actions repeatedly interrupted; the caster cannot move or act while the field lasts. Radius and duration scale with spell power.</Spell_FutsuNoMitama.description>

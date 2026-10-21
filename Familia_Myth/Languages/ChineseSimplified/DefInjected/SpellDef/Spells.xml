@@ -7,6 +7,8 @@
   <Spell_ArcsRay.label>灵弓光箭</Spell_ArcsRay.label>
   <Spell_Explosion.description>咏唱结束后在目标点引发一场巨大爆炸，伤害与范围随法强提升；施法结束后施法者将因魔力枯竭瘫痪数小时</Spell_Explosion.description>
   <Spell_Explosion.label>爆裂魔法</Spell_Explosion.label>
+  <Spell_FlameSword.description>咏唱结束后为自身附加烈焰附魔，接下来数次近战攻击会在命中方向扫出扇形火焰；伤害受法强影响。</Spell_FlameSword.description>
+  <Spell_FlameSword.label>烈焰魔剑</Spell_FlameSword.label>
   <Spell_FusilladeFlameSpears.description>咏唱过程中锁定扇形范围内敌人，结束时发射火标枪轰炸目标附近区域</Spell_FusilladeFlameSpears.description>
   <Spell_FusilladeFlameSpears.label>齐射火标枪</Spell_FusilladeFlameSpears.label>
   <Spell_FutsuNoMitama.description>咏唱结束后以自身为中心展开大型法阵，范围内所有单位大幅减速并被反复打断行动；法阵持续期间施法者自身无法移动或行动。范围与持续时间受法强影响。</Spell_FutsuNoMitama.description>
