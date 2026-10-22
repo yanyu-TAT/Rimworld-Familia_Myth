@@ -324,3 +324,11 @@
 - 是否规范缺失: 是（缺少「位移类特效的速度要按寿命量级估算」的经验条目）
 - 规范反哺: C-05 新增「十五、特效与粒子」补 `FleckThrown` 速度语义与「下落距离 = 速度 × 寿命」的估算方法。
 - 关联: 次数 1
+
+## BUG-038 | net472 下使用 `Queue<T>` → CS0433 类型同时存在于 mscorlib 与 System
+- 现象: 连攻的攻速窗口用 `Queue<int>`，构建 net472 目标时报 `error CS0433: 类型"Queue<T>"同时存在于"System"和"mscorlib"`，构建失败；net10.0 目标不受影响。
+- 根因: net472 目标同时引用了 `lib/1.6/mscorlib.dll`（Unity 的 .NET 4.x 副本）与框架 `System.dll`，而 `Queue<T>` 在该引用的两个程序集里都有定义；C# 无法消歧 → CS0433。`List<T>` / `Dictionary<K,V>` 只在 mscorlib，故项目既有集合代码未触发。
+- 修复方案: 攻速窗口改用 `List<int>`：`Add` 入窗、`attackTicks[0]` 判过期、`RemoveAt(0)` 出窗；窗口仅二十余条，开销可忽略。
+- 是否规范缺失: 是（缺少「net472 目标下避免使用 System.dll 独有的泛型集合」的经验条目）
+- 规范反哺: AGENTS.md「八、AI 高频错误」新增第 19 条；C-03 连攻约定补该约束。
+- 关联: 次数 1

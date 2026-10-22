@@ -248,6 +248,7 @@
 | 16 | 自管原版类型集合时漏搬原版 `PostLoadInit` 重建（`Ability.pawn` / `verb.caster` 等继承字段不参与 Scribe，读档为 null） | 照搬原版 `Hediff.ExposeData` 的 PostLoadInit 补回；或改持 `Scribe_References` 引用后间接取 Pawn（见 B-04 BUG-028） |
 | 17 | 同帧批量创建/销毁临时对象用 `Destroy`，上一批对象残留在相机视野里被渲染进当前结果 | 用 `DestroyImmediate`；批量导出/生成类代码尤其要注意（见 B-04 BUG-029） |
 | 18 | 反编译的版本与实际运行的版本不一致（`kb/L0-证据/decompiled/1.6` 是 1.6，实机跑 1.7；Clap 项目则相反：库为 1.7），据此判断运行时行为 | 排查运行时行为前先确认游戏版本，反编译对应版本（1.6 在 `RimWorldWin64_Data\Managed\`，1.7 在游戏根目录）；`Pawn` / `Thing` 的死亡与销毁路径两版不同（见 B-04 BUG-033） |
+| 19 | net472 目标下误用 `System.dll` 独有的泛型集合（如 `Queue<T>`）→ `CS0433` 类型同时存在于 mscorlib 与 System | 统一用 mscorlib 的 `List<T>` / `Dictionary<K,V>`；需要队列/栈语义时用 `List<T>` 手动维护（`Add` / `[0]` / `RemoveAt(0)`，见 B-04 BUG-038） |
 
 ***
 
@@ -259,7 +260,7 @@
 | | `PharnaUtility`（同文件内） | 恩惠与生效中技能的查询扩展 |
 | | `StatPart_*.cs` + `Patches/StatParts_*.xml` | StatDef 注入修正（恩惠系数 / 信息卡展示项 / 魔力操控）；`StatPart_PharnaWealth` 把恩惠等级与经验折入原版 `MarketValue`（顶点 ×25），经原版财富链路抬升袭击点数 |
 | | `PharnaCurve.cs` | 六维加成曲线：把原始能力值折算为系数计算用的有效值（优先取设置页配置，未配置时用内置默认：轻微前缓后急，魔力维恒等） |
-| | `DevelopableAbility*.cs` | 发展能力（熟练度 + StatPart 注入）；武器同调含按武器 def 的熟练度、冷却重置 / 暴击补丁与当前装备展示 Hediff |
+| | `DevelopableAbility*.cs` | 发展能力（熟练度 + StatPart 注入）；武器同调含按武器 def 的熟练度、冷却重置 / 暴击补丁与当前装备展示 Hediff；连攻含 10 秒近战攻速窗口与 `IStatusModifier` 补正 |
 | | `Patch_<能力值>Gain_<来源>.cs` | 各能力值的经验获取补丁 |
 | | `Hediff_Pharna.PainFactor`（override） | 耐久 → 疼痛系数：覆盖 `Hediff.PainFactor` 返回 `0.9995^s`（`s` 为 `PharnaCurve` 折算值），`GainStatus` 改耐久后刷 `DirtyPainCache`（疼痛是 Hediff 累乘值、不是 StatDef，无法经 `StatPart_Pharna` 注入） |
 | | `AscendHelper.cs`（含 `AscendRewardSession`） | 升华奖励：Def 注册表与抽取（权重 / 保底 / 确定性种子）、选取会话（刷新 / 锁定） |

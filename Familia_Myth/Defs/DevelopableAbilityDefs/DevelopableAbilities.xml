@@ -90,4 +90,15 @@
     <traitDefName>Trait_DevelopableAbility_WeaponAttunement</traitDefName>
   </FamiliaMyth.Abilities.DevelopableAbilityDef>
 
+  <!-- 连攻发展能力：按近战出手频率提供力量/灵巧补正 -->
+  <FamiliaMyth.Abilities.DevelopableAbilityDef>
+    <defName>DevelopableAbility_ChainAttack</defName>
+    <label>连攻</label>
+    <description>战斗中随近战攻击频率提升力量与灵巧的发展能力。持续近战出手时补正上升，停止攻击后逐渐消退。通过近战战斗提升熟练度。</description>
+    <abilityClass>FamiliaMyth.Abilities.DevelopableAbility_ChainAttack</abilityClass>
+    <maxProficiency>999</maxProficiency>
+    <rarity>Rare</rarity>
+    <traitDefName>Trait_DevelopableAbility_ChainAttack</traitDefName>
+  </FamiliaMyth.Abilities.DevelopableAbilityDef>
+
 </Defs>

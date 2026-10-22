@@ -21,4 +21,7 @@
   <DevelopableAbility_WeaponAttunement.description>提升近战命中率，并通过装备近战武器积累武器熟练度的发展能力。武器熟练度提供概率重置攻击冷却与暴击概率。通过近战战斗提升熟练度。</DevelopableAbility_WeaponAttunement.description>
   <DevelopableAbility_WeaponAttunement.label>武器同调</DevelopableAbility_WeaponAttunement.label>
 
+  <DevelopableAbility_ChainAttack.description>战斗中随近战攻击频率提升力量与灵巧的发展能力。持续近战出手时补正上升，停止攻击后逐渐消退。通过近战战斗提升熟练度。</DevelopableAbility_ChainAttack.description>
+  <DevelopableAbility_ChainAttack.label>连攻</DevelopableAbility_ChainAttack.label>
+
 </LanguageData>

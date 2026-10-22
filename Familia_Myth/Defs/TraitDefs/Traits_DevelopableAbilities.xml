@@ -415,4 +415,25 @@
     </degreeDatas>
   </TraitDef>
 
+  <TraitDef>
+    <defName>Trait_DevelopableAbility_ChainAttack</defName>
+    <label>连攻</label>
+    <description>由恩惠赋予的连攻发展能力，按近战出手频率提升力量与灵巧。</description>
+    <commonality>0</commonality>
+    <degreeDatas>
+      <li><label>连攻I</label><degree>0</degree><description>[PAWN_nameDef]拥有基础连攻能力。</description></li>
+      <li><label>连攻H</label><degree>1</degree><description>[PAWN_nameDef]的连攻能力有所提升。</description></li>
+      <li><label>连攻G</label><degree>2</degree><description>[PAWN_nameDef]的连攻能力稳步提升。</description></li>
+      <li><label>连攻F</label><degree>3</degree><description>[PAWN_nameDef]的连攻能力显著提升。</description></li>
+      <li><label>连攻E</label><degree>4</degree><description>[PAWN_nameDef]的连攻能力达到进阶水平。</description></li>
+      <li><label>连攻D</label><degree>5</degree><description>[PAWN_nameDef]的连攻能力达到精进水平。</description></li>
+      <li><label>连攻C</label><degree>6</degree><description>[PAWN_nameDef]的连攻能力达到高阶水平。</description></li>
+      <li><label>连攻B</label><degree>7</degree><description>[PAWN_nameDef]的连攻能力达到卓越水平。</description></li>
+      <li><label>连攻A</label><degree>8</degree><description>[PAWN_nameDef]的连攻能力达到顶尖水平。</description></li>
+      <li><label>连攻S</label><degree>9</degree><description>[PAWN_nameDef]的连攻能力超凡脱俗。</description></li>
+      <li><label>连攻SS</label><degree>10</degree><description>[PAWN_nameDef]的连攻能力达到传说级别。</description></li>
+      <li><label>连攻SSS</label><degree>11</degree><description>[PAWN_nameDef]的连攻能力已臻化境。</description></li>
+    </degreeDatas>
+  </TraitDef>
+
 </Defs>

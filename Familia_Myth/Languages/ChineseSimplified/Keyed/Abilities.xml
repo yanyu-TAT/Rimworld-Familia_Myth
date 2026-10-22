@@ -86,4 +86,8 @@
 	<FamiliaMyth.WeaponAttunement.ResetChance>攻击冷却重置概率：{0}</FamiliaMyth.WeaponAttunement.ResetChance>
 	<FamiliaMyth.WeaponAttunement.CritChance>暴击概率：{0}</FamiliaMyth.WeaponAttunement.CritChance>
 	<FamiliaMyth.WeaponAttunement.Crit>暴击！</FamiliaMyth.WeaponAttunement.Crit>
+
+  <!-- ==================== 连攻 ==================== -->
+	<FamiliaMyth.DevelopableAbility.ChainAttackLabel>连攻</FamiliaMyth.DevelopableAbility.ChainAttackLabel>
+	<FamiliaMyth.Ability.ChainAttack>连攻 ({0}次/秒): {1}</FamiliaMyth.Ability.ChainAttack>
 </LanguageData>

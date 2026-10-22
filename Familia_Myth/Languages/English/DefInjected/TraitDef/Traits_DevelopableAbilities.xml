@@ -229,4 +229,33 @@
   <Trait_DevelopableAbility_WeaponAttunement.description>A weapon attunement developable ability granted by Pharna. Increases melee hit chance and accumulates weapon proficiency while a melee weapon is equipped.</Trait_DevelopableAbility_WeaponAttunement.description>
   <Trait_DevelopableAbility_WeaponAttunement.label>Weapon Attunement</Trait_DevelopableAbility_WeaponAttunement.label>
 
+
+  <!-- Trait_DevelopableAbility_ChainAttack -->
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.0.description>[PAWN_nameDef] has basic chain attack ability.</Trait_DevelopableAbility_ChainAttack.degreeDatas.0.description>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.0.label>ChainAttack I</Trait_DevelopableAbility_ChainAttack.degreeDatas.0.label>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.1.description>[PAWN_nameDef]'s chain attack ability has improved.</Trait_DevelopableAbility_ChainAttack.degreeDatas.1.description>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.1.label>ChainAttack H</Trait_DevelopableAbility_ChainAttack.degreeDatas.1.label>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.2.description>[PAWN_nameDef]'s chain attack ability is improving steadily.</Trait_DevelopableAbility_ChainAttack.degreeDatas.2.description>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.2.label>ChainAttack G</Trait_DevelopableAbility_ChainAttack.degreeDatas.2.label>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.3.description>[PAWN_nameDef]'s chain attack ability has improved markedly.</Trait_DevelopableAbility_ChainAttack.degreeDatas.3.description>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.3.label>ChainAttack F</Trait_DevelopableAbility_ChainAttack.degreeDatas.3.label>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.4.description>[PAWN_nameDef]'s chain attack ability has reached a proficient level.</Trait_DevelopableAbility_ChainAttack.degreeDatas.4.description>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.4.label>ChainAttack E</Trait_DevelopableAbility_ChainAttack.degreeDatas.4.label>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.5.description>[PAWN_nameDef]'s chain attack ability has reached an advanced level.</Trait_DevelopableAbility_ChainAttack.degreeDatas.5.description>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.5.label>ChainAttack D</Trait_DevelopableAbility_ChainAttack.degreeDatas.5.label>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.6.description>[PAWN_nameDef]'s chain attack ability has reached a high level.</Trait_DevelopableAbility_ChainAttack.degreeDatas.6.description>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.6.label>ChainAttack C</Trait_DevelopableAbility_ChainAttack.degreeDatas.6.label>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.7.description>[PAWN_nameDef]'s chain attack ability has reached an exceptional level.</Trait_DevelopableAbility_ChainAttack.degreeDatas.7.description>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.7.label>ChainAttack B</Trait_DevelopableAbility_ChainAttack.degreeDatas.7.label>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.8.description>[PAWN_nameDef]'s chain attack ability has reached a peerless level.</Trait_DevelopableAbility_ChainAttack.degreeDatas.8.description>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.8.label>ChainAttack A</Trait_DevelopableAbility_ChainAttack.degreeDatas.8.label>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.9.description>[PAWN_nameDef]'s chain attack ability has transcended the mundane.</Trait_DevelopableAbility_ChainAttack.degreeDatas.9.description>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.9.label>ChainAttack S</Trait_DevelopableAbility_ChainAttack.degreeDatas.9.label>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.10.description>[PAWN_nameDef]'s chain attack ability has reached legendary levels.</Trait_DevelopableAbility_ChainAttack.degreeDatas.10.description>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.10.label>ChainAttack SS</Trait_DevelopableAbility_ChainAttack.degreeDatas.10.label>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.11.description>[PAWN_nameDef]'s chain attack ability has reached the pinnacle of mastery.</Trait_DevelopableAbility_ChainAttack.degreeDatas.11.description>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.11.label>ChainAttack SSS</Trait_DevelopableAbility_ChainAttack.degreeDatas.11.label>
+  <Trait_DevelopableAbility_ChainAttack.description>A chain attack developable ability granted by Pharna. Increases Strength and Dexterity with melee attack frequency.</Trait_DevelopableAbility_ChainAttack.description>
+  <Trait_DevelopableAbility_ChainAttack.label>ChainAttack</Trait_DevelopableAbility_ChainAttack.label>
+
 </LanguageData>

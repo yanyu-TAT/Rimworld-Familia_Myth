@@ -104,4 +104,8 @@
   <FamiliaMyth.WeaponAttunement.ResetChance>Attack cooldown reset chance: {0}</FamiliaMyth.WeaponAttunement.ResetChance>
   <FamiliaMyth.WeaponAttunement.CritChance>Critical hit chance: {0}</FamiliaMyth.WeaponAttunement.CritChance>
   <FamiliaMyth.WeaponAttunement.Crit>Critical hit!</FamiliaMyth.WeaponAttunement.Crit>
+
+  <!-- ==================== ChainAttack ==================== -->
+  <FamiliaMyth.DevelopableAbility.ChainAttackLabel>ChainAttack</FamiliaMyth.DevelopableAbility.ChainAttackLabel>
+  <FamiliaMyth.Ability.ChainAttack>ChainAttack ({0}/s): {1}</FamiliaMyth.Ability.ChainAttack>
 </LanguageData>

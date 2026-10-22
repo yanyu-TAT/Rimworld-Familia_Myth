@@ -229,4 +229,33 @@
   <Trait_DevelopableAbility_WeaponAttunement.description>由恩惠赋予的武器同调发展能力，提升近战命中率并通过装备近战武器积累武器熟练度。</Trait_DevelopableAbility_WeaponAttunement.description>
   <Trait_DevelopableAbility_WeaponAttunement.label>武器同调</Trait_DevelopableAbility_WeaponAttunement.label>
 
+
+  <!-- Trait_DevelopableAbility_ChainAttack -->
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.0.description>[PAWN_nameDef]拥有基础连攻能力。</Trait_DevelopableAbility_ChainAttack.degreeDatas.0.description>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.0.label>连攻I</Trait_DevelopableAbility_ChainAttack.degreeDatas.0.label>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.1.description>[PAWN_nameDef]的连攻能力有所提升。</Trait_DevelopableAbility_ChainAttack.degreeDatas.1.description>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.1.label>连攻H</Trait_DevelopableAbility_ChainAttack.degreeDatas.1.label>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.2.description>[PAWN_nameDef]的连攻能力稳步提升。</Trait_DevelopableAbility_ChainAttack.degreeDatas.2.description>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.2.label>连攻G</Trait_DevelopableAbility_ChainAttack.degreeDatas.2.label>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.3.description>[PAWN_nameDef]的连攻能力显著提升。</Trait_DevelopableAbility_ChainAttack.degreeDatas.3.description>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.3.label>连攻F</Trait_DevelopableAbility_ChainAttack.degreeDatas.3.label>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.4.description>[PAWN_nameDef]的连攻能力达到进阶水平。</Trait_DevelopableAbility_ChainAttack.degreeDatas.4.description>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.4.label>连攻E</Trait_DevelopableAbility_ChainAttack.degreeDatas.4.label>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.5.description>[PAWN_nameDef]的连攻能力达到精进水平。</Trait_DevelopableAbility_ChainAttack.degreeDatas.5.description>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.5.label>连攻D</Trait_DevelopableAbility_ChainAttack.degreeDatas.5.label>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.6.description>[PAWN_nameDef]的连攻能力达到高阶水平。</Trait_DevelopableAbility_ChainAttack.degreeDatas.6.description>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.6.label>连攻C</Trait_DevelopableAbility_ChainAttack.degreeDatas.6.label>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.7.description>[PAWN_nameDef]的连攻能力达到卓越水平。</Trait_DevelopableAbility_ChainAttack.degreeDatas.7.description>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.7.label>连攻B</Trait_DevelopableAbility_ChainAttack.degreeDatas.7.label>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.8.description>[PAWN_nameDef]的连攻能力达到顶尖水平。</Trait_DevelopableAbility_ChainAttack.degreeDatas.8.description>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.8.label>连攻A</Trait_DevelopableAbility_ChainAttack.degreeDatas.8.label>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.9.description>[PAWN_nameDef]的连攻能力超凡脱俗。</Trait_DevelopableAbility_ChainAttack.degreeDatas.9.description>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.9.label>连攻S</Trait_DevelopableAbility_ChainAttack.degreeDatas.9.label>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.10.description>[PAWN_nameDef]的连攻能力达到传说级别。</Trait_DevelopableAbility_ChainAttack.degreeDatas.10.description>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.10.label>连攻SS</Trait_DevelopableAbility_ChainAttack.degreeDatas.10.label>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.11.description>[PAWN_nameDef]的连攻能力已臻化境。</Trait_DevelopableAbility_ChainAttack.degreeDatas.11.description>
+  <Trait_DevelopableAbility_ChainAttack.degreeDatas.11.label>连攻SSS</Trait_DevelopableAbility_ChainAttack.degreeDatas.11.label>
+  <Trait_DevelopableAbility_ChainAttack.description>由恩惠赋予的连攻发展能力，按近战出手频率提升力量与灵巧。</Trait_DevelopableAbility_ChainAttack.description>
+  <Trait_DevelopableAbility_ChainAttack.label>连攻</Trait_DevelopableAbility_ChainAttack.label>
+
 </LanguageData>

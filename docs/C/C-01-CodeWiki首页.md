@@ -15,7 +15,7 @@
 | 咏唱 | `Verb_CastSpell.cs` / `Mote_Incantation.cs` / `Mote_MagicCircle.cs` |
 | 魔法弹 | `Projectile_MagicMissileBase.cs` + `MagicMissileStates.cs` |
 | 技能框架 | `Skill.cs` + `SkillDef.cs`（数值修正三条通道见 C-02「技能」，改原版 StatDef / 饥饿休息速率 / 崩溃阈值的 `HediffStage` 用法见 C-05） |
-| 发展能力 | `DevelopableAbility.cs` + `DevelopableAbilityDef.cs` + `StatPart_DevelopableAbility.cs`；武器同调见 `DevelopableAbility_WeaponAttunement.cs`（武器熟练度）+ `Hediff_WeaponAttunement.cs`（当前装备展示条）+ `Patch_WeaponAttunement.cs`（冷却重置 / 暴击） |
+| 发展能力 | `DevelopableAbility.cs` + `DevelopableAbilityDef.cs` + `StatPart_DevelopableAbility.cs`；武器同调见 `DevelopableAbility_WeaponAttunement.cs`（武器熟练度）+ `Hediff_WeaponAttunement.cs`（当前装备展示条）+ `Patch_WeaponAttunement.cs`（冷却重置 / 暴击）；连攻见 `DevelopableAbility_ChainAttack.cs`（10 秒攻速窗口 + `IStatusModifier` 补正）+ `Patch_ChainAttack.cs`（近战出手计数） |
 | 魔力系统（精神力→魔力→魔法） | `Hediff_Pharna.cs`（`manaPool` / 常态转化 / `SpendMana`）+ `Defs/StatDefs/PharnaStats.xml`（`ManaMax` / `ManaConversion` / `ManaConversionSpeed` / `ManaControl`）+ `StatPart_ManaControl.cs` + `Gizmo_ManaPool.cs`（池条 / 自动转化角标 / 悬停魔法时的魔力消耗预览段） |
 | 意志/美德 | `MentalState_Virtue.cs`（含触发当拍的心声飘字）+ `Defs/HediffDefs/Hediff_Virtues.xml`（五种 Buff 与范围光环）+ `Patch_Virtue_Trigger.cs`（崩溃前拦截）+ `Hediff_Pharna.TryTriggerVirtue`（概率/冷却/类型抽取） |
 | 公会 | `GameComponent_FamiliaRankTracker.cs` + `GameComponent_GuildEnvoyTracker.cs`（单槽使者）+ `GuildQuestDef/Generator*`（统一工厂 `GuildQuestGenerator.Create(def)` + `Available()` 发布预筛）+ `QuestUtilities.cs` + 任务三件套（`QuestNode_Root_*` / `QuestPart_*` / `SiteClearanceReward`，细节见 C-02）+ 世界对象交互 comp（`WorldObjectComp_*`，如物资押运的定居点按钮）+ 任务脚本（`Defs/QuestScriptDefs/`） |

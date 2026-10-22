@@ -21,4 +21,7 @@
   <DevelopableAbility_WeaponAttunement.description>A developable ability that increases melee hit chance and accumulates weapon proficiency while a melee weapon is equipped. Weapon proficiency grants a chance to reset attack cooldown and to critically hit. Proficiency rises through melee combat.</DevelopableAbility_WeaponAttunement.description>
   <DevelopableAbility_WeaponAttunement.label>Weapon Attunement</DevelopableAbility_WeaponAttunement.label>
 
+  <DevelopableAbility_ChainAttack.description>A developable ability that increases Strength and Dexterity with melee attack frequency in combat. The bonus rises while attacking and fades after attacks stop. Proficiency rises through melee combat.</DevelopableAbility_ChainAttack.description>
+  <DevelopableAbility_ChainAttack.label>ChainAttack</DevelopableAbility_ChainAttack.label>
+
 </LanguageData>
