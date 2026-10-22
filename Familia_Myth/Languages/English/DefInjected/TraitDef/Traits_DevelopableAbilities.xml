@@ -258,4 +258,33 @@
   <Trait_DevelopableAbility_ChainAttack.description>A chain attack developable ability granted by Pharna. Increases Strength and Dexterity with melee attack frequency.</Trait_DevelopableAbility_ChainAttack.description>
   <Trait_DevelopableAbility_ChainAttack.label>ChainAttack</Trait_DevelopableAbility_ChainAttack.label>
 
+
+  <!-- Trait_DevelopableAbility_MindHealing -->
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.0.description>[PAWN_nameDef] has basic mind healing ability.</Trait_DevelopableAbility_MindHealing.degreeDatas.0.description>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.0.label>Mind Healing I</Trait_DevelopableAbility_MindHealing.degreeDatas.0.label>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.1.description>[PAWN_nameDef]'s mind healing ability has improved.</Trait_DevelopableAbility_MindHealing.degreeDatas.1.description>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.1.label>Mind Healing H</Trait_DevelopableAbility_MindHealing.degreeDatas.1.label>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.2.description>[PAWN_nameDef]'s mind healing ability is improving steadily.</Trait_DevelopableAbility_MindHealing.degreeDatas.2.description>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.2.label>Mind Healing G</Trait_DevelopableAbility_MindHealing.degreeDatas.2.label>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.3.description>[PAWN_nameDef]'s mind healing ability has improved markedly.</Trait_DevelopableAbility_MindHealing.degreeDatas.3.description>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.3.label>Mind Healing F</Trait_DevelopableAbility_MindHealing.degreeDatas.3.label>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.4.description>[PAWN_nameDef]'s mind healing ability has reached a proficient level.</Trait_DevelopableAbility_MindHealing.degreeDatas.4.description>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.4.label>Mind Healing E</Trait_DevelopableAbility_MindHealing.degreeDatas.4.label>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.5.description>[PAWN_nameDef]'s mind healing ability has reached an advanced level.</Trait_DevelopableAbility_MindHealing.degreeDatas.5.description>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.5.label>Mind Healing D</Trait_DevelopableAbility_MindHealing.degreeDatas.5.label>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.6.description>[PAWN_nameDef]'s mind healing ability has reached a high level.</Trait_DevelopableAbility_MindHealing.degreeDatas.6.description>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.6.label>Mind Healing C</Trait_DevelopableAbility_MindHealing.degreeDatas.6.label>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.7.description>[PAWN_nameDef]'s mind healing ability has reached an exceptional level.</Trait_DevelopableAbility_MindHealing.degreeDatas.7.description>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.7.label>Mind Healing B</Trait_DevelopableAbility_MindHealing.degreeDatas.7.label>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.8.description>[PAWN_nameDef]'s mind healing ability has reached a peerless level.</Trait_DevelopableAbility_MindHealing.degreeDatas.8.description>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.8.label>Mind Healing A</Trait_DevelopableAbility_MindHealing.degreeDatas.8.label>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.9.description>[PAWN_nameDef]'s mind healing ability has transcended the mundane.</Trait_DevelopableAbility_MindHealing.degreeDatas.9.description>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.9.label>Mind Healing S</Trait_DevelopableAbility_MindHealing.degreeDatas.9.label>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.10.description>[PAWN_nameDef]'s mind healing ability has reached legendary levels.</Trait_DevelopableAbility_MindHealing.degreeDatas.10.description>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.10.label>Mind Healing SS</Trait_DevelopableAbility_MindHealing.degreeDatas.10.label>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.11.description>[PAWN_nameDef]'s mind healing ability has reached the pinnacle of mastery.</Trait_DevelopableAbility_MindHealing.degreeDatas.11.description>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.11.label>Mind Healing SSS</Trait_DevelopableAbility_MindHealing.degreeDatas.11.label>
+  <Trait_DevelopableAbility_MindHealing.description>A mind healing developable ability granted by Pharna. Continuously restores psyfocus.</Trait_DevelopableAbility_MindHealing.description>
+  <Trait_DevelopableAbility_MindHealing.label>Mind Healing</Trait_DevelopableAbility_MindHealing.label>
+
 </LanguageData>

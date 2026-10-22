@@ -24,4 +24,7 @@
   <DevelopableAbility_ChainAttack.description>A developable ability that increases Strength and Dexterity with melee attack frequency in combat. The bonus rises while attacking and fades after attacks stop. Proficiency rises through melee combat.</DevelopableAbility_ChainAttack.description>
   <DevelopableAbility_ChainAttack.label>ChainAttack</DevelopableAbility_ChainAttack.label>
 
+  <DevelopableAbility_MindHealing.description>A developable ability that continuously restores psyfocus. Restoration slows as psyfocus rises and scales with proficiency. Proficiency rises from spending psyfocus.</DevelopableAbility_MindHealing.description>
+  <DevelopableAbility_MindHealing.label>Mind Healing</DevelopableAbility_MindHealing.label>
+
 </LanguageData>

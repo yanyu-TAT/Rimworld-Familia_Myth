@@ -258,4 +258,33 @@
   <Trait_DevelopableAbility_ChainAttack.description>由恩惠赋予的连攻发展能力，按近战出手频率提升力量与灵巧。</Trait_DevelopableAbility_ChainAttack.description>
   <Trait_DevelopableAbility_ChainAttack.label>连攻</Trait_DevelopableAbility_ChainAttack.label>
 
+
+  <!-- Trait_DevelopableAbility_MindHealing -->
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.0.description>[PAWN_nameDef]拥有基础精愈能力。</Trait_DevelopableAbility_MindHealing.degreeDatas.0.description>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.0.label>精愈I</Trait_DevelopableAbility_MindHealing.degreeDatas.0.label>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.1.description>[PAWN_nameDef]的精愈能力有所提升。</Trait_DevelopableAbility_MindHealing.degreeDatas.1.description>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.1.label>精愈H</Trait_DevelopableAbility_MindHealing.degreeDatas.1.label>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.2.description>[PAWN_nameDef]的精愈能力稳步提升。</Trait_DevelopableAbility_MindHealing.degreeDatas.2.description>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.2.label>精愈G</Trait_DevelopableAbility_MindHealing.degreeDatas.2.label>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.3.description>[PAWN_nameDef]的精愈能力显著提升。</Trait_DevelopableAbility_MindHealing.degreeDatas.3.description>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.3.label>精愈F</Trait_DevelopableAbility_MindHealing.degreeDatas.3.label>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.4.description>[PAWN_nameDef]的精愈能力达到进阶水平。</Trait_DevelopableAbility_MindHealing.degreeDatas.4.description>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.4.label>精愈E</Trait_DevelopableAbility_MindHealing.degreeDatas.4.label>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.5.description>[PAWN_nameDef]的精愈能力达到精进水平。</Trait_DevelopableAbility_MindHealing.degreeDatas.5.description>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.5.label>精愈D</Trait_DevelopableAbility_MindHealing.degreeDatas.5.label>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.6.description>[PAWN_nameDef]的精愈能力达到高阶水平。</Trait_DevelopableAbility_MindHealing.degreeDatas.6.description>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.6.label>精愈C</Trait_DevelopableAbility_MindHealing.degreeDatas.6.label>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.7.description>[PAWN_nameDef]的精愈能力达到卓越水平。</Trait_DevelopableAbility_MindHealing.degreeDatas.7.description>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.7.label>精愈B</Trait_DevelopableAbility_MindHealing.degreeDatas.7.label>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.8.description>[PAWN_nameDef]的精愈能力达到顶尖水平。</Trait_DevelopableAbility_MindHealing.degreeDatas.8.description>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.8.label>精愈A</Trait_DevelopableAbility_MindHealing.degreeDatas.8.label>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.9.description>[PAWN_nameDef]的精愈能力超凡脱俗。</Trait_DevelopableAbility_MindHealing.degreeDatas.9.description>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.9.label>精愈S</Trait_DevelopableAbility_MindHealing.degreeDatas.9.label>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.10.description>[PAWN_nameDef]的精愈能力达到传说级别。</Trait_DevelopableAbility_MindHealing.degreeDatas.10.description>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.10.label>精愈SS</Trait_DevelopableAbility_MindHealing.degreeDatas.10.label>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.11.description>[PAWN_nameDef]的精愈能力已臻化境。</Trait_DevelopableAbility_MindHealing.degreeDatas.11.description>
+  <Trait_DevelopableAbility_MindHealing.degreeDatas.11.label>精愈SSS</Trait_DevelopableAbility_MindHealing.degreeDatas.11.label>
+  <Trait_DevelopableAbility_MindHealing.description>由恩惠赋予的精愈发展能力，持续自动恢复精神力。</Trait_DevelopableAbility_MindHealing.description>
+  <Trait_DevelopableAbility_MindHealing.label>精愈</Trait_DevelopableAbility_MindHealing.label>
+
 </LanguageData>

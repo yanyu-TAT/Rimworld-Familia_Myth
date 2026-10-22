@@ -108,4 +108,7 @@
   <!-- ==================== ChainAttack ==================== -->
   <FamiliaMyth.DevelopableAbility.ChainAttackLabel>ChainAttack</FamiliaMyth.DevelopableAbility.ChainAttackLabel>
   <FamiliaMyth.Ability.ChainAttack>ChainAttack ({0}/s): {1}</FamiliaMyth.Ability.ChainAttack>
+
+  <!-- ==================== Mind Healing ==================== -->
+  <FamiliaMyth.DevelopableAbility.MindHealingLabel>Mind Healing</FamiliaMyth.DevelopableAbility.MindHealingLabel>
 </LanguageData>

@@ -90,4 +90,7 @@
   <!-- ==================== 连攻 ==================== -->
 	<FamiliaMyth.DevelopableAbility.ChainAttackLabel>连攻</FamiliaMyth.DevelopableAbility.ChainAttackLabel>
 	<FamiliaMyth.Ability.ChainAttack>连攻 ({0}次/秒): {1}</FamiliaMyth.Ability.ChainAttack>
+
+  <!-- ==================== 精愈 ==================== -->
+	<FamiliaMyth.DevelopableAbility.MindHealingLabel>精愈</FamiliaMyth.DevelopableAbility.MindHealingLabel>
 </LanguageData>

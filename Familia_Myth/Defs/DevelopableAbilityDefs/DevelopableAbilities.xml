@@ -101,4 +101,15 @@
     <traitDefName>Trait_DevelopableAbility_ChainAttack</traitDefName>
   </FamiliaMyth.Abilities.DevelopableAbilityDef>
 
+  <!-- 精愈发展能力：持续自动恢复精神力 -->
+  <FamiliaMyth.Abilities.DevelopableAbilityDef>
+    <defName>DevelopableAbility_MindHealing</defName>
+    <label>精愈</label>
+    <description>持续自动恢复精神力的发展能力。精神力越满恢复越慢，并随熟练度提高而加快。通过消耗精神力提升熟练度。</description>
+    <abilityClass>FamiliaMyth.Abilities.DevelopableAbility_MindHealing</abilityClass>
+    <maxProficiency>999</maxProficiency>
+    <rarity>Uncommon</rarity>
+    <traitDefName>Trait_DevelopableAbility_MindHealing</traitDefName>
+  </FamiliaMyth.Abilities.DevelopableAbilityDef>
+
 </Defs>

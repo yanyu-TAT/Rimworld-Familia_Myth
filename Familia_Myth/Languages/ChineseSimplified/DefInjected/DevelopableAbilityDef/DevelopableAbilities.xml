@@ -24,4 +24,7 @@
   <DevelopableAbility_ChainAttack.description>战斗中随近战攻击频率提升力量与灵巧的发展能力。持续近战出手时补正上升，停止攻击后逐渐消退。通过近战战斗提升熟练度。</DevelopableAbility_ChainAttack.description>
   <DevelopableAbility_ChainAttack.label>连攻</DevelopableAbility_ChainAttack.label>
 
+  <DevelopableAbility_MindHealing.description>持续自动恢复精神力的发展能力。精神力越满恢复越慢，并随熟练度提高而加快。通过消耗精神力提升熟练度。</DevelopableAbility_MindHealing.description>
+  <DevelopableAbility_MindHealing.label>精愈</DevelopableAbility_MindHealing.label>
+
 </LanguageData>

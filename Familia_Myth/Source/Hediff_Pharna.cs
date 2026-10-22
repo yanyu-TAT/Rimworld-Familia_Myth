@@ -29,7 +29,7 @@ namespace FamiliaMyth.Pharna
         public const float AscendStatusThreshold = 500f;
 
         //魔力转化：每秒投入的精神力
-        private const float PsyfocusPerSecond = 0.0025f;
+        public const float PsyfocusPerSecond = 0.0025f;
         //魔力转化：每1%精神力折算的魔力
         private const float ManaPerPsyfocus = 1000f;
         //魔力转化：每1%精神力产生的心灵熵
