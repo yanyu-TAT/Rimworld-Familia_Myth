@@ -1,4 +1,3 @@
-using System.Text;
 using FamiliaMyth.Pharna;
 using RimWorld;
 using Verse;
@@ -175,7 +174,85 @@ namespace FamiliaMyth.Feat
                 });
             }
 
-            LogResolveReport(ctx, battleName, participants, results, traits, battleMagnitude, totalContribution);
+            FeatBattleReport report = BuildReport(ctx, battleName, tileId, now, participants, results,
+                traits, battleMagnitude, totalContribution);
+            report.WriteLog();
+            report.SendLetter();
+        }
+
+        //把结算结果整理成一份快照，日志与信件共用
+        private static FeatBattleReport BuildReport(FeatContext ctx, string battleName, int tileId, int tickAbs,
+            List<Pawn> participants, List<ParticipantResult> results,
+            List<FeatTraitDef> traits, float battleMagnitude, float totalContribution)
+        {
+            float threat = ctx.Threat();
+
+            int friendlyLost = 0;
+            for (int i = 0; i < ctx.friendlies.Count; i++)
+            {
+                Pawn pawn = ctx.friendlies[i];
+                if (pawn != null && (pawn.Dead || pawn.Downed)) friendlyLost++;
+            }
+
+            FeatBattleReport report = new()
+            {
+                battleName = battleName,
+                tickAbs = tickAbs,
+                tileId = tileId,
+                enemyCount = ctx.enemies.Count,
+                threat = threat,
+                maxCombatPower = ctx.MaxCombatPower(),
+                defeatedCount = ctx.DefeatedCount(),
+                friendlyCount = ctx.friendlies.Count,
+                downedCount = ctx.DownedCount(),
+                friendlyLostCount = friendlyLost,
+                participantCount = participants.Count,
+                battleDuration = ctx.BattleDuration(),
+                battleTraits = traits,
+                battleMagnitude = battleMagnitude,
+                battleMultiplier = threat > 0f ? battleMagnitude / threat : 1f,
+                totalContribution = totalContribution,
+                enemyDamageTotal = ctx.EnemyDamageTotal(),
+                friendliesDamageTotal = ctx.FriendliesDamageTotal(),
+                rows = new List<FeatReportRow>(ctx.friendlies.Count),
+                participants = participants,
+            };
+
+            float shareSum = 0f;
+            for (int i = 0; i < ctx.friendlies.Count; i++)
+            {
+                Pawn pawn = ctx.friendlies[i];
+                if (pawn == null) continue;
+
+                PawnContribution entry = ctx.EntryOf(pawn);
+                float contribution = ctx.ContributionOf(pawn);
+
+                bool rewarded = participants.Contains(pawn);
+                int index = rewarded ? results.FindIndex(r => r.pawn == pawn) : -1;
+                float share = index >= 0
+                    ? results[index].share
+                    : (totalContribution > 0f ? contribution / totalContribution : 0f);
+                float personalMultiplier = index >= 0 ? results[index].personal.multiplier : 1f;
+
+                report.rows.Add(new FeatReportRow
+                {
+                    pawn = pawn,
+                    dealt = entry?.dealt ?? 0f,
+                    taken = entry?.taken ?? 0f,
+                    support = entry?.support ?? 0f,
+                    contribution = contribution,
+                    share = share,
+                    score = battleMagnitude * share * personalMultiplier,
+                    tier = index >= 0 ? results[index].tier : 0,
+                    rewarded = rewarded,
+                    personalTraits = index >= 0 ? results[index].personal.traits : null,
+                });
+
+                if (index >= 0) shareSum += share;
+            }
+
+            report.shareSum = shareSum;
+            return report;
         }
 
         //个人层判定：只对 subject 本人生效，不影响战斗总得分
@@ -213,78 +290,6 @@ namespace FamiliaMyth.Feat
                 multiplier = multiplier,
             };
         }
-
-        //结算报告：输出战斗事实、性质判定与逐人贡献明细，便于核对数值
-        private static void LogResolveReport(FeatContext ctx, string battleName, List<Pawn> participants,
-            List<ParticipantResult> results, List<FeatTraitDef> traits, float battleMagnitude, float totalContribution)
-        {
-            float threat = ctx.Threat();
-            float multiplier = threat > 0f ? battleMagnitude / threat : 1f;
-
-            StringBuilder sb = new();
-            sb.AppendLine($"[FamiliaMyth] 战斗结算：{battleName ?? "未知战斗"}");
-            sb.AppendLine($"  战斗事实：敌方 {ctx.enemies.Count} 人｜战力合计 {threat:F1}｜最强单体 {ctx.MaxCombatPower():F1}｜已倒下或阵亡 {ctx.DefeatedCount()}"
-                + $"；我方 {ctx.friendlies.Count} 人｜倒地 {ctx.DownedCount()}｜受恩惠参与者 {participants.Count}；战斗总时间：{ctx.BattleDuration().ToStringTicksToPeriod()}");
-            sb.AppendLine($"  性质判定：{TraitText(traits)} → 战斗总得分 {battleMagnitude:F1}（敌方战力 {threat:F1} × 性质系数 {multiplier:F2}）");
-            sb.AppendLine($"  总贡献：{totalContribution:F1} 总输出： {ctx.EnemyDamageTotal()}");
-            float enemyDamage = ctx.EnemyDamageTotal();
-            float friendliesDealt = ctx.FriendliesDamageTotal();
-            sb.AppendLine($"  合账：敌方承受 {enemyDamage:F1}｜我方输出 {friendliesDealt:F1}"
-                + $"｜差额 {enemyDamage - friendliesDealt:F1}｜Σ占比 {ShareSum(results) * 100f:F1}%");
-            sb.AppendLine($"  贡献明细（输出｜承伤×{FeatContext.TakenWeight:F1}｜支援 → 合计｜占比｜个人得分｜档位）：");
-
-            for (int i = 0; i < ctx.friendlies.Count; i++)
-            {
-                Pawn pawn = ctx.friendlies[i];
-                if (pawn == null) continue;
-
-                PawnContribution row = ctx.EntryOf(pawn);
-                float dealt = row?.dealt ?? 0f;
-                float taken = row?.taken ?? 0f;
-                float support = row?.support ?? 0f;
-                float total = ctx.ContributionOf(pawn);
-
-                bool rewarded = participants.Contains(pawn);
-                int index = rewarded ? results.FindIndex(r => r.pawn == pawn) : -1;
-                float share = index >= 0
-                    ? results[index].share
-                    : (totalContribution > 0f ? total / totalContribution : 0f);
-                float personalMultiplier = index >= 0 ? results[index].personal.multiplier : 1f;
-                float score = battleMagnitude * share * personalMultiplier;
-                int tier = index >= 0 ? results[index].tier : 0;
-
-                string reward = rewarded
-                    ? $"｜{score:F1}｜{(tier > 0 ? $"{tier} 级" : "未达档位")}"
-                      + (index >= 0 ? PersonalText(results[index].personal) : "")
-                    : "";
-
-                sb.AppendLine($"    {(rewarded ? "[恩惠]" : "[    ]")} {pawn.Name.ToStringShort}（{pawn.KindLabel}）："
-                    + $"{dealt:F1}｜{taken * FeatContext.TakenWeight:F1}｜{support:F1}"
-                    + $" → {total:F1}｜{share.ToStringPercent()}{reward}");
-            }
-
-            Log.Message(sb.ToString());
-        }
-
-        //战斗层性质文本
-        private static string TraitText(List<FeatTraitDef> traits)
-            => traits.NullOrEmpty()
-                ? "无"
-                : string.Join("、", traits.Where(t => t != null).Select(t => $"{t.label}×{t.multiplier:F2}"));
-
-        //参与者占比之和，超过 100% 说明分摊分母少算
-        private static float ShareSum(List<ParticipantResult> results)
-        {
-            float sum = 0f;
-            for (int i = 0; i < results.Count; i++) sum += results[i].share;
-            return sum;
-        }
-
-        //个人层性质文本，附在该参与者的明细行末
-        private static string PersonalText(PersonalFeatResult personal)
-            => personal.traits.NullOrEmpty()
-                ? ""
-                : "｜个人：" + string.Join("、", personal.traits.Where(t => t != null).Select(t => $"{t.label}×{t.multiplier:F2}"));
 
         //原版战斗名是按需生成、且会被新日志清空的缓存，结算时取一次快照
         private static string SafeBattleName(Battle battle)

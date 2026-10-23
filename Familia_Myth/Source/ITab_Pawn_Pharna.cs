@@ -41,6 +41,17 @@ namespace FamiliaMyth.UI
         private const float TopBarH = 24f;
         private const float CloseBtnReserve = 24f;
 
+        //进度条跳动：紧追速率（1/秒）、收尾阈值、满亮差距（一档）、最大叠加亮度
+        private const float FollowRate = 3f;
+        private const float SettleEpsilon = 0.1f;
+        private const float FullFlashGap = 100f;
+        private const float FlashAlpha = 1f;
+
+        //条跳动：显示值向真实值追赶
+        private readonly Dictionary<DevelopableAbility, float> motions = new();
+        private readonly Dictionary<PharnaStatusType, float> statusMotions = new();
+        private readonly List<DevelopableAbility> staleKeys = new();
+
         private Vector2 scroll;
 
         //铭刻选择模式：顶栏按钮进入，点击能力值行完成后退出
@@ -57,7 +68,12 @@ namespace FamiliaMyth.UI
         public override bool IsVisible => SelPawn?.GetPharna() != null;
 
         //页签基类没有 OnClose，选择模式需在打开与点击外部时复位
-        public override void OnOpen() => selectingInscription = false;
+        public override void OnOpen()
+        {
+            selectingInscription = false;
+            motions.Clear();
+            statusMotions.Clear();
+        }
 
         public override void Notify_ClickOutsideWindow() => selectingInscription = false;
 
@@ -68,6 +84,8 @@ namespace FamiliaMyth.UI
             {
                 lastSelPawn = SelPawn;
                 selectingInscription = false;
+                motions.Clear();
+                statusMotions.Clear();
             }
 
             Hediff_Pharna pharna = SelPawn?.GetPharna();
@@ -183,9 +201,18 @@ namespace FamiliaMyth.UI
             float barW = r.xMax - barX;
             if (barW > 8f)
             {
+                float displayed = StepMotion(type, now);
+                float frac = displayed / pharna.maxStatus;
                 Rect bar = new(barX, r.y + 6f, barW, r.height - 12f);
-                UI_Bar.DrawWithThreshold(bar, now / pharna.maxStatus, barColor,
-                    Hediff_Pharna.AscendStatusThreshold / pharna.maxStatus,
+
+                //高亮叠在填充之上、门槛刻度之下，不遮挡刻度线
+                UI_Bar.Draw(bar, frac, barColor);
+                float flashAlpha = FlashAlpha * Mathf.Clamp01((now - displayed) / FullFlashGap);
+                if (flashAlpha > 0f)
+                    Widgets.DrawBoxSolid(new Rect(bar.x, bar.y, bar.width * Mathf.Clamp01(frac), bar.height),
+                        Color.white.WithAlpha(flashAlpha));
+
+                UI_Bar.DrawThreshold(bar, Hediff_Pharna.AscendStatusThreshold / pharna.maxStatus,
                     reached ? UI_Palette.Disabled : UI_Palette.Accent);
             }
 
@@ -246,8 +273,10 @@ namespace FamiliaMyth.UI
 
         //==================== 发展能力 ====================
 
-        private static void DrawDevelopableSection(Hediff_Pharna pharna, ref UI_Cursor cur)
+        private void DrawDevelopableSection(Hediff_Pharna pharna, ref UI_Cursor cur)
         {
+            PruneMotions(pharna);
+
             float innerHeight = DevelopableInnerHeight(pharna);
             Rect card = cur.Row(SectionHeight(innerHeight));
             UI_GroupBox.DrawOutlinedCardBg(card, "FamiliaMyth.Panel.SectionDevelopable".Translate(), UI_Palette.SectionBorder);
@@ -273,8 +302,8 @@ namespace FamiliaMyth.UI
             }
         }
 
-        //发展能力行：★ 名称 + 品质 + 熟练度文本 + 熟练度条（稀有度着色）
-        private static void DrawDevelopableRow(Rect r, DevelopableAbility ability, int index)
+        //发展能力行：★ 名称 + 品质 + 熟练度文本 + 熟练度条（稀有度着色，条随成长跳动）
+        private void DrawDevelopableRow(Rect r, DevelopableAbility ability, int index)
         {
             Color color = ((IAscendReward)ability).RarityColor;
             Widgets.DrawBoxSolid(r, UI_Palette.CardBg);
@@ -290,22 +319,81 @@ namespace FamiliaMyth.UI
                 Widgets.Label(new Rect(r.x + 8f, r.y, nameW - 8f, r.height), name);
 
             float maxProf = ability.def?.maxProficiency ?? 999f;
+            float actual = ability.Proficiency;
+            float displayed = StepMotion(ability, actual);
+
+            //数字用真实值，条用追赶后的显示值
             float numW = 110f;
             Rect numR = new(r.x + nameW, r.y, numW, r.height);
             using (UI_Scope.Color(UI_Palette.TextValue))
                 Widgets.Label(numR, "FamiliaMyth.Panel.DevelopableProficiency".Translate(
-                    ((int)ability.Proficiency).ToString(), ((int)maxProf).ToString()));
+                    ((int)actual).ToString(), ((int)maxProf).ToString()));
 
             float barX = numR.xMax + SegmentGap;
             float barW = r.xMax - barX - SegmentGap;
             if (barW > 8f)
             {
+                float frac = displayed / maxProf;
                 Rect bar = new(barX, r.y + 6f, barW, r.height - 12f);
-                UI_Bar.Draw(bar, ability.Proficiency / maxProf, color);
+                UI_Bar.Draw(bar, frac, color);
+
+                //亮度与剩余差距挂钩：一档差距满亮，追上即灭
+                float flashAlpha = FlashAlpha * Mathf.Clamp01((actual - displayed) / FullFlashGap);
+                if (flashAlpha > 0f)
+                    Widgets.DrawBoxSolid(new Rect(bar.x, bar.y, bar.width * Mathf.Clamp01(frac), bar.height),
+                        Color.white.WithAlpha(flashAlpha));
             }
 
             TooltipHandler.TipRegion(r, () => $"{ability.Label}\n\n{ability.Description}",
                 Gen.HashCombineInt(ability.GetHashCode(), 197307));
+        }
+
+        //推进一帧的显示值；known 为 false 表示该条首次出现，直接对齐
+        private static float Advance(float displayed, bool known, float actual)
+        {
+            if (!known) return actual;
+
+            //只在 Repaint 事件里累加，避免同帧多次 OnGUI 让追赶速度翻倍
+            if (Event.current.type != EventType.Repaint)
+                return displayed;
+
+            //回落（重建 / 读档）直接对齐，不播倒退
+            if (actual <= displayed) return actual;
+
+            displayed = Mathf.Lerp(displayed, actual, 1f - Mathf.Exp(-FollowRate * Time.unscaledDeltaTime));
+            return actual - displayed < SettleEpsilon ? actual : displayed;
+        }
+
+        private float StepMotion(DevelopableAbility ability, float actual)
+        {
+            bool known = motions.TryGetValue(ability, out float displayed);
+            displayed = Advance(displayed, known, actual);
+            motions[ability] = displayed;
+            return displayed;
+        }
+
+        private float StepMotion(PharnaStatusType type, float actual)
+        {
+            bool known = statusMotions.TryGetValue(type, out float displayed);
+            displayed = Advance(displayed, known, actual);
+            statusMotions[type] = displayed;
+            return displayed;
+        }
+
+        //恩惠重建后能力对象会换新，清掉已不在列表中的动画状态
+        private void PruneMotions(Hediff_Pharna pharna)
+        {
+            int alive = pharna.developableAbilities?.Count ?? 0;
+            if (motions.Count == 0 || motions.Count == alive) return;
+
+            staleKeys.Clear();
+            foreach (DevelopableAbility ability in motions.Keys)
+                if (pharna.developableAbilities == null || !pharna.developableAbilities.Contains(ability))
+                    staleKeys.Add(ability);
+
+            foreach (DevelopableAbility ability in staleKeys)
+                motions.Remove(ability);
+            staleKeys.Clear();
         }
 
         //==================== 技能 / 魔法（两栏） ====================

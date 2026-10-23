@@ -315,6 +315,7 @@ GenerateShuttle(Faction owningFaction = null, IEnumerable<Pawn> requiredPawns = 
 
 ### 正文着色（ColoredText.Colorize）与死亡信挂载点
 - `ColoredText.Colorize(this TaggedString ts, Color color)`（`Verse/ColoredText.cs:240`）= `ts.Resolve().Colorize(color)`；`Colorize(this string, Color)`（`:245`）= `<color=#RRGGBBAA>…</color>` 包裹 → **TaggedString 可着色，但产出是 string**（`TaggedString` 本身只有 `rawText` + `Resolve()`）。
+- **`TaggedString` 转 `string` 会剥掉全部标签**：`implicit operator string` 的实现是 `RawText.StripTags()`（`Verse/TaggedString.cs:120-123`），`<...>` 与 `(*...)` 一起清掉。因此拼正文若写成 `(string)"Key".Translate(...)`，颜色标签在这一步就消失了、连字面量都看不到（现象与排查见 B-04 BUG-039）；要保留标签一律取 `.RawText`。
 - 信件正文经 `Dialog_NodeTree.DrawNode` 的 `Widgets.Label(rect, curNode.text.Resolve())` 绘制 → `Widgets.Label(Rect, TaggedString)` → `GUI.Label(position, label, Text.CurFontStyle)`，颜色标签随原版富文本渲染生效；尺寸测量走 `RawText.StripTags()`，不撑坏布局；`CapitalizeFirst()` 经 `FirstLetterBetweenTags()` 跳过 `<` 标签，以 `<color=…>` 开头不会被误大写。
 - 死亡信正文由 `HealthUtility.GetDiedLetterText(pawn, dinfo, hediff)` 生成（三选一：`dinfo.Value.Def.deathMessage` / `PawnDiedBecauseOf` / `PawnDied`），在 `Pawn_HealthTracker.NotifyPlayerOfKilled` 里被调用后继续追加借用殖民者 / precept / 动物等段落 → 对 `GetDiedLetterText` 做 Postfix 追加的内容**不在正文最末**；要位于最末须改挂 `LetterStack.ReceiveLetter(Letter let, string debugInfo = null, int delayTicks = 0, bool playSound = true)`（`Verse/LetterStack.cs:56`）。
 - 出处：`kb/L0-证据/decompiled/1.6/Verse/ColoredText.cs`、`TaggedString.cs`、`Dialog_NodeTree.cs`、`Widgets.cs`、`HealthUtility.cs`、`Pawn_HealthTracker.cs`、`LetterStack.cs`。

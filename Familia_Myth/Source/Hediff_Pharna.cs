@@ -1,6 +1,7 @@
 using FamiliaMyth.Abilities;
 using FamiliaMyth.Core;
 using FamiliaMyth.Feat;
+using FamiliaMyth.Feedback;
 using RimWorld;
 using System.Text;
 using UnityEngine;
@@ -263,16 +264,24 @@ namespace FamiliaMyth.Pharna
 
         public FeatRecord AvailableFeat() => feats?.Where(f => f.usedForLevel < 0).OrderBy(f => f.tier).FirstOrDefault(f => f.tier >= level);
 
+        //恩惠等级已达上限
+        public bool AtLevelCap => level >= def.maxSeverity;
+
+        //任一能力值当前值达到升华门槛
+        public bool MeetsStatusRequirement()
+        {
+            for (int i = 0; i < 6; i++)
+                if (GetCurrentStatus((PharnaStatusType)i) >= AscendStatusThreshold) return true;
+            return false;
+        }
+
+        //存在可用于下次升华的伟业
+        public bool HasUsableFeat() => AvailableFeat() != null;
+
         public AcceptanceReport CanAscend()
         {
-            if (level >= def.maxSeverity) return "FamiliaMyth.MaxLevelRefusion".Translate();
-            bool status = false;
-            for (int i = 0; i < 6; i++)
-            {
-                PharnaStatusType type = (PharnaStatusType)i;
-                status = status || GetCurrentStatus(type) >= AscendStatusThreshold;
-            }
-            if (!status || AvailableFeat() == null)
+            if (AtLevelCap) return "FamiliaMyth.MaxLevelRefusion".Translate();
+            if (!MeetsStatusRequirement() || !HasUsableFeat())
                 return "FamiliaMyth.NotMeetAscendRequirementRefusion".Translate();
             return true;
         }
@@ -472,6 +481,8 @@ namespace FamiliaMyth.Pharna
             if (amount <= 0f) return false;
             float current = GetCurrentStatus(type);
             if (current >= maxStatus) return false;
+
+            int prevRank = RankIndexOf(current);
             float capped = Math.Min(amount * GetGrowthDecay(type), maxStatus - current);
             switch(type)
             {
@@ -487,6 +498,8 @@ namespace FamiliaMyth.Pharna
                 pawn.health.hediffSet.DirtyPainCache();
             if (gainExp)
                 GainExp(amount);
+
+            GrowthFeedback.NotifyStatusRankUp(this, type, prevRank, RankIndexOf(GetCurrentStatus(type)));
             return true;
         }
 
@@ -587,15 +600,16 @@ namespace FamiliaMyth.Pharna
             return false;
         }
 
-        public static string GetRank(float value)
-        {
-            int t = ((int)value) / 100;
-            t = t >= 12 ? 11 : t;
-            return ranks[t];
-        }
+        //档位索引：100 点一档，索引封顶到最后一档
+        public static int RankIndexOf(float value) => Mathf.Clamp((int)value / 100, 0, ranks.Count - 1);
+
+        //档位字母：按索引取，越界时取边界档
+        public static string RankNameAt(int index) => ranks[Mathf.Clamp(index, 0, ranks.Count - 1)];
+
+        public static string GetRank(float value) => RankNameAt(RankIndexOf(value));
 
         //发展能力品质档位标签（按 Degree 取，与能力值等级共用同一张档位表）
-        public static string GetDegreeRank(int degree) => ranks[Mathf.Clamp(degree, 0, ranks.Count - 1)];
+        public static string GetDegreeRank(int degree) => RankNameAt(degree);
 
         public override void ExposeData()
         {

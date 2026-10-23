@@ -332,3 +332,12 @@
 - 是否规范缺失: 是（缺少「net472 目标下避免使用 System.dll 独有的泛型集合」的经验条目）
 - 规范反哺: AGENTS.md「八、AI 高频错误」新增第 19 条；C-03 连攻约定补该约束。
 - 关联: 次数 1
+
+## BUG-039 | `TaggedString` 隐式转 `string` 会剥离富文本标签 → 信件正文颜色全部失效
+- 现象: 伟业达成信按设计在角色名、数值、档位、结论短语上拼了 `<color=#RRGGBB>` 标签，实测信件正文全为默认色；标签既未生效、也没有以字面量形式显示出来。
+- 根因: 拼正文时按项目惯例写了 `(string)"Key".Translate(...)` 显式转型，而 `TaggedString` 的 `implicit operator string` 实现是 `RawText.StripTags()`（`kb/L0-证据/decompiled/1.6/Verse/TaggedString.cs:120-123`），会把 `<...>` 与 `(*...)` 一并剥掉；标签在这一步就没了，后续 `Dialog_NodeTree` 的富文本渲染自然无标可用。
+- 修复方案: 需要保留标签的文本一律取 `.RawText`（`"Key".Translate(...).RawText`），不走隐式或显式 `string` 转型；面向 `Log.Message` 的纯文本链路（如 `WriteLog`）继续用普通字符串。
+- 是否规范缺失: 是（缺少「`TaggedString` 转 `string` 会剥标签」这一 API 事实）
+- 规范反哺: AGENTS.md「八、AI 高频错误」新增第 20 条。
+- 关联: 次数 1
+

@@ -1,3 +1,4 @@
+using FamiliaMyth.Feedback;
 using FamiliaMyth.Pharna;
 using RimWorld;
 using UnityEngine;
@@ -92,6 +93,7 @@ namespace FamiliaMyth.Abilities
                 }
                 pharna.pawn.story.traits.GainTrait(ToTrait);
             }
+            GrowthFeedback.NotifyDegreeRankUp(pharna, this, prevDegree, Degree);
             return true;
         }
 

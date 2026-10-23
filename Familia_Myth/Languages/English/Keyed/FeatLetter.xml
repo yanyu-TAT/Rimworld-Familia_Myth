@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- ==================== Feat achievement letter ==================== -->
+
+  <FamiliaMyth.FeatLetter.Label>Feat Achieved</FamiliaMyth.FeatLetter.Label>
+  <FamiliaMyth.FeatLetter.NameSeparator>, </FamiliaMyth.FeatLetter.NameSeparator>
+  <FamiliaMyth.FeatLetter.Etc> et al.</FamiliaMyth.FeatLetter.Etc>
+
+  <FamiliaMyth.FeatLetter.Intro>{0} achieved a feat worthy of being recorded and praised in the battle of {1}!</FamiliaMyth.FeatLetter.Intro>
+  <FamiliaMyth.FeatLetter.SectionBattle>Battle details:</FamiliaMyth.FeatLetter.SectionBattle>
+  <FamiliaMyth.FeatLetter.EnemyLine>◆Enemies {0}, total threat {1}, killed/downed {2}</FamiliaMyth.FeatLetter.EnemyLine>
+  <FamiliaMyth.FeatLetter.FriendlyLine>◆Our side {0}, dead/downed {1}</FamiliaMyth.FeatLetter.FriendlyLine>
+  <FamiliaMyth.FeatLetter.DurationLine>◆Battle lasted {0}</FamiliaMyth.FeatLetter.DurationLine>
+  <FamiliaMyth.FeatLetter.ScoreLine>◆Battle score {0} ({1} × {2})</FamiliaMyth.FeatLetter.ScoreLine>
+  <FamiliaMyth.FeatLetter.MultipliersLine>◆{0}</FamiliaMyth.FeatLetter.MultipliersLine>
+
+  <FamiliaMyth.FeatLetter.SectionRecords>Contribution breakdown:</FamiliaMyth.FeatLetter.SectionRecords>
+  <FamiliaMyth.FeatLetter.TierText>[Tier {0}]</FamiliaMyth.FeatLetter.TierText>
+  <FamiliaMyth.FeatLetter.Row>{0} {1}: dealt {2} · taken {3} · support {4} → contribution {5} → score {6}</FamiliaMyth.FeatLetter.Row>
+  <FamiliaMyth.FeatLetter.TraitLine>　 ◆{0} ×{1}</FamiliaMyth.FeatLetter.TraitLine>
+
+  <FamiliaMyth.FeatLetter.SectionAscend>Among them:</FamiliaMyth.FeatLetter.SectionAscend>
+  <FamiliaMyth.FeatLetter.LevelText>Lv.{0}</FamiliaMyth.FeatLetter.LevelText>
+  <FamiliaMyth.FeatLetter.AscendLine>{0} achieved a feat worthy of ascending to {1}!\nTheir highest stat {2} reached {3}{4}, and {5}.</FamiliaMyth.FeatLetter.AscendLine>
+  <FamiliaMyth.FeatLetter.AscendReadyPhrase>can ascend its pharna</FamiliaMyth.FeatLetter.AscendReadyPhrase>
+  <FamiliaMyth.FeatLetter.AscendNotReadyPhrase>has not met the ascension requirements</FamiliaMyth.FeatLetter.AscendNotReadyPhrase>
+  <FamiliaMyth.FeatLetter.AscendMaxLevel>{0}'s pharna has reached max level and cannot be ascended further.</FamiliaMyth.FeatLetter.AscendMaxLevel>
+
+</LanguageData>

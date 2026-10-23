@@ -34,6 +34,10 @@ namespace FamiliaMyth.UI
         public static readonly Color Warning = new(1f, 0.75f, 0.2f);
         public static readonly Color Disabled = new(0.45f, 0.45f, 0.5f);
 
+        //信件正文：计算数值与否定结论（淡金强调复用 Accent）
+        public static readonly Color LetterValue = new(0.62f, 0.80f, 0.95f);
+        public static readonly Color LetterWarn = new(1f, 0.52f, 0.52f);
+
         //稀有度
         public static readonly Color RarityCommon = new(0.62f, 0.72f, 0.82f);
         public static readonly Color RarityUncommon = new(0.35f, 0.95f, 0.55f);

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- 伟业达成信：战斗解析 + 可升华判断 -->
+  <!-- letterClass 留默认 StandardLetter（自带关闭 / 跳转到位置选项）；到达音效沿用原版 -->
+  <LetterDef>
+    <defName>FamiliaMyth_FeatAchieved</defName>
+    <color>(255, 191, 51)</color>
+    <flashColor>(255, 230, 128)</flashColor>
+    <flashInterval>90</flashInterval>
+    <arriveSound>LetterArrive_Good</arriveSound>
+    <pauseMode>Never</pauseMode>
+  </LetterDef>
+
+</Defs>

@@ -249,6 +249,7 @@
 | 17 | 同帧批量创建/销毁临时对象用 `Destroy`，上一批对象残留在相机视野里被渲染进当前结果 | 用 `DestroyImmediate`；批量导出/生成类代码尤其要注意（见 B-04 BUG-029） |
 | 18 | 反编译的版本与实际运行的版本不一致（`kb/L0-证据/decompiled/1.6` 是 1.6，实机跑 1.7；Clap 项目则相反：库为 1.7），据此判断运行时行为 | 排查运行时行为前先确认游戏版本，反编译对应版本（1.6 在 `RimWorldWin64_Data\Managed\`，1.7 在游戏根目录）；`Pawn` / `Thing` 的死亡与销毁路径两版不同（见 B-04 BUG-033） |
 | 19 | net472 目标下误用 `System.dll` 独有的泛型集合（如 `Queue<T>`）→ `CS0433` 类型同时存在于 mscorlib 与 System | 统一用 mscorlib 的 `List<T>` / `Dictionary<K,V>`；需要队列/栈语义时用 `List<T>` 手动维护（`Add` / `[0]` / `RemoveAt(0)`，见 B-04 BUG-038） |
+| 20 | 含富文本标签的文本走了 `TaggedString → string` 的隐式/显式转型 | `TaggedString` 的 `implicit operator string` 是 `RawText.StripTags()`，会把 `<color>` 与 `(*...)` 一起剥掉；要保留标签必须取 `.RawText`（见 B-04 BUG-039） |
 
 ***
 
@@ -266,6 +267,7 @@
 | | `AscendHelper.cs`（含 `AscendRewardSession`） | 升华奖励：Def 注册表与抽取（权重 / 保底 / 确定性种子）、选取会话（刷新 / 锁定） |
 | | `PharnaRecord.cs` | 恩惠丢失快照（六维 / 潜在值 / 铭刻 / 等级 / 经验 / 伟业 / 魔力池 + 技能魔法发展能力 defName 与熟练度）与重建（统一工厂 + `Apply`，事后校验） |
 | | `ChoiceLetter_PharnaLost.cs` + `Defs/Misc/LetterDefs/LetterDef_PharnaLost.xml` | 恩惠意外消失信（重建 / 放弃两个按钮）；`Patch_PharnaDeathLetter.cs` 在持有恩惠者死亡信正文前置神明感知段 |
+| | `GrowthFeedback.cs` | 成长反馈统一出口：能力值 / 发展能力跨档时发一条 Message（一次跨多档只报最终档），音效由原版 `MessageTypeDef` 自带 |
 | **魔法** | `Spell*.cs` + `SpellDef.cs` | 魔法框架与具体魔法（继承原版 Ability） |
 | | `Command_Spell.cs` | 魔法图标命令（继承原版 `Command_Psycast`）：供原版心灵熵条识别并预览施法熵消耗，且角标与描述中显示魔力消耗 |
 | | `Hediff_SpellState.cs` + `Verb_CastSpell*.cs` | 魔法效果状态与咏唱 verb |
@@ -286,7 +288,8 @@
 | | `Defs/GuildQuestDefs/` + `Defs/QuestScriptDefs/` | 任务定义与任务脚本 |
 | **伟业（Feat）** | `FeatTraitDef.cs`（内含 `FeatTraitScope` / `FeatContext` / `FeatTraitJudger` / `FeatRecord`） | 伟业数据层：性质定义（`judgerClass` + 系数 + `scope` 作用域）、战斗数据包门面（持贡献账本）、判定器基类（战斗层 / 个人层双入口）与统一工厂、记录 |
 | | `FeatTraitJudgers.cs` | 各性质判定器（阈值集中在类内；判定只看战斗事实，不看来源；`Battle` 实现 `Judge(ctx)`、`Pawn` 实现 `Judge(ctx, subject)`） |
-| | `FeatUtility.cs` | 结算流水线：取战斗事实 → 战斗层逐 Def 判定并累乘 → 个人层逐人判定 → 按贡献分摊并乘个人系数 → 阈值分割档位 |
+| | `FeatUtility.cs` | 结算流水线：取战斗事实 → 战斗层逐 Def 判定并累乘 → 个人层逐人判定 → 按贡献分摊并乘个人系数 → 阈值分割档位 → 整理成 `FeatBattleReport`（日志与信件由它自己的两个视图输出） |
+| | `FeatBattleReport.cs` | 结算快照与它自己的两个视图：`WriteLog()` 输出开发者日志（保留合账 / Σ占比核对字段），`SendLetter()` 输出伟业达成信（战斗解析 + 可升华判断，一场战斗一封，`LetterDef` 见 `Defs/Misc/LetterDefs/LetterDef_Feat.xml`） |
 | | `GameComponent_FeatTracker.cs` | 战斗扫描器与贡献账本（`BattleAccount` / `PawnContribution`）：按战斗聚合、归属解析、吸收归并、结算去重与清理 |
 | | `Patch_FeatContribution.cs` | 伤害归因补丁（`Pawn.PostApplyDamage` 记输出 / 承受） |
 | | `HealHelper.cs`（治疗工具） + `HediffComp_FeatSupport.cs` | 支援贡献上报：治疗三工具按真实量记（末位 `healer` 参数归因），持续型效果由 Hediff 组件按实际生效 tick 记（XML 配 `<supportPerSecond>`） |
@@ -299,7 +302,7 @@
 | **表现层** | `Mote_*.cs` | 地图特效（咏唱词 / 魔法阵 / 光环 / 斩击等） |
 | | `UI_*.cs` | UI 基础设施与页面：`UI_Palette` 全局色源 / `UI_Scope` GUI 状态作用域 / `UI_Text` 度量与截断 / `UI_Bar` 进度条与门槛刻度 / `UI_Layout` 纵向游标 / `UI_GroupBox` 卡片 / `UI_RadarChart` 雷达图 / `UI_FamiliaPage` 眷族页 / `UI_SettingsPage` 模组设置页 / `UI_CurveEditor` 曲线编辑器 |
 | | `Window_FamiliaBase.cs` + `Dialog_AscendReward.cs` | 窗口基类（内容区模板 + 初始尺寸换算）与升华奖励弹窗（符文动画） |
-| | `ITab_Pawn_Pharna.cs` | Pawn 级「恩惠」页签：能力 / 发展能力 / 技能·魔法 / 伟业 四分区（仅受恩惠者可见），顶栏含铭刻选取 |
+| | `ITab_Pawn_Pharna.cs` | Pawn 级「恩惠」页签：能力 / 发展能力 / 技能·魔法 / 伟业 四分区（仅受恩惠者可见），顶栏含铭刻选取；六维条与发展能力条按显示值追赶真实值（亮度随剩余差距衰减） |
 | | `HistoryTabHelper.cs` + `Gizmo_ManaPool.cs` | 历史窗口眷族页签接入（含失效兜底）与魔力池 Gizmo |
 | **工具与基础设施** | `WeaponHelper.cs` | 武器查询与直线索敌 / 射线工具 |
 | | `HealHelper.cs` | 伤口与断肢治疗工具 |

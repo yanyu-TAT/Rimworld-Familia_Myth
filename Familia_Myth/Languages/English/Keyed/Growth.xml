@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- ==================== Growth feedback: rank-up messages ==================== -->
+
+  <FamiliaMyth.Growth.StatusRankUp>{0}'s {1} reached rank {2}</FamiliaMyth.Growth.StatusRankUp>
+  <FamiliaMyth.Growth.DegreeRankUp>{0}'s {1} proficiency reached rank {2}</FamiliaMyth.Growth.DegreeRankUp>
+
+</LanguageData>

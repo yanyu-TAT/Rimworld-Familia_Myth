@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- ==================== 成长反馈：档位提升消息 ==================== -->
+
+  <FamiliaMyth.Growth.StatusRankUp>{0} 的 {1} 提升至 {2} 档</FamiliaMyth.Growth.StatusRankUp>
+  <FamiliaMyth.Growth.DegreeRankUp>{0} 的 {1} 熟练度提升至 {2} 档</FamiliaMyth.Growth.DegreeRankUp>
+
+</LanguageData>

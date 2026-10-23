@@ -24,11 +24,9 @@ namespace FamiliaMyth.UI
             Widgets.DrawBoxSolid(new Rect(filled.x, filled.y, filled.width, HighlightHeight), new Color(1f, 1f, 1f, 0.12f));
         }
 
-        //thresholdFrac 为归一化门槛位置（0~1）
-        public static void DrawWithThreshold(Rect r, float frac, Color fill, float thresholdFrac, Color thresholdColor)
+        //thresholdFrac 为归一化门槛位置（0~1）；只画刻度线，供需要在填充与刻度之间叠加内容时分层绘制
+        public static void DrawThreshold(Rect r, float thresholdFrac, Color thresholdColor)
         {
-            Draw(r, frac, fill);
-
             float x = r.x + r.width * Mathf.Clamp01(thresholdFrac);
             if (x <= r.x + 1f || x >= r.xMax - 1f)
                 return;
