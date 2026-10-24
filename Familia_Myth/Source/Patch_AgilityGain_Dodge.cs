@@ -52,7 +52,7 @@ namespace FamiliaMyth.Patch
                 var entries = battles[0].Entries;
                 if (entries.Count <= __state) return;
 
-                if (entries[entries.Count - 1] is BattleLogEntry_MeleeCombat log && DodgeRules.Contains(log.RuleDef))
+                if (entries[0] is BattleLogEntry_MeleeCombat log && DodgeRules.Contains(log.RuleDef))
                 {
                     if (__instance.CurrentTarget.Thing is Pawn pawn)
                     {
