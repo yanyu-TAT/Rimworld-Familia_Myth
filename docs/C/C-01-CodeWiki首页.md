@@ -6,13 +6,14 @@
 
 | 想了解 | 入口 |
 |---|---|
-| 模组入口与神名 | `FamiliaMythMod.cs`（`Verse.Mod` 子类，构造函数内注册全部 Harmony 补丁与设置数据，`SettingsData` 经 `GetSettings<FamiliaMythSettingsData>()` 取；神名 = 当前文化主神名 `godName` ← `Ideo.KeyDeityName`；默认称呼 `DefaultGodName1`/`DefaultGodName2` + `Honorific` 与 `GodAddress` 见 C-03） |
+| 模组入口与神名 | `FamiliaMythMod.cs`（`Verse.Mod` 子类，构造函数内注册全部 Harmony 补丁与设置数据，`SettingsData` 经 `GetSettings<FamiliaMythSettingsData>()` 取；神名 = 当前文化主神名 `godName` ← `Ideo.KeyDeityName`；默认称呼 `DefaultGodName1`/`DefaultGodName2`（懒加载翻译）+ `Honorific` 与 `GodAddress` 见 C-03） |
 | 恩惠/能力值 | `Hediff_Pharna.cs` + `StatPart_Pharna.cs` + `Patches/StatParts_Pharna.xml` |
 | 成长/经验 | `Patch_SkillGrowth.cs`、`Patch_WillGain.cs`、各 `<能力值>Gain_<来源>.cs`（力量/耐久/灵巧/敏捷/魔力） |
 | 恩惠丢失重建 | `PharnaRecord.cs`（纯值快照 + 重建）+ `GameComponent_FamiliaMyth.cs`（`Dictionary<Pawn, PharnaRecord>` 登记 / 发信）+ `ChoiceLetter_PharnaLost.cs`（重建 / 放弃）+ `Hediff_Pharna.PostRemoved`（唯一捕获点）+ `ExposeData` 读档自愈；死亡信追加见 `Patch_PharnaDeathLetter.cs` |
 | 升华/升级奖励 | `AscendHelper.cs`（注册表 + `AscendRewardSession`：刷新 / 锁定 / 保底）+ `Dialog_AscendReward.cs` + 仪式类 |
 | 魔法框架 | `Spell.cs`（继承原版 Ability）+ `SpellDef.cs` + `Command_Spell.cs`（图标命令，继承原版 `Command_Psycast`：让原版心灵熵条预览施法熵消耗，并在角标与描述中显示魔力消耗） |
 | 咏唱 | `Verb_CastSpell.cs` / `Mote_Incantation.cs` / `Mote_MagicCircle.cs` |
+| 音效 | `FamiliaMythSounds.cs`（5 个 SoundDef 静态缓存）+ `Defs/SoundDefs/FamiliaMyth_Sounds.xml` + `Sounds/Familia_Myth/`（离线合成 wav）；挂点与约定见 C-02「咏唱音效」与 C-03 |
 | 魔法弹 | `Projectile_MagicMissileBase.cs` + `MagicMissileStates.cs` |
 | 技能框架 | `Skill.cs` + `SkillDef.cs`（数值修正三条通道见 C-02「技能」，改原版 StatDef / 饥饿休息速率 / 崩溃阈值的 `HediffStage` 用法见 C-05） |
 | 发展能力 | `DevelopableAbility.cs` + `DevelopableAbilityDef.cs` + `StatPart_DevelopableAbility.cs`；武器同调见 `DevelopableAbility_WeaponAttunement.cs`（武器熟练度）+ `Hediff_WeaponAttunement.cs`（当前装备展示条）+ `Patch_WeaponAttunement.cs`（冷却重置 / 暴击）；连攻见 `DevelopableAbility_ChainAttack.cs`（10 秒攻速窗口 + `IStatusModifier` 补正）+ `Patch_ChainAttack.cs`（近战出手计数）；精愈见 `DevelopableAbility_MindHealing.cs`（精神力持续恢复）+ `Patch_MindHealing.cs`（精神力消耗喂熟练度） |

@@ -16,6 +16,9 @@ ExampleMods/
 plans/
 lora-prep/
 .dsh-pyenv/
+
+# 音效素材生成工作区（依赖、试听与脚本，不进构建）
+.audio-preview/
 .dsh-dotnet/
 .dotnet-home/
 

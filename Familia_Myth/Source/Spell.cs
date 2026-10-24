@@ -2,6 +2,7 @@ using FamiliaMyth.Pharna;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using Verse.Sound;
 
 namespace FamiliaMyth.Abilities
 {
@@ -58,6 +59,12 @@ namespace FamiliaMyth.Abilities
         protected float actualEnt;
 
         public bool stunning = false;
+
+        //咏唱音效：低频持续音句柄与吐息节流
+        private Sustainer humSustainer;
+        private int lastBreathTick = -1;
+
+        private const int BreathThrottleTicks = 18;
 
         public bool CanConcurrentCast => Def.canConcurrentCast;
 
@@ -128,24 +135,32 @@ namespace FamiliaMyth.Abilities
 
             if (!isWarmingUp)
             {
+                //咏唱已结束但持续音未收，兜底停掉
+                humSustainer?.End();
+                humSustainer = null;
+
                 //开始咏唱
                 if (verb.WarmingUp && !wasWarmingUp)
                 {
                     lineIndex = 1;
+                    isWarmingUp = true;
                     ThrowIncantation(0);
                     warmupTicksLeft = WarmupTicks - 1;
-                    isWarmingUp = true;
                     stunning = true;
                     actualEnt = 0;
                     actualMana = 0;
                     WarmUpStart();
                     MagicCircleStart();
+                    StartCastHum();
                 }
                 wasWarmingUp = verb.WarmingUp;
                 return;
             }
 
             wasWarmingUp = verb.WarmingUp;
+
+            //逐 tick 维持低频音；漏维持会被 Sustainer 自动结束，避免残留
+            humSustainer?.Maintain();
 
             //被眩晕暂停咏唱
             if (pawn.stances.stunner.Stunned)
@@ -217,11 +232,12 @@ namespace FamiliaMyth.Abilities
             if (castDone)
                 CombatLogHelper.WriteCastLog(pawn, Def);
 
-            //保证最后一句生成
+            //保证最后一句生成；此时 isWarmingUp 已为 false，不带吐息
             if (lineIndex <= LineCount)
                 ThrowIncantation(LineCount);
 
             //Log.Message($"castDone: {castDone}");
+            StopCastHum(castDone);
             WarmUpFinish(castDone);
             MagicCircleEnd();
             pawn.stances.SetStance(new Stance_Mobile());
@@ -270,11 +286,40 @@ namespace FamiliaMyth.Abilities
             foreach (var mote in activeMotes) mote?.Maintain();
         }
 
-        /// <returns>是否成功生成该行咏唱文字</returns>
+        //生成第 a 句咏唱词，咏唱进行中才带吐息
         private void ThrowIncantation(int a)
         {
             if (a >= Def.incantationLines.Count) return;
             ThrowIncantation(Def.incantationLines[a]);
+            PlayCastBreath();
+        }
+
+        private void StartCastHum()
+        {
+            humSustainer?.End();
+            humSustainer = FamiliaMythSounds.CastHum?.TrySpawnSustainer(
+                SoundInfo.InMap(new TargetInfo(pawn.Position, pawn.Map), MaintenanceType.PerTick));
+        }
+
+        private void StopCastHum(bool castDone)
+        {
+            humSustainer?.End();
+            humSustainer = null;
+
+            if (pawn == null) return;
+
+            SoundDef sound = castDone ? FamiliaMythSounds.CastRelease : FamiliaMythSounds.CastAbort;
+            sound?.PlayOneShot(SoundInfo.InMap(pawn));
+        }
+
+        //每句咏唱词一次吐息；非咏唱状态（如完成时补最后一句）不吹气，卡顿补句按 tick 节流
+        private void PlayCastBreath()
+        {
+            if (pawn == null || !isWarmingUp) return;
+            if (CurrentTick - lastBreathTick < BreathThrottleTicks) return;
+
+            lastBreathTick = CurrentTick;
+            FamiliaMythSounds.CastBreath?.PlayOneShot(SoundInfo.InMap(pawn));
         }
 
         private void ThrowIncantation(string s)
@@ -404,6 +449,7 @@ namespace FamiliaMyth.Abilities
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
+                humSustainer = null;
                 foreach (var mote in activeMotes)
                     mote?.Maintain();
             }

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- 恩惠升华：升华奖励弹窗打开时播放 -->
+  <SoundDef>
+    <defName>FamiliaMyth_Sound_Ascend</defName>
+    <context>MapOnly</context>
+    <maxVoices>1</maxVoices>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds>
+      <li>
+        <onCamera>True</onCamera>
+        <grains>
+          <li Class="Verse.Sound.AudioGrain_Clip">
+            <clipPath>Familia_Myth/Ascend</clipPath>
+          </li>
+        </grains>
+        <volumeRange>50~75</volumeRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <!-- 咏唱低频：咏唱期间持续播放，由代码 End 结束 -->
+  <SoundDef>
+    <defName>FamiliaMyth_Sound_CastHum</defName>
+    <context>MapOnly</context>
+    <sustain>True</sustain>
+    <sustainFadeoutTime>0.2</sustainFadeoutTime>
+    <priorityMode>PrioritizeNearest</priorityMode>
+    <maxVoices>1</maxVoices>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="Verse.Sound.AudioGrain_Clip">
+            <clipPath>Familia_Myth/CastHum</clipPath>
+          </li>
+        </grains>
+        <volumeRange>50~100</volumeRange>
+        <distRange>10~25</distRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <!-- 吐息：每句咏唱词触发一次，三段由引擎随机且避免连续重复 -->
+  <SoundDef>
+    <defName>FamiliaMyth_Sound_CastBreath</defName>
+    <context>MapOnly</context>
+    <maxVoices>2</maxVoices>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="Verse.Sound.AudioGrain_Clip">
+            <clipPath>Familia_Myth/CastBreath_1</clipPath>
+          </li>
+          <li Class="Verse.Sound.AudioGrain_Clip">
+            <clipPath>Familia_Myth/CastBreath_2</clipPath>
+          </li>
+          <li Class="Verse.Sound.AudioGrain_Clip">
+            <clipPath>Familia_Myth/CastBreath_3</clipPath>
+          </li>
+        </grains>
+        <volumeRange>75~100</volumeRange>
+        <pitchRange>0.97~1.03</pitchRange>
+        <distRange>8~20</distRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <!-- 咏唱完成：结晶音与低频冲击 -->
+  <SoundDef>
+    <defName>FamiliaMyth_Sound_CastRelease</defName>
+    <context>MapOnly</context>
+    <maxVoices>1</maxVoices>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="Verse.Sound.AudioGrain_Clip">
+            <clipPath>Familia_Myth/CastRelease</clipPath>
+          </li>
+        </grains>
+        <volumeRange>75~100</volumeRange>
+        <distRange>10~30</distRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <!-- 咏唱中断：干燥收束，音量明显低于完成音 -->
+  <SoundDef>
+    <defName>FamiliaMyth_Sound_CastAbort</defName>
+    <context>MapOnly</context>
+    <maxVoices>1</maxVoices>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="Verse.Sound.AudioGrain_Clip">
+            <clipPath>Familia_Myth/CastAbort</clipPath>
+          </li>
+        </grains>
+        <volumeRange>75~100</volumeRange>
+        <distRange>5~15</distRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+</Defs>

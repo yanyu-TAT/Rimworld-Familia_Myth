@@ -251,6 +251,8 @@
 | 19 | net472 目标下误用 `System.dll` 独有的泛型集合（如 `Queue<T>`）→ `CS0433` 类型同时存在于 mscorlib 与 System | 统一用 mscorlib 的 `List<T>` / `Dictionary<K,V>`；需要队列/栈语义时用 `List<T>` 手动维护（`Add` / `[0]` / `RemoveAt(0)`，见 B-04 BUG-038） |
 | 20 | 含富文本标签的文本走了 `TaggedString → string` 的隐式/显式转型 | `TaggedString` 的 `implicit operator string` 是 `RawText.StripTags()`，会把 `<color>` 与 `(*...)` 一起剥掉；要保留标签必须取 `.RawText`（见 B-04 BUG-039） |
 | 21 | 自研 `SkillDef` 与原版 `RimWorld.SkillDef` 同名，在 `FamiliaMyth.Patch` 等外部命名空间裸写 → `CS0104` 歧义 | 写完全限定名 `FamiliaMyth.Abilities.SkillDef`（`Patch_SkillGrowth` / `Patch_Railgun` 为先例；`FamiliaMyth.Abilities` 内裸写安全，本命名空间优先） |
+| 22 | 新建 sustainer 的 SoundDef 沿用默认 `prioritizeMode = PrioritizeNewest` → 加载期报 `PrioritizeNewest is not supported with sustainers` | 持续音 SoundDef 显式配 `<priorityMode>PrioritizeNearest</priorityMode>`（见 B-04 BUG-041） |
+| 23 | 在 `Mod` 子类等启动早期执行的静态字段初始化器里调用 `Translate()` / 查 Def → 语言未加载，值被固定成 key | 改为懒加载属性或游戏内首次访问时取值（见 B-04 BUG-042） |
 
 ***
 
@@ -269,11 +271,12 @@
 | | `PharnaRecord.cs` | 恩惠丢失快照（六维 / 潜在值 / 铭刻 / 等级 / 经验 / 伟业 / 魔力池 + 技能魔法发展能力 defName 与熟练度）与重建（统一工厂 + `Apply`，事后校验） |
 | | `ChoiceLetter_PharnaLost.cs` + `Defs/Misc/LetterDefs/LetterDef_PharnaLost.xml` | 恩惠意外消失信（重建 / 放弃两个按钮）；`Patch_PharnaDeathLetter.cs` 在持有恩惠者死亡信正文前置神明感知段 |
 | | `GrowthFeedback.cs` | 成长反馈统一出口：能力值 / 发展能力跨档时发一条 Message（一次跨多档只报最终档），音效由原版 `MessageTypeDef` 自带 |
-| **魔法** | `Spell*.cs` + `SpellDef.cs` | 魔法框架与具体魔法（继承原版 Ability） |
+| **魔法** | `Spell*.cs` + `SpellDef.cs` | 魔法框架与具体魔法（继承原版 Ability）；咏唱音效（低频持续音 + 逐句吐息）在 `Spell.AbilityTick` / `ThrowIncantation` 内挂 |
 | | `Command_Spell.cs` | 魔法图标命令（继承原版 `Command_Psycast`）：供原版心灵熵条识别并预览施法熵消耗，且角标与描述中显示魔力消耗 |
 | | `Hediff_SpellState.cs` + `Verb_CastSpell*.cs` | 魔法效果状态与咏唱 verb |
 | | `Projectile_*` + `MagicMissileStates.cs` | 魔法弹与运动状态机 |
 | | `Gizmo_ManaPool.cs` | 魔力池状态条、自动转化开关与施法魔力消耗预览 |
+| | `FamiliaMythSounds.cs` | 本模组音效 SoundDef 的静态缓存（配套 `Defs/SoundDefs/FamiliaMyth_Sounds.xml`）：升华钟、咏唱低频、吐息、完成、中断；缺失时告警并退化为静默 |
 | **技能** | `Skill*.cs` + `SkillDef.cs` | 技能框架与具体技能（主动 / 被动 / 触发） |
 | | `HediffComp_SkillState.cs` / `HediffComp_SkillInEffect.cs` | 技能状态标签与效果生命周期 |
 | | `HediffComp_DisappearsWithCounter.cs` | 按剩余次数结束效果的计数 comp（`TryConsume` 消耗，`ResetCnt` 重设计数） |

@@ -516,3 +516,28 @@ battleActive / battleExitTick（超时未刷新即视为战斗结束）
 - `DamageDef Flame` 的 `explosionCellFleck` 为 `BlastFlame`（`Data/Core/Defs/DamageDefs/Damages_Environmental.xml`）：原版火焰爆炸按**每个爆炸格**生成 `BlastFlame`，不是单个中心爆点。自制方向性范围可对每个受影响格 `FleckMaker.GetDataStatic(cell.ToVector3Shifted(), map, BlastFlameDef, scale)`。
 - `Fleck_RadialSparks`（`MoteCircularSparks`）是**原地环形扩张**的 shader 特效，不适合方向性扇形；需要火星时用 `MicroSparksFast` / `HeatGlow_Intense`。
 - 其他可复用件：`ExplosionFlash`（爆炸闪光）、`HeatGlow` / `HeatGlow_Intense`（热光）、`Smoke` / `SmokeGrowing`（烟）、`Fleck_HeatDiffusion` / `Fleck_HeatWaveDistortion`（热浪/扭曲）；巨型爆炸的 `Mote_GiantExplosion` / `Mote_GiantExplosionInner` 画幅过大，不适合小范围。
+
+## 十六、音效（SoundDef / Sustainer）
+
+### 构建与播放
+
+- 素材来自 `SubSoundDef.grains`：`AudioGrain_Clip.clipPath` 写相对 `Sounds/` 的路径（不带扩展名），`AudioGrain_Folder.clipFolderPath` 自动收集整个文件夹。
+- `SoundInfo.OnCamera()` / `SoundInfo.InMap(TargetInfo)` 构造播放信息；运行时只有 `volumeFactor` / `pitchFactor` 可调（`SoundInfo.cs:9-11`），没有节点级 DSP 接口。
+- 一次性：`soundDef.PlayOneShot(info)`；UI/弹窗层用 `PlayOneShotOnCamera()`（`SoundStarter.cs:8`）。
+
+### Sustainers（持续音）
+
+- 创建：`soundDef.TrySpawnSustainer(info)` 返回 `Sustainer` 句柄（`SoundStarter.cs:72`）；`SoundDef.sustain` 必须为 true。
+- 结束：`Sustainer.End()` 进入 `sustainFadeoutTime` 淡出；`Cleanup()` 在淡出结束后才执行并播放 `sustainStopSound`（`Sustainer.cs:180-206`）——若需要「立刻」的收尾音，只能由代码在 `End()` 后自己播。
+- 维持：`MaintenanceType.PerTick` 时超过 1 tick 未 `Maintain()` 即自动 `End()`（`Sustainer.cs:102-108`）；`PerTickRare` 250 tick，`PerFrame` 1 帧；传 `None` 则永不超时，只能靠代码 `End()`。
+- 优先级：`SoundDef.priorityMode` 默认 `PrioritizeNewest`，`ConfigErrors` 对 `sustain && PrioritizeNewest` 直接报错（`SoundDef.cs:140`）→ 持续音必须显式配 `PrioritizeNearest`。
+
+### 变体随机
+
+- `SubSoundDef.RandomizedResolvedGrain()` 从 `resolvedGrains` 中 `RandomElement()`；`repeatMode` 默认 `NeverLastHalf`，排除最近播放的 `grains / 2` 段，可选 `NeverTwice`（`SubSoundDef.cs:208-231`）。
+
+### 其他事实
+
+- `LetterDef.arriveSound` 在 `ResolveReferences` 里空值兜底为 `LetterArrive`（`LetterDef.cs:43-49`）——自定义信件不会静音，只会播默认到达音。
+- 位置化播放的素材用**单声道**：Unity 对立体声源不做 3D 空间化，会丢失左右/远近定位。
+- 出处：`kb/L0-证据/decompiled/1.6/Verse/SoundDef.cs`、`Verse.Sound/SoundStarter.cs`、`Verse.Sound/Sustainer.cs`、`Verse.Sound/SoundInfo.cs`、`Verse.Sound/SubSoundDef.cs`、`Verse/LetterDef.cs`。

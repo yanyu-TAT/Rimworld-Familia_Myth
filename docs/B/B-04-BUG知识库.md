@@ -335,17 +335,19 @@
 
 ## BUG-039 | `TaggedString` 隐式转 `string` 会剥离富文本标签 → 信件正文颜色全部失效
 - 现象: 伟业达成信按设计在角色名、数值、档位、结论短语上拼了 `<color=#RRGGBB>` 标签，实测信件正文全为默认色；标签既未生效、也没有以字面量形式显示出来。
-- 根因: 拼正文时按项目惯例写了 `(string)"Key".Translate(...)` 显式转型，而 `TaggedString` 的 `implicit operator string` 实现是 `RawText.StripTags()`（`kb/L0-证据/decompiled/1.6/Verse/TaggedString.cs:120-123`），会把 `<...>` 与 `(*...)` 一并剥掉；标签在这一步就没了，后续 `Dialog_NodeTree` 的富文本渲染自然无标可用。
-- 修复方案: 需要保留标签的文本一律取 `.RawText`（`"Key".Translate(...).RawText`），不走隐式或显式 `string` 转型；面向 `Log.Message` 的纯文本链路（如 `WriteLog`）继续用普通字符串。
-- 是否规范缺失: 是（缺少「`TaggedString` 转 `string` 会剥标签」这一 API 事实）
-- 规范反哺: AGENTS.md「八、AI 高频错误」新增第 20 条。
+
+## BUG-041 | 新建 sustainer 的 SoundDef 沿用默认 `PrioritizeNewest` → 加载期 Config error
+- 现象: 启动日志出现 `Config error in FamiliaMyth_Sound_CastHum: PrioritizeNewest is not supported with sustainers.`
+- 根因: `SoundDef.priorityMode` 的默认值是枚举首项 `PrioritizeNewest`（`SoundDef.cs:31`），而 `ConfigErrors` 在 `sustain == true` 且 `priorityMode == PrioritizeNewest` 时直接报错（`SoundDef.cs:140`）。原版所有持续音都显式配了 `PrioritizeNearest`。
+- 修复方案: 持续音 SoundDef 显式写 `<priorityMode>PrioritizeNearest</priorityMode>`；一次性音效不受影响。
+- 是否规范缺失: 是（缺少「新建 sustainer SoundDef 必须显式设 priorityMode」的 API 事实）
+- 规范反哺: AGENTS.md「八、AI 高频错误」新增第 22 条。
 - 关联: 次数 1
 
-## BUG-040 | `Patch_Railgun` 裸写 `SkillDef` 触发 CS0104（自研类型与原版同名）
-- 现象: net472 与 net10.0 双目标编译均失败：`error CS0104: “SkillDef”是“FamiliaMyth.Abilities.SkillDef”和“RimWorld.SkillDef”之间的不明确的引用`（`Patch_Railgun.cs:15-16`）。
-- 根因: 战斗日志接入时在 `FamiliaMyth.Patch` 命名空间写了 `private static SkillDef railgunDef;`。该命名空间同时 `using RimWorld;` 与 `using FamiliaMyth.Abilities;`，两个同名类型都可见，裸名无法消歧。`FamiliaMyth.Abilities` 内的文件不受影响——C# 名称解析优先当前命名空间。
-- 修复方案: 改用完全限定名 `FamiliaMyth.Abilities.SkillDef`（含 `DefDatabase<...>` 泛型参数）。项目既有先例：`Patch_SkillGrowth` 对原版类型写 `RimWorld.SkillDef`。
-- 是否规范缺失: 是（缺少「自研类型与原版同名时，在外部命名空间须完全限定」的经验条目）
-- 规范反哺: B-01「一、命名规范」与 AGENTS.md「八、AI 高频错误」第 21 条已补；C-03「命名与命名差异」补同名类型约定。
+## BUG-042 | `Mod` 子类静态字段初始化器里 `Translate()` 早于语言加载 → 默认神名固定成 key
+- 现象: 启动日志出现 `No active language! Cannot translate from key FamiliaMyth.DefaultGodName1` / `DefaultGodName2`，随后界面上「神明 / 你」的位置显示原始 key 字符串。
+- 根因: `public static string DefaultGodName1 = "...".Translate();` 位于 `FamiliaMythMod`（`Mod` 子类）的静态字段初始化器；该类在 `LoadedModManager.CreateModClasses` 阶段被反射创建，早于 `Translator` 注入语言数据。`Translate()` 此时取不到译文并返回 key，而静态字段只赋值一次，之后语言加载完成也不会重译。
+- 修复方案: 改为懒加载属性 `=> _defaultGodName1 ??= "...".Translate();`，首次访问推迟到游戏内经 `GodAddress` / 仪式 worker 取值时（语言已就绪）。
+- 是否规范缺失: 是（缺少「静态字段初始化器不得做翻译/查 Def」的时机约束）
+- 规范反哺: AGENTS.md「八、AI 高频错误」新增第 23 条。
 - 关联: 次数 1
-

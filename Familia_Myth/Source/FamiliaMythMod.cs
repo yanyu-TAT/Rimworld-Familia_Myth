@@ -9,14 +9,17 @@ namespace FamiliaMyth.Core
     /// </summary>
     public class FamiliaMythMod : Mod
     {
+        private static string _defaultGodName1;
+        private static string _defaultGodName2;
+
         /// <summary>
-        /// 相对于玩家的默认神名：如 “你”
+        /// 相对于玩家的默认神名：如 “你”，首次访问时翻译
         /// </summary>
-        public static string DefaultGodName1 = "FamiliaMyth.DefaultGodName1".Translate();
+        public static string DefaultGodName1 => _defaultGodName1 ??= "FamiliaMyth.DefaultGodName1".Translate();
         /// <summary>
-        /// 相对于眷族的默认神名：如 “神明”
+        /// 相对于眷族的默认神名：如 “神明”，首次访问时翻译
         /// </summary>
-        public static string DefaultGodName2 = "FamiliaMyth.DefaultGodName2".Translate();
+        public static string DefaultGodName2 => _defaultGodName2 ??= "FamiliaMyth.DefaultGodName2".Translate();
         /// <summary>
         /// 玩家当前文化的主神名，无文化或文化无神灵时为 null
         /// </summary>
@@ -310,4 +313,5 @@ namespace FamiliaMyth.Core
  * 10/24 02:39 完成了成长反馈
  * 10/24 16:55 发现敏捷增长的bug，已修复
  * 10/24 18:55 完整添加了技能/魔法的战斗日志
+ * 10/25 00:20 基本完成了音效的添加，期待加入更多音效
  */

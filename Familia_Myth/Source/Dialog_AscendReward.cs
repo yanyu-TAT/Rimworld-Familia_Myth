@@ -2,6 +2,7 @@ using FamiliaMyth.Pharna;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using Verse.Sound;
 
 namespace FamiliaMyth.UI
 {
@@ -60,6 +61,13 @@ namespace FamiliaMyth.UI
             closeOnAccept = false;
             closeOnCancel = false;
             InitHieroglyphs();
+        }
+
+        //升华钟声挂在弹窗打开时，避开仪式结论音与信件音
+        public override void PostOpen()
+        {
+            base.PostOpen();
+            FamiliaMythSounds.Ascend?.PlayOneShotOnCamera();
         }
 
         private void InitHieroglyphs()
