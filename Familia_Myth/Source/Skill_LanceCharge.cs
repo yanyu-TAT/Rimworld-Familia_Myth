@@ -86,7 +86,8 @@ namespace FamiliaMyth.Abilities
                     Owner, null, verb.EquipmentSource?.def,
                     DamageInfo.SourceCategory.ThingOrUnknown, null, false);
                 dinfo.SetTool(verb.tool);
-                enemy.TakeDamage(dinfo);
+                var log = CombatLogHelper.MakeHitLog(Owner, enemy, def);
+                enemy.TakeDamage(dinfo).AssociateWithLog(log);
 
                 //沿冲刺方向击退
                 GameComponent_LanceCharge.StartMoving(enemy, chargeDir, KnockTicks, KnockbackDist);

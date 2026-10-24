@@ -360,6 +360,7 @@
 	<!-- ==================== 君王之剑 (Kings Sword) ===================== -->
 	<FamiliaMyth.Abilities.SpellDef>
 		<defName>Spell_KingsSword</defName>
+		<combatLogRule>FamiliaMyth_Hit_Spell_KingsSword</combatLogRule>
 		<manaCost>500</manaCost>
 		<statBases>
 			<Ability_EntropyGain>80</Ability_EntropyGain>
@@ -471,6 +472,7 @@
 	<!-- ==================== 光灵守护 (Light Guard) ===================== -->
 	<FamiliaMyth.Abilities.SpellDef>
 		<defName>Spell_LightGuard</defName>
+		<combatLogRule>FamiliaMyth_Hit_Spell_LightGuard</combatLogRule>
 		<manaCost>50</manaCost>
 		<statBases>
 			<Ability_EntropyGain>50</Ability_EntropyGain>
@@ -718,6 +720,7 @@
 	<!-- ==================== 烈焰魔剑 (Blaze Magic Sword) ===================== -->
 	<FamiliaMyth.Abilities.SpellDef>
 		<defName>Spell_FlameSword</defName>
+		<combatLogRule>FamiliaMyth_Hit_Spell_FlameSword</combatLogRule>
 		<manaCost>250</manaCost>
 		<statBases>
 			<Ability_EntropyGain>60</Ability_EntropyGain>

@@ -341,3 +341,11 @@
 - 规范反哺: AGENTS.md「八、AI 高频错误」新增第 20 条。
 - 关联: 次数 1
 
+## BUG-040 | `Patch_Railgun` 裸写 `SkillDef` 触发 CS0104（自研类型与原版同名）
+- 现象: net472 与 net10.0 双目标编译均失败：`error CS0104: “SkillDef”是“FamiliaMyth.Abilities.SkillDef”和“RimWorld.SkillDef”之间的不明确的引用`（`Patch_Railgun.cs:15-16`）。
+- 根因: 战斗日志接入时在 `FamiliaMyth.Patch` 命名空间写了 `private static SkillDef railgunDef;`。该命名空间同时 `using RimWorld;` 与 `using FamiliaMyth.Abilities;`，两个同名类型都可见，裸名无法消歧。`FamiliaMyth.Abilities` 内的文件不受影响——C# 名称解析优先当前命名空间。
+- 修复方案: 改用完全限定名 `FamiliaMyth.Abilities.SkillDef`（含 `DefDatabase<...>` 泛型参数）。项目既有先例：`Patch_SkillGrowth` 对原版类型写 `RimWorld.SkillDef`。
+- 是否规范缺失: 是（缺少「自研类型与原版同名时，在外部命名空间须完全限定」的经验条目）
+- 规范反哺: B-01「一、命名规范」与 AGENTS.md「八、AI 高频错误」第 21 条已补；C-03「命名与命名差异」补同名类型约定。
+- 关联: 次数 1
+

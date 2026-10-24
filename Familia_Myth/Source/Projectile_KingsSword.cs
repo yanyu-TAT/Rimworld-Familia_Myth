@@ -169,7 +169,8 @@ namespace FamiliaMyth.Abilities
 
                     //造成伤害
                     DamageInfo dinfo = new(DamageDefOf.Cut, dmg, ArmorPenetration, OTangle, launcher);
-                    thing.TakeDamage(dinfo);
+                    var log = CombatLogHelper.MakeHitLog(launcher as Pawn, thing, Spell?.Def);
+                    thing.TakeDamage(dinfo).AssociateWithLog(log);
                 }
             }
         }

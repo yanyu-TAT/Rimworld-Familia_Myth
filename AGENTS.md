@@ -250,6 +250,7 @@
 | 18 | 反编译的版本与实际运行的版本不一致（`kb/L0-证据/decompiled/1.6` 是 1.6，实机跑 1.7；Clap 项目则相反：库为 1.7），据此判断运行时行为 | 排查运行时行为前先确认游戏版本，反编译对应版本（1.6 在 `RimWorldWin64_Data\Managed\`，1.7 在游戏根目录）；`Pawn` / `Thing` 的死亡与销毁路径两版不同（见 B-04 BUG-033） |
 | 19 | net472 目标下误用 `System.dll` 独有的泛型集合（如 `Queue<T>`）→ `CS0433` 类型同时存在于 mscorlib 与 System | 统一用 mscorlib 的 `List<T>` / `Dictionary<K,V>`；需要队列/栈语义时用 `List<T>` 手动维护（`Add` / `[0]` / `RemoveAt(0)`，见 B-04 BUG-038） |
 | 20 | 含富文本标签的文本走了 `TaggedString → string` 的隐式/显式转型 | `TaggedString` 的 `implicit operator string` 是 `RawText.StripTags()`，会把 `<color>` 与 `(*...)` 一起剥掉；要保留标签必须取 `.RawText`（见 B-04 BUG-039） |
+| 21 | 自研 `SkillDef` 与原版 `RimWorld.SkillDef` 同名，在 `FamiliaMyth.Patch` 等外部命名空间裸写 → `CS0104` 歧义 | 写完全限定名 `FamiliaMyth.Abilities.SkillDef`（`Patch_SkillGrowth` / `Patch_Railgun` 为先例；`FamiliaMyth.Abilities` 内裸写安全，本命名空间优先） |
 
 ***
 
@@ -277,6 +278,7 @@
 | | `HediffComp_SkillState.cs` / `HediffComp_SkillInEffect.cs` | 技能状态标签与效果生命周期 |
 | | `HediffComp_DisappearsWithCounter.cs` | 按剩余次数结束效果的计数 comp（`TryConsume` 消耗，`ResetCnt` 重设计数） |
 | | `Hediff_*.cs`（效果类） | 技能 / 魔法的常驻效果 Hediff（配套 `Defs/HediffDefs/`） |
+| **战斗日志** | `CombatLogHelper.cs` + `BattleLogEntry_AbilityCast.cs` | `ICombatLogSource` 日志配置接口（图标 / 施法行与伤害行规则包 / 显示名）与统一构造入口；施法行为自建条目、仅记施法者，伤害行复用原版 `MeleeCombat` + 可配规则包 |
 | **意志与美德** | `MentalState_Virtue.cs` | 美德精神状态与触发当拍的心声飘字 |
 | | `Patch_Virtue*.cs` | 崩溃前拦截与美德可控性补丁 |
 | | `Defs/HediffDefs/Hediff_Virtues.xml` | 五种美德 Buff 与范围光环 |

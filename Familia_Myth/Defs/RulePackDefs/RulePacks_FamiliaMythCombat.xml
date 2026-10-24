@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+    <!-- ==================== 施法行：魔法 ==================== -->
+    <RulePackDef>
+        <defName>FamiliaMyth_CastSpell</defName>
+        <rulePack>
+            <rulesStrings>
+                <li>r_logentry->[INITIATOR_definite]施放了[ABILITY_label]。</li>
+            </rulesStrings>
+        </rulePack>
+    </RulePackDef>
+
+    <!-- ==================== 施法行：技能 ==================== -->
+    <RulePackDef>
+        <defName>FamiliaMyth_CastSkill</defName>
+        <rulePack>
+            <rulesStrings>
+                <li>r_logentry->[INITIATOR_definite]发动了[ABILITY_label]。</li>
+            </rulesStrings>
+        </rulePack>
+    </RulePackDef>
+
+    <!-- ==================== 伤害行：魔法（默认） ==================== -->
+    <RulePackDef>
+        <defName>FamiliaMyth_HitBySpell</defName>
+        <rulePack>
+            <rulesStrings>
+                <li>r_logentry->[RECIPIENT_definite]被[INITIATOR_definite]的[TOOL_label]击中。</li>
+            </rulesStrings>
+        </rulePack>
+    </RulePackDef>
+
+    <!-- ==================== 伤害行：技能（默认） ==================== -->
+    <RulePackDef>
+        <defName>FamiliaMyth_HitBySkill</defName>
+        <rulePack>
+            <rulesStrings>
+                <li>r_logentry->[RECIPIENT_definite]被[INITIATOR_definite]的[TOOL_label]命中。</li>
+            </rulesStrings>
+        </rulePack>
+    </RulePackDef>
+
+
+    <!-- ==================== 伤害行：居合拔刀气刃斩 ==================== -->
+    <RulePackDef>
+        <defName>FamiliaMyth_Hit_Skill_IaiSpiritSlash</defName>
+        <rulePack>
+            <rulesStrings>
+                <li>r_logentry->[RECIPIENT_definite]被[INITIATOR_definite]的[TOOL_label]一斩而过。</li>
+            </rulesStrings>
+        </rulePack>
+    </RulePackDef>
+
+    <!-- ==================== 伤害行：夹枪冲锋 ==================== -->
+    <RulePackDef>
+        <defName>FamiliaMyth_Hit_Skill_LanceCharge</defName>
+        <rulePack>
+            <rulesStrings>
+                <li>r_logentry->[RECIPIENT_definite]被[INITIATOR_definite]的[TOOL_label]刺穿。</li>
+            </rulesStrings>
+        </rulePack>
+    </RulePackDef>
+
+    <!-- ==================== 伤害行：回旋踢 ==================== -->
+    <RulePackDef>
+        <defName>FamiliaMyth_Hit_Skill_RoundhouseKick</defName>
+        <rulePack>
+            <rulesStrings>
+                <li>r_logentry->[RECIPIENT_definite]被[INITIATOR_definite]一记[TOOL_label]扫飞。</li>
+            </rulesStrings>
+        </rulePack>
+    </RulePackDef>
+
+    <!-- ==================== 伤害行：剑雨滂沱 ==================== -->
+    <RulePackDef>
+        <defName>FamiliaMyth_Hit_Skill_SwordRain</defName>
+        <rulePack>
+            <rulesStrings>
+                <li>r_logentry->[RECIPIENT_definite]被[INITIATOR_definite]的[TOOL_label]贯穿。</li>
+            </rulesStrings>
+        </rulePack>
+    </RulePackDef>
+
+    <!-- ==================== 伤害行：超电磁炮 ==================== -->
+    <RulePackDef>
+        <defName>FamiliaMyth_Hit_Skill_Railgun</defName>
+        <rulePack>
+            <rulesStrings>
+                <li>r_logentry->[RECIPIENT_definite]被[INITIATOR_definite]的[TOOL_label]洞穿。</li>
+            </rulesStrings>
+        </rulePack>
+    </RulePackDef>
+
+    <!-- ==================== 伤害行：烈焰魔剑 ==================== -->
+    <RulePackDef>
+        <defName>FamiliaMyth_Hit_Spell_FlameSword</defName>
+        <rulePack>
+            <rulesStrings>
+                <li>r_logentry->[RECIPIENT_definite]被[INITIATOR_definite]的[TOOL_label]灼烧。</li>
+            </rulesStrings>
+        </rulePack>
+    </RulePackDef>
+
+    <!-- ==================== 伤害行：君王之剑 ==================== -->
+    <RulePackDef>
+        <defName>FamiliaMyth_Hit_Spell_KingsSword</defName>
+        <rulePack>
+            <rulesStrings>
+                <li>r_logentry->[RECIPIENT_definite]被[INITIATOR_definite]的[TOOL_label]横扫。</li>
+            </rulesStrings>
+        </rulePack>
+    </RulePackDef>
+
+    <!-- ==================== 伤害行：光灵守护 ==================== -->
+    <RulePackDef>
+        <defName>FamiliaMyth_Hit_Spell_LightGuard</defName>
+        <rulePack>
+            <rulesStrings>
+                <li>r_logentry->[RECIPIENT_definite]被[INITIATOR_definite]的[TOOL_label]灼伤。</li>
+            </rulesStrings>
+        </rulePack>
+    </RulePackDef>
+
+</Defs>

@@ -44,7 +44,8 @@ namespace FamiliaMyth.Abilities
                     DamageDef, DamageAmount, ArmorPenetration,
                     ExactRotation.eulerAngles.y, launcher, null, null,
                     DamageInfo.SourceCategory.ThingOrUnknown);
-                enemy.TakeDamage(dinfo);
+                var log = CombatLogHelper.MakeHitLog(launcher as Pawn, enemy, spell?.Def);
+                enemy.TakeDamage(dinfo).AssociateWithLog(log);
                 cooldownTicks = BasicCooldownTicks;
             }
             else if (TryAbsorbProjectile())

@@ -105,7 +105,10 @@ namespace FamiliaMyth.Abilities
             if (!def.needTarget)
             {
                 if (ApplyEffect(null))
+                {
                     Charge--;
+                    WriteCastLog();
+                }
                 return;
             }
 
@@ -114,17 +117,22 @@ namespace FamiliaMyth.Abilities
                 t => 
                 {
                     if (t.IsValid && ApplyEffect(t))
+                    {
                         Charge--;
+                        WriteCastLog();
+                    }
                 },
                 null,                 //高亮（默认）
                 null,                 //过滤器
                 Owner,                //施法者
                 null,                 //选择状态结束时行为
-                null,                 //鼠标额外贴图
+                def.LogIcon,          //鼠标额外贴图
                 true,                 //是否播放确认音效
                 null,                 //选择时GUI层每帧行为
                 OnTargeting);   //选择时世界层每帧行为
         }
+
+        private void WriteCastLog() => CombatLogHelper.WriteCastLog(Owner, def);
 
         public virtual TargetingParameters TargetingParms => TargetingParameters.ForThing();
 
@@ -145,7 +153,10 @@ namespace FamiliaMyth.Abilities
 
             if (!CanCast) return;
             if (ApplyEffect(null) && def.skillType == SkillType.Triggered)
+            {
                 Charge--;
+                WriteCastLog();
+            }
         }
 
         protected virtual bool ShouldCooldown => !stunning && !active;

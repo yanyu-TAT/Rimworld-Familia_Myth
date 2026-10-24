@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+    <!-- 战斗日志句式：整表替换，须与 Def 内 rulesStrings 同序同条数 -->
+    <FamiliaMyth_CastSpell.rulePack.rulesStrings>
+        <li>r_logentry->[INITIATOR_definite]施放了[ABILITY_label]。</li>
+    </FamiliaMyth_CastSpell.rulePack.rulesStrings>
+
+    <FamiliaMyth_CastSkill.rulePack.rulesStrings>
+        <li>r_logentry->[INITIATOR_definite]发动了[ABILITY_label]。</li>
+    </FamiliaMyth_CastSkill.rulePack.rulesStrings>
+
+    <FamiliaMyth_HitBySpell.rulePack.rulesStrings>
+        <li>r_logentry->[RECIPIENT_definite]被[INITIATOR_definite]的[TOOL_label]击中。</li>
+    </FamiliaMyth_HitBySpell.rulePack.rulesStrings>
+
+    <FamiliaMyth_HitBySkill.rulePack.rulesStrings>
+        <li>r_logentry->[RECIPIENT_definite]被[INITIATOR_definite]的[TOOL_label]命中。</li>
+    </FamiliaMyth_HitBySkill.rulePack.rulesStrings>
+
+
+    <FamiliaMyth_Hit_Skill_IaiSpiritSlash.rulePack.rulesStrings>
+        <li>r_logentry->[RECIPIENT_definite]被[INITIATOR_definite]的[TOOL_label]一斩而过。</li>
+    </FamiliaMyth_Hit_Skill_IaiSpiritSlash.rulePack.rulesStrings>
+
+    <FamiliaMyth_Hit_Skill_LanceCharge.rulePack.rulesStrings>
+        <li>r_logentry->[RECIPIENT_definite]被[INITIATOR_definite]的[TOOL_label]刺穿。</li>
+    </FamiliaMyth_Hit_Skill_LanceCharge.rulePack.rulesStrings>
+
+    <FamiliaMyth_Hit_Skill_RoundhouseKick.rulePack.rulesStrings>
+        <li>r_logentry->[RECIPIENT_definite]被[INITIATOR_definite]一记[TOOL_label]扫飞。</li>
+    </FamiliaMyth_Hit_Skill_RoundhouseKick.rulePack.rulesStrings>
+
+    <FamiliaMyth_Hit_Skill_SwordRain.rulePack.rulesStrings>
+        <li>r_logentry->[RECIPIENT_definite]被[INITIATOR_definite]的[TOOL_label]贯穿。</li>
+    </FamiliaMyth_Hit_Skill_SwordRain.rulePack.rulesStrings>
+
+    <FamiliaMyth_Hit_Skill_Railgun.rulePack.rulesStrings>
+        <li>r_logentry->[RECIPIENT_definite]被[INITIATOR_definite]的[TOOL_label]洞穿。</li>
+    </FamiliaMyth_Hit_Skill_Railgun.rulePack.rulesStrings>
+
+    <FamiliaMyth_Hit_Spell_FlameSword.rulePack.rulesStrings>
+        <li>r_logentry->[RECIPIENT_definite]被[INITIATOR_definite]的[TOOL_label]灼烧。</li>
+    </FamiliaMyth_Hit_Spell_FlameSword.rulePack.rulesStrings>
+
+    <FamiliaMyth_Hit_Spell_KingsSword.rulePack.rulesStrings>
+        <li>r_logentry->[RECIPIENT_definite]被[INITIATOR_definite]的[TOOL_label]横扫。</li>
+    </FamiliaMyth_Hit_Spell_KingsSword.rulePack.rulesStrings>
+
+    <FamiliaMyth_Hit_Spell_LightGuard.rulePack.rulesStrings>
+        <li>r_logentry->[RECIPIENT_definite]被[INITIATOR_definite]的[TOOL_label]灼伤。</li>
+    </FamiliaMyth_Hit_Spell_LightGuard.rulePack.rulesStrings>
+
+</LanguageData>

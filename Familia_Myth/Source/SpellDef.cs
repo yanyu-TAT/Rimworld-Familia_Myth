@@ -5,7 +5,7 @@ using Verse;
 
 namespace FamiliaMyth.Abilities
 {
-    public class SpellDef : AbilityDef
+    public class SpellDef : AbilityDef, ICombatLogSource
     {
         public SpellDef()
         {
@@ -30,6 +30,16 @@ namespace FamiliaMyth.Abilities
 
         public List<MagicCircleLayer> magicCircles;
 
+        /// <summary>
+        /// 伤害日志用的规则包。为空时用默认包。
+        /// </summary>
+        public RulePackDef combatLogRule;
+
+        /// <summary>
+        /// 伤害日志里显示的名字。为空时用 label。
+        /// </summary>
+        public string combatLogLabel;
+
         public Color themeColor = Color.white;
 
         public bool canConcurrentCast = true;
@@ -45,6 +55,11 @@ namespace FamiliaMyth.Abilities
             spell.def = this;
             return spell;
         }
+
+        public Texture2D LogIcon => uiIcon == BaseContent.BadTex ? null : uiIcon;
+        public RulePackDef CastRule => FamiliaMythRulePackDefOf.FamiliaMyth_CastSpell;
+        public RulePackDef HitRule => combatLogRule ?? FamiliaMythRulePackDefOf.FamiliaMyth_HitBySpell;
+        public string LogLabel => (combatLogLabel.NullOrEmpty() ? label : combatLogLabel).Colorize(themeColor.WithAlpha(1f));
 
         public override void PostLoad()
         {

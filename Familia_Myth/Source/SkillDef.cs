@@ -1,10 +1,11 @@
 using FamiliaMyth.Pharna;
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace FamiliaMyth.Abilities
 {
-    public class SkillDef : Def
+    public class SkillDef : Def, ICombatLogSource
     {
         public Type skillClass;
 
@@ -20,6 +21,33 @@ namespace FamiliaMyth.Abilities
         public int maxCharge = 1;
 
         public string iconPath;
+
+        /// <summary>
+        /// 伤害日志用的规则包。为空时用默认包。
+        /// </summary>
+        public RulePackDef combatLogRule;
+
+        /// <summary>
+        /// 伤害日志里显示的名字。为空时用 label。
+        /// </summary>
+        public string combatLogLabel;
+
+        private static readonly Color LogLabelColor = new(0.6f, 0.85f, 1f);
+
+        [Unsaved(false)]
+        private Texture2D icon;
+
+        public Texture2D LogIcon => icon;
+        public RulePackDef CastRule => FamiliaMythRulePackDefOf.FamiliaMyth_CastSkill;
+        public RulePackDef HitRule => combatLogRule ?? FamiliaMythRulePackDefOf.FamiliaMyth_HitBySkill;
+        public string LogLabel => (combatLogLabel.NullOrEmpty() ? label : combatLogLabel).Colorize(LogLabelColor);
+
+        public override void PostLoad()
+        {
+            base.PostLoad();
+            if (iconPath.NullOrEmpty()) return;
+            LongEventHandler.ExecuteWhenFinished(() => icon = ContentFinder<Texture2D>.Get(iconPath, false));
+        }
 
         public Skill CreateSkill()
         {

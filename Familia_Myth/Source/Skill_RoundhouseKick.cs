@@ -1,4 +1,4 @@
-﻿using RimWorld;
+using RimWorld;
 using Verse;
 
 namespace FamiliaMyth.Abilities
@@ -34,9 +34,10 @@ namespace FamiliaMyth.Abilities
             var dir = (enemy.Position - Owner.Position).ToVector3();
             var dinfo = new DamageInfo(verb.GetDamageDef(), dmg, apt, (-dir).ToAngleFlat(), Owner);
             dinfo.SetTool(verb.tool);
-            enemy.TakeDamage(dinfo);
+            var log = CombatLogHelper.MakeHitLog(Owner, enemy, def);
+            enemy.TakeDamage(dinfo).AssociateWithLog(log);
 
-            GameComponent_RoundhouseKick.Kick(enemy, verb, dir);
+            GameComponent_RoundhouseKick.Kick(enemy, verb, dir, def);
 
             return true;
         }

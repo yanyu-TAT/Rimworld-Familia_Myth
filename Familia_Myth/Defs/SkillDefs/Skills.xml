@@ -29,6 +29,7 @@
 
   <FamiliaMyth.Abilities.SkillDef>
     <defName>Skill_SwordRain</defName>
+    <combatLogRule>FamiliaMyth_Hit_Skill_SwordRain</combatLogRule>
     <label>剑雨滂沱</label>
     <description>持有锐伤近战武器时可释放：\n对周围小范围内的敌人连续造成两次武器伤害；\n若造成击杀或击倒敌人，则立即重置冷却，但重置次数有限。</description>
     <skillClass>FamiliaMyth.Abilities.Skill_SwordRain</skillClass>
@@ -72,6 +73,7 @@
 
   <FamiliaMyth.Abilities.SkillDef>
     <defName>Skill_IaiSpiritSlash</defName>
+    <combatLogRule>FamiliaMyth_Hit_Skill_IaiSpiritSlash</combatLogRule>
     <label>居合拔刀气刃斩</label>
     <description>持有锐伤近战武器时可释放：\n进入居合状态，期间将受到的所有伤害纳于刀身；\n片刻后拔刀向指定方向疾进一段距离，对沿途敌人造成武器伤害，并附加所吸收伤害的一部分。</description>
     <skillClass>FamiliaMyth.Abilities.Skill_IaiSpiritSlash</skillClass>
@@ -100,6 +102,7 @@
 
   <FamiliaMyth.Abilities.SkillDef>
     <defName>Skill_RoundhouseKick</defName>
+    <combatLogRule>FamiliaMyth_Hit_Skill_RoundhouseKick</combatLogRule>
     <label>回旋踢</label>
     <description>对自身周围一定范围内的单个敌人造成徒手伤害，并将其大力击退；\n若击退路径上有阻挡，则造成大量额外伤害。可存储数次。</description>
     <skillClass>FamiliaMyth.Abilities.Skill_RoundhouseKick</skillClass>
@@ -116,6 +119,7 @@
 
   <FamiliaMyth.Abilities.SkillDef>
     <defName>Skill_LanceCharge</defName>
+    <combatLogRule>FamiliaMyth_Hit_Skill_LanceCharge</combatLogRule>
     <label>夹枪冲锋</label>
     <description>持有锐伤近战武器时可释放：\n向一定距离内的目标点冲刺，对沿途敌人造成大量伤害并将其击退。</description>
     <skillClass>FamiliaMyth.Abilities.Skill_LanceCharge</skillClass>
@@ -132,6 +136,7 @@
 
   <FamiliaMyth.Abilities.SkillDef>
     <defName>Skill_Railgun</defName>
+    <combatLogRule>FamiliaMyth_Hit_Skill_Railgun</combatLogRule>
     <label>超电磁炮</label>
     <description>持有远程枪械时可释放：\n向武器注入电磁能量，此后数次射击将贯穿弹道，对路径上所有敌人造成大量伤害并使其短暂麻痹，\n遇墙则弹道被截停，并对墙体造成额外伤害。</description>
     <skillClass>FamiliaMyth.Abilities.Skill_Railgun</skillClass>

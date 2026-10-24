@@ -26,6 +26,10 @@ namespace FamiliaMyth.Patch
         private const float BlastFlameScaleMax = 1.2f;
         private const float EffectMinDistance = 0.6f;
 
+        private static SpellDef flameSwordDef;
+        private static SpellDef FlameSwordDef =>
+            flameSwordDef ??= DefDatabase<SpellDef>.GetNamed("Spell_FlameSword", false);
+
         private static HediffDef effectDef;
         private static HediffDef EffectDef =>
             effectDef ??= DefDatabase<HediffDef>.GetNamed("FlameSwordInEffect");
@@ -108,7 +112,8 @@ namespace FamiliaMyth.Patch
                     if (thing == caster || thing.Destroyed || !damaged.Add(thing)) continue;
                     if (thing is Pawn pawn && pawn.Faction == caster.Faction) continue;
 
-                    thing.TakeDamage(new DamageInfo(DamageDefOf.Flame, damage, ArmorPenetration, aim, caster));
+                    var log = CombatLogHelper.MakeHitLog(caster, thing, FlameSwordDef);
+                    thing.TakeDamage(new DamageInfo(DamageDefOf.Flame, damage, ArmorPenetration, aim, caster)).AssociateWithLog(log);
                 }
             }
         }

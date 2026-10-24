@@ -1,4 +1,4 @@
-﻿using RimWorld;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -20,7 +20,8 @@ namespace FamiliaMyth.Abilities
             var pos = Position;
             skill.swordCount--;
             if (target != null && target.Spawned && !target.Dead){
-                target.TakeDamage(dinfo);
+                var log = CombatLogHelper.MakeHitLog(skill?.Owner, target, skill?.def);
+                target.TakeDamage(dinfo).AssociateWithLog(log);
                 if (target.Downed || target.Dead)
                 {
                     skill.kill = true;

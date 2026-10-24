@@ -1,4 +1,4 @@
-﻿using RimWorld;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -17,6 +17,7 @@ namespace FamiliaMyth.Abilities
             public Vector3 velocity;
             public Vector3 exactPos;
             public Verb verb;
+            public SkillDef skillDef;
             public int ticks;
 
             public void ExposeData()
@@ -26,12 +27,13 @@ namespace FamiliaMyth.Abilities
                 Scribe_Values.Look(ref exactPos, "exactPos");
                 Scribe_References.Look(ref pawn, "pawn");
                 Scribe_References.Look(ref verb, "verb");
+                Scribe_Defs.Look(ref skillDef, "skillDef");
             }
         }
 
         private List<KnockedPawn> knockedPawns = new();
 
-        public static void Kick(Pawn pawn, Verb verb, Vector3 dir)
+        public static void Kick(Pawn pawn, Verb verb, Vector3 dir, SkillDef skillDef)
         {
             if (Instance?.knockedPawns.Any(k => k.pawn == pawn) ?? false)
                 return;
@@ -40,6 +42,7 @@ namespace FamiliaMyth.Abilities
             {
                 pawn = pawn,
                 verb = verb,
+                skillDef = skillDef,
                 velocity = dir.normalized * (Skill_RoundhouseKick.KnockbackDist / Skill_RoundhouseKick.KnckbackTicks),
                 exactPos = pawn.Position.ToVector3Shifted(),
                 ticks = Skill_RoundhouseKick.KnckbackTicks
@@ -98,7 +101,8 @@ namespace FamiliaMyth.Abilities
                     (-knocked.velocity).ToAngleFlat(),
                     verb.CasterPawn);
                 dinfo.SetTool(verb.tool);
-                pawn.TakeDamage(dinfo);
+                var log = CombatLogHelper.MakeHitLog(verb.CasterPawn, pawn, knocked.skillDef);
+                pawn.TakeDamage(dinfo).AssociateWithLog(log);
                 pawn.stances?.stagger?.StaggerFor(30);
 
                 FleckMaker.ThrowSmoke(next.ToVector3(), pawn.Map, 1f);

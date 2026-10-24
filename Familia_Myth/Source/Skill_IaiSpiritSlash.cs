@@ -142,7 +142,10 @@ namespace FamiliaMyth.Abilities
             dinfo.SetTool(verb.tool);
 
             foreach (var enemy in RangeUtilities.GetEnemiesAroundStraightWay(start, end, PathDamageRadius, Owner).ToList())
-                enemy.TakeDamage(dinfo);
+            {
+                var log = CombatLogHelper.MakeHitLog(Owner, enemy, def);
+                enemy.TakeDamage(dinfo).AssociateWithLog(log);
+            }
         }
 
         protected override void OnTargeting(LocalTargetInfo targetInfo)

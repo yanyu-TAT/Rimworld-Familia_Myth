@@ -213,6 +213,10 @@ namespace FamiliaMyth.Abilities
             isWarmingUp = false;
             stunning = false;
 
+            //完整咏唱结束时记录施法日志
+            if (castDone)
+                CombatLogHelper.WriteCastLog(pawn, Def);
+
             //保证最后一句生成
             if (lineIndex <= LineCount)
                 ThrowIncantation(LineCount);

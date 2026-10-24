@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+    <!-- Combat log rules: full-list replacement, must match the Def's rulesStrings in order and count. -->
+    <FamiliaMyth_CastSpell.rulePack.rulesStrings>
+        <li>r_logentry->[INITIATOR_definite] cast [ABILITY_label].</li>
+    </FamiliaMyth_CastSpell.rulePack.rulesStrings>
+
+    <FamiliaMyth_CastSkill.rulePack.rulesStrings>
+        <li>r_logentry->[INITIATOR_definite] used [ABILITY_label].</li>
+    </FamiliaMyth_CastSkill.rulePack.rulesStrings>
+
+    <FamiliaMyth_HitBySpell.rulePack.rulesStrings>
+        <li>r_logentry->[RECIPIENT_definite] was struck by [INITIATOR_possessive] [TOOL_label].</li>
+    </FamiliaMyth_HitBySpell.rulePack.rulesStrings>
+
+    <FamiliaMyth_HitBySkill.rulePack.rulesStrings>
+        <li>r_logentry->[RECIPIENT_definite] was hit by [INITIATOR_possessive] [TOOL_label].</li>
+    </FamiliaMyth_HitBySkill.rulePack.rulesStrings>
+
+
+    <FamiliaMyth_Hit_Skill_IaiSpiritSlash.rulePack.rulesStrings>
+        <li>r_logentry->[RECIPIENT_definite] was sliced through by [INITIATOR_possessive] [TOOL_label].</li>
+    </FamiliaMyth_Hit_Skill_IaiSpiritSlash.rulePack.rulesStrings>
+
+    <FamiliaMyth_Hit_Skill_LanceCharge.rulePack.rulesStrings>
+        <li>r_logentry->[RECIPIENT_definite] was pierced by [INITIATOR_possessive] [TOOL_label].</li>
+    </FamiliaMyth_Hit_Skill_LanceCharge.rulePack.rulesStrings>
+
+    <FamiliaMyth_Hit_Skill_RoundhouseKick.rulePack.rulesStrings>
+        <li>r_logentry->[RECIPIENT_definite] was sent flying by [INITIATOR_possessive] [TOOL_label].</li>
+    </FamiliaMyth_Hit_Skill_RoundhouseKick.rulePack.rulesStrings>
+
+    <FamiliaMyth_Hit_Skill_SwordRain.rulePack.rulesStrings>
+        <li>r_logentry->[RECIPIENT_definite] was pierced by [INITIATOR_possessive] [TOOL_label].</li>
+    </FamiliaMyth_Hit_Skill_SwordRain.rulePack.rulesStrings>
+
+    <FamiliaMyth_Hit_Skill_Railgun.rulePack.rulesStrings>
+        <li>r_logentry->[RECIPIENT_definite] was blasted through by [INITIATOR_possessive] [TOOL_label].</li>
+    </FamiliaMyth_Hit_Skill_Railgun.rulePack.rulesStrings>
+
+    <FamiliaMyth_Hit_Spell_FlameSword.rulePack.rulesStrings>
+        <li>r_logentry->[RECIPIENT_definite] was scorched by [INITIATOR_possessive] [TOOL_label].</li>
+    </FamiliaMyth_Hit_Spell_FlameSword.rulePack.rulesStrings>
+
+    <FamiliaMyth_Hit_Spell_KingsSword.rulePack.rulesStrings>
+        <li>r_logentry->[RECIPIENT_definite] was swept aside by [INITIATOR_possessive] [TOOL_label].</li>
+    </FamiliaMyth_Hit_Spell_KingsSword.rulePack.rulesStrings>
+
+    <FamiliaMyth_Hit_Spell_LightGuard.rulePack.rulesStrings>
+        <li>r_logentry->[RECIPIENT_definite] was seared by [INITIATOR_possessive] [TOOL_label].</li>
+    </FamiliaMyth_Hit_Spell_LightGuard.rulePack.rulesStrings>
+
+</LanguageData>

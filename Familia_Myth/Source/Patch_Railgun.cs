@@ -1,4 +1,4 @@
-﻿using FamiliaMyth.Abilities;
+using FamiliaMyth.Abilities;
 using HarmonyLib;
 using RimWorld;
 using UnityEngine;
@@ -11,6 +11,10 @@ namespace FamiliaMyth.Patch
     {
         private const float PathDamageRadius = 1f;      //伤害范围
         private const float WallDamageFactor = 2f;  //建筑伤害倍率
+
+        private static FamiliaMyth.Abilities.SkillDef railgunDef;
+        private static FamiliaMyth.Abilities.SkillDef RailgunDef =>
+            railgunDef ??= DefDatabase<FamiliaMyth.Abilities.SkillDef>.GetNamed("Skill_Railgun", false);
 
         private static ThingDef moteDef;
         private static ThingDef MoteDef =>
@@ -113,7 +117,8 @@ namespace FamiliaMyth.Patch
                 0f, launcher, null, weapon?.def,
                 DamageInfo.SourceCategory.ThingOrUnknown, null, false);
             dinfo.SetTool(verb.tool);
-            thing.TakeDamage(dinfo);
+            var log = CombatLogHelper.MakeHitLog(launcher, thing, RailgunDef);
+            thing.TakeDamage(dinfo).AssociateWithLog(log);
         }
     }
 }
