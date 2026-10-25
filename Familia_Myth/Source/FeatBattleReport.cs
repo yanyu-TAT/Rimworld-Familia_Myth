@@ -73,7 +73,7 @@ namespace FamiliaMyth.Feat
             sb.AppendLine($"  战斗事实：敌方 {enemyCount} 人｜战力合计 {threat:F1}｜最强单体 {maxCombatPower:F1}｜已倒下或阵亡 {defeatedCount}"
                 + $"；我方 {friendlyCount} 人｜倒地 {downedCount}｜受恩惠参与者 {participantCount}；战斗总时间：{battleDuration.ToStringTicksToPeriod()}");
             sb.AppendLine($"  性质判定：{DescribeTraits(battleTraits) ?? "无"} → 战斗总得分 {battleMagnitude:F1}（敌方战力 {threat:F1} × 性质系数 {battleMultiplier:F2}）");
-            sb.AppendLine($"  总贡献：{totalContribution:F1} 总输出： {enemyDamageTotal}");
+            sb.AppendLine($"  总贡献：{totalContribution:F1}｜总输出：{enemyDamageTotal:F1}");
             sb.AppendLine($"  合账：敌方承受 {enemyDamageTotal:F1}｜我方输出 {friendliesDamageTotal:F1}"
                 + $"｜差额 {enemyDamageTotal - friendliesDamageTotal:F1}｜Σ占比 {shareSum * 100f:F1}%");
             sb.AppendLine($"  贡献明细（输出｜承伤×{FeatContext.TakenWeight:F1}｜支援 → 合计｜占比｜个人得分｜档位）：");

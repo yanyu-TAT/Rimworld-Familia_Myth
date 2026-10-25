@@ -104,11 +104,10 @@ namespace FamiliaMyth.Abilities
             Owner.jobs?.StopAll();
             if (!def.needTarget)
             {
+                //施法行先写，效果内产生的伤害行才会排在它之后
+                WriteCastLog();
                 if (ApplyEffect(null))
-                {
                     Charge--;
-                    WriteCastLog();
-                }
                 return;
             }
 
@@ -116,11 +115,11 @@ namespace FamiliaMyth.Abilities
                 TargetingParms,
                 t => 
                 {
-                    if (t.IsValid && ApplyEffect(t))
-                    {
+                    if (!t.IsValid) return;
+                    //施法行先写，效果内产生的伤害行才会排在它之后
+                    WriteCastLog();
+                    if (ApplyEffect(t))
                         Charge--;
-                        WriteCastLog();
-                    }
                 },
                 null,                 //高亮（默认）
                 null,                 //过滤器
