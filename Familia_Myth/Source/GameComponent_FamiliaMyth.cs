@@ -16,6 +16,9 @@ namespace FamiliaMyth.Core
 
         public readonly Dictionary<Pawn, PharnaRecord> records = new();
 
+        //已发送的教程信件 id
+        public List<string> sentTutorials = new();
+
         public void CommitRecord(Hediff_Pharna pharna)
         {
             var pawn = pharna?.pawn;
@@ -37,12 +40,29 @@ namespace FamiliaMyth.Core
             return records.TryGetValue(pawn, out var record) ? record : null;
         }
 
+        public bool HasTutorialBeenSent(string id) => sentTutorials != null && sentTutorials.Contains(id);
+
+        public void MarkTutorialSent(string id)
+        {
+            sentTutorials ??= new List<string>();
+            if (!sentTutorials.Contains(id))
+                sentTutorials.Add(id);
+        }
+
         public static void Schedule(int tick, Action action, Thing giver)
         {
             pendingActions.Add((tick, action, giver));
         }
 
         public GameComponent_FamiliaMyth(Game game) : base() { }
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_Collections.Look(ref sentTutorials, "sentTutorials", LookMode.Value);
+            if (Scribe.mode == LoadSaveMode.PostLoadInit && sentTutorials == null)
+                sentTutorials = new List<string>();
+        }
 
         public override void FinalizeInit()
         {
@@ -54,6 +74,9 @@ namespace FamiliaMyth.Core
 
         public override void GameComponentTick()
         {
+            if (Find.TickManager.TicksGame % TutorialLetterHelper.GrantHintCheckInterval == 0)
+                TutorialLetterHelper.CheckGrantHint();
+
             if (pendingActions.NullOrEmpty()) return;
             for (int i = 0; i < pendingActions.Count; i++)
             {

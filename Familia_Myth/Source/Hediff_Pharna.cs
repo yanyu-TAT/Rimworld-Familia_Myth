@@ -142,6 +142,8 @@ namespace FamiliaMyth.Pharna
 
             //首次获得恩惠即给予一次铭刻机会
             inscriptionAvailable = true;
+
+            TutorialLetterHelper.TrySend(TutorialLetterHelper.IntroGrant, pawn);
         }
 
         public override string TipStringExtra
@@ -500,6 +502,13 @@ namespace FamiliaMyth.Pharna
                 GainExp(amount);
 
             GrowthFeedback.NotifyStatusRankUp(this, type, prevRank, RankIndexOf(GetCurrentStatus(type)));
+
+            if (capped < amount && MeetsStatusRequirement())
+            {
+                TutorialLetterHelper.TrySend(TutorialLetterHelper.Bottleneck, pawn);
+                TutorialLetterHelper.TryCheckAscendable(this);
+            }
+
             return true;
         }
 

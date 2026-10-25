@@ -21,6 +21,11 @@ namespace FamiliaMyth.Core
         public static bool GuildContentEnabled => Data?.guildContent ?? false;
 
         /// <summary>
+        /// 教程信件是否启用；设置尚未就绪时按开启处理
+        /// </summary>
+        public static bool TutorialLettersEnabled => Data?.tutorialLetters ?? true;
+
+        /// <summary>
         /// 六维之一当前生效的加成曲线；设置尚未就绪时返回 null
         /// </summary>
         public static SimpleCurve Curve(PharnaStatusType statusType) => Data?.GetCurve(statusType);

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<!-- 设置页：教程总开关 -->
+	<FamiliaMyth.Settings.TutorialLettersLabel>教程</FamiliaMyth.Settings.TutorialLettersLabel>
+	<FamiliaMyth.Settings.TutorialLettersDesc>在首次接触某项机制时发送一次性说明信件。</FamiliaMyth.Settings.TutorialLettersDesc>
+
+	<!-- 开场信：文化已含本模组结构 -->
+	<FamiliaMyth.Tutorial.grant_hint.Label>赋予恩惠</FamiliaMyth.Tutorial.grant_hint.Label>
+	<FamiliaMyth.Tutorial.grant_hint.Text>你现在可以进行「赋予恩惠」仪式了，让一名殖民者成为你的眷族成员吧！\n\n放置一个仪式点，在仪式列表中选择「赋予恩惠」，指定一名殖民者作为接受者即可进行。</FamiliaMyth.Tutorial.grant_hint.Text>
+
+	<!-- 开场信：文化未含本模组结构 -->
+	<FamiliaMyth.Tutorial.grant_hint_nomeme.Label>眷族信仰</FamiliaMyth.Tutorial.grant_hint_nomeme.Label>
+	<FamiliaMyth.Tutorial.grant_hint_nomeme.Text>你的文化结构未选择「眷族信仰」，因此你可能无法体验本模组的绝大部分内容。\n若想游玩本模组的恩惠体系，请在建立文化时选择名为「眷族信仰」的文化结构。\n\n或者……是时候动用你的神之力(DevMode)了？</FamiliaMyth.Tutorial.grant_hint_nomeme.Text>
+
+	<!-- 首次获得恩惠 -->
+	<FamiliaMyth.Tutorial.intro_grant.Label>神之恩惠</FamiliaMyth.Tutorial.intro_grant.Label>
+	<FamiliaMyth.Tutorial.intro_grant.Text>{0} 已获得神之恩惠，成为了你眷族的第一名成员。\n以下是一些你可能会想知道的相关事项：\n\n能力值：\n六维能力值会随日常行为增长：\n战斗与锻炼以提升力量，\n承受伤害与获取营养以提升耐久，\n精密工作会提升灵巧，\n奔跑和闪避会提升敏捷，\n使用魔法产生心灵熵以提升魔力，\n冥想与人际交流则会提升意志。\n六项能力值的数值可以在其「恩惠」页签中查看。\n\n伟业：\n伟业来自战斗结算——输出、承伤与支援都会被计算在内，是升华恩惠的必要条件之一。\n\n现在还有一次铭刻机会：\n在「恩惠」页签顶栏选择一项能力值，此后获得的经验会按比例转化为该能力值。\n每次升华后即可重新铭刻到其他能力。</FamiliaMyth.Tutorial.intro_grant.Text>
+
+	<!-- 首次跨过 500 -->
+	<FamiliaMyth.Tutorial.bottleneck.Label>瓶颈期</FamiliaMyth.Tutorial.bottleneck.Label>
+	<FamiliaMyth.Tutorial.bottleneck.Text>能力值的增长存在瓶颈期：\n单项超过 400 后，能力值的增长会逐渐变慢；六项总和超过 2000 时还会进一步衰减。单项上限为 999。\n\n升华会把现有值清零并计入潜在值，潜在值会和现有值一样提供加成。\n\n具体的衰减系数可以在「恩惠」页签中查看，请自行把握培养节奏。</FamiliaMyth.Tutorial.bottleneck.Text>
+
+	<!-- 首次可升华 -->
+	<FamiliaMyth.Tutorial.ascendable.Label>恩惠升华</FamiliaMyth.Tutorial.ascendable.Label>
+	<FamiliaMyth.Tutorial.ascendable.Text>{0} 有达到D级的能力值和对应等级的伟业，已经满足了升华条件！\n\n打开「文化」页签，在仪式列表中选择「升华恩惠」，指定 {0} 为接受者。\n\n升华会清零当前六维并计入潜在值，还会恢复一次铭刻机会，\n以及三选一的升华奖励（包含技能、魔法或发展能力）。\n\n恩惠等级上限为 10，满级后无法继续升华。</FamiliaMyth.Tutorial.ascendable.Text>
+
+	<!-- 首次获得魔法 -->
+	<FamiliaMyth.Tutorial.first_spell.Label>魔法</FamiliaMyth.Tutorial.first_spell.Label>
+	<FamiliaMyth.Tutorial.first_spell.Text>{0} 成为了你眷族中首个获得魔法的成员！\n\n施展魔法需要进行时长不等的咏唱，期间会消耗魔力并产生心灵熵，魔力不足或心灵熵超出阈值（如果有设置）时咏唱则会中断。\n\n魔力需要施法者从精神力中转换而来，而转换过程也会产生心灵熵。\n可以在下方的魔力池中查看当前的魔力量，并在其右上角开关「精神力自动转化魔力」。\n\n魔法的效果还会根据类别受到施法者的魔力操作精度影响，可以在角色的详情界面查看对应的数值。</FamiliaMyth.Tutorial.first_spell.Text>
+
+	<!-- 首次获得发展能力 -->
+	<FamiliaMyth.Tutorial.first_devability.Label>发展能力</FamiliaMyth.Tutorial.first_devability.Label>
+	<FamiliaMyth.Tutorial.first_devability.Text>{0} 成为了你眷族中首个获得发展能力的成员！\n\n发展能力和基础能力值一样随行为积累熟练度，并随稀有度提高增强效果。\n\n熟练度与当前档位可以在「恩惠」页签的发展能力区查看。</FamiliaMyth.Tutorial.first_devability.Text>
+
+</LanguageData>

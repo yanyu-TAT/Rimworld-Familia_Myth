@@ -1,4 +1,5 @@
 using System.Text;
+using FamiliaMyth.Core;
 using FamiliaMyth.Pharna;
 using FamiliaMyth.UI;
 using RimWorld;
@@ -122,6 +123,9 @@ namespace FamiliaMyth.Feat
                 new LookTargets(participants));
 
             Find.LetterStack.ReceiveLetter(letter);
+
+            for (int i = 0; i < rewarded.Count; i++)
+                TutorialLetterHelper.TryCheckAscendable(rewarded[i].pawn?.GetPharna());
         }
 
         //TaggedString 转 string 会剥离富文本标签，正文一律取 RawText

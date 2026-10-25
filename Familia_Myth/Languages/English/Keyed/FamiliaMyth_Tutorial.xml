@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<!-- Settings: tutorial master switch -->
+	<FamiliaMyth.Settings.TutorialLettersLabel>Tutorial</FamiliaMyth.Settings.TutorialLettersLabel>
+	<FamiliaMyth.Settings.TutorialLettersDesc>Send a one-time explanatory letter when a mechanic is first encountered.</FamiliaMyth.Settings.TutorialLettersDesc>
+
+	<!-- Opening letter: culture includes this mod's structure -->
+	<FamiliaMyth.Tutorial.grant_hint.Label>Grant Pharna</FamiliaMyth.Tutorial.grant_hint.Label>
+	<FamiliaMyth.Tutorial.grant_hint.Text>You can now perform the "Grant Pharna" ritual. Let a colonist become a member of your familia!\n\nPlace a ritual spot, then select "Grant Pharna" from the ritual list and choose a colonist as the recipient.</FamiliaMyth.Tutorial.grant_hint.Text>
+
+	<!-- Opening letter: culture lacks this mod's structure -->
+	<FamiliaMyth.Tutorial.grant_hint_nomeme.Label>Familia Myth</FamiliaMyth.Tutorial.grant_hint_nomeme.Label>
+	<FamiliaMyth.Tutorial.grant_hint_nomeme.Text>Your culture has not chosen the "Familia Myth" structure, so you may not be able to experience most of this mod's content.\nIf you want to play this mod's Pharna system, choose the culture structure named "Familia Myth" when creating your culture.\n\nOr... is it time to use your divine power (DevMode)?</FamiliaMyth.Tutorial.grant_hint_nomeme.Text>
+
+	<!-- First Pharna granted -->
+	<FamiliaMyth.Tutorial.intro_grant.Label>Pharna granted</FamiliaMyth.Tutorial.intro_grant.Label>
+	<FamiliaMyth.Tutorial.intro_grant.Text>{0} has been granted Pharna and has become the first member of your familia.\nHere are a few things you may want to know:\n\nStats:\nThe six stats grow through daily activity:\ncombat and training raise Strength,\ntaking damage and gaining nutrition raise Endurance,\nprecise work raises Dexterity,\nrunning and dodging raise Agility,\ngenerating psychic entropy by casting spells raises Mana,\nand meditation and social interaction raise Will.\nThe six values can be viewed in the Pharna tab.\n\nFeats:\nFeats come from combat resolution. Damage dealt, damage taken and support are all counted, and they are required for ascension.\n\nYou also have one inscription available:\nchoose a stat in the top bar of the Pharna tab, and experience gained afterwards will partly convert into that stat.\nAfter each ascension you can inscribe again into a different stat.</FamiliaMyth.Tutorial.intro_grant.Text>
+
+	<!-- First stat reaches the bottleneck -->
+	<FamiliaMyth.Tutorial.bottleneck.Label>Bottleneck</FamiliaMyth.Tutorial.bottleneck.Label>
+	<FamiliaMyth.Tutorial.bottleneck.Text>Stat growth has a bottleneck:\nabove 400 a single stat grows more and more slowly, and once the six stats total more than 2000 it decays further. The cap for a single stat is 999.\n\nAscension resets current values to zero and adds them to potential, and potential provides bonuses just like current values.\n\nThe exact decay factors can be viewed in the Pharna tab. Pace your training as you see fit.</FamiliaMyth.Tutorial.bottleneck.Text>
+
+	<!-- First ascension-ready pawn -->
+	<FamiliaMyth.Tutorial.ascendable.Label>Pharna ascension</FamiliaMyth.Tutorial.ascendable.Label>
+	<FamiliaMyth.Tutorial.ascendable.Text>{0} has a stat at Tier D plus feats of the matching tier, and already meets the requirements for ascension!\n\nOpen the Culture tab, select "Ascend Pharna" from the ritual list, and choose {0} as the recipient.\n\nAscension resets all six stats to zero and adds them to potential, and restores one inscription opportunity,\nalong with a choice of one out of three ascension rewards (skills, spells or developable abilities).\n\nThe Pharna level cap is 10. Ascension is no longer possible at the cap.</FamiliaMyth.Tutorial.ascendable.Text>
+
+	<!-- First spell -->
+	<FamiliaMyth.Tutorial.first_spell.Label>Spells</FamiliaMyth.Tutorial.first_spell.Label>
+	<FamiliaMyth.Tutorial.first_spell.Text>{0} is the first member of your familia to gain a spell!\n\nCasting a spell requires an incantation of varying length. Mana is consumed during it and psychic entropy is generated. If mana is insufficient or psychic entropy exceeds the threshold (if one is set), the incantation is interrupted.\n\nMana must be converted by the caster from psyfocus, and the conversion itself also generates psychic entropy.\nYou can view the current mana in the mana pool below, and toggle "automatically convert psyfocus into mana" at its upper right corner.\n\nSpell effects are also affected by the caster's Mana Control depending on spell type. The corresponding values can be viewed in the character's detail panel.</FamiliaMyth.Tutorial.first_spell.Text>
+
+	<!-- First developable ability -->
+	<FamiliaMyth.Tutorial.first_devability.Label>Developable abilities</FamiliaMyth.Tutorial.first_devability.Label>
+	<FamiliaMyth.Tutorial.first_devability.Text>{0} is the first member of your familia to gain a developable ability!\n\nDevelopable abilities accumulate proficiency through behavior just like basic stats, and their effects grow stronger with rarity.\n\nProficiency and the current tier can be viewed in the developable ability section of the Pharna tab.</FamiliaMyth.Tutorial.first_devability.Text>
+
+</LanguageData>

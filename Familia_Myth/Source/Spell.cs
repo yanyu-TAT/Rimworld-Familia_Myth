@@ -1,3 +1,4 @@
+using FamiliaMyth.Core;
 using FamiliaMyth.Pharna;
 using RimWorld;
 using UnityEngine;
@@ -377,6 +378,8 @@ namespace FamiliaMyth.Abilities
             if (verb is Verb_CastSpell castSpell && this is ISpellWithTargetRange spellWithTargetRange)
                 castSpell.spell = spellWithTargetRange;
             pharna.spells.Add(this);
+
+            TutorialLetterHelper.TrySend(TutorialLetterHelper.FirstSpell, pharna.pawn);
         }
 
         private static readonly Dictionary<SpellType, StatDef> ManaControlStatDefs = new();

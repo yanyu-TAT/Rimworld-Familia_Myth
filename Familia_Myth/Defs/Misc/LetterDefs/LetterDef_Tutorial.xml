@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- 教程信：低饱和配色，避免与事件信抢注意力；不自动暂停 -->
+  <LetterDef>
+    <defName>FamiliaMyth_Tutorial</defName>
+    <color>(178, 168, 144)</color>
+    <flashColor>(152, 144, 126)</flashColor>
+    <flashInterval>90</flashInterval>
+    <arriveSound>LetterArrive</arriveSound>
+    <pauseMode>Never</pauseMode>
+  </LetterDef>
+
+</Defs>

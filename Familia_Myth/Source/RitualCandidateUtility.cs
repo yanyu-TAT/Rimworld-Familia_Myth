@@ -4,7 +4,7 @@ using Verse;
 namespace FamiliaMyth.Ritual
 {
     /// <summary>
-    /// 恩惠仪式角色的候选校验：只有文化结构为眷族神话的成员才能担任接受者。
+    /// 恩惠仪式角色的候选校验：只有文化结构为眷族信仰的成员才能担任接受者。
     /// </summary>
     public static class RitualCandidateUtility
     {

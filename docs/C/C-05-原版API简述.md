@@ -541,3 +541,12 @@ battleActive / battleExitTick（超时未刷新即视为战斗结束）
 - `LetterDef.arriveSound` 在 `ResolveReferences` 里空值兜底为 `LetterArrive`（`LetterDef.cs:43-49`）——自定义信件不会静音，只会播默认到达音。
 - 位置化播放的素材用**单声道**：Unity 对立体声源不做 3D 空间化，会丢失左右/远近定位。
 - 出处：`kb/L0-证据/decompiled/1.6/Verse/SoundDef.cs`、`Verse.Sound/SoundStarter.cs`、`Verse.Sound/Sustainer.cs`、`Verse.Sound/SoundInfo.cs`、`Verse.Sound/SubSoundDef.cs`、`Verse/LetterDef.cs`。
+
+## 十七、信件与一次性引导
+
+- `LetterDef`（`Verse/LetterDef.cs`）：`letterClass` 默认 `StandardLetter`（`ChoiceLetter` 子类）；另有 `color` / `flashColor` / `flashInterval` / `bounce` / `icon`（默认 `UI/Letters/LetterUnopened`）/ `pauseMode`（默认 `AnyLetter`）——只写颜色与 `pauseMode` 即可定义一封说明信，不需要自定义信类。
+- `LetterMaker.MakeLetter`（`Verse/LetterMaker.cs`）：3 参（无 `LookTargets`）与 4 参（`LookTargets` + `Faction` + `Quest` + `hyperlinkThingDefs`）两个重载；**两者都要求 `def.letterClass` 是 `ChoiceLetter` 子类**，否则只 `Log.Error` 并返回 null，4 参重载随即解引用 null —— 调用方须判空。
+- `LetterStack.ReceiveLetter(Letter)`（`Verse/LetterStack.cs:56-81`）：`playSound` 为真时播 `def.arriveSound`，并 `Find.Archive.Add(let)` → 信件进原版历史页签、本次会话内可回看（关闭游戏后清空）。
+- 原版"事件触发说明信"的现成范式是 `ResearchProjectDef.discoveredLetterTitle/Text`（`Data/Core/Defs/ResearchProjectDefs/ResearchProjects_4_MultiAnalyzer.xml` 的 Fabrication 条目即"高级零部件"提示信）：一次事件一封信、正文给途径，不依赖 ConceptDef / Tutor。
+- `ConceptDef`（`RimWorld/ConceptDef.cs`）：`priority <= 0` 直触发、`helpText` 支持 `{Key:...}`、`highlightTags` 高亮原版控件；`LearningReadout` 管右上角学习提示与 `showAllMode` 浏览。本模组未使用——长文本引导走信件，回看交给历史页签。
+- 存档级一次性标记：`Scribe_Collections.Look` 有 `ref List<T>` / `ref HashSet<T>` 重载（`Verse/Scribe_Collections.cs:524`），`GameComponent.ExposeData` 为 virtual（`Verse/GameComponent.cs:19`）→ 标记挂在 `GameComponent` 上随档持久化，不用 static。

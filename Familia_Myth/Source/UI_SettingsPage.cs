@@ -49,6 +49,9 @@ namespace FamiliaMyth.UI
                 UI_Cursor cursor = new(new Rect(0f, 0f, viewRect.width, viewRect.height));
                 cursor.Gap(SectionGap);
 
+                DrawTutorialToggle(cursor.Row(RowHeight));
+                cursor.Gap(SectionGap);
+
                 Rect experimentalHeader = cursor.Row(HeaderHeight);
                 if (DrawFoldHeader(experimentalHeader, "FamiliaMyth.Settings.ExperimentalGroup".Translate(), null, experimentalExpanded))
                 {
@@ -116,6 +119,17 @@ namespace FamiliaMyth.UI
             }
 
             return Widgets.ButtonInvisible(clickRect);
+        }
+
+        private static void DrawTutorialToggle(Rect row)
+        {
+            FamiliaMythSettingsData data = FamiliaMythSettings.Data;
+            if (data is null) return;
+
+            bool value = data.tutorialLetters;
+            Widgets.CheckboxLabeled(row, "FamiliaMyth.Settings.TutorialLettersLabel".Translate(), ref value);
+            data.tutorialLetters = value;
+            TooltipHandler.TipRegion(row, "FamiliaMyth.Settings.TutorialLettersDesc".Translate());
         }
 
         private static void DrawGuildToggle(Rect row)

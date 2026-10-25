@@ -271,6 +271,7 @@
 | | `PharnaRecord.cs` | 恩惠丢失快照（六维 / 潜在值 / 铭刻 / 等级 / 经验 / 伟业 / 魔力池 + 技能魔法发展能力 defName 与熟练度）与重建（统一工厂 + `Apply`，事后校验） |
 | | `ChoiceLetter_PharnaLost.cs` + `Defs/Misc/LetterDefs/LetterDef_PharnaLost.xml` | 恩惠意外消失信（重建 / 放弃两个按钮）；`Patch_PharnaDeathLetter.cs` 在持有恩惠者死亡信正文前置神明感知段 |
 | | `GrowthFeedback.cs` | 成长反馈统一出口：能力值 / 发展能力跨档时发一条 Message（一次跨多档只报最终档），音效由原版 `MessageTypeDef` 自带 |
+| | `TutorialLetterHelper.cs` | 教程信件统一出口：六个触发时机、七条文案的发送、开关判断与存档标记（`sentTutorials`） |
 | **魔法** | `Spell*.cs` + `SpellDef.cs` | 魔法框架与具体魔法（继承原版 Ability）；咏唱音效（低频持续音 + 逐句吐息）在 `Spell.AbilityTick` / `ThrowIncantation` 内挂 |
 | | `Command_Spell.cs` | 魔法图标命令（继承原版 `Command_Psycast`）：供原版心灵熵条识别并预览施法熵消耗，且角标与描述中显示魔力消耗 |
 | | `Hediff_SpellState.cs` + `Verb_CastSpell*.cs` | 魔法效果状态与咏唱 verb |
@@ -302,7 +303,7 @@
 | **仪式与文化** | `Ritual*.cs`（含 `RitualRoleColonist_*` / `RitualCandidateUtility`） | 给予 / 升华恩惠仪式及其接受者校验 |
 | | `Defs/PreceptDefs/` + `Defs/RitualBehaviorDefs/` + `Defs/RitualOutcomeEffectDefs/` + `Defs/RitualPatternDefs/` | 仪式的 Precept、行为、结果与图案定义 |
 | | `Defs/MemeDefs/` + `Defs/RulePackDefs/` + `Patch_DeityGender.cs` | 文化结构、文化命名规则包与神灵性别绑定 |
-| **存档级与场地** | `GameComponent_*.cs` | 存档级追踪与引擎（评级 / 使者 / 位移击退 / 定时动作） |
+| **存档级与场地** | `GameComponent_*.cs` | 存档级追踪与引擎（评级 / 使者 / 位移击退 / 定时动作 / 教程标记） |
 | | `MapComponent_*.cs` | 地图级状态（恩惠特效管理） |
 | **表现层** | `Mote_*.cs` | 地图特效（咏唱词 / 魔法阵 / 光环 / 斩击等） |
 | | `UI_*.cs` | UI 基础设施与页面：`UI_Palette` 全局色源 / `UI_Scope` GUI 状态作用域 / `UI_Text` 度量与截断 / `UI_Bar` 进度条与门槛刻度 / `UI_Layout` 纵向游标 / `UI_GroupBox` 卡片 / `UI_RadarChart` 雷达图 / `UI_FamiliaPage` 眷族页 / `UI_SettingsPage` 模组设置页 / `UI_CurveEditor` 曲线编辑器 |
@@ -312,8 +313,8 @@
 | **工具与基础设施** | `WeaponHelper.cs` | 武器查询与直线索敌 / 射线工具 |
 | | `HealHelper.cs` | 伤口与断肢治疗工具 |
 | | `FamiliaMythMod.cs` | 模组主类（`Verse.Mod` 子类）：构造函数内注册全部 Harmony 补丁与设置数据，包含开发日志和计划（文件内日志 / 计划表仅用户维护） |
-| | `FamiliaMythSettings.cs` | 模组设置项门面：实验性内容开关（`GuildContentEnabled`）与六维曲线读写（`Curve` / `ResetCurve` / `ResetAllCurves`） |
-| | `FamiliaMythSettingsData.cs` | 模组设置数据（`ModSettings` 子类，`GetSettings<T>` 读写 Config 目录）：公会开关 + 六条 `Scribe_Deep` 曲线 |
+| | `FamiliaMythSettings.cs` | 模组设置项门面：实验性内容开关（`GuildContentEnabled`）、教程开关（`TutorialLettersEnabled`）与六维曲线读写（`Curve` / `ResetCurve` / `ResetAllCurves`） |
+| | `FamiliaMythSettingsData.cs` | 模组设置数据（`ModSettings` 子类，`GetSettings<T>` 读写 Config 目录）：公会开关 + 教程开关 + 六条 `Scribe_Deep` 曲线 |
 | | `Patch_*.cs` | Harmony 补丁（命名与异常防护细则见 C-03） |
 | | `DebugAction_*.cs` | 开发者模式调试指令（恩惠 / 任务 / 杂项：导出咏唱词纹理） |
 | | `Mote_Incantation.cs` + `Textures/Familia_Myth/Incantation/` | 咏唱词纹理：只读离线预渲染 PNG（1.6 用调试指令导出），缺失时报错；`MeshHeight` / `TextHeightRatio` / `marginRatio` 分层控制字号与飞溅留白 |

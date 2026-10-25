@@ -1,3 +1,4 @@
+using FamiliaMyth.Core;
 using FamiliaMyth.Feedback;
 using FamiliaMyth.Pharna;
 using RimWorld;
@@ -114,6 +115,8 @@ namespace FamiliaMyth.Abilities
                 var temp = ToTrait;
                 pharna.pawn.story.traits.GainTrait(temp);
             }
+
+            TutorialLetterHelper.TrySend(TutorialLetterHelper.FirstDevAbility, pharna.pawn);
         }
 
         //指定初始化熟练度的添加方法，仅限开发者或重建恩惠时使用

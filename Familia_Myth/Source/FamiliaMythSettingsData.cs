@@ -9,6 +9,7 @@ namespace FamiliaMyth.Core
     public class FamiliaMythSettingsData : ModSettings
     {
         public bool guildContent;
+        public bool tutorialLetters = true;
 
         private SimpleCurve curveStrength;
         private SimpleCurve curveEndurance;
@@ -54,6 +55,7 @@ namespace FamiliaMyth.Core
         public override void ExposeData()
         {
             Scribe_Values.Look(ref guildContent, "guildContent", false);
+            Scribe_Values.Look(ref tutorialLetters, "tutorialLetters", true);
             curveStrength = ScribeCurve(curveStrength, "curveStrength", PharnaStatusType.Strength);
             curveEndurance = ScribeCurve(curveEndurance, "curveEndurance", PharnaStatusType.Endurance);
             curveDexterity = ScribeCurve(curveDexterity, "curveDexterity", PharnaStatusType.Dexterity);
