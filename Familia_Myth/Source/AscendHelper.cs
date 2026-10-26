@@ -71,7 +71,7 @@ namespace FamiliaMyth.Pharna
         //各稀有度的抽取权重
         private const float CommonWeight = 20f;
         private const float UncommonWeight = 10f;
-        private const float RareWeight = 1f;
+        private const float RareWeight = 2.5f;
 
         //保底：连续未获得罕见奖励时，罕见权重每层增加的倍率与封顶
         private const float PityWeightStep = 2f;

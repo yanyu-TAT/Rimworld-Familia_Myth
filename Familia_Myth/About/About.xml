@@ -3,10 +3,9 @@
 <ModMetaData>
     <name>Familia Myth</name>
     <author>yanyu</author>
-    <description>参考了大量《在地下城期待邂逅是否搞错了什么》中的设定的模组。</description>
+    <description>参考了大量《在地下城寻求邂逅是否搞错了什么》以及其他ACGN作品中的设定的模组。扮演降临下界的神明，通过赋予殖民者们神之恩惠，参与到这则眷族神话中吧！</description>
     <packageId>yanyu.familiamyth</packageId>
-	<!-- 进行本地试玩时中间版本，部分预定的升华奖励尚未完成 -->
-    <modVersion>0.0.5</modVersion>
+    <modVersion>1.0.0</modVersion>
 
     <supportedVersions>
         <li>1.6</li>

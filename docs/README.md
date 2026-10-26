@@ -1,6 +1,6 @@
 # docs — 项目文档体系
 
-> 本目录为 Familia Myth 的规范与知识文档库。权威源为根目录 `AGENTS.md`；Bug 反哺闭环见 `docs/B/B-04-BUG知识库.md`。
+> 本目录为 Familia Myth（在边缘世界寻求邂逅是否搞错了什么？）的规范与知识文档库。权威源为根目录 `AGENTS.md`；Bug 反哺闭环见 `docs/B/B-04-BUG知识库.md`。
 
 ## 目录结构
 
