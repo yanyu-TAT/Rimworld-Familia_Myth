@@ -2,8 +2,8 @@
 <Defs>
   <!-- 君王之剑边缘辉光着色器：
        本模组采用自定义着色器，需将 .shader 打包进 asset bundle。
-       打包时 bundle 内路径签约为 Assets/Data/Familia_Myth/Materials/KingsSword.shader，
-       运行时 ContentFinder<Shader>.TryFindAssetInModBundles("KingsSword") 加载。
+       运行时由 FamiliaMythShader.Resolve 先按 shaderPath 的文件名在自身 bundle 内查找，
+       未命中再回落到原版 ShaderTypeDef.Shader 的路径查找（不受 mod 文件夹名影响）。
        若未打包(仅放置 .shader 文件)将无法加载，会回退到默认着色器（功能不受影响，仅辉光失效）。 -->
   <ShaderTypeDef>
     <defName>KingsSword</defName>

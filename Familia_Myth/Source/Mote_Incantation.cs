@@ -128,7 +128,12 @@ namespace FamiliaMyth.Abilities
             {
                 if (whiteMat == null)
                 {
-                    var shader = DefDatabase<ShaderTypeDef>.GetNamed("IncantationText").Shader;
+                    Shader shader = FamiliaMythShader.Resolve("IncantationText");
+                    if (shader == null)
+                    {
+                        Log.Error("[FamiliaMyth] IncantationText shader unavailable, falling back to MoteGlow.");
+                        shader = ShaderDatabase.MoteGlow;
+                    }
                     whiteMat = new Material(shader)
                     {
                         name = "Mote_Incantation_SharedWhite",

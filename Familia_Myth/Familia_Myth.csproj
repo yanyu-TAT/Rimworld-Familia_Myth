@@ -59,6 +59,10 @@
       <HintPath>..\lib\1.6\UnityEngine.CoreModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>..\lib\1.6\UnityEngine.AssetBundleModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
       <HintPath>..\lib\1.6\UnityEngine.IMGUIModule.dll</HintPath>
       <Private>false</Private>

@@ -30,6 +30,7 @@ $sourceMap = if ($Version -eq '1.6') {
         "$managed\netstandard.dll"                         = 'netstandard.dll'
         "$managed\UnityEngine.dll"                         = 'UnityEngine.dll'
         "$managed\UnityEngine.CoreModule.dll"              = 'UnityEngine.CoreModule.dll'
+        "$managed\UnityEngine.AssetBundleModule.dll"         = 'UnityEngine.AssetBundleModule.dll'
         "$managed\UnityEngine.IMGUIModule.dll"             = 'UnityEngine.IMGUIModule.dll'
         "$managed\UnityEngine.InputLegacyModule.dll"       = 'UnityEngine.InputLegacyModule.dll'
         "$managed\UnityEngine.TextRenderingModule.dll"     = 'UnityEngine.TextRenderingModule.dll'
