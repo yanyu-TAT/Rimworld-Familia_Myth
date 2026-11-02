@@ -1,6 +1,8 @@
 # AGENTS.md — AI 编程助手指南
 
 > **共享知识库 `kb/` 的位置**：`D:\CODE\rim\kb\`。本项目根目录下的 `kb/` 是指向该目录的**目录联接**（junction），因此 `kb/...` 与 `..\kb\...` 两种写法等价，**不是**项目内的独立副本。
+>
+> ⚠ **沙盒边界与提权**：以本项目目录为工作区的会话对 `kb/` **只读** —— 沙盒按真实路径判定工作区，经联接的写入落在工作区外会被拒绝。需要写入 kb（反编译输出、知识条目、文档）时，在**该次工具调用**上申请提权：`sandbox_permissions: danger-full-access` + `justification` 说明用途（如「向共享知识库 kb 写入反编译输出」）；每次写入单独申请，不静默落盘、不把内容写进项目目录冒充已入库。
 
 > 本文件为本项目 AI 编程规范的**权威源**。详细规则见 `docs/B/B-01-开发规范.md`，Bug 反哺见 `docs/B/B-04-BUG知识库.md`。
 
@@ -37,6 +39,7 @@
 | 编译     | `dotnet build Familia_Myth/Familia_Myth.csproj`（一次出 1.6 + 1.7 两版；`-f net472` / `-f net10.0` 单编） |
 | 刷新引用副本 | `pwsh -File .\13-同步引用库.ps1 -Version 1.6`（或 `1.7`，需先把 Steam 切到该版本） |
 | 清理构建产物 | 运行 `11.bat`（清除 1.6 / 1.7 目录中非本模组 DLL 与 obj/）                      |
+| 打包上传   | `pwsh -File .\14-打包.ps1`（构建 Release + 输出 `package\Familia_Myth`，含 DLL 构建配置校验、完整性校验；`-SkipBuild` 跳过构建，`-NoSource` 不带源码） |
 | 反编译原版  | 通过 ilspycmd 输出到 `kb/L0-证据/decompiled/<版本>/`，详见 `kb/L0-证据/decompiled/README.md`（1.6 程序集在 `RimWorldWin64_Data\Managed\`，1.7 在游戏根目录）             |
 | 查看游戏日志 | 项目根目录 `Player.log`                                               |
 | 检查 XML | PowerShell `[xml](Get-Content <file>)` 解析验证                      |
@@ -306,9 +309,10 @@
 | **存档级与场地** | `GameComponent_*.cs` | 存档级追踪与引擎（评级 / 使者 / 位移击退 / 定时动作 / 教程标记） |
 | | `MapComponent_*.cs` | 地图级状态（恩惠特效管理） |
 | **表现层** | `Mote_*.cs` | 地图特效（咏唱词 / 魔法阵 / 光环 / 斩击等） |
-| | `UI_*.cs` | UI 基础设施与页面：`UI_Palette` 全局色源 / `UI_Scope` GUI 状态作用域 / `UI_Text` 度量与截断 / `UI_Bar` 进度条与门槛刻度 / `UI_Layout` 纵向游标 / `UI_GroupBox` 卡片 / `UI_RadarChart` 雷达图 / `UI_FamiliaPage` 眷族页 / `UI_SettingsPage` 模组设置页 / `UI_CurveEditor` 曲线编辑器 |
+| | `UI_*.cs` | UI 基础设施与页面：`UI_Palette` 全局色源 / `UI_Scope` GUI 状态作用域 / `UI_Text` 度量与截断 / `UI_Bar` 进度条与门槛刻度 / `UI_Layout` 纵向游标 / `UI_GroupBox` 卡片 / `UI_FoldHeader` 折叠头 / `UI_RadarChart` 雷达图 / `UI_FamiliaPage` 眷族页 / `UI_SettingsPage` 模组设置页 / `UI_CurveEditor` 曲线编辑器 |
 | | `Window_FamiliaBase.cs` + `Dialog_AscendReward.cs` | 窗口基类（内容区模板 + 初始尺寸换算）与升华奖励弹窗（符文动画） |
-| | `ITab_Pawn_Pharna.cs` | Pawn 级「恩惠」页签：能力 / 发展能力 / 技能·魔法 / 伟业 四分区（仅受恩惠者可见），顶栏含铭刻选取；六维条与发展能力条按显示值追赶真实值（亮度随剩余差距衰减） |
+| | `ITab_Pawn_Pharna.cs` | Pawn 级「恩惠」页签：能力 / 发展能力 / 技能·魔法 / 伟业 四分区（仅受恩惠者可见），顶栏含铭刻选取与加成统计入口；六维条与发展能力条按显示值追赶真实值（亮度随剩余差距衰减） |
+| | `Window_PharnaBonus.cs` + `PharnaBonusStats.cs` | 恩惠加成统计副窗口（按原版分类 / 属性两级折叠，列出恩惠来源的加成说明）与其数据层（收集 `ExplanationPart` 文本、拆分说明与数值、正负判定与排序） |
 | | `HistoryTabHelper.cs` + `Gizmo_ManaPool.cs` | 历史窗口眷族页签接入（含失效兜底）与魔力池 Gizmo |
 | **工具与基础设施** | `WeaponHelper.cs` | 武器查询与直线索敌 / 射线工具 |
 | | `HealHelper.cs` | 伤口与断肢治疗工具 |
@@ -321,6 +325,7 @@
 | | `Defs/` + `Patches/` + `Languages/` | XML 定义、条件补丁与中英本地化 |
 | | `LoadFolders.xml` + `1.6/` + `1.7/` | 双版本装载：`<v1.6>` / `<v1.7>` 各装载共享根目录与对应版本目录（细则见 B-05） |
 | | `13-同步引用库.ps1` | 从 Steam 游戏与创意工坊刷新 `lib\<版本>\` 引用副本（含哈希记录） |
+| | `14-打包.ps1` | 构建 Release 并输出 `package/Familia_Myth`（含 DLL 构建配置校验与完整性校验）；`-SkipBuild` 跳过构建，`-NoSource` 不带源码 |
 
 > 本表只做**定位索引**：每行一句话说明该文件 / 前缀负责什么。机制细节、常量与信号约定见 `docs/C/C-02-架构详解.md`，长期约定见 `docs/C/C-03-项目长期记忆.md`，任务与内容明细见 `docs/C/C-04-已实现内容清单.md`。新增模块/文件时同步更新本表。
 

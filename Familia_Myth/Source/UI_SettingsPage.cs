@@ -15,7 +15,6 @@ namespace FamiliaMyth.UI
         private const float PlotSide = 300f;
         private const float IndentStep = 14f;
         private const float SectionGap = 6f;
-        private const float IconSize = 18f;
         private const float ResetAllWidth = 90f;
         private const float ScrollBarWidth = 20f;
 
@@ -86,40 +85,9 @@ namespace FamiliaMyth.UI
             }
         }
 
-        //折叠分组头：rect 已按层级缩进，底色铺满 rect（右端到行尾），右侧 rightReserve 留给按钮
+        //折叠分组头：视觉与交互统一由 UI_FoldHeader 提供
         private static bool DrawFoldHeader(Rect rect, string label, string tooltip, bool expanded, float rightReserve = 0f)
-        {
-            Widgets.DrawBoxSolid(rect, UI_Palette.TitleBarBg);
-            Widgets.DrawBoxSolid(new Rect(rect.x, rect.y, 3f, rect.height), UI_Palette.Accent);
-
-            Rect clickRect = new(rect.x, rect.y, Mathf.Max(rect.width - rightReserve, 1f), rect.height);
-            Widgets.DrawHighlightIfMouseover(clickRect);
-
-            Rect iconRect = new(rect.x + 9f, rect.y + (rect.height - IconSize) * 0.5f, IconSize, IconSize);
-            Texture2D icon = ContentFinder<Texture2D>.Get(expanded ? "UI/Buttons/Minus" : "UI/Buttons/Plus", false);
-            if (icon is not null)
-            {
-                GUI.DrawTexture(iconRect, icon);
-            }
-            else
-            {
-                using (UI_Scope.Text(GameFont.Small, TextAnchor.MiddleCenter))
-                using (UI_Scope.Color(Color.white))
-                    Widgets.Label(iconRect, expanded ? "-" : "+");
-            }
-
-            Rect labelRect = new(iconRect.xMax + 7f, rect.y, Mathf.Max(clickRect.xMax - iconRect.xMax - 7f, 1f), rect.height);
-            using (UI_Scope.Text(GameFont.Small, TextAnchor.MiddleLeft))
-            using (UI_Scope.Color(UI_Palette.TextNormal))
-                Widgets.Label(labelRect, label);
-
-            if (!tooltip.NullOrEmpty())
-            {
-                TooltipHandler.TipRegion(clickRect, tooltip);
-            }
-
-            return Widgets.ButtonInvisible(clickRect);
-        }
+            => UI_FoldHeader.Draw(rect, label, tooltip, expanded, rightReserve);
 
         private static void DrawTutorialToggle(Rect row)
         {

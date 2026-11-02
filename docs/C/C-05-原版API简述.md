@@ -550,3 +550,15 @@ battleActive / battleExitTick（超时未刷新即视为战斗结束）
 - 原版"事件触发说明信"的现成范式是 `ResearchProjectDef.discoveredLetterTitle/Text`（`Data/Core/Defs/ResearchProjectDefs/ResearchProjects_4_MultiAnalyzer.xml` 的 Fabrication 条目即"高级零部件"提示信）：一次事件一封信、正文给途径，不依赖 ConceptDef / Tutor。
 - `ConceptDef`（`RimWorld/ConceptDef.cs`）：`priority <= 0` 直触发、`helpText` 支持 `{Key:...}`、`highlightTags` 高亮原版控件；`LearningReadout` 管右上角学习提示与 `showAllMode` 浏览。本模组未使用——长文本引导走信件，回看交给历史页签。
 - 存档级一次性标记：`Scribe_Collections.Look` 有 `ref List<T>` / `ref HashSet<T>` 重载（`Verse/Scribe_Collections.cs:524`），`GameComponent.ExposeData` 为 virtual（`Verse/GameComponent.cs:19`）→ 标记挂在 `GameComponent` 上随档持久化，不用 static。
+
+## 十八、窗口、属性信息卡与文本度量
+
+- `WindowStack.Add`（`Verse/WindowStack.cs:358`）内部依次 `RemoveWindowsOfType(同类型)` → `PreOpen` → `InsertAtCorrectPositionInList` → `FocusAfterInsertIfShould` → `PostOpen`，故同类型窗口只会存在一个。
+- 页签的 OnGUI 内打开窗口是安全的：`WindowStackOnGUI` 先把 `windows` 复制到 `windowStackOnGUITmpList` 再遍历（`Verse/WindowStack.cs:205-215`），`Add` / `TryRemove` 只改 `windows` 本体，不会破坏枚举。原版 `ITab_Bills` 即在页签回调里打开 `Dialog_MessageBox`。
+- `WindowStack.WindowOfType<T>()`（`Verse/WindowStack.cs:330`）：返回首个匹配窗口或 `null`，用于「已打开则关闭」判重。
+- 非模态窗口的字段组合：`forcePause=false`、`absorbInputAroundWindow=false`、`preventCameraMotion=false`、`closeOnCancel=true`、`draggable=true`、`resizeable=false`。
+- `TooltipHandler.TipRegion` 只有 `(Rect, Func<string>, int)` 与 `(Rect, TipSignal)` 两个重载；`TipSignal` 对 `string` / `TaggedString` 都有隐式转换（`Verse/TipSignal.cs:103,108`），故 `TipRegion(rect, "Key".Translate())` 与 `new TipSignal("Key".Translate())` 等价。`TipSignal(TaggedString)` 以文本哈希作 `uniqueId`（`TipSignal.cs:63-74`），同一条 tooltip 重复注册不会叠加；`TipRegion` 仅在 `EventType.repaint` 且鼠标悬停时登记（`Verse/TooltipHandler.cs:79-97`）。
+- `Pawn_StoryTracker.favoriteColor` 是 `ColorDef`（`RimWorld/Pawn_StoryTracker.cs:32`），取 `.color` 得色值；Ideology 启用时自动生成，未启用或未生成时为 null。
+- 原版属性信息卡排序：`category.displayOrder` 升序 → `DisplayPriorityWithinCategory` 降序 → `LabelCap`（`RimWorld/StatsReportUtility.cs:281`）；其中 `StatDrawEntry.DisplayPriorityWithinCategory => stat.displayPriorityInCategory`（`RimWorld/StatDrawEntry.cs:70,79`）。`StatCategoryDef` 的排序字段即 `displayOrder`（`RimWorld/StatCategoryDef.cs:7`）。
+- 文本换行：`Text.WordWrap` 默认 true；`Widgets.Label(rect, string)` 走 `GUI.Label` + `Text.CurFontStyle`（`Verse/Widgets.cs:894`），`Text.CalcHeight(text, width)` 用同一 `CurFontStyle.CalcHeight`（`Verse/Text.cs:209`）→ 按 `CalcHeight` 定高绘制即可正确换行。
+- `StatRequest.For(Thing)` / `For(Thing, Pawn)`（`RimWorld/StatRequest.cs:59,76`）构造属性请求；`StatPart.ExplanationPart(StatRequest)`（`RimWorld/StatPart.cs:16`）返回该 part 的说明文本（可多行，按 `\n` 拆分），只读无副作用，可在 UI 层直接调用。

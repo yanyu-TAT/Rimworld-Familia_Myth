@@ -247,6 +247,14 @@ namespace FamiliaMyth.UI
             const float ButtonW = 72f;
             const float TextW = 200f;
             const float Gap = 6f;
+            const float BonusButtonW = 76f;
+
+            //左侧：加成统计入口
+            Rect bonusRect = new(bar.x, bar.y + 1f, BonusButtonW, bar.height - 2f);
+            if (Widgets.ButtonText(bonusRect, (string)"FamiliaMyth.Panel.OpenBonus".Translate(), drawBackground: true, doMouseoverSound: true))
+                ToggleBonusWindow(pharna);
+
+            TooltipHandler.TipRegion(bonusRect, new TipSignal("FamiliaMyth.Panel.OpenBonusTooltip".Translate()));
 
             float right = bar.xMax - CloseBtnReserve;
             Rect buttonRect = new(right - ButtonW, bar.y + 1f, ButtonW, bar.height - 2f);
@@ -269,6 +277,20 @@ namespace FamiliaMyth.UI
 
             if (active && Widgets.ButtonText(buttonRect, buttonLabel, drawBackground: true, doMouseoverSound: true))
                 selectingInscription = !selectingInscription;
+        }
+
+        //加成统计副窗口：已打开则关闭，否则以当前角色打开
+        private static void ToggleBonusWindow(Hediff_Pharna pharna)
+        {
+            Window_PharnaBonus open = Find.WindowStack.WindowOfType<Window_PharnaBonus>();
+            if (open != null)
+            {
+                open.Close();
+                return;
+            }
+
+            if (pharna?.pawn != null)
+                Find.WindowStack.Add(new Window_PharnaBonus(pharna.pawn));
         }
 
         //==================== 发展能力 ====================

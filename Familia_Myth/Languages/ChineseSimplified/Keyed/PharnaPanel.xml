@@ -45,4 +45,10 @@
   <FamiliaMyth.Panel.InscriptionPickTip>点击铭刻此项</FamiliaMyth.Panel.InscriptionPickTip>
   <FamiliaMyth.Panel.InscribedDesc>已铭刻</FamiliaMyth.Panel.InscribedDesc>
 
+  <!-- 加成统计副窗口：页签顶栏按钮、窗口标题与空态 -->
+  <FamiliaMyth.Panel.OpenBonus>查看加成</FamiliaMyth.Panel.OpenBonus>
+  <FamiliaMyth.Bonus.Title>综合加成统计</FamiliaMyth.Bonus.Title>
+  <FamiliaMyth.Bonus.Empty>暂无加成</FamiliaMyth.Bonus.Empty>
+  <FamiliaMyth.Panel.OpenBonusTooltip>查看当前殖民者的恩惠所提供的具体加成\n（仅包含基础能力值和发展能力提供的加成）</FamiliaMyth.Panel.OpenBonusTooltip>
+
 </LanguageData>

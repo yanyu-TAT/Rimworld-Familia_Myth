@@ -45,4 +45,10 @@
   <FamiliaMyth.Panel.InscriptionPickTip>Click to inscribe this status</FamiliaMyth.Panel.InscriptionPickTip>
   <FamiliaMyth.Panel.InscribedDesc>Inscribed</FamiliaMyth.Panel.InscribedDesc>
 
+  <!-- Bonus summary window: tab bar button, window title and empty state -->
+  <FamiliaMyth.Panel.OpenBonus>View Bonuses</FamiliaMyth.Panel.OpenBonus>
+  <FamiliaMyth.Bonus.Title>Bonus Summary</FamiliaMyth.Bonus.Title>
+  <FamiliaMyth.Bonus.Empty>No bonuses yet</FamiliaMyth.Bonus.Empty>
+  <FamiliaMyth.Panel.OpenBonusTooltip>View the specific bonuses granted by this colonist's Pharna.\n(Only bonuses from base status and developable abilities are included.)</FamiliaMyth.Panel.OpenBonusTooltip>
+
 </LanguageData>

@@ -34,6 +34,10 @@ namespace FamiliaMyth.UI
         public static readonly Color Warning = new(1f, 0.75f, 0.2f);
         public static readonly Color Disabled = new(0.45f, 0.45f, 0.5f);
 
+        //加成统计：数值为正/为负时的文本色
+        public static readonly Color BonusPositive = new(0.45f, 0.92f, 0.55f);
+        public static readonly Color BonusNegative = new(1f, 0.45f, 0.45f);
+
         //信件正文：计算数值与否定结论（淡金强调复用 Accent）
         public static readonly Color LetterValue = new(0.62f, 0.80f, 0.95f);
         public static readonly Color LetterWarn = new(1f, 0.52f, 0.52f);

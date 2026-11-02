@@ -21,8 +21,9 @@
 | 意志/美德 | `MentalState_Virtue.cs`（含触发当拍的心声飘字）+ `Defs/HediffDefs/Hediff_Virtues.xml`（五种 Buff 与范围光环）+ `Patch_Virtue_Trigger.cs`（崩溃前拦截）+ `Hediff_Pharna.TryTriggerVirtue`（概率/冷却/类型抽取） |
 | 公会 | `GameComponent_FamiliaRankTracker.cs` + `GameComponent_GuildEnvoyTracker.cs`（单槽使者）+ `GuildQuestDef/Generator*`（统一工厂 `GuildQuestGenerator.Create(def)` + `Available()` 发布预筛）+ `QuestUtilities.cs` + 任务三件套（`QuestNode_Root_*` / `QuestPart_*` / `SiteClearanceReward`，细节见 C-02）+ 世界对象交互 comp（`WorldObjectComp_*`，如物资押运的定居点按钮）+ 任务脚本（`Defs/QuestScriptDefs/`） |
 | 眷族 UI | `UI_FamiliaPage.cs` + `UI_RadarChart.cs` |
+| 恩惠 UI | `ITab_Pawn_Pharna.cs`（四分区页签 + 顶栏入口）+ `Window_PharnaBonus.cs` + `PharnaBonusStats.cs`（加成统计副窗口与其数据层）+ `UI_FoldHeader.cs`（折叠头）+ `UI_GroupBox.cs` / `UI_Bar.cs` / `UI_Palette.cs` 等基础件 |
 | 特效 | `Mote_*.cs` + `Textures/` + `Materials/` |
-| 本地化 | `Languages/` —— `Keyed/`（代码内文本 6 个文件）+ `DefInjected/`（Def 文本，文件名与 `Defs/` 一一对应）；中英逐键对称（`12-本地化检查.ps1` 七项全绿；第 [1] 项 262 键全覆盖）。机制与四条文本路径见 C-03，术语基准见 C-06 |
+| 本地化 | `Languages/` —— `Keyed/`（代码内文本 7 个文件）+ `DefInjected/`（Def 文本，文件名与 `Defs/` 一一对应）；中英逐键对称（`12-本地化检查.ps1` 七项全绿；第 [1] 项 270 键全覆盖）。机制与四条文本路径见 C-03，术语基准见 C-06 |
 
 ## 内容索引
 
