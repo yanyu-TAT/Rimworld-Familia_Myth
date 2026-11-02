@@ -550,6 +550,7 @@ battleActive / battleExitTick（超时未刷新即视为战斗结束）
 - 原版"事件触发说明信"的现成范式是 `ResearchProjectDef.discoveredLetterTitle/Text`（`Data/Core/Defs/ResearchProjectDefs/ResearchProjects_4_MultiAnalyzer.xml` 的 Fabrication 条目即"高级零部件"提示信）：一次事件一封信、正文给途径，不依赖 ConceptDef / Tutor。
 - `ConceptDef`（`RimWorld/ConceptDef.cs`）：`priority <= 0` 直触发、`helpText` 支持 `{Key:...}`、`highlightTags` 高亮原版控件；`LearningReadout` 管右上角学习提示与 `showAllMode` 浏览。本模组未使用——长文本引导走信件，回看交给历史页签。
 - 存档级一次性标记：`Scribe_Collections.Look` 有 `ref List<T>` / `ref HashSet<T>` 重载（`Verse/Scribe_Collections.cs:524`），`GameComponent.ExposeData` 为 virtual（`Verse/GameComponent.cs:19`）→ 标记挂在 `GameComponent` 上随档持久化，不用 static。
+- Keyed 富文本：`LoadedLanguage` 经 `DirectXmlLoaderSimple.ValuesFromXmlFile` 取 `XElement.Value`（反转义后的文本，`Verse/DirectXmlLoaderSimple.cs`），所以标签要写成 `&lt;color=#RRGGBB&gt;…&lt;/color&gt;`；裸写 `<color=...>` 是非法 XML（元素名含 `=` / `#`）。`Translate` 返回 `TaggedString`，信件全程不转 `string` 即可保留标签。
 
 ## 十八、窗口、属性信息卡与文本度量
 

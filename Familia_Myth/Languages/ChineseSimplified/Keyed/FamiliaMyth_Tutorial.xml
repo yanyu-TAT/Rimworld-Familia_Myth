@@ -15,7 +15,7 @@
 
 	<!-- 首次获得恩惠 -->
 	<FamiliaMyth.Tutorial.intro_grant.Label>神之恩惠</FamiliaMyth.Tutorial.intro_grant.Label>
-	<FamiliaMyth.Tutorial.intro_grant.Text>{0} 已获得神之恩惠，成为了你眷族的第一名成员。\n以下是一些你可能会想知道的相关事项：\n\n能力值：\n六维能力值会随日常行为增长：\n战斗与锻炼以提升力量，\n承受伤害与获取营养以提升耐久，\n精密工作会提升灵巧，\n奔跑和闪避会提升敏捷，\n使用魔法产生心灵熵以提升魔力，\n冥想与人际交流则会提升意志。\n六项能力值的数值可以在其「恩惠」页签中查看。\n\n伟业：\n伟业来自战斗结算——输出、承伤与支援都会被计算在内，是升华恩惠的必要条件之一。\n\n现在还有一次铭刻机会：\n在「恩惠」页签顶栏选择一项能力值，此后获得的经验会按比例转化为该能力值。\n每次升华后即可重新铭刻到其他能力。</FamiliaMyth.Tutorial.intro_grant.Text>
+	<FamiliaMyth.Tutorial.intro_grant.Text>{0} 已获得神之恩惠，成为了你眷族的第一名成员。\n以下是一些你可能会想知道的相关事项：\n\n能力值：\n六维能力值会随日常行为增长：\n&lt;color=#D0A15F&gt;战斗与锻炼&lt;/color&gt;以提升力量，\n&lt;color=#D0A15F&gt;承受伤害与获取营养&lt;/color&gt;以提升耐久，\n&lt;color=#D0A15F&gt;精密工作&lt;/color&gt;会提升灵巧，\n&lt;color=#D0A15F&gt;奔跑和闪避&lt;/color&gt;会提升敏捷，\n&lt;color=#D0A15F&gt;使用魔法产生心灵熵&lt;/color&gt;以提升魔力，\n&lt;color=#D0A15F&gt;冥想与人际交流&lt;/color&gt;则会提升意志。\n六项能力值的数值可以在其「恩惠」页签中查看。\n\n伟业：\n伟业来自战斗结算——输出、承伤与支援都会被计算在内，是升华恩惠的必要条件之一。\n\n现在还有一次铭刻机会：\n在「恩惠」页签顶栏选择一项能力值，此后获得的经验会按比例转化为该能力值。\n每次升华后即可重新铭刻到其他能力。</FamiliaMyth.Tutorial.intro_grant.Text>
 
 	<!-- 首次跨过 500 -->
 	<FamiliaMyth.Tutorial.bottleneck.Label>瓶颈期</FamiliaMyth.Tutorial.bottleneck.Label>
