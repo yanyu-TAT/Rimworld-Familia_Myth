@@ -174,6 +174,7 @@ namespace FamiliaMyth.Core
  *          1. The World的tick patch（未验证）
  *          2. 咏唱词的大量纹理
  *          3. 可能存在的1.7兼容问题（未验证）
+ *          4. StaticConstructer导致的黄字
  * - [ ] 优化实现方式，提升可扩展性
  * - [ ] 添加由玩家操纵/自定义的神明化身
  * - [ ] 修改仪式演出
