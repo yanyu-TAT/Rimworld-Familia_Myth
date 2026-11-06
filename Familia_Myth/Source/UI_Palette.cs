@@ -56,6 +56,15 @@ namespace FamiliaMyth.UI
             new Color(1.00f, 0.55f, 0.15f), new Color(1.00f, 0.32f, 0.28f), new Color(1.00f, 0.15f, 0.55f)
         };
 
+        //书籍风图鉴：书皮、纸面、墨色与页线
+        public static readonly Color BookCover = new(0.26f, 0.20f, 0.14f);
+        public static readonly Color BookPaper = new(0.93f, 0.89f, 0.80f);
+        public static readonly Color BookPaperAlt = new(0.88f, 0.84f, 0.75f);
+        public static readonly Color BookInk = new(0.20f, 0.16f, 0.12f);
+        public static readonly Color BookInkSoft = new(0.42f, 0.36f, 0.28f);
+        public static readonly Color BookRule = new(0.55f, 0.48f, 0.36f, 0.6f);
+        public static readonly Color BookSpine = new(0.30f, 0.24f, 0.18f);
+
         //表格行交错底色
         public static readonly Color RowStripe = new(1f, 1f, 1f, 0.035f);
 

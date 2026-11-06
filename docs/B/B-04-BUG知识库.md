@@ -351,3 +351,35 @@
 - 是否规范缺失: 是（缺少「静态字段初始化器不得做翻译/查 Def」的时机约束）
 - 规范反哺: AGENTS.md「八、AI 高频错误」新增第 23 条。
 - 关联: 次数 1
+
+## BUG-043 | Def 的 `TaggedString` 字段不做 XML 换行转义 → 趣闻显示字面 `\n`
+- 现象: 图鉴趣闻（`<anecdote>`）里的 `\n` 原样显示成两个字符，不换行；同文件的 `<description>` 换行正常。
+- 根因: `DirectXmlToObject` 把字面 `\n` 换成真换行的 `InnerTextWithReplacedNewlinesOrXML` 只作用于 `string` 字段（`Verse/DirectXmlToObject.cs:98`）；`TaggedString` 走 `ParseHelper.ParseTaggedString`（`Verse/ParseHelper.cs:356,402`）原样包装，不做替换。
+- 修复方案: 读取处统一 `Replace("\\n", "\n")`（`Window_AscendRewardCollection.ReplaceLineBreaks`），Def 与 DefInjected 两条来源一并覆盖。
+- 是否规范缺失: 是（缺少「`TaggedString` 与 `string` 的 XML 转义差异」的 API 事实）
+- 规范反哺: AGENTS.md「八、AI 高频错误」新增第 26 条。
+- 关联: 次数 1
+
+## BUG-044 | 自绘窗口边缘露出一条原版窗口底色
+- 现象: 窗口内容已画满 `DoWindowContents` 收到的 `inRect`，外圈仍有一条深色带。
+- 根因: `Window.InnerWindowOnGUI` 用 `Margin`（默认 18f）把内容区缩进后再传给 `DoWindowContents(rect3.AtZero())`（`Verse/Window.cs:249,258`），并在整个 `windowRect` 上画 `doWindowBackground`（`Window.cs:212-215`）——两者之间的 `Margin` 宽度露出原版底色。
+- 修复方案: 子类 `protected override float Margin => 0f;` + 构造函数 `doWindowBackground = false;`，背景自行铺满整窗。
+- 是否规范缺失: 是（缺少「自绘窗口须处理 `Margin` 与原版背景」的 API 事实）
+- 规范反哺: AGENTS.md「八、AI 高频错误」新增第 25 条。
+- 关联: 次数 1
+
+## BUG-045 | `GameFont.Large` 不存在 → CS0117
+- 现象: 编译报错 `GameFont 未包含 Large 的定义`。
+- 根因: 凭记忆假设有四档字号；原版枚举只有 `Tiny / Small / Medium`（`Verse/GameFont.cs`）。
+- 修复方案: 用 `Medium`（最大档），层级改由位置、颜色与分隔线承担。
+- 是否规范缺失: 是（凭记忆使用不存在的 API，属高频错误 #1 的同型）
+- 规范反哺: AGENTS.md「八、AI 高频错误」新增第 24 条。
+- 关联: 次数 1
+
+## BUG-046 | 子类常量与基类成员同名 → CS0108 隐藏警告
+- 现象: `ScreenFraction` / `HeaderHeight` / `FooterRowHeight` 三条「隐藏继承的成员」警告。
+- 根因: `Window.FooterRowHeight`（55f，`Window.cs:74`）、`Window_FamiliaBase.HeaderHeight`（46f）与 `ScreenFraction`（0.9f）已存在，子类自定义同名常量。
+- 修复方案: 改名 `MaxScreenHeightFraction` / `PageHeaderHeight` / `PageFooterRowHeight`。
+- 是否规范缺失: 否（普通命名冲突）
+- 规范反哺: 写子类常量前先查基类成员即可。
+- 关联: 次数 1

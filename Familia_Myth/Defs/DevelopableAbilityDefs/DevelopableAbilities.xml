@@ -40,6 +40,7 @@
     <defName>DevelopableAbility_Healing</defName>
     <label>治愈</label>
     <description>提升治疗品质、医疗/手术速度以及手术成功率的发展能力。通过治疗伤员、进行手术提升熟练度。</description>
+    <anecdote>谁会赢？精心包装的现代医药，还是医疗20级小人的双手？</anecdote>
     <abilityClass>FamiliaMyth.Abilities.DevelopableAbility_Healing</abilityClass>
     <maxProficiency>999</maxProficiency>
     <rarity>Common</rarity>
@@ -51,6 +52,7 @@
     <defName>DevelopableAbility_LuckOfTheSea</defName>
     <label>海之眷顾</label>
     <description>提升钓鱼速度与产出数量，并有概率在钓鱼时额外获得稀有渔获的发展能力。通过钓鱼提升熟练度。</description>
+    <anecdote>——我已经掌握了钓鱼的核心！\n——你钓上来的真的是鱼吗？\n——总之有钓上来东西就不算空军！</anecdote>
     <abilityClass>FamiliaMyth.Abilities.DevelopableAbility_LuckOfTheSea</abilityClass>
     <maxProficiency>999</maxProficiency>
     <rarity>Uncommon</rarity>
@@ -62,6 +64,7 @@
     <defName>DevelopableAbility_Botany</defName>
     <label>植生学</label>
     <description>提升播种/收获速度、收获效率以及野外采集效率的发展能力。通过植物类工作提升熟练度。</description>
+    <anecdote>——所以你是怎么从一株药草上拔出两份草药的？\n——一定是神明大人的赐福吧！\n——那祂就不能直接给我们草药吗……</anecdote>
     <abilityClass>FamiliaMyth.Abilities.DevelopableAbility_Botany</abilityClass>
     <maxProficiency>999</maxProficiency>
     <rarity>Common</rarity>
@@ -73,6 +76,7 @@
     <defName>DevelopableAbility_Mineralogy</defName>
     <label>矿物学</label>
     <description>提升采矿/深钻井操作速度以及采矿效率的发展能力。通过采矿类工作提升熟练度。</description>
+    <anecdote>据完全不统计，持有这项能力的殖民者的出勤次数似乎格外的多</anecdote>
     <abilityClass>FamiliaMyth.Abilities.DevelopableAbility_Mineralogy</abilityClass>
     <maxProficiency>999</maxProficiency>
     <rarity>Common</rarity>
@@ -84,6 +88,7 @@
     <defName>DevelopableAbility_WeaponAttunement</defName>
     <label>武器同调</label>
     <description>提升近战命中率，并通过装备近战武器积累武器熟练度的发展能力。武器熟练度提供概率重置攻击冷却与暴击概率。通过近战战斗提升熟练度。</description>
+    <anecdote>——我知道你很喜欢那把武器，但真的有必要连上厕所的时候都带着它吗？\n——你懂什么！上厕所的时候最容易被偷袭了！</anecdote>
     <abilityClass>FamiliaMyth.Abilities.DevelopableAbility_WeaponAttunement</abilityClass>
     <maxProficiency>999</maxProficiency>
     <rarity>Rare</rarity>
@@ -95,6 +100,7 @@
     <defName>DevelopableAbility_ChainAttack</defName>
     <label>连攻</label>
     <description>战斗中随近战攻击频率提升力量与灵巧的发展能力。持续近战出手时补正上升，停止攻击后逐渐消退。通过近战战斗提升熟练度。</description>
+    <anecdote>我的回合，我的回合，还是我的回合！</anecdote>
     <abilityClass>FamiliaMyth.Abilities.DevelopableAbility_ChainAttack</abilityClass>
     <maxProficiency>999</maxProficiency>
     <rarity>Rare</rarity>
@@ -106,6 +112,7 @@
     <defName>DevelopableAbility_MindHealing</defName>
     <label>精愈</label>
     <description>持续自动恢复精神力的发展能力。精神力越满恢复越慢，并随熟练度提高而加快。通过消耗精神力提升熟练度。</description>
+    <anecdote>“精神力越少精神力回复越快，精神力回复越快精神力越多，所以精神力越少精神力越多。”</anecdote>
     <abilityClass>FamiliaMyth.Abilities.DevelopableAbility_MindHealing</abilityClass>
     <maxProficiency>999</maxProficiency>
     <rarity>Uncommon</rarity>

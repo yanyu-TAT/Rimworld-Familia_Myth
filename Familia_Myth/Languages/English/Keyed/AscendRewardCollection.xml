@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- ==================== Ascend reward collection ==================== -->
+
+  <FamiliaMyth.AscendReward.Title>Reward Collection</FamiliaMyth.AscendReward.Title>
+  <FamiliaMyth.AscendReward.Open>Collection</FamiliaMyth.AscendReward.Open>
+  <FamiliaMyth.AscendReward.OpenTooltip>Browse the rewards obtainable through ascend rituals.</FamiliaMyth.AscendReward.OpenTooltip>
+
+  <FamiliaMyth.AscendReward.GroupDevelopable>Developable abilities</FamiliaMyth.AscendReward.GroupDevelopable>
+  <FamiliaMyth.AscendReward.GroupSkill>Skills</FamiliaMyth.AscendReward.GroupSkill>
+  <FamiliaMyth.AscendReward.GroupSpell>Spells</FamiliaMyth.AscendReward.GroupSpell>
+
+  <FamiliaMyth.AscendReward.Progress>Discovered {0} / {1}</FamiliaMyth.AscendReward.Progress>
+  <FamiliaMyth.AscendReward.Unknown>？？？</FamiliaMyth.AscendReward.Unknown>
+  <FamiliaMyth.AscendReward.UnknownIndex>No. {0}</FamiliaMyth.AscendReward.UnknownIndex>
+  <FamiliaMyth.AscendReward.UnknownHint>Not yet seen in an ascend ritual.</FamiliaMyth.AscendReward.UnknownHint>
+
+  <FamiliaMyth.AscendReward.PageFooter>Page {0} / {1}</FamiliaMyth.AscendReward.PageFooter>
+  <FamiliaMyth.AscendReward.PrevPage>❮ Previous</FamiliaMyth.AscendReward.PrevPage>
+  <FamiliaMyth.AscendReward.NextPage>Next ❯</FamiliaMyth.AscendReward.NextPage>
+  <FamiliaMyth.AscendReward.BackToIndex>Back to index</FamiliaMyth.AscendReward.BackToIndex>
+  <FamiliaMyth.AscendReward.EscHint>Press ESC to exit</FamiliaMyth.AscendReward.EscHint>
+
+  <FamiliaMyth.AscendReward.HolderPrefix>Held by: </FamiliaMyth.AscendReward.HolderPrefix>
+  <FamiliaMyth.AscendReward.NoHolder>No familia member holds this.</FamiliaMyth.AscendReward.NoHolder>
+  <FamiliaMyth.AscendReward.Empty>No rewards.</FamiliaMyth.AscendReward.Empty>
+
+  <FamiliaMyth.AscendReward.SpellTypeLine>Spell type: {0}</FamiliaMyth.AscendReward.SpellTypeLine>
+  <FamiliaMyth.AscendReward.SpellMana>Mana {0} · entropy {1}</FamiliaMyth.AscendReward.SpellMana>
+  <FamiliaMyth.AscendReward.SkillTypeLine>Skill type: {0}</FamiliaMyth.AscendReward.SkillTypeLine>
+  <FamiliaMyth.AscendReward.SkillCooldown>Cooldown {0} s</FamiliaMyth.AscendReward.SkillCooldown>
+  <FamiliaMyth.AscendReward.SkillCharge>Charges {0}</FamiliaMyth.AscendReward.SkillCharge>
+  <FamiliaMyth.AscendReward.SkillNeedTarget>Requires a target.</FamiliaMyth.AscendReward.SkillNeedTarget>
+  <FamiliaMyth.AscendReward.DevMaxProficiency>Max proficiency {0}</FamiliaMyth.AscendReward.DevMaxProficiency>
+
+  <FamiliaMyth.AscendReward.SpellTypeNone>Untyped</FamiliaMyth.AscendReward.SpellTypeNone>
+  <FamiliaMyth.AscendReward.SpellTypeAttack>Attack</FamiliaMyth.AscendReward.SpellTypeAttack>
+  <FamiliaMyth.AscendReward.SpellTypeHeal>Healing</FamiliaMyth.AscendReward.SpellTypeHeal>
+  <FamiliaMyth.AscendReward.SpellTypeDefense>Defense</FamiliaMyth.AscendReward.SpellTypeDefense>
+  <FamiliaMyth.AscendReward.SpellTypeBuff>Buff</FamiliaMyth.AscendReward.SpellTypeBuff>
+  <FamiliaMyth.AscendReward.SpellTypeDebuff>Debuff</FamiliaMyth.AscendReward.SpellTypeDebuff>
+  <FamiliaMyth.AscendReward.SpellTypeEnchant>Enchant</FamiliaMyth.AscendReward.SpellTypeEnchant>
+  <FamiliaMyth.AscendReward.SpellTypeField>Field</FamiliaMyth.AscendReward.SpellTypeField>
+  <FamiliaMyth.AscendReward.SpellTypeSummon>Summon</FamiliaMyth.AscendReward.SpellTypeSummon>
+  <FamiliaMyth.AscendReward.SpellTypeSpecial>Special</FamiliaMyth.AscendReward.SpellTypeSpecial>
+
+  <FamiliaMyth.AscendReward.SkillTypeActive>Active</FamiliaMyth.AscendReward.SkillTypeActive>
+  <FamiliaMyth.AscendReward.SkillTypePassive>Passive</FamiliaMyth.AscendReward.SkillTypePassive>
+  <FamiliaMyth.AscendReward.SkillTypeTriggered>Triggered</FamiliaMyth.AscendReward.SkillTypeTriggered>
+
+  <FamiliaMyth.AscendReward.DebugCleared>Reward collection cleared.</FamiliaMyth.AscendReward.DebugCleared>
+
+</LanguageData>

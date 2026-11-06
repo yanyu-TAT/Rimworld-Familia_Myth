@@ -563,3 +563,25 @@ battleActive / battleExitTick（超时未刷新即视为战斗结束）
 - 原版属性信息卡排序：`category.displayOrder` 升序 → `DisplayPriorityWithinCategory` 降序 → `LabelCap`（`RimWorld/StatsReportUtility.cs:281`）；其中 `StatDrawEntry.DisplayPriorityWithinCategory => stat.displayPriorityInCategory`（`RimWorld/StatDrawEntry.cs:70,79`）。`StatCategoryDef` 的排序字段即 `displayOrder`（`RimWorld/StatCategoryDef.cs:7`）。
 - 文本换行：`Text.WordWrap` 默认 true；`Widgets.Label(rect, string)` 走 `GUI.Label` + `Text.CurFontStyle`（`Verse/Widgets.cs:894`），`Text.CalcHeight(text, width)` 用同一 `CurFontStyle.CalcHeight`（`Verse/Text.cs:209`）→ 按 `CalcHeight` 定高绘制即可正确换行。
 - `StatRequest.For(Thing)` / `For(Thing, Pawn)`（`RimWorld/StatRequest.cs:59,76`）构造属性请求；`StatPart.ExplanationPart(StatRequest)`（`RimWorld/StatPart.cs:16`）返回该 part 的说明文本（可多行，按 `\n` 拆分），只读无副作用，可在 UI 层直接调用。
+
+## 十八、窗口布局与原版文本解析
+
+### 窗口内容区与背景
+- `Window.InnerWindowOnGUI` 先把 `windowRect.AtZero()` 整块交给 `doWindowBackground` 绘制（`Window.cs:210-215`），再以 `rect3 = rect.ContractedBy(Margin)` 作内容区、在 `BeginGroup(rect3)` 内调 `DoWindowContents(rect3.AtZero())`（`Window.cs:249-258`）。
+- `Margin` 是 `protected virtual float => 18f`（`Window.cs:104`），子类可 `override`；要「整窗自绘」必须同时处理 `Margin` 与 `doWindowBackground`，否则窗口边缘会露出原版底色（见 B-04 BUG-044）。
+- `WindowStack.WindowOfType<T>()` 是原版公开方法（`Verse/WindowStack.cs:330`），可直接用来查某类窗口是否已打开；`WindowStack.Windows` 返回只读列表（`WindowStack.cs:41`）。
+
+### 字号
+- `GameFont` 只有 `Tiny / Small / Medium` 三档（`Verse/GameFont.cs`），**没有 `Large`**；需要更大视觉层级只能靠位置、颜色、分隔线或自绘。
+
+### 文本解析
+- Def XML 到对象的简单值分派：文本子节点走 `ParseHelper.FromString<T>(xmlRoot.InnerText)`（`DirectXmlToObject.cs:94-104`）；`string` 字段另有 `InnerTextWithReplacedNewlinesOrXML` 把字面 `\n` 换成真换行（`DirectXmlToObject.cs:86,98`）。
+- `TaggedString` 在 `ParseHelper` 里注册的是 `ParseTaggedString`（`ParseHelper.cs:356,402`），只做包装、**不做 `\n` 替换** → 同一段文本写成 `TaggedString` 字段与 `string` 字段，换行表现不同（见 B-04 BUG-043）。
+- `TaggedString.RawText` 取未剥离标签的原文（`Verse/TaggedString.cs:9`）；隐式转 `string` 会走 `StripTags()`。
+
+### 能力 Def 的图标与属性
+- `AbilityDef.uiIcon` 默认 `BaseContent.BadTex`（`RimWorld/AbilityDef.cs:123`），`PostLoad` 里有 `iconPath` 时用 `ContentFinder.Get(iconPath)` 覆盖（`AbilityDef.cs:335-339`）；判断「无图标」须同时判 null 与 `BadTex`。
+- `GetStatValueAbstract(StatDef)` 对 `AbilityDef` 是扩展方法（`RimWorld/StatExtension.cs:22`，另有 `BuildableDef` 重载），不是 `Def` 的实例成员。
+- `SkillDef.iconPath` 是纯 `string` 字段（`Source/SkillDef.cs`），自取图标时用 `ContentFinder<Texture2D>.Get(path, false)` 并允许 null。
+
+> 出处：`kb/L0-证据/decompiled/1.6/Verse/Window.cs`、`Verse/WindowStack.cs`、`Verse/GameFont.cs`、`Verse/DirectXmlToObject.cs`、`Verse/ParseHelper.cs`、`Verse/TaggedString.cs`、`RimWorld/AbilityDef.cs`、`RimWorld/StatExtension.cs`。

@@ -27,4 +27,16 @@
   <DevelopableAbility_MindHealing.description>持续自动恢复精神力的发展能力。精神力越满恢复越慢，并随熟练度提高而加快。通过消耗精神力提升熟练度。</DevelopableAbility_MindHealing.description>
   <DevelopableAbility_MindHealing.label>精愈</DevelopableAbility_MindHealing.label>
 
+  <!-- 图鉴趣闻：每个升华奖励一条，内容待填写 -->
+  <DevelopableAbility_AbnormalResistance.anecdote></DevelopableAbility_AbnormalResistance.anecdote>
+  <DevelopableAbility_Botany.anecdote>——所以你是怎么从一株药草上拔出两份草药的？\n——一定是神明大人的赐福吧！\n——那祂就不能直接给我们草药吗……</DevelopableAbility_Botany.anecdote>
+  <DevelopableAbility_ChainAttack.anecdote>我的回合，我的回合，还是我的回合！</DevelopableAbility_ChainAttack.anecdote>
+  <DevelopableAbility_EfficientCirculation.anecdote></DevelopableAbility_EfficientCirculation.anecdote>
+  <DevelopableAbility_Healing.anecdote>谁会赢？精心包装的现代医药，还是医疗20级小人的双手？</DevelopableAbility_Healing.anecdote>
+  <DevelopableAbility_LuckOfTheSea.anecdote>——我已经掌握了钓鱼的核心！\n——你钓上来的真的是鱼吗？\n——总之有钓上来东西就不算空军！</DevelopableAbility_LuckOfTheSea.anecdote>
+  <DevelopableAbility_Magic.anecdote></DevelopableAbility_Magic.anecdote>
+  <DevelopableAbility_MindHealing.anecdote>“精神力越少精神力回复越快，精神力回复越快精神力越多，所以精神力越少精神力越多。”</DevelopableAbility_MindHealing.anecdote>
+  <DevelopableAbility_Mineralogy.anecdote>据完全不统计，持有这项能力的殖民者的出勤次数似乎格外的多</DevelopableAbility_Mineralogy.anecdote>
+  <DevelopableAbility_WeaponAttunement.anecdote>——我知道你很喜欢那把武器，但真的有必要连上厕所的时候都带着它吗？\n——你懂什么！上厕所的时候最容易被偷袭了！</DevelopableAbility_WeaponAttunement.anecdote>
+
 </LanguageData>

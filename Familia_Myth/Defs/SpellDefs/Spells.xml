@@ -419,6 +419,7 @@
 		</statBases>
 		<label>爆裂魔法</label>
 		<description>咏唱结束后在目标点引发一场巨大爆炸，伤害与范围随法强提升；施法结束后施法者将因魔力枯竭瘫痪数小时</description>
+		<anecdote>“……以大魔法师为业，操纵最强攻击魔法，爆裂魔法之人……！”</anecdote>
 
 		<!-- 魔法实现类 -->
 		<spellClass>FamiliaMyth.Abilities.Spell_Explosion</spellClass>
@@ -536,6 +537,7 @@
 		</statBases>
 		<label>重生女神之礼赞</label>
 		<description>咏唱结束后在目标点展开治愈法阵，为范围内友方包扎伤口、恢复伤势并附加疼痛抑制</description>
+		<anecdote>——在大部分作品中，有自我恢复能力的角色似乎总是会受最重的伤呢。\n——……别说这种话。</anecdote>
 
 		<!-- 魔法实现类 -->
 		<spellClass>FamiliaMyth.Abilities.Spell_ZeoGullveig</spellClass>
@@ -727,6 +729,7 @@
 		</statBases>
 		<label>烈焰魔剑</label>
 		<description>咏唱结束后为自身附加烈焰附魔，接下来数次近战攻击会在命中方向扫出扇形火焰；伤害受法强影响。</description>
+		<anecdote>“哦哦，黑暗烈焰之力栖息于吾身！”</anecdote>
 
 		<!-- 魔法实现类 -->
 		<spellClass>FamiliaMyth.Abilities.Spell_FlameSword</spellClass>

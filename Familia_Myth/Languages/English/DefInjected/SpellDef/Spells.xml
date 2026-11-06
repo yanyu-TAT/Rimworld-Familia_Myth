@@ -30,4 +30,19 @@
   <Spell_ZeoGullveig.description>Once the incantation ends, unfolds a healing circle at the target point that bandages wounds, heals injuries and suppresses pain for allies within it</Spell_ZeoGullveig.description>
   <Spell_ZeoGullveig.label>Blessing of the Goddess of Rebirth</Spell_ZeoGullveig.label>
 
+  <!-- Collection anecdotes: one per ascend reward, text to be filled in -->
+  <Spell_ArcsRay.anecdote></Spell_ArcsRay.anecdote>
+  <Spell_Explosion.anecdote></Spell_Explosion.anecdote>
+  <Spell_FlameSword.anecdote></Spell_FlameSword.anecdote>
+  <Spell_FusilladeFlameSpears.anecdote></Spell_FusilladeFlameSpears.anecdote>
+  <Spell_FutsuNoMitama.anecdote></Spell_FutsuNoMitama.anecdote>
+  <Spell_KingsSword.anecdote></Spell_KingsSword.anecdote>
+  <Spell_LightGuard.anecdote></Spell_LightGuard.anecdote>
+  <Spell_LuminousWind.anecdote></Spell_LuminousWind.anecdote>
+  <Spell_NoahHeal.anecdote></Spell_NoahHeal.anecdote>
+  <Spell_SolLight.anecdote></Spell_SolLight.anecdote>
+  <Spell_TheWorld.anecdote></Spell_TheWorld.anecdote>
+  <Spell_ThunderStorm.anecdote></Spell_ThunderStorm.anecdote>
+  <Spell_ZeoGullveig.anecdote></Spell_ZeoGullveig.anecdote>
+
 </LanguageData>

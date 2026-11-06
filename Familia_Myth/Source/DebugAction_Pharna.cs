@@ -108,6 +108,18 @@ namespace FamiliaMyth.Debug
                 Find.WindowStack.Add(new Dialog_AscendReward(session));
         }
 
+        /// <summary>
+        /// 调试指令：清空升华奖励图鉴的收集记录
+        /// </summary>
+        [DebugAction("Familia Myth", "Clear Ascend Reward Collection",
+            actionType = DebugActionType.Action,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        public static void ClearAscendRewardCollection()
+        {
+            GameComponent_AscendRewardCollection.Instance?.ClearAll();
+            Messages.Message("FamiliaMyth.AscendReward.DebugCleared".Translate(), MessageTypeDefOf.NeutralEvent);
+        }
+
         [DebugAction("Familia Myth", "All Developable Ability Gain +100 Proficiency",
             actionType = DebugActionType.ToolMapForPawns,
             allowedGameStates = AllowedGameStates.PlayingOnMap)]

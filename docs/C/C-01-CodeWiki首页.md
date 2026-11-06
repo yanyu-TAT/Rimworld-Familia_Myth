@@ -10,7 +10,8 @@
 | 恩惠/能力值 | `Hediff_Pharna.cs` + `StatPart_Pharna.cs` + `Patches/StatParts_Pharna.xml` |
 | 成长/经验 | `Patch_SkillGrowth.cs`、`Patch_WillGain.cs`、各 `<能力值>Gain_<来源>.cs`（力量/耐久/灵巧/敏捷/魔力） |
 | 恩惠丢失重建 | `PharnaRecord.cs`（纯值快照 + 重建）+ `GameComponent_FamiliaMyth.cs`（`Dictionary<Pawn, PharnaRecord>` 登记 / 发信）+ `ChoiceLetter_PharnaLost.cs`（重建 / 放弃）+ `Hediff_Pharna.PostRemoved`（唯一捕获点）+ `ExposeData` 读档自愈；死亡信追加见 `Patch_PharnaDeathLetter.cs` |
-| 升华/升级奖励 | `AscendHelper.cs`（注册表 + `AscendRewardSession`：刷新 / 锁定 / 保底）+ `Dialog_AscendReward.cs` + 仪式类 |
+| 升华/升级奖励 | `AscendHelper.cs`（注册表 + `AscendRewardSession`：刷新 / 锁定 / 保底）+ `AscendRewardCatalog.cs`（图鉴与抽取共用的奖励全集）+ `Dialog_AscendReward.cs` + 仪式类 |
+| 升华奖励图鉴 | `Window_AscendRewardCollection.cs`（书籍风副窗口：类型分组 + 自动分页 + 详情页）+ `GameComponent_AscendRewardCollection.cs`（存档级「展示过即点亮」记录）+ `AscendRewardCatalog.cs`；入口在历史→眷族页顶栏 |
 | 魔法框架 | `Spell.cs`（继承原版 Ability）+ `SpellDef.cs` + `Command_Spell.cs`（图标命令，继承原版 `Command_Psycast`：让原版心灵熵条预览施法熵消耗，并在角标与描述中显示魔力消耗） |
 | 咏唱 | `Verb_CastSpell.cs` / `Mote_Incantation.cs` / `Mote_MagicCircle.cs` |
 | 音效 | `FamiliaMythSounds.cs`（5 个 SoundDef 静态缓存）+ `Defs/SoundDefs/FamiliaMyth_Sounds.xml` + `Sounds/Familia_Myth/`（离线合成 wav）；挂点与约定见 C-02「咏唱音效」与 C-03 |
@@ -21,9 +22,9 @@
 | 意志/美德 | `MentalState_Virtue.cs`（含触发当拍的心声飘字）+ `Defs/HediffDefs/Hediff_Virtues.xml`（五种 Buff 与范围光环）+ `Patch_Virtue_Trigger.cs`（崩溃前拦截）+ `Hediff_Pharna.TryTriggerVirtue`（概率/冷却/类型抽取） |
 | 公会 | `GameComponent_FamiliaRankTracker.cs` + `GameComponent_GuildEnvoyTracker.cs`（单槽使者）+ `GuildQuestDef/Generator*`（统一工厂 `GuildQuestGenerator.Create(def)` + `Available()` 发布预筛）+ `QuestUtilities.cs` + 任务三件套（`QuestNode_Root_*` / `QuestPart_*` / `SiteClearanceReward`，细节见 C-02）+ 世界对象交互 comp（`WorldObjectComp_*`，如物资押运的定居点按钮）+ 任务脚本（`Defs/QuestScriptDefs/`） |
 | 眷族 UI | `UI_FamiliaPage.cs` + `UI_RadarChart.cs` |
-| 恩惠 UI | `ITab_Pawn_Pharna.cs`（四分区页签 + 顶栏入口）+ `Window_PharnaBonus.cs` + `PharnaBonusStats.cs`（加成统计副窗口与其数据层）+ `UI_FoldHeader.cs`（折叠头）+ `UI_GroupBox.cs` / `UI_Bar.cs` / `UI_Palette.cs` 等基础件 |
+| 恩惠 UI | `ITab_Pawn_Pharna.cs`（四分区页签 + 顶栏入口）+ `Window_PharnaBonus.cs` + `PharnaBonusStats.cs`（加成统计副窗口与其数据层）+ `Window_AscendRewardCollection.cs`（奖励图鉴）+ `UI_FoldHeader.cs`（折叠头）+ `UI_GroupBox.cs` / `UI_Bar.cs` / `UI_Palette.cs`（含 `Book*` 纸面色组）等基础件 |
 | 特效 | `Mote_*.cs` + `Textures/` + `Materials/` |
-| 本地化 | `Languages/` —— `Keyed/`（代码内文本 7 个文件）+ `DefInjected/`（Def 文本，文件名与 `Defs/` 一一对应）；中英逐键对称（`12-本地化检查.ps1` 七项全绿；第 [1] 项 270 键全覆盖）。机制与四条文本路径见 C-03，术语基准见 C-06 |
+| 本地化 | `Languages/` —— `Keyed/`（代码内文本 10 个文件，含 `AscendRewardCollection.xml`）+ `DefInjected/`（Def 文本，文件名与 `Defs/` 一一对应，含三个奖励 Def 的 `anecdote` 键）；中英逐键对称（`12-本地化检查.ps1` 七项全绿；第 [1] 项 270 键全覆盖）。机制与四条文本路径见 C-03，术语基准见 C-06 |
 
 ## 内容索引
 

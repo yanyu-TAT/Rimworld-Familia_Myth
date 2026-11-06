@@ -1,11 +1,12 @@
 using FamiliaMyth.Pharna;
+using FamiliaMyth.UI;
 using RimWorld;
 using UnityEngine;
 using Verse;
 
 namespace FamiliaMyth.Abilities
 {
-    public class SpellDef : AbilityDef, ICombatLogSource
+    public class SpellDef : AbilityDef, ICombatLogSource, IAnecdoteProvider
     {
         public SpellDef()
         {
@@ -43,6 +44,9 @@ namespace FamiliaMyth.Abilities
         public Color themeColor = Color.white;
 
         public bool canConcurrentCast = true;
+
+        public TaggedString anecdote;
+        public TaggedString Anecdote => anecdote;
 
         /// <summary>
         /// 咏唱秒数。至少一个行间隔，保证单行咏唱也能进入原版 warmup。

@@ -256,6 +256,9 @@
 | 21 | 自研 `SkillDef` 与原版 `RimWorld.SkillDef` 同名，在 `FamiliaMyth.Patch` 等外部命名空间裸写 → `CS0104` 歧义 | 写完全限定名 `FamiliaMyth.Abilities.SkillDef`（`Patch_SkillGrowth` / `Patch_Railgun` 为先例；`FamiliaMyth.Abilities` 内裸写安全，本命名空间优先） |
 | 22 | 新建 sustainer 的 SoundDef 沿用默认 `prioritizeMode = PrioritizeNewest` → 加载期报 `PrioritizeNewest is not supported with sustainers` | 持续音 SoundDef 显式配 `<priorityMode>PrioritizeNearest</priorityMode>`（见 B-04 BUG-041） |
 | 23 | 在 `Mod` 子类等启动早期执行的静态字段初始化器里调用 `Translate()` / 查 Def → 语言未加载，值被固定成 key | 改为懒加载属性或游戏内首次访问时取值（见 B-04 BUG-042） |
+| 24 | 凭记忆使用 `GameFont.Large` → CS0117，原版只有 `Tiny / Small / Medium` 三档 | 只用三档；更大视觉层级靠位置 / 颜色 / 分隔线（见 B-04 BUG-045） |
+| 25 | 自绘窗口内容已画满 `inRect`，窗口边缘仍露出一条原版底色 | 子类 `override float Margin => 0f` + 构造函数 `doWindowBackground = false`（见 B-04 BUG-044） |
+| 26 | Def 的 `TaggedString` 字段里写 `\n` 不换行（只有 `string` 字段会转义） | 读取处 `Replace("\\n", "\n")`，或该字段改用 `string`（见 B-04 BUG-043） |
 
 ***
 
@@ -271,6 +274,9 @@
 | | `Patch_<能力值>Gain_<来源>.cs` | 各能力值的经验获取补丁 |
 | | `Hediff_Pharna.PainFactor`（override） | 耐久 → 疼痛系数：覆盖 `Hediff.PainFactor` 返回 `0.9995^s`（`s` 为 `PharnaCurve` 折算值），`GainStatus` 改耐久后刷 `DirtyPainCache`（疼痛是 Hediff 累乘值、不是 StatDef，无法经 `StatPart_Pharna` 注入） |
 | | `AscendHelper.cs`（含 `AscendRewardSession`） | 升华奖励：Def 注册表与抽取（权重 / 保底 / 确定性种子）、选取会话（刷新 / 锁定） |
+| | `AscendRewardCatalog.cs` | 升华奖励图鉴数据全集：与抽取共用「类字段非空」判据、图标解析、固定顺序（魔法 → 技能 → 发展能力，与注册顺序一致） |
+| | `GameComponent_AscendRewardCollection.cs` | 存档级图鉴记录：升华窗口中展示过的奖励 defName（`ExposeData` 持久化），跨眷族与恩惠重建 |
+| | `Window_AscendRewardCollection.cs` | 书籍风奖励图鉴副窗口：类型分组列表 + 按纸面高度自动分页 + 详情页（图标自适应、持有者列表） |
 | | `PharnaRecord.cs` | 恩惠丢失快照（六维 / 潜在值 / 铭刻 / 等级 / 经验 / 伟业 / 魔力池 + 技能魔法发展能力 defName 与熟练度）与重建（统一工厂 + `Apply`，事后校验） |
 | | `ChoiceLetter_PharnaLost.cs` + `Defs/Misc/LetterDefs/LetterDef_PharnaLost.xml` | 恩惠意外消失信（重建 / 放弃两个按钮）；`Patch_PharnaDeathLetter.cs` 在持有恩惠者死亡信正文前置神明感知段 |
 | | `GrowthFeedback.cs` | 成长反馈统一出口：能力值 / 发展能力跨档时发一条 Message（一次跨多档只报最终档），音效由原版 `MessageTypeDef` 自带 |

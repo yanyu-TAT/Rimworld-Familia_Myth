@@ -40,4 +40,19 @@
   <Skill_SuccessionOfJustice.label>Succession of Justice</Skill_SuccessionOfJustice.label>
   <Skill_SuccessionOfJustice.description>Always active:\nFamilia members within range, including this person, gain bonuses: mana and will raised, mental break threshold lowered;\nradius and strength scale with this person's experience.</Skill_SuccessionOfJustice.description>
 
+  <!-- Collection anecdotes: one per ascend reward, text to be filled in -->
+  <Skill_2FightIs2Be.anecdote></Skill_2FightIs2Be.anecdote>
+  <Skill_BerserkerChaos.anecdote></Skill_BerserkerChaos.anecdote>
+  <Skill_DesperateArmyWin.anecdote></Skill_DesperateArmyWin.anecdote>
+  <Skill_Ember.anecdote></Skill_Ember.anecdote>
+  <Skill_FlameAffinity.anecdote></Skill_FlameAffinity.anecdote>
+  <Skill_IaiSpiritSlash.anecdote></Skill_IaiSpiritSlash.anecdote>
+  <Skill_LanceCharge.anecdote></Skill_LanceCharge.anecdote>
+  <Skill_ManaLoad.anecdote></Skill_ManaLoad.anecdote>
+  <Skill_Provoke.anecdote></Skill_Provoke.anecdote>
+  <Skill_Railgun.anecdote></Skill_Railgun.anecdote>
+  <Skill_RoundhouseKick.anecdote></Skill_RoundhouseKick.anecdote>
+  <Skill_SuccessionOfJustice.anecdote></Skill_SuccessionOfJustice.anecdote>
+  <Skill_SwordRain.anecdote></Skill_SwordRain.anecdote>
+
 </LanguageData>

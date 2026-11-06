@@ -1,11 +1,12 @@
 using FamiliaMyth.Pharna;
+using FamiliaMyth.UI;
 using RimWorld;
 using UnityEngine;
 using Verse;
 
 namespace FamiliaMyth.Abilities
 {
-    public class SkillDef : Def, ICombatLogSource
+    public class SkillDef : Def, ICombatLogSource, IAnecdoteProvider
     {
         public Type skillClass;
 
@@ -19,6 +20,7 @@ namespace FamiliaMyth.Abilities
         public float duration = 0f;
         public float checkInterval = 60f;
         public int maxCharge = 1;
+
 
         public string iconPath;
 
@@ -41,6 +43,9 @@ namespace FamiliaMyth.Abilities
         public RulePackDef CastRule => FamiliaMythRulePackDefOf.FamiliaMyth_CastSkill;
         public RulePackDef HitRule => combatLogRule ?? FamiliaMythRulePackDefOf.FamiliaMyth_HitBySkill;
         public string LogLabel => (combatLogLabel.NullOrEmpty() ? label : combatLogLabel).Colorize(LogLabelColor);
+
+        public TaggedString anecdote;
+        public TaggedString Anecdote => anecdote;
 
         public override void PostLoad()
         {

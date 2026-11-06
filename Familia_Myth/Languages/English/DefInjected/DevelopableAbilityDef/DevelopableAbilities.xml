@@ -27,4 +27,16 @@
   <DevelopableAbility_MindHealing.description>A developable ability that continuously restores psyfocus. Restoration slows as psyfocus rises and scales with proficiency. Proficiency rises from spending psyfocus.</DevelopableAbility_MindHealing.description>
   <DevelopableAbility_MindHealing.label>Mind Healing</DevelopableAbility_MindHealing.label>
 
+  <!-- Collection anecdotes: one per ascend reward, text to be filled in -->
+  <DevelopableAbility_AbnormalResistance.anecdote></DevelopableAbility_AbnormalResistance.anecdote>
+  <DevelopableAbility_Botany.anecdote></DevelopableAbility_Botany.anecdote>
+  <DevelopableAbility_ChainAttack.anecdote></DevelopableAbility_ChainAttack.anecdote>
+  <DevelopableAbility_EfficientCirculation.anecdote></DevelopableAbility_EfficientCirculation.anecdote>
+  <DevelopableAbility_Healing.anecdote></DevelopableAbility_Healing.anecdote>
+  <DevelopableAbility_LuckOfTheSea.anecdote></DevelopableAbility_LuckOfTheSea.anecdote>
+  <DevelopableAbility_Magic.anecdote></DevelopableAbility_Magic.anecdote>
+  <DevelopableAbility_MindHealing.anecdote></DevelopableAbility_MindHealing.anecdote>
+  <DevelopableAbility_Mineralogy.anecdote></DevelopableAbility_Mineralogy.anecdote>
+  <DevelopableAbility_WeaponAttunement.anecdote></DevelopableAbility_WeaponAttunement.anecdote>
+
 </LanguageData>

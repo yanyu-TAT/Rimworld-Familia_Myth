@@ -92,23 +92,9 @@ namespace FamiliaMyth.Pharna
         {
             try
             {
-                foreach (var def in DefDatabase<SpellDef>.AllDefs)
-                {
-                    if (def.spellClass != null)
-                        RegisterReward(def.spellClass, def.rarity);
-                }
-
-                foreach (var def in DefDatabase<SkillDef>.AllDefs)
-                {
-                    if (def.skillClass != null)
-                        RegisterReward(def.skillClass, def.rarity);
-                }
-
-                foreach (var def in DefDatabase<DevelopableAbilityDef>.AllDefs)
-                {
-                    if (def.abilityClass != null)
-                        RegisterReward(def.abilityClass, def.rarity);
-                }
+                //判据与图鉴共用同一份目录
+                foreach (var entry in AscendRewardCatalog.All)
+                    RegisterReward(entry.RewardClass, entry.Rarity);
             }
             catch (Exception e)
             {
@@ -263,6 +249,9 @@ namespace FamiliaMyth.Pharna
             this.pharna = pharna;
             RerollsLeft = rerollCount;
             rewards = AscendHelper.GetRandomRewardsFor(rewardCount, pharna);
+
+            //进入视野即记为已收集
+            GameComponent_AscendRewardCollection.Instance?.MarkSeen(rewards);
         }
 
         public bool IsLocked(int index) => lockedIndexes.Contains(index);
@@ -299,6 +288,9 @@ namespace FamiliaMyth.Pharna
             for (int i = 0; i < rewards.Count; i++)
                 if (!lockedIndexes.Contains(i))
                     rewards[i] = rolled[cursor++];
+
+            //刷新出的新卡同样算展示过
+            GameComponent_AscendRewardCollection.Instance?.MarkSeen(rolled);
         }
 
         /// <summary>

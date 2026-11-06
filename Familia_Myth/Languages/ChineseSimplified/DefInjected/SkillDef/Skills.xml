@@ -31,4 +31,19 @@
   <Skill_SuccessionOfJustice.description>常态生效：\n一定范围内的同眷族成员与自身获得增益：魔力/意志提升，崩溃阈值下降；作用范围与增幅程度随自身经验值提升。</Skill_SuccessionOfJustice.description>
   <Skill_SuccessionOfJustice.label>正义继巡</Skill_SuccessionOfJustice.label>
 
+  <!-- 图鉴趣闻：每个升华奖励一条，内容待填写 -->
+  <Skill_2FightIs2Be.anecdote>“我战故我在，我在故我战。”</Skill_2FightIs2Be.anecdote>
+  <Skill_BerserkerChaos.anecdote>——帮我倒杯咖啡，不要加奶，一点都不要，就好像那里从来都没有奶存在过。\n——（怒）你这混蛋绝对话里有话吧！</Skill_BerserkerChaos.anecdote>
+  <Skill_DesperateArmyWin.anecdote>“胜兵必骄，骄兵必败；败兵必哀，哀兵必胜。”</Skill_DesperateArmyWin.anecdote>
+  <Skill_Ember.anecdote>——还有冰淇淋吗？\n——你今天已经吃了十几份冰淇淋了吧！\n——哪来那么多废话，快拿出来！</Skill_Ember.anecdote>
+  <Skill_FlameAffinity.anecdote></Skill_FlameAffinity.anecdote>
+  <Skill_IaiSpiritSlash.anecdote>——切！居！登！\n——空！猫！哈哈哈哈！</Skill_IaiSpiritSlash.anecdote>
+  <Skill_LanceCharge.anecdote></Skill_LanceCharge.anecdote>
+  <Skill_ManaLoad.anecdote>*明明应该是精神装填吧！*\n*毕竟用的是魔力嘛。*</Skill_ManaLoad.anecdote>
+  <Skill_Provoke.anecdote>（勾手指）你过来啊！</Skill_Provoke.anecdote>
+  <Skill_Railgun.anecdote>你指尖跃动的电光，是我此生不变的信仰！</Skill_Railgun.anecdote>
+  <Skill_RoundhouseKick.anecdote></Skill_RoundhouseKick.anecdote>
+  <Skill_SuccessionOfJustice.anecdote>——你是说，这块三角形的煤炭是三明治？\n——……只是稍微烧焦了一点。\n——怎么想都不止一点吧！</Skill_SuccessionOfJustice.anecdote>
+  <Skill_SwordRain.anecdote>——好想吃pocky~\n——边缘世界真的有那种东西吗？</Skill_SwordRain.anecdote>
+
 </LanguageData>

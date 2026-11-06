@@ -21,8 +21,8 @@ namespace FamiliaMyth.UI
         private const float LineIndent = IndentStep * 2f;
         private const float ValueWidth = 96f;
         private const float ColumnGap = 3f;
-        private const float GroupGap = 6f;
-        private const float StatGap = 6f;
+        private const float GroupGap = 3f;
+        private const float StatGap = 3f;
         private const float BottomPad = 6f;
         private const float ScrollBarW = 16f;
 
@@ -258,5 +258,10 @@ namespace FamiliaMyth.UI
             => sign > 0 ? UI_Palette.BonusPositive
              : sign < 0 ? UI_Palette.BonusNegative
              : UI_Palette.TextValue;
+    }
+
+    public interface IAnecdoteProvider
+    {
+        TaggedString Anecdote { get; }
     }
 }

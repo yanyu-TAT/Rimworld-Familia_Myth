@@ -32,6 +32,11 @@ namespace FamiliaMyth.UI
         private const float SmallCardGap = 3f;
         private const float M = 6f;
 
+        //顶栏工具条：图鉴入口
+        private const float ToolbarHeight = 24f;
+        private const float ToolbarGap = 8f;
+        private const float CollectionButtonWidth = 120f;
+
         //可升级提示的呼吸参数
         private const float PulseSpeed = 3.2f;
         private const float PulseFillMinAlpha = 0.05f;
@@ -48,12 +53,37 @@ namespace FamiliaMyth.UI
             Rect iconBlock = new(body.x, body.y, CategoryColumnWidth, IconBlockHeight);
             DrawIconCard(iconBlock);
 
-            Rect catList = new(body.x, iconBlock.yMax + 8f, CategoryColumnWidth, body.yMax - (iconBlock.yMax + 8f));
+            Rect toolbar = new(body.x, iconBlock.yMax + ToolbarGap, CategoryColumnWidth, ToolbarHeight);
+            DrawToolbar(toolbar);
+
+            Rect catList = new(body.x, toolbar.yMax + ToolbarGap, CategoryColumnWidth, body.yMax - (toolbar.yMax + ToolbarGap));
             DrawCategories(catList);
 
             Rect memList = new(body.x + CategoryColumnWidth + ColumnGap, body.y,
                 body.width - CategoryColumnWidth - ColumnGap, body.height);
             DrawMembers(memList);
+        }
+
+        //工具条：奖励图鉴入口，已打开时再点即关闭
+        private static void DrawToolbar(Rect r)
+        {
+            Rect button = new(r.x, r.y, CollectionButtonWidth, r.height);
+            if (Widgets.ButtonText(button, (string)"FamiliaMyth.AscendReward.Open".Translate(), drawBackground: true, doMouseoverSound: true))
+                ToggleCollectionWindow();
+
+            TooltipHandler.TipRegion(button, new TipSignal("FamiliaMyth.AscendReward.OpenTooltip".Translate()));
+        }
+
+        private static void ToggleCollectionWindow()
+        {
+            Window_AscendRewardCollection open = Find.WindowStack.WindowOfType<Window_AscendRewardCollection>();
+            if (open != null)
+            {
+                open.Close();
+                return;
+            }
+
+            Find.WindowStack.Add(new Window_AscendRewardCollection());
         }
 
         private static void DrawIconCard(Rect r)

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <!-- ==================== 恩惠升华奖励图鉴 ==================== -->
+
+  <FamiliaMyth.AscendReward.Title>奖励图鉴</FamiliaMyth.AscendReward.Title>
+  <FamiliaMyth.AscendReward.Open>图鉴</FamiliaMyth.AscendReward.Open>
+  <FamiliaMyth.AscendReward.OpenTooltip>查看恩惠升华可获得的奖励图鉴</FamiliaMyth.AscendReward.OpenTooltip>
+
+  <FamiliaMyth.AscendReward.GroupDevelopable>发展能力</FamiliaMyth.AscendReward.GroupDevelopable>
+  <FamiliaMyth.AscendReward.GroupSkill>技能</FamiliaMyth.AscendReward.GroupSkill>
+  <FamiliaMyth.AscendReward.GroupSpell>魔法</FamiliaMyth.AscendReward.GroupSpell>
+
+  <FamiliaMyth.AscendReward.Progress>已探明 {0} / {1}</FamiliaMyth.AscendReward.Progress>
+  <FamiliaMyth.AscendReward.Unknown>？？？</FamiliaMyth.AscendReward.Unknown>
+  <FamiliaMyth.AscendReward.UnknownIndex>№ {0}</FamiliaMyth.AscendReward.UnknownIndex>
+  <FamiliaMyth.AscendReward.UnknownHint>尚未在升华中见过</FamiliaMyth.AscendReward.UnknownHint>
+
+  <FamiliaMyth.AscendReward.PageFooter>第 {0} / {1} 页</FamiliaMyth.AscendReward.PageFooter>
+  <FamiliaMyth.AscendReward.PrevPage>❮ 上一页</FamiliaMyth.AscendReward.PrevPage>
+  <FamiliaMyth.AscendReward.NextPage>下一页 ❯</FamiliaMyth.AscendReward.NextPage>
+  <FamiliaMyth.AscendReward.BackToIndex>返回目录</FamiliaMyth.AscendReward.BackToIndex>
+  <FamiliaMyth.AscendReward.EscHint>按 ESC 退出</FamiliaMyth.AscendReward.EscHint>
+
+  <FamiliaMyth.AscendReward.HolderPrefix>持有者：</FamiliaMyth.AscendReward.HolderPrefix>
+  <FamiliaMyth.AscendReward.NoHolder>暂无眷族持有</FamiliaMyth.AscendReward.NoHolder>
+  <FamiliaMyth.AscendReward.Empty>暂无奖励</FamiliaMyth.AscendReward.Empty>
+
+  <FamiliaMyth.AscendReward.SpellTypeLine>魔法类型：{0}</FamiliaMyth.AscendReward.SpellTypeLine>
+  <FamiliaMyth.AscendReward.SpellMana>魔力 {0} · 熵 {1}</FamiliaMyth.AscendReward.SpellMana>
+  <FamiliaMyth.AscendReward.SkillTypeLine>技能类型：{0}</FamiliaMyth.AscendReward.SkillTypeLine>
+  <FamiliaMyth.AscendReward.SkillCooldown>冷却 {0} 秒</FamiliaMyth.AscendReward.SkillCooldown>
+  <FamiliaMyth.AscendReward.SkillCharge>充能 {0}</FamiliaMyth.AscendReward.SkillCharge>
+  <FamiliaMyth.AscendReward.SkillNeedTarget>需要目标</FamiliaMyth.AscendReward.SkillNeedTarget>
+  <FamiliaMyth.AscendReward.DevMaxProficiency>熟练度上限 {0}</FamiliaMyth.AscendReward.DevMaxProficiency>
+
+  <FamiliaMyth.AscendReward.SpellTypeNone>无类型</FamiliaMyth.AscendReward.SpellTypeNone>
+  <FamiliaMyth.AscendReward.SpellTypeAttack>攻击</FamiliaMyth.AscendReward.SpellTypeAttack>
+  <FamiliaMyth.AscendReward.SpellTypeHeal>治疗</FamiliaMyth.AscendReward.SpellTypeHeal>
+  <FamiliaMyth.AscendReward.SpellTypeDefense>防御</FamiliaMyth.AscendReward.SpellTypeDefense>
+  <FamiliaMyth.AscendReward.SpellTypeBuff>增益</FamiliaMyth.AscendReward.SpellTypeBuff>
+  <FamiliaMyth.AscendReward.SpellTypeDebuff>减益</FamiliaMyth.AscendReward.SpellTypeDebuff>
+  <FamiliaMyth.AscendReward.SpellTypeEnchant>赋予</FamiliaMyth.AscendReward.SpellTypeEnchant>
+  <FamiliaMyth.AscendReward.SpellTypeField>领域</FamiliaMyth.AscendReward.SpellTypeField>
+  <FamiliaMyth.AscendReward.SpellTypeSummon>召唤</FamiliaMyth.AscendReward.SpellTypeSummon>
+  <FamiliaMyth.AscendReward.SpellTypeSpecial>特殊</FamiliaMyth.AscendReward.SpellTypeSpecial>
+
+  <FamiliaMyth.AscendReward.SkillTypeActive>主动</FamiliaMyth.AscendReward.SkillTypeActive>
+  <FamiliaMyth.AscendReward.SkillTypePassive>被动</FamiliaMyth.AscendReward.SkillTypePassive>
+  <FamiliaMyth.AscendReward.SkillTypeTriggered>触发</FamiliaMyth.AscendReward.SkillTypeTriggered>
+
+  <FamiliaMyth.AscendReward.DebugCleared>图鉴记录已清空</FamiliaMyth.AscendReward.DebugCleared>
+
+</LanguageData>
