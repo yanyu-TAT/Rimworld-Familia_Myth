@@ -41,18 +41,26 @@
   <Skill_SuccessionOfJustice.description>Always active:\nFamilia members within range, including this person, gain bonuses: mana and will raised, mental break threshold lowered;\nradius and strength scale with this person's experience.</Skill_SuccessionOfJustice.description>
 
   <!-- Collection anecdotes: one per ascend reward, text to be filled in -->
-  <Skill_2FightIs2Be.anecdote></Skill_2FightIs2Be.anecdote>
-  <Skill_BerserkerChaos.anecdote></Skill_BerserkerChaos.anecdote>
-  <Skill_DesperateArmyWin.anecdote></Skill_DesperateArmyWin.anecdote>
-  <Skill_Ember.anecdote></Skill_Ember.anecdote>
+  <Skill_2FightIs2Be.anecdote>"I fight, therefore I am. I am, therefore I fight."</Skill_2FightIs2Be.anecdote>
+  <Skill_BerserkerChaos.anecdote>--Pour me a coffee. No milk. Not even a single drop -- as if there had never been any milk there at all.
+--(angry) You're definitely implying something, you bastard!</Skill_BerserkerChaos.anecdote>
+  <Skill_DesperateArmyWin.anecdote>"A victorious army grows arrogant, and an arrogant army is doomed; a defeated army grieves, and a grieving army wins."</Skill_DesperateArmyWin.anecdote>
+  <Skill_Ember.anecdote>--Is there any ice cream left?
+--You've already eaten a dozen servings today!
+--Quit whining and just hand it over!</Skill_Ember.anecdote>
   <Skill_FlameAffinity.anecdote></Skill_FlameAffinity.anecdote>
-  <Skill_IaiSpiritSlash.anecdote></Skill_IaiSpiritSlash.anecdote>
+  <Skill_IaiSpiritSlash.anecdote>--Foresight! Iai! Helm Breaker!
+--Whiff! Cart! Hahahaha!</Skill_IaiSpiritSlash.anecdote>
   <Skill_LanceCharge.anecdote></Skill_LanceCharge.anecdote>
-  <Skill_ManaLoad.anecdote></Skill_ManaLoad.anecdote>
-  <Skill_Provoke.anecdote></Skill_Provoke.anecdote>
-  <Skill_Railgun.anecdote></Skill_Railgun.anecdote>
+  <Skill_ManaLoad.anecdote>*It really should be "psychic load", shouldn't it?*
+*Well, it runs on mana, after all.*</Skill_ManaLoad.anecdote>
+  <Skill_Provoke.anecdote>(beckons with a finger) Come at me!</Skill_Provoke.anecdote>
+  <Skill_Railgun.anecdote>The lightning dancing at your fingertips is the faith I will hold for all my life!</Skill_Railgun.anecdote>
   <Skill_RoundhouseKick.anecdote></Skill_RoundhouseKick.anecdote>
-  <Skill_SuccessionOfJustice.anecdote></Skill_SuccessionOfJustice.anecdote>
-  <Skill_SwordRain.anecdote></Skill_SwordRain.anecdote>
+  <Skill_SuccessionOfJustice.anecdote>--Are you telling me this triangular lump of coal is a sandwich?
+--...It's just a little burnt.
+--"A little"?! It's way beyond that!</Skill_SuccessionOfJustice.anecdote>
+  <Skill_SwordRain.anecdote>--I really want some Pocky~
+--Does that even exist in the RimWorld?</Skill_SwordRain.anecdote>
 
 </LanguageData>

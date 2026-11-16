@@ -37,6 +37,8 @@ namespace FamiliaMyth.UI
         private const float LockWidth = 30f;
         //底部刷新按钮条高度
         private const float RefreshBarHeight = 40f;
+        //图鉴入口与刷新按钮同排，各占内容区一半
+        private const float CodexButtonGap = 10f;
         //锁定栏 tooltip 的稳定 id 基数（按卡位偏移）
         private const int LockHintTooltipId = 197320;
 
@@ -132,7 +134,36 @@ namespace FamiliaMyth.UI
             }
             Widgets.EndScrollView();
 
-            DrawRefreshBar(new Rect(contentX, contentRect.yMax + 6f, ContentWidth, RefreshBarHeight - 6f));
+            float halfWidth = (ContentWidth - CodexButtonGap) / 2f;
+            float bottomY = contentRect.yMax + 6f;
+            float bottomH = RefreshBarHeight - 6f;
+
+            DrawCodexButton(new Rect(contentX, bottomY, halfWidth, bottomH));
+            DrawRefreshBar(new Rect(contentX + halfWidth + CodexButtonGap, bottomY, halfWidth, bottomH));
+        }
+
+        //右下角图鉴入口：叠加在弹窗之上，关闭后回到选卡
+        private void DrawCodexButton(Rect button)
+        {
+            if (Widgets.ButtonText(button, (string)"FamiliaMyth.AscendReward.Open".Translate(),
+                    drawBackground: true, doMouseoverSound: true))
+                OpenCollectionWindow();
+
+            TooltipHandler.TipRegion(button, new TipSignal("FamiliaMyth.AscendReward.OpenTooltip".Translate()));
+        }
+
+        private static void OpenCollectionWindow()
+        {
+            Window_AscendRewardCollection open = Find.WindowStack.WindowOfType<Window_AscendRewardCollection>();
+            if (open != null)
+                open.Close();
+
+            //叠加在模态弹窗之上时吸收外部点击，避免透传到下层的奖励卡
+            Window_AscendRewardCollection window = new()
+            {
+                absorbInputAroundWindow = true
+            };
+            Find.WindowStack.Add(window);
         }
 
         //刷新按钮：不可刷新（次数用尽或全部锁定）时不显示

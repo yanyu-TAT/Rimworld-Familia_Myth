@@ -7,7 +7,7 @@
 	<!-- 分组头：实验性内容 / 数值配置 -->
 	<FamiliaMyth.Settings.ExperimentalGroup>实验性内容</FamiliaMyth.Settings.ExperimentalGroup>
 	<FamiliaMyth.Settings.NumericGroup>数值配置</FamiliaMyth.Settings.NumericGroup>
-	<FamiliaMyth.Settings.NumericGroupDesc>六维能力值的加成曲线。修改后立即生效，并随模组设置一起保存。</FamiliaMyth.Settings.NumericGroupDesc>
+	<FamiliaMyth.Settings.NumericGroupDesc>六维能力值的加成曲线</FamiliaMyth.Settings.NumericGroupDesc>
 
 	<!-- 实验性内容开关：公会任务系统 -->
 	<FamiliaMyth.Settings.GuildContentLabel>公会任务系统</FamiliaMyth.Settings.GuildContentLabel>
@@ -17,6 +17,26 @@
 	<FamiliaMyth.Settings.CurveSubGroup>映射曲线</FamiliaMyth.Settings.CurveSubGroup>
 	<FamiliaMyth.Settings.CurveReset>重置</FamiliaMyth.Settings.CurveReset>
 	<FamiliaMyth.Settings.CurveResetAll>全部重置</FamiliaMyth.Settings.CurveResetAll>
-	<FamiliaMyth.Settings.CurveHint>曲线把原始能力值映射为加成计算用的有效值：横轴为原始能力值，纵轴为有效值。拖动白点调整；双击空白处加点；右键中间点删除；两端点的横轴固定。拖动与加点按 100 吸附。</FamiliaMyth.Settings.CurveHint>
+	<FamiliaMyth.Settings.CurveHint>原始能力值通过曲线映射为加成计算用的有效值。\n横轴为原始能力值，纵轴为有效值。拖动移动，双击添加，右键删除。\n &lt;color=#FF7373&gt;注意：过高的数值可能导致不平衡的游戏体验&lt;/color&gt;</FamiliaMyth.Settings.CurveHint>
+
+	<!-- 分组头：成长衰减设置 -->
+	<FamiliaMyth.Settings.DecayGroup>成长衰减设置</FamiliaMyth.Settings.DecayGroup>
+	<FamiliaMyth.Settings.DecayGroupDesc>自定义成长衰减的数值\n &lt;color=#FF7373&gt;注意：过低的衰减可能导致不平衡的游戏体验&lt;/color&gt;</FamiliaMyth.Settings.DecayGroupDesc>
+
+	<!-- 成长衰减 → 预设 -->
+	<FamiliaMyth.Settings.DecayPreset>预设</FamiliaMyth.Settings.DecayPreset>
+	<FamiliaMyth.Settings.DecayPresetDefault>默认</FamiliaMyth.Settings.DecayPresetDefault>
+	<FamiliaMyth.Settings.DecayPresetLow>低衰减</FamiliaMyth.Settings.DecayPresetLow>
+	<FamiliaMyth.Settings.DecayPresetCustom>自定义</FamiliaMyth.Settings.DecayPresetCustom>
+
+	<!-- 成长衰减 → 单项 / 总和参数 -->
+	<FamiliaMyth.Settings.DecayStatGroup>单项衰减</FamiliaMyth.Settings.DecayStatGroup>
+	<FamiliaMyth.Settings.DecayTotalGroup>总和衰减</FamiliaMyth.Settings.DecayTotalGroup>
+	<FamiliaMyth.Settings.DecayThreshold>衰减起始阈值</FamiliaMyth.Settings.DecayThreshold>
+	<FamiliaMyth.Settings.DecayStatThresholdDesc>能力值（单项）超过该值后开始衰减，未超过时保持正常增长。</FamiliaMyth.Settings.DecayStatThresholdDesc>
+	<FamiliaMyth.Settings.DecayTotalThresholdDesc>能力值（六项总和）超过该值后开始衰减，未超过时保持正常增长。</FamiliaMyth.Settings.DecayTotalThresholdDesc>
+	<FamiliaMyth.Settings.DecayPeakRate>最高衰减率</FamiliaMyth.Settings.DecayPeakRate>
+	<FamiliaMyth.Settings.DecayStatPeakRateDesc>能力值（单项）达到单级上限时的衰减率；0% 表示不产生衰减。</FamiliaMyth.Settings.DecayStatPeakRateDesc>
+	<FamiliaMyth.Settings.DecayTotalPeakRateDesc>能力值（六项总和）达到单级上限时的衰减率；0% 表示不产生衰减。</FamiliaMyth.Settings.DecayTotalPeakRateDesc>
 
 </LanguageData>

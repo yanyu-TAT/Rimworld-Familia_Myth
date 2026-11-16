@@ -270,6 +270,7 @@
 | | `PharnaUtility`（同文件内） | 恩惠与生效中技能的查询扩展 |
 | | `StatPart_*.cs` + `Patches/StatParts_*.xml` | StatDef 注入修正（恩惠系数 / 信息卡展示项 / 魔力操控）；`StatPart_PharnaWealth` 把恩惠等级与经验折入原版 `MarketValue`（顶点 ×25），经原版财富链路抬升袭击点数 |
 | | `PharnaCurve.cs` | 六维加成曲线：把原始能力值折算为系数计算用的有效值（优先取设置页配置，未配置时用内置默认：轻微前缓后急，魔力维恒等） |
+| | `GrowthDecay.cs` | 成长衰减参数：预设常量（默认 / 低衰减）、单项与总和的单级上限、按「起始阈值 + 最高衰减率」反解比例与求值 |
 | | `DevelopableAbility*.cs` | 发展能力（熟练度 + StatPart 注入）；武器同调含按武器 def 的熟练度、冷却重置 / 暴击补丁与当前装备展示 Hediff；连攻含 10 秒近战攻速窗口与 `IStatusModifier` 补正；精愈含精神力持续恢复与按精神力消耗喂熟练度 |
 | | `Patch_<能力值>Gain_<来源>.cs` | 各能力值的经验获取补丁 |
 | | `Hediff_Pharna.PainFactor`（override） | 耐久 → 疼痛系数：覆盖 `Hediff.PainFactor` 返回 `0.9995^s`（`s` 为 `PharnaCurve` 折算值），`GainStatus` 改耐久后刷 `DirtyPainCache`（疼痛是 Hediff 累乘值、不是 StatDef，无法经 `StatPart_Pharna` 注入） |
@@ -315,16 +316,16 @@
 | **存档级与场地** | `GameComponent_*.cs` | 存档级追踪与引擎（评级 / 使者 / 位移击退 / 定时动作 / 教程标记） |
 | | `MapComponent_*.cs` | 地图级状态（恩惠特效管理） |
 | **表现层** | `Mote_*.cs` | 地图特效（咏唱词 / 魔法阵 / 光环 / 斩击等） |
-| | `UI_*.cs` | UI 基础设施与页面：`UI_Palette` 全局色源 / `UI_Scope` GUI 状态作用域 / `UI_Text` 度量与截断 / `UI_Bar` 进度条与门槛刻度 / `UI_Layout` 纵向游标 / `UI_GroupBox` 卡片 / `UI_FoldHeader` 折叠头 / `UI_RadarChart` 雷达图 / `UI_FamiliaPage` 眷族页 / `UI_SettingsPage` 模组设置页 / `UI_CurveEditor` 曲线编辑器 |
-| | `Window_FamiliaBase.cs` + `Dialog_AscendReward.cs` | 窗口基类（内容区模板 + 初始尺寸换算）与升华奖励弹窗（符文动画） |
+| | `UI_*.cs` | UI 基础设施与页面：`UI_Palette` 全局色源 / `UI_Scope` GUI 状态作用域 / `UI_Text` 度量与截断 / `UI_Bar` 进度条与门槛刻度 / `UI_Layout` 纵向游标 / `UI_GroupBox` 卡片 / `UI_FoldHeader` 折叠头 / `UI_RadarChart` 雷达图 / `UI_FamiliaPage` 眷族页 / `UI_SettingsPage` 模组设置页（教程 / 实验性内容 / 数值配置 / 成长衰减） / `UI_CurveEditor` 曲线编辑器 |
+| | `Window_FamiliaBase.cs` + `Dialog_AscendReward.cs` | 窗口基类（内容区模板 + 初始尺寸换算）与升华奖励弹窗（符文动画；底部左半边为图鉴入口，与刷新按钮各占一半） |
 | | `ITab_Pawn_Pharna.cs` | Pawn 级「恩惠」页签：能力 / 发展能力 / 技能·魔法 / 伟业 四分区（仅受恩惠者可见），顶栏含铭刻选取与加成统计入口；六维条与发展能力条按显示值追赶真实值（亮度随剩余差距衰减） |
 | | `Window_PharnaBonus.cs` + `PharnaBonusStats.cs` | 恩惠加成统计副窗口（按原版分类 / 属性两级折叠，列出恩惠来源的加成说明）与其数据层（收集 `ExplanationPart` 文本、拆分说明与数值、正负判定与排序） |
 | | `HistoryTabHelper.cs` + `Gizmo_ManaPool.cs` | 历史窗口眷族页签接入（含失效兜底）与魔力池 Gizmo |
 | **工具与基础设施** | `WeaponHelper.cs` | 武器查询与直线索敌 / 射线工具 |
 | | `HealHelper.cs` | 伤口与断肢治疗工具 |
 | | `FamiliaMythMod.cs` | 模组主类（`Verse.Mod` 子类）：构造函数内注册全部 Harmony 补丁与设置数据，包含开发日志和计划（文件内日志 / 计划表仅用户维护） |
-| | `FamiliaMythSettings.cs` | 模组设置项门面：实验性内容开关（`GuildContentEnabled`）、教程开关（`TutorialLettersEnabled`）与六维曲线读写（`Curve` / `ResetCurve` / `ResetAllCurves`） |
-| | `FamiliaMythSettingsData.cs` | 模组设置数据（`ModSettings` 子类，`GetSettings<T>` 读写 Config 目录）：公会开关 + 教程开关 + 六条 `Scribe_Deep` 曲线 |
+| | `FamiliaMythSettings.cs` | 模组设置项门面：实验性内容开关（`GuildContentEnabled`）、教程开关（`TutorialLettersEnabled`）、六维曲线读写（`Curve` / `ResetCurve` / `ResetAllCurves`）与成长衰减参数读写（`DecayPreset` / `StatDecayThreshold` / `StatDecayPeakRate` / `TotalDecayThreshold` / `TotalDecayPeakRate` / `ApplyDecayPreset`） |
+| | `FamiliaMythSettingsData.cs` | 模组设置数据（`ModSettings` 子类，`GetSettings<T>` 读写 Config 目录）：公会开关 + 教程开关 + 六条 `Scribe_Deep` 曲线 + 成长衰减预设与四个参数（阈值 / 最高衰减率） |
 | | `Patch_*.cs` | Harmony 补丁（命名与异常防护细则见 C-03） |
 | | `DebugAction_*.cs` | 开发者模式调试指令（恩惠 / 任务 / 杂项：导出咏唱词纹理） |
 | | `Mote_Incantation.cs` + `Textures/Familia_Myth/Incantation/` | 咏唱词纹理：只读离线预渲染 PNG（1.6 用调试指令导出），缺失时报错；`MeshHeight` / `TextHeightRatio` / `marginRatio` 分层控制字号与飞溅留白 |

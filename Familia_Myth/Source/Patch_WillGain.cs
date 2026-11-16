@@ -33,8 +33,8 @@ namespace FamiliaMyth.Patch
             {
                 if (__result)
                 {
-                    //灵感每次10点
-                    __instance.pawn.GetPharna()?.GainStatus(PharnaStatusType.Will, 10f);
+                    //灵感每次15点
+                    __instance.pawn.GetPharna()?.GainStatus(PharnaStatusType.Will, 15f);
                 }
             }
             catch (Exception ex)
@@ -84,9 +84,9 @@ namespace FamiliaMyth.Patch
                 {
                     return;
                 }
-                //深入交流/美言每次双方2点
-                PawnRef(__instance).GetPharna()?.GainStatus(PharnaStatusType.Will, 2f);
-                recipient.GetPharna()?.GainStatus(PharnaStatusType.Will, 2f);
+                //深入交流/美言每次双方5点
+                PawnRef(__instance).GetPharna()?.GainStatus(PharnaStatusType.Will, 5f);
+                recipient.GetPharna()?.GainStatus(PharnaStatusType.Will, 5f);
             }
             catch (Exception ex)
             {

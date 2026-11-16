@@ -9,7 +9,7 @@ namespace FamiliaMyth.Patch
     public static class Patch_EnduranceGain_Nutrition
     {
         //每点摄入营养值的能力值增长
-        private const float EndurancePerNutrition = 2f;
+        private const float EndurancePerNutrition = 3f;
 
         public static void Postfix(Pawn ingester, float __result)
         {

@@ -7,7 +7,7 @@
 	<!-- Group headers: experimental content / numeric settings -->
 	<FamiliaMyth.Settings.ExperimentalGroup>Experimental content</FamiliaMyth.Settings.ExperimentalGroup>
 	<FamiliaMyth.Settings.NumericGroup>Numeric settings</FamiliaMyth.Settings.NumericGroup>
-	<FamiliaMyth.Settings.NumericGroupDesc>Bonus curves for the six attributes. Changes apply immediately and are saved with the mod settings.</FamiliaMyth.Settings.NumericGroupDesc>
+	<FamiliaMyth.Settings.NumericGroupDesc>Bonus curves for the six attributes</FamiliaMyth.Settings.NumericGroupDesc>
 
 	<!-- Experimental content toggle: guild quest system -->
 	<FamiliaMyth.Settings.GuildContentLabel>Guild quest system</FamiliaMyth.Settings.GuildContentLabel>
@@ -17,6 +17,26 @@
 	<FamiliaMyth.Settings.CurveSubGroup>Mapping curves</FamiliaMyth.Settings.CurveSubGroup>
 	<FamiliaMyth.Settings.CurveReset>Reset</FamiliaMyth.Settings.CurveReset>
 	<FamiliaMyth.Settings.CurveResetAll>Reset all</FamiliaMyth.Settings.CurveResetAll>
-	<FamiliaMyth.Settings.CurveHint>The curve maps a raw attribute value to the value used for bonus calculation: the horizontal axis is the raw value and the vertical axis the effective value. Drag the points to adjust; double-click empty space to add a point; right-click a middle point to remove it; the horizontal position of both end points is fixed. Dragging and adding snap to steps of 100.</FamiliaMyth.Settings.CurveHint>
+	<FamiliaMyth.Settings.CurveHint>A raw attribute value is mapped through the curve to the effective value used for bonus calculation.\nThe horizontal axis is the raw value and the vertical axis the effective value. Drag to move, double-click to add, right-click to delete.\n&lt;color=#FF7373&gt;Note: values that are too high may unbalance the game experience&lt;/color&gt;</FamiliaMyth.Settings.CurveHint>
+
+	<!-- Group header: growth decay -->
+	<FamiliaMyth.Settings.DecayGroup>Growth decay</FamiliaMyth.Settings.DecayGroup>
+	<FamiliaMyth.Settings.DecayGroupDesc>Customize the growth decay values;\n&lt;color=#FF7373&gt;Note: too low a decay may unbalance the game experience&lt;/color&gt;</FamiliaMyth.Settings.DecayGroupDesc>
+
+	<!-- Growth decay - preset -->
+	<FamiliaMyth.Settings.DecayPreset>Preset</FamiliaMyth.Settings.DecayPreset>
+	<FamiliaMyth.Settings.DecayPresetDefault>Default</FamiliaMyth.Settings.DecayPresetDefault>
+	<FamiliaMyth.Settings.DecayPresetLow>Low decay</FamiliaMyth.Settings.DecayPresetLow>
+	<FamiliaMyth.Settings.DecayPresetCustom>Custom</FamiliaMyth.Settings.DecayPresetCustom>
+
+	<!-- Growth decay - single attribute / total parameters -->
+	<FamiliaMyth.Settings.DecayStatGroup>Single attribute</FamiliaMyth.Settings.DecayStatGroup>
+	<FamiliaMyth.Settings.DecayTotalGroup>Total</FamiliaMyth.Settings.DecayTotalGroup>
+	<FamiliaMyth.Settings.DecayThreshold>Decay start threshold</FamiliaMyth.Settings.DecayThreshold>
+	<FamiliaMyth.Settings.DecayStatThresholdDesc>Decay begins once the value (single attribute) exceeds this threshold; below it growth stays linear.</FamiliaMyth.Settings.DecayStatThresholdDesc>
+	<FamiliaMyth.Settings.DecayTotalThresholdDesc>Decay begins once the value (six-attribute total) exceeds this threshold; below it growth stays linear.</FamiliaMyth.Settings.DecayTotalThresholdDesc>
+	<FamiliaMyth.Settings.DecayPeakRate>Peak decay rate</FamiliaMyth.Settings.DecayPeakRate>
+	<FamiliaMyth.Settings.DecayStatPeakRateDesc>Decay rate at the per-level cap of the value (single attribute); 0% means no decay.</FamiliaMyth.Settings.DecayStatPeakRateDesc>
+	<FamiliaMyth.Settings.DecayTotalPeakRateDesc>Decay rate at the per-level cap of the value (six-attribute total); 0% means no decay.</FamiliaMyth.Settings.DecayTotalPeakRateDesc>
 
 </LanguageData>

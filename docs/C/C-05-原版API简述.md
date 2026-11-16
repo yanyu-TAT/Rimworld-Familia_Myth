@@ -551,6 +551,7 @@ battleActive / battleExitTick（超时未刷新即视为战斗结束）
 - `ConceptDef`（`RimWorld/ConceptDef.cs`）：`priority <= 0` 直触发、`helpText` 支持 `{Key:...}`、`highlightTags` 高亮原版控件；`LearningReadout` 管右上角学习提示与 `showAllMode` 浏览。本模组未使用——长文本引导走信件，回看交给历史页签。
 - 存档级一次性标记：`Scribe_Collections.Look` 有 `ref List<T>` / `ref HashSet<T>` 重载（`Verse/Scribe_Collections.cs:524`），`GameComponent.ExposeData` 为 virtual（`Verse/GameComponent.cs:19`）→ 标记挂在 `GameComponent` 上随档持久化，不用 static。
 - Keyed 富文本：`LoadedLanguage` 经 `DirectXmlLoaderSimple.ValuesFromXmlFile` 取 `XElement.Value`（反转义后的文本，`Verse/DirectXmlLoaderSimple.cs`），所以标签要写成 `&lt;color=#RRGGBB&gt;…&lt;/color&gt;`；裸写 `<color=...>` 是非法 XML（元素名含 `=` / `#`）。`Translate` 返回 `TaggedString`，信件全程不转 `string` 即可保留标签。
+- **Keyed 值里的字面 `\n` 会换成真换行**：`DirectXmlLoaderSimple.ValuesFromXmlFile(XDocument)` 对每个键值做 `value.Replace("\\n", "\n")`（`Verse/DirectXmlLoaderSimple.cs:35`）——语言文件写 `\n` 即分行，不受 `TaggedString` 字段不转义的限制（对照上节 Def 字段：只有 `string` 字段经 `InnerTextWithReplacedNewlinesOrXML` 转义，见 B-04 BUG-043）。
 
 ## 十八、窗口、属性信息卡与文本度量
 
@@ -559,10 +560,12 @@ battleActive / battleExitTick（超时未刷新即视为战斗结束）
 - `WindowStack.WindowOfType<T>()`（`Verse/WindowStack.cs:330`）：返回首个匹配窗口或 `null`，用于「已打开则关闭」判重。
 - 非模态窗口的字段组合：`forcePause=false`、`absorbInputAroundWindow=false`、`preventCameraMotion=false`、`closeOnCancel=true`、`draggable=true`、`resizeable=false`。
 - `TooltipHandler.TipRegion` 只有 `(Rect, Func<string>, int)` 与 `(Rect, TipSignal)` 两个重载；`TipSignal` 对 `string` / `TaggedString` 都有隐式转换（`Verse/TipSignal.cs:103,108`），故 `TipRegion(rect, "Key".Translate())` 与 `new TipSignal("Key".Translate())` 等价。`TipSignal(TaggedString)` 以文本哈希作 `uniqueId`（`TipSignal.cs:63-74`），同一条 tooltip 重复注册不会叠加；`TipRegion` 仅在 `EventType.repaint` 且鼠标悬停时登记（`Verse/TooltipHandler.cs:79-97`）。
+- **tooltip 里的富文本可以保留**：`TipSignal(TaggedString)` 的构造取 `text.Resolve()`（`Verse/TipSignal.cs:63-74`），`Resolve()` 只解析 `{…}` 参数、不剥标签（同 `ColoredText.Colorize` 依赖它保留标签）；所以直接传 `"Key".Translate()` 与传 `.RawText` 都能显示颜色。两者差别只在是否解析占位符：需要标签+参数时传 `TaggedString`，只要原样文本时传 `.RawText`。
 - `Pawn_StoryTracker.favoriteColor` 是 `ColorDef`（`RimWorld/Pawn_StoryTracker.cs:32`），取 `.color` 得色值；Ideology 启用时自动生成，未启用或未生成时为 null。
 - 原版属性信息卡排序：`category.displayOrder` 升序 → `DisplayPriorityWithinCategory` 降序 → `LabelCap`（`RimWorld/StatsReportUtility.cs:281`）；其中 `StatDrawEntry.DisplayPriorityWithinCategory => stat.displayPriorityInCategory`（`RimWorld/StatDrawEntry.cs:70,79`）。`StatCategoryDef` 的排序字段即 `displayOrder`（`RimWorld/StatCategoryDef.cs:7`）。
 - 文本换行：`Text.WordWrap` 默认 true；`Widgets.Label(rect, string)` 走 `GUI.Label` + `Text.CurFontStyle`（`Verse/Widgets.cs:894`），`Text.CalcHeight(text, width)` 用同一 `CurFontStyle.CalcHeight`（`Verse/Text.cs:209`）→ 按 `CalcHeight` 定高绘制即可正确换行。
 - `StatRequest.For(Thing)` / `For(Thing, Pawn)`（`RimWorld/StatRequest.cs:59,76`）构造属性请求；`StatPart.ExplanationPart(StatRequest)`（`RimWorld/StatPart.cs:16`）返回该 part 的说明文本（可多行，按 `\n` 拆分），只读无副作用，可在 UI 层直接调用。
+- 数值输入与滑块（`Verse/Widgets.cs`，1.6 / 1.7 签名一致）：`TextFieldNumeric<T>(Rect, ref T val, ref string buffer, float min = 0f, float max = 1E+09f)` —— `buffer` 为 null 时用 `val.ToString()` 初始化；只在玩家编辑且文本可解析时才写回 `val` 并按 `[min,max]` 夹取，未编辑时**不会**把已有值改成范围内的值。`TextFieldPercent(Rect, ref float val, ref string buffer, float min = 0f, float max = 1f)` 在其外层做「×100 + `%` 后缀」，同样只在 `val > max` 时回写 `buffer`。`HorizontalSlider(Rect, float value, float min, float max, bool middleAlignment = false, string label = null, string leftAlignedLabel = null, string rightAlignedLabel = null, float roundTo = -1f)` 返回新值，`roundTo > 0` 时返回值先按该步长吸附；不传 `label` 与左右标签时不改 `rect.y`（滑块垂直居中）。滑块与输入框并排时，须在滑块值变化后自行重置 `buffer`，否则输入框继续显示旧值。
 
 ## 十八、窗口布局与原版文本解析
 

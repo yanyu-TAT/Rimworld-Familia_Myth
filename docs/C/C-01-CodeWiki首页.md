@@ -11,7 +11,7 @@
 | 成长/经验 | `Patch_SkillGrowth.cs`、`Patch_WillGain.cs`、各 `<能力值>Gain_<来源>.cs`（力量/耐久/灵巧/敏捷/魔力） |
 | 恩惠丢失重建 | `PharnaRecord.cs`（纯值快照 + 重建）+ `GameComponent_FamiliaMyth.cs`（`Dictionary<Pawn, PharnaRecord>` 登记 / 发信）+ `ChoiceLetter_PharnaLost.cs`（重建 / 放弃）+ `Hediff_Pharna.PostRemoved`（唯一捕获点）+ `ExposeData` 读档自愈；死亡信追加见 `Patch_PharnaDeathLetter.cs` |
 | 升华/升级奖励 | `AscendHelper.cs`（注册表 + `AscendRewardSession`：刷新 / 锁定 / 保底）+ `AscendRewardCatalog.cs`（图鉴与抽取共用的奖励全集）+ `Dialog_AscendReward.cs` + 仪式类 |
-| 升华奖励图鉴 | `Window_AscendRewardCollection.cs`（书籍风副窗口：类型分组 + 自动分页 + 详情页）+ `GameComponent_AscendRewardCollection.cs`（存档级「展示过即点亮」记录）+ `AscendRewardCatalog.cs`；入口在历史→眷族页顶栏 |
+| 升华奖励图鉴 | `Window_AscendRewardCollection.cs`（书籍风副窗口：类型分组 + 自动分页 + 详情页）+ `GameComponent_AscendRewardCollection.cs`（存档级「展示过即点亮」记录）+ `AscendRewardCatalog.cs`；入口在历史→眷族页顶栏与升华奖励弹窗底部 |
 | 魔法框架 | `Spell.cs`（继承原版 Ability）+ `SpellDef.cs` + `Command_Spell.cs`（图标命令，继承原版 `Command_Psycast`：让原版心灵熵条预览施法熵消耗，并在角标与描述中显示魔力消耗） |
 | 咏唱 | `Verb_CastSpell.cs` / `Mote_Incantation.cs` / `Mote_MagicCircle.cs` |
 | 音效 | `FamiliaMythSounds.cs`（5 个 SoundDef 静态缓存）+ `Defs/SoundDefs/FamiliaMyth_Sounds.xml` + `Sounds/Familia_Myth/`（离线合成 wav）；挂点与约定见 C-02「咏唱音效」与 C-03 |

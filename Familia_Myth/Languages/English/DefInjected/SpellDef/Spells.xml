@@ -32,8 +32,8 @@
 
   <!-- Collection anecdotes: one per ascend reward, text to be filled in -->
   <Spell_ArcsRay.anecdote></Spell_ArcsRay.anecdote>
-  <Spell_Explosion.anecdote></Spell_Explosion.anecdote>
-  <Spell_FlameSword.anecdote></Spell_FlameSword.anecdote>
+  <Spell_Explosion.anecdote>"...By trade a great mage, one who wields the strongest offensive magic, Explosion...!"</Spell_Explosion.anecdote>
+  <Spell_FlameSword.anecdote>"Oh, the power of dark flames dwells within me!"</Spell_FlameSword.anecdote>
   <Spell_FusilladeFlameSpears.anecdote></Spell_FusilladeFlameSpears.anecdote>
   <Spell_FutsuNoMitama.anecdote></Spell_FutsuNoMitama.anecdote>
   <Spell_KingsSword.anecdote></Spell_KingsSword.anecdote>
@@ -43,6 +43,7 @@
   <Spell_SolLight.anecdote></Spell_SolLight.anecdote>
   <Spell_TheWorld.anecdote></Spell_TheWorld.anecdote>
   <Spell_ThunderStorm.anecdote></Spell_ThunderStorm.anecdote>
-  <Spell_ZeoGullveig.anecdote></Spell_ZeoGullveig.anecdote>
+  <Spell_ZeoGullveig.anecdote>--In most works, characters with self-healing always seem to take the worst injuries.
+--...Don't say that.</Spell_ZeoGullveig.anecdote>
 
 </LanguageData>

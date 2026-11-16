@@ -11,6 +11,12 @@ namespace FamiliaMyth.Core
         public bool guildContent;
         public bool tutorialLetters = true;
 
+        public GrowthDecayPreset decayPreset = GrowthDecayPreset.Default;
+        public float statDecayThreshold = GrowthDecay.DefaultStatThreshold;
+        public float statDecayPeakRate = GrowthDecay.DefaultStatPeakRate;
+        public float totalDecayThreshold = GrowthDecay.DefaultTotalThreshold;
+        public float totalDecayPeakRate = GrowthDecay.DefaultTotalPeakRate;
+
         private SimpleCurve curveStrength;
         private SimpleCurve curveEndurance;
         private SimpleCurve curveDexterity;
@@ -52,10 +58,38 @@ namespace FamiliaMyth.Core
             ResetCurve(PharnaStatusType.Will);
         }
 
+        /// <summary>
+        /// 套用成长衰减预设；「自定义」只切换标记，不改动参数
+        /// </summary>
+        public void ApplyDecayPreset(GrowthDecayPreset preset)
+        {
+            decayPreset = preset;
+            switch (preset)
+            {
+                case GrowthDecayPreset.Default:
+                    statDecayThreshold = GrowthDecay.DefaultStatThreshold;
+                    statDecayPeakRate = GrowthDecay.DefaultStatPeakRate;
+                    totalDecayThreshold = GrowthDecay.DefaultTotalThreshold;
+                    totalDecayPeakRate = GrowthDecay.DefaultTotalPeakRate;
+                    break;
+                case GrowthDecayPreset.Low:
+                    statDecayThreshold = GrowthDecay.LowStatThreshold;
+                    statDecayPeakRate = GrowthDecay.LowStatPeakRate;
+                    totalDecayThreshold = GrowthDecay.LowTotalThreshold;
+                    totalDecayPeakRate = GrowthDecay.LowTotalPeakRate;
+                    break;
+            }
+        }
+
         public override void ExposeData()
         {
             Scribe_Values.Look(ref guildContent, "guildContent", false);
             Scribe_Values.Look(ref tutorialLetters, "tutorialLetters", true);
+            Scribe_Values.Look(ref decayPreset, "decayPreset", GrowthDecayPreset.Default);
+            Scribe_Values.Look(ref statDecayThreshold, "statDecayThreshold", GrowthDecay.DefaultStatThreshold);
+            Scribe_Values.Look(ref statDecayPeakRate, "statDecayPeakRate", GrowthDecay.DefaultStatPeakRate);
+            Scribe_Values.Look(ref totalDecayThreshold, "totalDecayThreshold", GrowthDecay.DefaultTotalThreshold);
+            Scribe_Values.Look(ref totalDecayPeakRate, "totalDecayPeakRate", GrowthDecay.DefaultTotalPeakRate);
             curveStrength = ScribeCurve(curveStrength, "curveStrength", PharnaStatusType.Strength);
             curveEndurance = ScribeCurve(curveEndurance, "curveEndurance", PharnaStatusType.Endurance);
             curveDexterity = ScribeCurve(curveDexterity, "curveDexterity", PharnaStatusType.Dexterity);

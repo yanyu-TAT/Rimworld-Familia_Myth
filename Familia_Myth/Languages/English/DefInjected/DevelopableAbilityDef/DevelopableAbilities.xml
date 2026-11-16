@@ -29,14 +29,19 @@
 
   <!-- Collection anecdotes: one per ascend reward, text to be filled in -->
   <DevelopableAbility_AbnormalResistance.anecdote></DevelopableAbility_AbnormalResistance.anecdote>
-  <DevelopableAbility_Botany.anecdote></DevelopableAbility_Botany.anecdote>
-  <DevelopableAbility_ChainAttack.anecdote></DevelopableAbility_ChainAttack.anecdote>
+  <DevelopableAbility_Botany.anecdote>--So how did you pull two herbs out of a single herb plant?
+--Must be the blessing of my god!
+--Then couldn't they just give us the herbs directly...</DevelopableAbility_Botany.anecdote>
+  <DevelopableAbility_ChainAttack.anecdote>My turn. My turn. Still my turn!</DevelopableAbility_ChainAttack.anecdote>
   <DevelopableAbility_EfficientCirculation.anecdote></DevelopableAbility_EfficientCirculation.anecdote>
-  <DevelopableAbility_Healing.anecdote></DevelopableAbility_Healing.anecdote>
-  <DevelopableAbility_LuckOfTheSea.anecdote></DevelopableAbility_LuckOfTheSea.anecdote>
+  <DevelopableAbility_Healing.anecdote>Who would win? Carefully packaged modern medicine, or the hands of a colonist with Medicine 20?</DevelopableAbility_Healing.anecdote>
+  <DevelopableAbility_LuckOfTheSea.anecdote>--I've mastered the essence of fishing!
+--Is that really a fish you caught?
+--As long as I caught something, it doesn't count as a skunk!</DevelopableAbility_LuckOfTheSea.anecdote>
   <DevelopableAbility_Magic.anecdote></DevelopableAbility_Magic.anecdote>
-  <DevelopableAbility_MindHealing.anecdote></DevelopableAbility_MindHealing.anecdote>
-  <DevelopableAbility_Mineralogy.anecdote></DevelopableAbility_Mineralogy.anecdote>
-  <DevelopableAbility_WeaponAttunement.anecdote></DevelopableAbility_WeaponAttunement.anecdote>
+  <DevelopableAbility_MindHealing.anecdote>"The less psyfocus you have, the faster it regenerates; the faster it regenerates, the more psyfocus you have. Therefore, the less psyfocus you have, the more psyfocus you have."</DevelopableAbility_MindHealing.anecdote>
+  <DevelopableAbility_Mineralogy.anecdote>According to completely unreliable statistics, colonists with this ability seem to show up for work suspiciously often.</DevelopableAbility_Mineralogy.anecdote>
+  <DevelopableAbility_WeaponAttunement.anecdote>--I know you love that weapon, but do you really need to bring it to the toilet?
+--What do you know! The toilet is when you're most likely to be ambushed!</DevelopableAbility_WeaponAttunement.anecdote>
 
 </LanguageData>

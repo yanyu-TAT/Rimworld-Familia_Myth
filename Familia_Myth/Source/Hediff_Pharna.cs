@@ -20,12 +20,6 @@ namespace FamiliaMyth.Pharna
 
     public class Hediff_Pharna : Hediff_Level
     {
-        // 成长衰减：单项当前值 / 本周期六项总和 超过阈值后开始反比衰减
-        private const float StatDecayThreshold = 400f;
-        private const float StatDecayScale = 500f;
-        private const float TotalStatDecayThreshold = 2000f;
-        private const float TotalStatDecayScale = 2500f;
-
         //升华条件：六维任一项达到该值
         public const float AscendStatusThreshold = 500f;
 
@@ -77,7 +71,7 @@ namespace FamiliaMyth.Pharna
         public List<FeatRecord> feats = new(); //伟业
 
         //能力值上限
-        public float maxStatus = 999f;
+        public float maxStatus = GrowthDecay.StatusCap;
 
         //魔力池当前值（由精神力转化而来）
         public float manaPool;
@@ -466,23 +460,24 @@ namespace FamiliaMyth.Pharna
                 ascendsWithoutRare++;
         }
 
-        //成长衰减系数：1 = 无衰减，越接近 0 衰减越重（受单项与六项总量双重影响）
+        //成长衰减系数 = 单项系数 × 总和系数，1 = 无衰减，越接近 0 衰减越重
+        //系数 = 1 / (1 + 超量 / 比例)，超量 = max(0, 当前值 − 起始阈值)
+        //比例 = (单级上限 − 起始阈值) × (1 − 最高衰减率) / 最高衰减率
         public float GetGrowthDecay(PharnaStatusType type)
         {
             if (inscriptionType == type)
                 return 1f;
 
-            float current = GetCurrentStatus(type);
-            float statExcess = Mathf.Max(0f, current - StatDecayThreshold);
-            float totalExcess = Mathf.Max(0f, TotalStatus - TotalStatDecayThreshold);
-            return 1f / (1f + statExcess / StatDecayScale) / (1f + totalExcess / TotalStatDecayScale);
+            float statScale = GrowthDecay.Scale(FamiliaMythSettings.StatDecayThreshold, FamiliaMythSettings.StatDecayPeakRate, maxStatus);
+            float totalScale = GrowthDecay.Scale(FamiliaMythSettings.TotalDecayThreshold, FamiliaMythSettings.TotalDecayPeakRate, GrowthDecay.TotalCap(maxStatus));
+            return GrowthDecay.Factor(GetCurrentStatus(type), FamiliaMythSettings.StatDecayThreshold, statScale)
+                * GrowthDecay.Factor(TotalStatus, FamiliaMythSettings.TotalDecayThreshold, totalScale);
         }
 
         public bool GainStatus(PharnaStatusType type, float amount, bool gainExp = true)
         {
             if (amount <= 0f) return false;
             float current = GetCurrentStatus(type);
-            if (current >= maxStatus) return false;
 
             int prevRank = RankIndexOf(current);
             float capped = Math.Min(amount * GetGrowthDecay(type), maxStatus - current);
@@ -498,6 +493,8 @@ namespace FamiliaMyth.Pharna
             }
             if (type == PharnaStatusType.Endurance && pawn?.health?.hediffSet != null)
                 pawn.health.hediffSet.DirtyPainCache();
+
+            //能力值增长超出单级上限时不截断经验值增长且不受成长衰减影响
             if (gainExp)
                 GainExp(amount);
 
