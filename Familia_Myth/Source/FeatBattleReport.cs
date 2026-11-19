@@ -104,7 +104,7 @@ namespace FamiliaMyth.Feat
             for (int i = 0; i < rows.Count; i++)
             {
                 FeatReportRow row = rows[i];
-                if (row != null && row.rewarded && row.tier > 0) rewarded.Add(row);
+                if (row != null && row.recorded) rewarded.Add(row);
             }
             if (rewarded.Count == 0) return;
 
@@ -313,6 +313,8 @@ namespace FamiliaMyth.Feat
         public float score;
         public int tier;
         public bool rewarded;
+        //是否已写入恩惠的伟业列表
+        public bool recorded;
         public List<FeatTraitDef> personalTraits;
     }
 }

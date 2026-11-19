@@ -260,6 +260,14 @@ namespace FamiliaMyth.Pharna
 
         public FeatRecord AvailableFeat() => feats?.Where(f => f.usedForLevel < 0).OrderBy(f => f.tier).FirstOrDefault(f => f.tier >= level);
 
+        //去掉未使用且等级低于当前恩惠等级的伟业：这些已无法再用于升华
+        public void PruneFeats()
+        {
+            if (feats == null || feats.Count == 0) return;
+            int threshold = Mathf.Max(level, 1);
+            feats.RemoveAll(f => f != null && f.usedForLevel < 0 && f.tier < threshold);
+        }
+
         //恩惠等级已达上限
         public bool AtLevelCap => level >= def.maxSeverity;
 
@@ -447,6 +455,8 @@ namespace FamiliaMyth.Pharna
             //升级奖励在仪式奖励中给予
             //升级
             ChangeLevel(1);
+            //升级后低档伟业已无法再用于升华
+            PruneFeats();
         }
 
         /// <summary>
@@ -654,7 +664,12 @@ namespace FamiliaMyth.Pharna
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
+                //保证level >= 1
+                level = Mathf.Max(1, level);
+
                 feats ??= new List<FeatRecord>();
+                //去掉未使用且等级低于当前恩惠等级的伟业
+                PruneFeats();
 
                 //Ability.pawn 与 verb.caster 不参与 Scribe，读档后在此重建
                 foreach (var spell in spells)

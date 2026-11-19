@@ -266,7 +266,7 @@
 
 | 系统 | 文件 / 前缀 | 职责 |
 | --- | --- | --- |
-| **恩惠与成长** | `Hediff_Pharna.cs` | 恩惠状态：六维能力值 / 经验 / 伟业记录、成长与升华、铭刻、魔力池 |
+| **恩惠与成长** | `Hediff_Pharna.cs` | 恩惠状态：六维能力值 / 经验 / 伟业记录（只留可升华档位，读档与升华时清理）、成长与升华、铭刻、魔力池 |
 | | `PharnaUtility`（同文件内） | 恩惠与生效中技能的查询扩展 |
 | | `StatPart_*.cs` + `Patches/StatParts_*.xml` | StatDef 注入修正（恩惠系数 / 信息卡展示项 / 魔力操控）；`StatPart_PharnaWealth` 把恩惠等级与经验折入原版 `MarketValue`（顶点 ×25），经原版财富链路抬升袭击点数 |
 | | `PharnaCurve.cs` | 六维加成曲线：把原始能力值折算为系数计算用的有效值（优先取设置页配置，未配置时用内置默认：轻微前缓后急，魔力维恒等） |
@@ -305,7 +305,7 @@
 | **伟业（Feat）** | `FeatTraitDef.cs`（内含 `FeatTraitScope` / `FeatContext` / `FeatTraitJudger` / `FeatRecord`） | 伟业数据层：性质定义（`judgerClass` + 系数 + `scope` 作用域）、战斗数据包门面（持贡献账本）、判定器基类（战斗层 / 个人层双入口）与统一工厂、记录 |
 | | `FeatTraitJudgers.cs` | 各性质判定器（阈值集中在类内；判定只看战斗事实，不看来源；`Battle` 实现 `Judge(ctx)`、`Pawn` 实现 `Judge(ctx, subject)`） |
 | | `FeatUtility.cs` | 结算流水线：取战斗事实 → 战斗层逐 Def 判定并累乘 → 个人层逐人判定 → 按贡献分摊并乘个人系数 → 阈值分割档位 → 整理成 `FeatBattleReport`（日志与信件由它自己的两个视图输出） |
-| | `FeatBattleReport.cs` | 结算快照与它自己的两个视图：`WriteLog()` 输出开发者日志（保留合账 / Σ占比核对字段），`SendLetter()` 输出伟业达成信（战斗解析 + 可升华判断，一场战斗一封，`LetterDef` 见 `Defs/Misc/LetterDefs/LetterDef_Feat.xml`） |
+| | `FeatBattleReport.cs` | 结算快照与它自己的两个视图：`WriteLog()` 输出开发者日志（保留合账 / Σ占比核对字段），`SendLetter()` 输出伟业达成信（只列已落库的达成者，战斗解析 + 可升华判断，一场战斗一封，`LetterDef` 见 `Defs/Misc/LetterDefs/LetterDef_Feat.xml`） |
 | | `GameComponent_FeatTracker.cs` | 战斗扫描器与贡献账本（`BattleAccount` / `PawnContribution`）：按战斗聚合、归属解析、吸收归并、结算去重与清理 |
 | | `Patch_FeatContribution.cs` | 伤害归因补丁（`Pawn.PostApplyDamage` 记输出 / 承受） |
 | | `HealHelper.cs`（治疗工具） + `HediffComp_FeatSupport.cs` | 支援贡献上报：治疗三工具按真实量记（末位 `healer` 参数归因），持续型效果由 Hediff 组件按实际生效 tick 记（XML 配 `<supportPerSecond>`） |

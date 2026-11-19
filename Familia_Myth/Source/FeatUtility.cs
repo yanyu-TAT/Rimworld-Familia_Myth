@@ -149,6 +149,8 @@ namespace FamiliaMyth.Feat
                 PersonalFeatResult personal = JudgePersonalTraits(ctx, allDefs, p);
                 float score = battleMagnitude * share * personal.multiplier;
                 int tier = TierOf(score);
+                //低于当前恩惠等级的伟业已无法再用于升华，不写入信件，但还需要在日志中写入
+                bool recorded = tier >= pharna.level;
 
                 results.Add(new ParticipantResult
                 {
@@ -156,9 +158,10 @@ namespace FamiliaMyth.Feat
                     share = share,
                     tier = tier,
                     personal = personal,
+                    recorded = recorded,
                 });
 
-                if (tier == 0) continue;
+                if (!recorded) continue;
 
                 pharna.feats.Add(new FeatRecord
                 {
@@ -245,6 +248,7 @@ namespace FamiliaMyth.Feat
                     score = battleMagnitude * share * personalMultiplier,
                     tier = index >= 0 ? results[index].tier : 0,
                     rewarded = rewarded,
+                    recorded = index >= 0 && results[index].recorded,
                     personalTraits = index >= 0 ? results[index].personal.traits : null,
                 });
 
@@ -313,6 +317,8 @@ namespace FamiliaMyth.Feat
             public float share;
             public int tier;
             public PersonalFeatResult personal;
+            //是否已写入恩惠的伟业列表
+            public bool recorded;
         }
 
         //个人层判定结果：命中的性质与系数合计
